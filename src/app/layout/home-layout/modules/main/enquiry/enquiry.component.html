@@ -1,0 +1,38 @@
+<div class="mt-2">
+  <div class="text-lg font-medium flex items-center">
+    ENQUIRY MANAGEMENT
+  </div>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-2">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th scope="col" *ngIf="!dashboard">Created</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Message</th>
+          <th scope="col" *ngIf="dashboard">Created</th>
+          <th scope="col" *ngIf="!dashboard"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of item_list">
+          <tr>
+            <td *ngIf="!dashboard" class="date">22-12-2024</td>
+            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
+              Rahul Roy
+            </td>
+            <td>rahulgmal.ffo</td>
+            <td>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. In sint
+              dolorum aliquam quo aspernatur vitae repellendus rem
+            </td>
+            <td *ngIf="dashboard" class="date">22-12-2024</td>
+            <td class="text-center" *ngIf="!dashboard">
+              <app-menu [modalItem]="1" [delete]="1"></app-menu>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>  

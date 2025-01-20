@@ -1,0 +1,49 @@
+<!-- <p>user works!</p> -->
+<div class="relative overflow-x-auto">
+    <div class="m-3 flex justify-between items-center">
+      <div class="flex flex-col items-start">
+        <span class="text-base font-medium">User Lists</span>
+        <span class="block text-gray-500 text-xs">2 User added</span>
+      </div>
+      <button (click)="addItem()" class="ai-button">+ Add New</button>
+    </div>
+    <hr />
+    <div class="m-3">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">User Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Email ID</th>
+            <th scope="col">Password</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of item_list">
+            <tr>
+              <td>chk</td>
+              <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
+                Rahul Roy
+              </td>
+              <td>Admin</td>
+              <td>rahulgmal.ffo</td>
+              <td></td>
+              <td></td>
+              <td class="text-center">
+                <app-menu [modalItem]="1" [delete]="1"></app-menu>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="!item_list?.length">
+            <tr>
+              <td class="text-center" colspan="7">NO ITEMS FOUND</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+</div>
+<router-outlet></router-outlet>

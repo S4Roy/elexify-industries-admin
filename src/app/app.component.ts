@@ -1,0 +1,84 @@
+import { Component } from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
+import { filter } from 'rxjs';
+import { HelpersService } from './core/services/helpers.service';
+import { Title } from '@angular/platform-browser';
+import * as Global from './global';
+
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  GLobal = Global;
+  PageMainTitle = Global.APP_NAME;
+  breadcrumbs: Array<{ label: string; url: string }> = [];
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private helperService: HelpersService,
+    private titleService: Title,
+
+  ) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const route = this.getActivatedRouteChild(this.activatedRoute);
+        route.data.subscribe((data: any) => {
+          if (data?.pageTitle) {
+            this.titleService.setTitle(
+              data?.pageTitle + ' | ' + this.PageMainTitle
+            );
+          } else {
+            this.titleService.setTitle(this.PageMainTitle);
+          }
+        });
+        this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);        
+        this.helperService.updateBreadCrumbs(this.breadcrumbs);
+      });
+  }
+
+  private createBreadcrumbs(
+    route: ActivatedRoute,
+    url: string = '',
+    breadcrumbs: Array<{ label: string; url: string }> = []
+  ): Array<{ label: string; url: string }> {
+    const children: ActivatedRoute[] = route.children;
+
+    if (children.length === 0) {
+      return breadcrumbs;
+    }
+
+    for (const child of children) {
+      const routeURL: string = child.snapshot.url
+        .map((segment) => segment.path)
+        .join('/');
+      if (routeURL !== '') {
+        url += `/${routeURL}`;
+      }
+      let label =
+        child.snapshot.data['breadcrumb'] || child.snapshot.data['Title'];
+      if (label) {
+        breadcrumbs.push({ label: label, url: url });
+      }
+      return this.createBreadcrumbs(child, url, breadcrumbs);
+    }
+
+    return breadcrumbs;
+  }
+  getActivatedRouteChild(activatedRoute: ActivatedRoute): ActivatedRoute {
+    if (activatedRoute.firstChild) {
+      return this.getActivatedRouteChild(activatedRoute.firstChild);
+    } else {
+      return activatedRoute;
+    }
+  }
+}

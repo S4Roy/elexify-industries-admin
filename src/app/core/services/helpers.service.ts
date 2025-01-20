@@ -1,0 +1,119 @@
+import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from './auth.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class HelpersService {
+  private viewport = new BehaviorSubject<any>({});
+  viewport$ = this.viewport.asObservable();
+  private formGroup = new BehaviorSubject<any>({});
+  private nextClick = new BehaviorSubject<any>({});
+  private backUrl = new BehaviorSubject<any>({});
+  private breadcrumbs = new BehaviorSubject<any>([]);
+  breadcrumbs$ = this.breadcrumbs.asObservable();
+  constructor(private authService: AuthService) {}
+  updateBreadCrumbs(data: any) {
+    this.breadcrumbs.next(data);
+  }
+  updateNext(data: any) {
+    this.nextClick.next(data);
+  }
+  updateBackUrl(data: any) {
+    this.backUrl.next(data);
+  }
+  updateformGroup(data: any) {
+    this.formGroup.next(data);
+  }
+  getNext(): Observable<any> {
+    return this.nextClick.asObservable();
+  }
+  getBackUrl(): Observable<any> {
+    return this.backUrl.asObservable();
+  }
+  getFormGroup(): Observable<any> {
+    return this.formGroup.asObservable();
+  }
+  role() {
+    let userData = this.authService.getUserData();
+    if (userData !== null) {
+      let parseData = JSON.parse(userData);
+      if (!parseData?.userRoles?.length) {
+        return '';
+      }
+      let user_role = parseData?.userRoles[0]?.name ?? null;
+      return user_role;
+    } else {
+      return null;
+    }
+  }
+  role_id() {
+    let userData = this.authService.getUserData();
+    if (userData !== null) {
+      let parseData = JSON.parse(userData);
+      if (!parseData?.userRoles?.length) {
+        return '';
+      }
+      let roleId = parseData?.userRoles[0]?.id ?? null;
+      return roleId;
+    } else {
+      return null;
+    }
+  }
+  CompanyAccountId() {
+    let userData = this.authService.getUserData();
+    if (userData !== null) {
+      let parseData = JSON.parse(userData);
+
+      let CompanyAccountId = parseData?.companyAccountId ?? null;
+      return CompanyAccountId;
+    } else {
+      return null;
+    }
+  }
+  userId() {
+    let userData = this.authService.getUserData();
+    if (userData !== null) {
+      let parseData = JSON.parse(userData);
+
+      let userId = parseData?.userId ?? null;
+      return userId;
+    } else {
+      return null;
+    }
+  }
+  userEmail() {
+    let userData = this.authService.getUserData();
+    if (userData !== null) {
+      let parseData = JSON.parse(userData);
+      let email = parseData?.email ?? null;
+      return email;
+    } else {
+      return null;
+    }
+  }
+  approvalLevel() {
+    let userData = this.authService.getUserData();
+    if (userData !== null) {
+      let parseData = JSON.parse(userData);
+      let approvalLevel = parseData?.approvalLevel ?? null;
+      return approvalLevel;
+    } else {
+      return null;
+    }
+  }
+  userDetails() {
+    let userData = this.authService.getUserData();
+    if (userData !== null) {
+      let parseData = JSON.parse(userData);
+      return parseData;
+    } else {
+      return null;
+    }
+  }
+  updateViewPort(data: any) {
+    this.viewport.next(data);
+  }
+}

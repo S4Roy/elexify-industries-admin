@@ -1,0 +1,42 @@
+<div class="relative overflow-x-auto">
+    <div class="m-3 flex justify-between items-center">
+      <div class="flex flex-col items-start">
+        <span class="text-base font-medium">Roles & Permissions</span>
+        <span class="block text-gray-500 text-xs">5 Roles added</span>
+      </div>
+      <button (click)="addItem()" class="ai-button">+ Add New</button>
+    </div>
+    <hr />
+    <div class="m-3">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+          <tr>
+            <th scope="col">Role Name</th>
+            <th scope="col">Number Of Users</th>
+            <th scope="col">Module & Permission</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of item_list">
+            <tr>
+              <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
+                Rahul Roy
+              </td>
+              <td>rahulgmal.ffo</td>
+              <td></td>
+              <td></td>
+              <td class="text-center">
+                <app-menu [modalItem]="1" [delete]="1"></app-menu>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="!item_list?.length">
+            <tr>
+              <td class="text-center" colspan="4">NO ITEMS FOUND</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+@if (localConveyance ||bikeCarLog ||modalItem || edit || details||
+updateJourneyNumber || delete || cancel || reports || itineraryCancel
+||rescheduleJourney || cancelJourney|| cancelSpecificUser|| transferAccount) {
+
+<mat-icon class="cursor-pointer" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+
+<mat-menu #menu="matMenu">
+  <ul class="actionlink">
+    @if (transferAccount) {
+    <li>
+      <button mat-menu-item (click)="initTransferAccountModal.next(transferAccount)">
+        <mat-icon>sync</mat-icon>
+        <span>Transfer Account</span>
+      </button>
+    </li>
+    }@if (localConveyance) {
+    <li>
+      <button mat-menu-item [routerLink]="localConveyance">
+        <mat-icon>receipt_long</mat-icon>
+        <span>Local Conveyance</span>
+      </button>
+    </li>
+    } @if (bikeCarLog) {
+    <li>
+      <button mat-menu-item [routerLink]="bikeCarLog">
+        <mat-icon>directions_car</mat-icon>
+        <span>Bike/Car Log</span>
+      </button>
+    </li>
+    } @if (reports) {
+    <li>
+      <button mat-menu-item [routerLink]="reports">
+        <mat-icon>info</mat-icon>
+        <span>Reports</span>
+      </button>
+    </li>
+    } @if (modalItem) {
+    <li>
+      <button mat-menu-item (click)="initModal.next(modalItem)">
+        <mat-icon>edit</mat-icon>
+        <span class="ml-1">Edit</span>
+      </button>
+    </li>
+
+    } @if (edit) {
+    <li>
+      <button mat-menu-item [routerLink]="edit">
+        <mat-icon>edit</mat-icon>
+        <span>Modify</span>
+      </button>
+    </li>
+    } @if (details) {
+    <li>
+      <button mat-menu-item [routerLink]="details">
+        <mat-icon>info</mat-icon>
+        <span>Details</span>
+      </button>
+    </li>
+    } @if (delete) {
+    <li>
+      <button class="text-danger" mat-menu-item (click)="onDelete()">
+        <mat-icon class="text-red-600">delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </li>
+    } @if (cancel) {
+    <li>
+      <button mat-menu-item (click)="onCancel()">
+        <mat-icon>delete</mat-icon>
+        <span>Cancel Request</span>
+      </button>
+    </li>
+    } @if (itineraryCancel) {
+    <li>
+      <button class="text-danger" mat-menu-item (click)="itineraryCancelModal.next(itineraryCancel)">
+        <mat-icon>close</mat-icon>
+        <span>Cancel</span>
+      </button>
+    </li>
+    } @if (updateJourneyNumber) {
+    <li>
+      <button mat-menu-item (click)="updateJourneyNumberModal.next(updateJourneyNumber)">
+        <mat-icon>sync_alt</mat-icon>
+        <span>Update Journey No.</span>
+      </button>
+    </li>
+    } @if (rescheduleJourney) {
+    <li>
+      <button mat-menu-item (click)="rescheduleJourneyModal.next(rescheduleJourney)">
+        <mat-icon>sync_alt</mat-icon>
+        <span>Reschedule Journey</span>
+      </button>
+    </li>
+    } @if (cancelJourney) {
+    <li>
+      <button class="text-danger" mat-menu-item (click)="cancelJourneyModal.next(cancelJourney)">
+        <mat-icon>sync_alt</mat-icon>
+        <span>Cancel Journey</span>
+      </button>
+    </li>
+    }@if (cancelSpecificUser) {
+    <li>
+      <button class="text-danger" mat-menu-item (click)="cancelSpecificUserModal.next(cancelSpecificUser)">
+        <mat-icon>delete</mat-icon>
+        <span>Cancel Specific User</span>
+      </button>
+    </li>
+    }
+  </ul>
+</mat-menu>
+}
