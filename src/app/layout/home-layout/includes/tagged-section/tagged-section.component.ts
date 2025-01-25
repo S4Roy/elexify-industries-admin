@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
-          selector: 'app-tagged-section',
+  selector: 'app-tagged-section',
   imports: [MatCheckboxModule, NgFor],
   templateUrl: './tagged-section.component.html',
   styleUrl: './tagged-section.component.scss',

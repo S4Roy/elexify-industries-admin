@@ -10,13 +10,16 @@ import { MenuComponent } from '../../../includes/menu/menu.component';
 })
 export class EnquiryComponent {
   @Input() dashboard: boolean = false;
-  item_list: any = [];
+  enquiryList: any = [];
   constructor() {
-    this.item_list = [1, 2, 3, 4, 4, 5, 5, 6, 6];
+    this.enquiryList = [1, 2, 3, 4, 4, 5, 5, 6, 6];
   }
   ngOnChanges() {
     if (this.dashboard) {
-      this.item_list = [1, 2, 3];
+      this.enquiryList = [1, 2, 3];
     }
+  }
+  getEnquiryList(){
+    
   }
 }

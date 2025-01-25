@@ -14,8 +14,11 @@ export class AuthService {
     private httpService: HttpService,
     private router: Router,
     private toastr: ToastrService
-  ) {}
+  ) { }
   adminLogin(payload: any) {
+    //return this.httpService.post('admin/auth/login', payload);
+    // /api/v1/admin/auth/login
+
     return this.httpService.post('admin/auth/login', payload);
   }
   forgotPassword(payload: any) {
@@ -28,6 +31,7 @@ export class AuthService {
     return this.httpService.delete('api/User/DeleteUserByEmail/' + email);
   }
   userSuccessLogin(data: any, rememberme: boolean = false, encodedUrl: string) {
+    console.log(data,rememberme,encodedUrl,"ttttttttt");
     let user = {
       email: data?.email,
       is_admin: data?.is_admin,
@@ -39,6 +43,7 @@ export class AuthService {
       user_type: data?.user_type,
       username: data?.username,
     };
+    console.log(user,"userrrrrr");
     if (rememberme == true) {
       localStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
       localStorage.setItem(

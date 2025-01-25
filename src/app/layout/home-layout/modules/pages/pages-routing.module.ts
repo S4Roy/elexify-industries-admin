@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeLayoutComponent } from '../../home-layout.component';
 import { AboutComponent } from './about/about.component';
+import { EnquiryComponent } from '../main/enquiry/enquiry.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -16,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        component: AboutComponent,
+        component: HomeComponent,
         data: { pageTitle: 'Home', breadcrumb: 'Home' },
       },
       {

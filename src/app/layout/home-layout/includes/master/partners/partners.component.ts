@@ -12,7 +12,7 @@ import { NewPartnerComponent } from './new-partner/new-partner.component';
   styleUrl: './partners.component.scss',
 })
 export class PartnersComponent {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
   addItem(data: any = null) {
     this.dialog
       .open(NewPartnerComponent, {

@@ -16,7 +16,7 @@ import { Editor } from 'ngx-editor';
     ThumbnailComponent,
     FormsModule,
     ReactiveFormsModule,
-    NgxEditorModule,
+    NgxEditorModule
   ],
   templateUrl: './info-card.component.html',
   styleUrl: './info-card.component.scss',

@@ -1,0 +1,43 @@
+<!-- <p>home-section2-landing-info-card works!</p> -->
+<div class="flex gap-3">
+    <div class="w-2/5 grow ">
+        <app-thumbnail></app-thumbnail>
+    </div>
+    <div class="w-3/5 bg-white p-3 rounded">
+        <form class="space-y-6" [formGroup]="formGroup">
+            <div class="">
+                <input formControlName="main_heading" type="text" [placeholder]="'Add heading here'"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+            </div>
+            <div class="">
+                <input formControlName="sub_heading" type="text" [placeholder]="'Add sub heading here'"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+            </div>
+            <div class="">
+                <textarea formControlName="description" [placeholder]="'Add description'"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+            </div>
+            <div class="modal-footer right-content-between">
+                <div></div>
+                <div>
+                    <!-- <button class="edms-btn btn-danger" matRipple [mat-dialog-close]="false"> -->
+                    <!-- <button class="edms-btn btn-danger" matRipple >
+                        <span>
+                            <i class="fas fa-times"></i>
+                        </span>
+                        Cancel
+                    </button> -->
+                    <!-- <button class="edms-btn btn-green ml-3" matRipple (click)="save()"> -->
+                    <!-- <button class="edms-btn btn-green ml-3" matRipple >
+                        <span>
+                            <i class="far fa-paper-plane"></i>
+                        </span>
+                        Submit
+                    </button> -->
+                    <button  class="ai-button"> Save</button>
+                    <button  class="ai-button"> Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

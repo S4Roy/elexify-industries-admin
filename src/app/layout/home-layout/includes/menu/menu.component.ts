@@ -37,7 +37,7 @@ export class MenuComponent {
   @Output() rescheduleJourneyModal = new EventEmitter<any>();
   @Output() cancelJourneyModal = new EventEmitter<any>();
   @Output() cancelSpecificUserModal = new EventEmitter<any>();
-  constructor(private dialogService: DialogService) {    
+  constructor(private dialogService: DialogService) {
   }
   onDelete() {
     const dialogData: ConfirmDialogData = {
@@ -46,12 +46,12 @@ export class MenuComponent {
       cancelText: 'Cancel',
       saveText: 'Delete',
     };
-    this.dialogService.confirmDialog(dialogData).subscribe((result:any) => {
+    this.dialogService.confirmDialog(dialogData).subscribe((result: any) => {
       if (result?.confirm) {
         this.deleteItem.next(this.delete);
       }
     });
-  }  
+  }
   onCancel() {
     const dialogData: ConfirmDialogData = {
       title: 'Are you sure?',
@@ -59,7 +59,7 @@ export class MenuComponent {
       cancelText: 'NO',
       saveText: 'YES, CANCEL',
     };
-    this.dialogService.confirmDialog(dialogData).subscribe((result:any) => {
+    this.dialogService.confirmDialog(dialogData).subscribe((result: any) => {
       if (result?.confirm) {
         this.cancelItem.next(this.cancel);
       }
