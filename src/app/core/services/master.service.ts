@@ -18,8 +18,12 @@ export class MasterService {
 
 
   // Enquiry List Page
-  getEnquiryList(params: any) {
+  getLatestEnquiryList(params: any) {
     return this.httpService.get('admin/dashboard/latest-enquiries', params);
    // return this.http.get(environment.apiEndpoint + 'master/security_question/?'+ params);
+  }
+
+  getLatestAnnouncementList(params: any) {
+    return this.httpService.get('admin/dashboard/latest-announcement', params);
   }
 }

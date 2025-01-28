@@ -10,6 +10,10 @@ import {
 import { NgxEditorModule } from 'ngx-editor';
 import { Editor } from 'ngx-editor';
 import { MenuComponent } from '../menu/menu.component';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
+import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home-section2-landing-info-card',
@@ -17,6 +21,8 @@ import { MenuComponent } from '../menu/menu.component';
     FormsModule,
     ReactiveFormsModule,
     NgxEditorModule,
+    MatIcon,MatMenu,
+    MatMenuModule, MatButtonModule, MatIconModule, RouterModule
     ],
   templateUrl: './home-section2-landing-info-card.component.html',
   styleUrl: './home-section2-landing-info-card.component.scss'

@@ -31,7 +31,8 @@ export class AuthService {
     return this.httpService.delete('api/User/DeleteUserByEmail/' + email);
   }
   userSuccessLogin(data: any, rememberme: boolean = false, encodedUrl: string) {
-    console.log(data,rememberme,encodedUrl,"ttttttttt");
+  // userSuccessLogin(data: any, encodedUrl: string) {
+  //  console.log(data,rememberme,encodedUrl,"ttttttttt");
     let user = {
       email: data?.email,
       is_admin: data?.is_admin,
@@ -44,13 +45,14 @@ export class AuthService {
       username: data?.username,
     };
     console.log(user,"userrrrrr");
-    if (rememberme == true) {
-      localStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
-      localStorage.setItem(
-        this.USER_TOKEN_ADMIN,
-        this.encrypt(JSON.stringify(user))
-      );
-    } else {
+    //if (rememberme == true) {
+    // if (true) {
+    //   localStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
+    //   localStorage.setItem(
+    //     this.USER_TOKEN_ADMIN,
+    //     this.encrypt(JSON.stringify(user))
+    //   );
+    // } else {
       sessionStorage.setItem(
         this.USER_TOKEN_KEY,
         this.encrypt(data?.token)
@@ -59,8 +61,8 @@ export class AuthService {
         this.USER_TOKEN_ADMIN,
         this.encrypt(JSON.stringify(user))
       );
-    }
-    this.router.navigate([encodedUrl ?? '/dashboard']);
+    //}
+    this.router.navigate([encodedUrl ?? 'admin/dashboard']);
   }
   getUserToken() {
     let token = localStorage.getItem(this.USER_TOKEN_KEY);
@@ -113,11 +115,11 @@ export class AuthService {
       return null;
     }
   }
-  HRMS_REDIRECTION(res: any) {
-    localStorage.removeItem(this.USER_TOKEN_KEY);
-    localStorage.removeItem(this.USER_TOKEN_ADMIN);
-    sessionStorage.removeItem(this.USER_TOKEN_KEY);
-    sessionStorage.removeItem(this.USER_TOKEN_ADMIN);
-    this.userSuccessLogin(res, true, '');
-  }
+  // HRMS_REDIRECTION(res: any) {
+  //   localStorage.removeItem(this.USER_TOKEN_KEY);
+  //   localStorage.removeItem(this.USER_TOKEN_ADMIN);
+  //   sessionStorage.removeItem(this.USER_TOKEN_KEY);
+  //   sessionStorage.removeItem(this.USER_TOKEN_ADMIN);
+  //   this.userSuccessLogin(res, true, '');
+  // }
 }

@@ -19,7 +19,7 @@ export class SideNavComponent {
         {
           label: 'Dashboard',
           icon: 'dashboard',
-          url: '/',
+          url: '/admin/dashboard',
           exact: true,
         },
         {

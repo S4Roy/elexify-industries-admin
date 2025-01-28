@@ -10,7 +10,7 @@ const routes: Routes = [
     data: { pageTitle: '', breadcrumb: '' },
     children: [
       {
-        path: '',
+        path: 'admin/dashboard',
         component: DashboardComponent,
       },
     ],

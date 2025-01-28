@@ -39,6 +39,17 @@
                 <div class="invalid-feedback d-block" *ngIf="isFieldValid(formGroup,'batch_image')">Please Upload
                     {{formGroup.get('batch_image')?.value}} </div>
             </div> -->
+            <div style="text-align: right;">
+                <button>
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu>
+                    <button>
+                        <label><svg width="14px" height="14px" fill="#3d49ad"><use xlink:href="#list_rename"/></svg></label> 
+                        <span class="m-2">Edit</span>
+                    </button>
+                </mat-menu>
+            </div>
             <div class="">
                 <input formControlName="sec3_main_heading" type="text" [placeholder]="'Add main heading here'"
                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />

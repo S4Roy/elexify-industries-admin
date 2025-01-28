@@ -36,7 +36,7 @@ export class LoginComponent {
         ]),
       ],
       password: [null, Validators.compose([Validators.required])],
-      rememberme: [true],
+      //rememberme: [true],
     });
   }
   submitLogin() {
