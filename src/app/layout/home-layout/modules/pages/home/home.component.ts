@@ -10,15 +10,23 @@ import { PartnersComponent } from '../../../includes/master/partners/partners.co
 import { HomeSection2LandingInfoCardComponent } from '../../../includes/home-section2-landing-info-card/home-section2-landing-info-card.component';
 import { HomeSection3LandingInfoCardComponent } from '../../../includes/home-section3-landing-info-card/home-section3-landing-info-card.component';
 import { HomeSection4LandingServiceInfoCardComponent } from '../../../includes/home-section4-landing-service-info-card/home-section4-landing-service-info-card.component';
+import { HomeHeroSectionLandingInfoCardComponent } from '../../../includes/home-hero-section-landing-info-card/home-hero-section-landing-info-card.component';
+import { HomeAwardsCertificateSectionInfoCardComponent } from '../../../includes/home-awards-certificate-section-info-card/home-awards-certificate-section-info-card.component';
+import { HomeProgressSectionInfoCardComponent } from '../../../includes/home-progress-section-info-card/home-progress-section-info-card.component';
+import { HomeCareerSectionInfoCardComponent } from '../../../includes/home-career-section-info-card/home-career-section-info-card.component';
 
 @Component({
   selector: 'app-home',
   //imports:[],
   //imports: [InfoCardComponent,TaggedSectionComponent,MatIconModule,PartnersComponent,AboutRoadmapInfoCardComponent,ThumbnailComponent],
   imports: [TaggedSectionComponent,MatIconModule,PartnersComponent,
+    HomeHeroSectionLandingInfoCardComponent,
     AboutRoadmapInfoCardComponent,HomeSection2LandingInfoCardComponent,
     HomeSection3LandingInfoCardComponent,
-    HomeSection4LandingServiceInfoCardComponent],
+    HomeSection4LandingServiceInfoCardComponent,
+  HomeAwardsCertificateSectionInfoCardComponent,
+HomeProgressSectionInfoCardComponent,
+HomeCareerSectionInfoCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

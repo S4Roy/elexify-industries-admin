@@ -17,20 +17,22 @@ import { RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-home-section3-landing-info-card',
-  imports: [ FormsModule,
-      ReactiveFormsModule,
-      NgxEditorModule,
-      //MatIcon,MatMenu,
-      MatMenuModule,MatButtonModule, 
-      MatIconModule,RouterModule,
-      NgIf],
-  templateUrl: './home-section3-landing-info-card.component.html',
-  styleUrl: './home-section3-landing-info-card.component.scss'
+  selector: 'app-home-hero-section-landing-info-card',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    NgxEditorModule,
+    //MatIcon,MatMenu,
+    MatMenuModule,MatButtonModule, 
+    MatIconModule,RouterModule,
+    NgIf
+  ],
+  templateUrl: './home-hero-section-landing-info-card.component.html',
+  styleUrl: './home-hero-section-landing-info-card.component.scss'
 })
-export class HomeSection3LandingInfoCardComponent {
+export class HomeHeroSectionLandingInfoCardComponent {
 
-  homeSec3Form: FormGroup;
+  homeHeroSecForm: FormGroup;
   isEditMode: boolean = false; // Flag to check if we are in edit mode
   currentItemIndex: number | null = null; // To track the current item index
 
@@ -46,19 +48,11 @@ export class HomeSection3LandingInfoCardComponent {
 
   constructor(private fb: FormBuilder) {
   //   // Initialize the form
-  this.homeSec3Form = this.fb.group({
-    sec3_main_heading: [null, Validators.required],
-    sec3_title1: [null, Validators.required],
-    sec3_des1: [null, Validators.required],
-    sec3_link1: [null, Validators.required],
-    sec3_title2: [null, Validators.required],
-    sec3_des2: [null, Validators.required],
-    sec3_link2: [null, Validators.required],
-    sec3_title3: [null, Validators.required],
-    sec3_des3: [null, Validators.required],
-    sec3_link3: [null, Validators.required],
-  });
-
+    this.homeHeroSecForm = this.fb.group({
+      hero_sec_main_heading: [''],
+      hero_sec_sub_heading: [''],
+      hero_sec_image_video: [null] // Form control for the image
+    });
   }
 
   ngOnInit(): void {
@@ -67,7 +61,7 @@ export class HomeSection3LandingInfoCardComponent {
 
   // Method to save or update the item
   // save() {
-  //   const itemData = this.homeSec3Form.value;
+  //   const itemData = this.homeHeroSecForm.value;
 
   //   if (this.isEditMode && this.currentItemIndex !== null) {
   //     this.updateItem(itemData);
@@ -82,7 +76,7 @@ export class HomeSection3LandingInfoCardComponent {
     const items = this.getItemsFromLocalStorage();
     items.push(itemData);
     localStorage.setItem('items', JSON.stringify(items));
-    this.homeSec3Form.patchValue(items); // Update the form with the saved data
+    this.homeHeroSecForm.patchValue(items); // Update the form with the saved data
     //this.resetForm();
     console.log('Item saved:', itemData);
   }
@@ -100,7 +94,7 @@ export class HomeSection3LandingInfoCardComponent {
 
   // Method to reset the form
   // resetForm() {
-  //   this.homeSec3Form.reset();
+  //   this.homeHeroSecForm.reset();
   //   this.isEditMode = false; // Reset to create mode
   //   this.currentItemIndex = null; // Reset the current item index
   // }
@@ -121,7 +115,7 @@ export class HomeSection3LandingInfoCardComponent {
   // Method to set the component in edit mode with existing item data
   editItem(index: number) {
     const items = this.getItemsFromLocalStorage();
-    this.homeSec3Form.setValue(items[index]); // Set the form values to the selected item
+    this.homeHeroSecForm.setValue(items[index]); // Set the form values to the selected item
     this.isEditMode = true; // Set to edit mode
     this.currentItemIndex = index; // Set the current item index
   }
@@ -144,12 +138,12 @@ export class HomeSection3LandingInfoCardComponent {
     if (!confirmation) {
       this.selectedImage = null; // Reset if not confirmed
       this.imagePreview = null; // Reset preview
-      this.homeSec3Form.reset(); // Reset the form
+      this.homeHeroSecForm.reset(); // Reset the form
     }
   }
 
   onSubmit() {
-    const itemData = this.homeSec3Form.value;
+    const itemData = this.homeHeroSecForm.value;
 
     if (this.isEditMode && this.currentItemIndex !== null) {
       this.updateItem(itemData);
@@ -159,7 +153,7 @@ export class HomeSection3LandingInfoCardComponent {
     }
     if (this.selectedImage) {
       const formData = new FormData();
-      formData.append('image', this.selectedImage, this.selectedImage.name);
+      formData.append('hero_sec_image_video', this.selectedImage, this.selectedImage.name);
 
       // this.yourService.uploadImage(formData).subscribe(
       //   (response) => {
@@ -174,7 +168,7 @@ export class HomeSection3LandingInfoCardComponent {
          // this.imagePreview = imageUrl; // Use the URL returned from the server
 
           // Optionally reset the form or show a success message
-          this.homeSec3Form.reset();
+          this.homeHeroSecForm.reset();
           this.selectedImage = null;
       //   },
       //   (error) => {

@@ -18,7 +18,7 @@ export class TaggedSectionComponent {
       },
       {
         id: 2,
-        name: 'Our Team',
+        name: 'Our Team and Partners Section',
       },
       {
         id: 3,

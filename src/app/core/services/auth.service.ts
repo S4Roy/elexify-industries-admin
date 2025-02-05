@@ -18,7 +18,6 @@ export class AuthService {
   adminLogin(payload: any) {
     //return this.httpService.post('admin/auth/login', payload);
     // /api/v1/admin/auth/login
-
     return this.httpService.post('admin/auth/login', payload);
   }
   forgotPassword(payload: any) {
@@ -32,7 +31,7 @@ export class AuthService {
   }
   userSuccessLogin(data: any, rememberme: boolean = false, encodedUrl: string) {
   // userSuccessLogin(data: any, encodedUrl: string) {
-  //  console.log(data,rememberme,encodedUrl,"ttttttttt");
+  console.log(data,rememberme,encodedUrl,"ttttttttt");
     let user = {
       email: data?.email,
       is_admin: data?.is_admin,
@@ -62,7 +61,7 @@ export class AuthService {
         this.encrypt(JSON.stringify(user))
       );
     //}
-    this.router.navigate([encodedUrl ?? 'admin/dashboard']);
+    this.router.navigate(['admin/dashboard']);
   }
   getUserToken() {
     let token = localStorage.getItem(this.USER_TOKEN_KEY);

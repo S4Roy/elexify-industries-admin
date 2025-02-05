@@ -21,4 +21,9 @@ import { RouterModule } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  enquiryTotal_count: any ; 
+  onEnquiryTotalCountChange(count: number) {
+    this.enquiryTotal_count = count; 
+  }
+}

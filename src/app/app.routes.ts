@@ -3,6 +3,7 @@ import { guestGuard } from './core/gurds/guest.guard';
 import { authGuard } from './core/gurds/auth.guard';
 import { P404Component } from './error/p404/p404.component';
 import { HomeLayoutComponent } from './layout/home-layout/home-layout.component';
+//import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 
 export const routes: Routes = [
   {

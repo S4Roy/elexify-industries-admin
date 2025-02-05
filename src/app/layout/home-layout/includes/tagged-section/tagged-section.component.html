@@ -2,7 +2,7 @@
   <div class="font-medium text-xs text-black">
     Want to active the following section is this page?
   </div>
-  <div class="mt-3">
+  <div class="mt-6">
     <ng-container *ngFor="let section of section_list">
       <mat-checkbox [value]="section.id">{{ section?.name }}</mat-checkbox>
     </ng-container>

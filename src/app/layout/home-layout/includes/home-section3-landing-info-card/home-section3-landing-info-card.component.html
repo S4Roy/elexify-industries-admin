@@ -1,125 +1,93 @@
-<!-- <p>home-section333333333333-landing-info-card works!</p> -->
-<div class="flex gap-3">
-    <div class="w-2/5 grow ">
+<!-- <p>home-section3-landing-info-card works!</p> -->
+<!-- <div class="flex gap-3"> -->
+    <!-- <div class="w-2/5 grow ">
         <app-thumbnail></app-thumbnail>
-        <!-- <div class="form-group">
-            <label>Badge Image<span class="error-star">*</span></label>
-            <div class="document-upload-outer">
-                <label class="signature document-upload">
-                    <input type="file" class="d-none"
-                        (change)="fileUploader($event, form, 'batch_image', ['jpg', 'jpeg', 'png', 'svg'])" />
-                    <p><span>Upload Image</span></p>
-                    <div class="preview" *ngIf="form.get('batch_image')?.value">
-                        <img [src]="getFilePreview(form.get('batch_image')?.value)" />
+    </div> -->
+    <!-- <div class="w-3/5 bg-white p-3 rounded"> -->
+    <div>
+        <form [formGroup]="homeSec3Form" (ngSubmit)="onSubmit()">
+            <div class="flex gap-3">
+                <div class="w-2/5 grow">
+                    <!-- <app-thumbnail></app-thumbnail> -->
+                    <div>
+                        <label for="image">Choose Your File or Image:</label> <br>
+                        <input type="file" formControlName="homeSec3_image" (change)="onFileSelected($event)" accept="image/*" />
                     </div>
-                </label>
-                <a class="preview-btn" [href]="fileConverter(form.get('batch_image')?.value)"
-                    target="_blank" *ngIf="form.get('batch_image')?.value">Preview</a>
-            </div>
-            <div class="invalid-feedback d-block" *ngIf="isFieldValid(form,'batch_image')">Please Upload
-                {{form.get('batch_image')?.value}} </div>
-        </div> -->
-    </div>
-    <div class="w-3/5 bg-white p-3 rounded">
-        <form class="space-y-6" [formGroup]="formGroup">
-            <!-- <div class="form-group">
-                <label>Badge Image<span class="error-star">*</span></label>
-                <div class="document-upload-outer">
-                    <label class="signature document-upload">
-                        <input type="file" class="d-none"
-                            (change)="fileUploader($event, formGroup, 'batch_image', ['jpg', 'jpeg', 'png', 'svg'])" />
-                        <p><span>Upload Image</span></p>
-                        <div class="preview" *ngIf="formGroup.get('batch_image')?.value">
-                            <img [src]="getFilePreview(formGroup.get('batch_image')?.value)" />
+                    <div class="mb-3"></div>
+                    <div *ngIf="imagePreview">
+                        <h3>Image Preview:</h3> <br>
+                        <div class="w-full bg-white p-5 h-full rounded flex items-center justify-center">
+                            <div class="flex flex-col items-center justify-center">
+                              <img [src]="imagePreview" alt="Image Preview" />
+                              <!-- <div>Upload Image Here</div>
+                              <div class="text-center text-red-600 font-normal italic">
+                                Mimimum size required 1920 width 640 height
+                              </div> -->
+                            </div>
                         </div>
-                    </label>
-                    <a class="preview-btn" [href]="fileConverter(formGroup.get('batch_image')?.value)"
-                        target="_blank" *ngIf="formGroup.get('batch_image')?.value">Preview</a>
-                </div>
-                <div class="invalid-feedback d-block" *ngIf="isFieldValid(formGroup,'batch_image')">Please Upload
-                    {{formGroup.get('batch_image')?.value}} </div>
-            </div> -->
-            <div style="text-align: right;">
-                <button>
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu>
-                    <button>
-                        <label><svg width="14px" height="14px" fill="#3d49ad"><use xlink:href="#list_rename"/></svg></label> 
-                        <span class="m-2">Edit</span>
-                    </button>
-                </mat-menu>
-            </div>
-            <div class="">
-                <input formControlName="sec3_main_heading" type="text" [placeholder]="'Add main heading here'"
-                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-            </div>
-            <div>
-                <div class="">
-                    <input formControlName="sec3_title1" type="text" [placeholder]="'Add title here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
-                <div class="">
-                    <input formControlName="sec3_des1" type="text" [placeholder]="'Add description here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
-                <div class="">
-                    <textarea formControlName="sec3_link1"   [placeholder]="'Add link or url here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                </div>
-            </div>
-            <div class="mb-3"></div>
-            <div>
-                <div class="">
-                    <input formControlName="sec3_title2" type="text" [placeholder]="'Add title here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
-                <div class="">
-                    <input formControlName="sec3_des2" type="text" [placeholder]="'Add description here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
-                <div class="">
-                    <textarea formControlName="sec3_link2" [placeholder]="'Add link or url here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                </div>
-            </div>
-            <div class="mb-3"></div>
-            <div>
-                <div class="">
-                    <input formControlName="sec3_title3" type="text" [placeholder]="'Add title here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
-                <div class="">
-                    <input formControlName="sec3_des3" type="text" [placeholder]="'Add description here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
-                <div class="">
-                    <textarea formControlName="sec3_link3" [placeholder]="'Add link or url here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer right-content-between">
-                <div></div>
-                <div>
-                    <!-- <button class="edms-btn btn-danger" matRipple [mat-dialog-close]="false"> -->
-                    <!-- <button class="edms-btn btn-danger" matRipple >
-                        <span>
-                            <i class="fas fa-times"></i>
-                        </span>
-                        Cancel
-                    </button> -->
-                    <!-- <button class="edms-btn btn-green ml-3" matRipple (click)="save()"> -->
-                    <!-- <button class="edms-btn btn-green ml-3" matRipple >
-                        <span>
-                            <i class="far fa-paper-plane"></i>
-                        </span>
-                        Submit
-                    </button> -->
-                    <!-- <button (click)="addItem()" class="ai-button"> Save</button> -->
-                    <button  class="ai-button"> Save</button>
-                    <button  class="ai-button"> Cancel</button>
-                </div>
-            </div>
+                        <!-- <img [src]="imagePreview" alt="Image Preview" style="max-width: 300px; max-height: 300px;" /> -->
+                    </div>
+                </div>  
+                <div class="w-3/5 bg-white p-3 rounded space-y-6">
+                    <div class="">
+                        <input formControlName="sec3_main_heading" type="text" [placeholder]="'Add main heading here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                    </div>
+                    <div class="bg-white py-2 rounded space-y-2">
+                        <div class="">
+                            <input formControlName="sec3_title1" type="text" [placeholder]="'Add title here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                        </div>
+                        <div class="">
+                            <input formControlName="sec3_des1" type="text" [placeholder]="'Add description here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                        </div>
+                        <div class="">
+                            <textarea formControlName="sec3_link1"   [placeholder]="'Add link or url here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3"></div>
+                    <div class="bg-white py-2 rounded space-y-2">
+                        <div class="">
+                            <input formControlName="sec3_title2" type="text" [placeholder]="'Add title here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                        </div>
+                        <div class="">
+                            <input formControlName="sec3_des2" type="text" [placeholder]="'Add description here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                        </div>
+                        <div class="">
+                            <textarea formControlName="sec3_link2" [placeholder]="'Add link or url here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3"></div>
+                    <div class="bg-white py-2 rounded space-y-2">
+                        <div class="">
+                            <input formControlName="sec3_title3" type="text" [placeholder]="'Add title here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                        </div>
+                        <div class="">
+                            <input formControlName="sec3_des3" type="text" [placeholder]="'Add description here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                        </div>
+                        <div class="">
+                            <textarea formControlName="sec3_link3" [placeholder]="'Add link or url here'"
+                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3"></div>
+                    <div class="flex justify-end">   
+                        <div>
+                            <button  class="ai-button"> Save</button>
+                        </div>
+                        <div>
+                            <button  class="ai-button"> Cancel</button>
+                        </div>    
+                    </div>
+                </div> 
+            </div>   
         </form>
     </div>
-</div>
+<!-- </div> -->

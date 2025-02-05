@@ -1,5 +1,5 @@
 import { JsonPipe, NgFor, NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input,EventEmitter, Output } from '@angular/core';
 import { MenuComponent } from '../../../includes/menu/menu.component';
 import { MasterService } from '../../../../../core/services/master.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 })
 export class EnquiryComponent {
   @Input() dashboard: boolean = false;
+  @Output() enquiryTotalCountChange = new EventEmitter<number>();
   latestEnquiryList: any = [];
   constructor(
     private toastr: ToastrService,
@@ -37,12 +38,11 @@ export class EnquiryComponent {
       (res: any) => {
         console.log(res,"EnquiryList ressssssssss");
          this.latestEnquiryList = res['results'];
-         console.log(this.latestEnquiryList,"this.enquiryListtttttttttttttt");
-         //this.loading = LoadingState.Ready;
+         this.enquiryTotalCountChange.emit(res.total_count);
       },
       err => {
         this.toastr.error(err.error.msg, '', {
-          timeOut: 3000,
+          timeOut: 1000,
         });
        // this.loading = LoadingState.Ready;
       }
