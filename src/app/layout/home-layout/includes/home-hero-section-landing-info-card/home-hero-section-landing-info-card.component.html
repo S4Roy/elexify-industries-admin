@@ -1,16 +1,19 @@
 <!-- <p>home-hero-section-landing-info-card works!</p> -->
 <div>
-    <form [formGroup]="homeHeroSecForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="homeHeroSecForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <div class="flex gap-3">
             <div class="w-2/5 grow">
                 <div>
-                    <label for="image">Choose Your File or Image:</label> <br>
-                    <input type="file" formControlName="hero_sec_image_video" 
+                    <!-- <label for="image">Choose Your File or Image:</label> <br> -->
+                    <!-- <div class="text-left font-medium text-sm text-black mb-3">
+                        Upload Image
+                    </div> -->
+                    <input type="file" formControlName="file" 
                     (change)="onFileSelected($event)" accept="image/*" />
                 </div>
                 <!-- <div class="mb-3"></div> -->
                 <div *ngIf="imagePreview">
-                    <h3>Image Preview:</h3> 
+                    <!-- <h3>Image Preview:</h3>  -->
                     <div class="w-full bg-white p-5 h-full rounded flex items-center justify-center">
                         <div class="flex flex-col items-center justify-center">
                             <img [src]="imagePreview" alt="Image Preview" />

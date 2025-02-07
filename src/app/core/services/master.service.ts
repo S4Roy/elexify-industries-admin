@@ -26,4 +26,17 @@ export class MasterService {
   getLatestAnnouncementList(params: any) {
     return this.httpService.get('admin/dashboard/latest-announcement', params);
   }
+
+  addHeroSectionData(payload:any) {
+    return this.httpService.post('admin/home/section/save/sec_1', payload);
+  //  /api/v1/home/section/save/sec_1
+  }
+
+  updateHeroSectionData(id: number, payload: any) {
+    return this.httpService.post('admin/dashboard/latest-announcement' + id + '/', payload);
+  }
+
+  getHeroSectionData(params: any) {
+    return this.httpService.get('admin/home/section/info/sec_1', params);
+  }
 }

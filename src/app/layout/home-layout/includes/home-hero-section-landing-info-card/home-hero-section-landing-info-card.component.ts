@@ -15,6 +15,8 @@ import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { MasterService } from '../../../../core/services/master.service';
 
 @Component({
   selector: 'app-home-hero-section-landing-info-card',
@@ -23,8 +25,8 @@ import { NgIf } from '@angular/common';
     ReactiveFormsModule,
     NgxEditorModule,
     //MatIcon,MatMenu,
-    MatMenuModule,MatButtonModule, 
-    MatIconModule,RouterModule,
+    MatMenuModule, MatButtonModule,
+    MatIconModule, RouterModule,
     NgIf
   ],
   templateUrl: './home-hero-section-landing-info-card.component.html',
@@ -46,12 +48,15 @@ export class HomeHeroSectionLandingInfoCardComponent {
   //   });
   // }
 
-  constructor(private fb: FormBuilder) {
-  //   // Initialize the form
+  constructor(private fb: FormBuilder,
+    private toastr: ToastrService,
+    private master: MasterService
+  ) {
+    //   // Initialize the form
     this.homeHeroSecForm = this.fb.group({
       hero_sec_main_heading: [''],
       hero_sec_sub_heading: [''],
-      hero_sec_image_video: [null] // Form control for the image
+      file: [null] // Form control for the image
     });
   }
 
@@ -143,39 +148,40 @@ export class HomeHeroSectionLandingInfoCardComponent {
   }
 
   onSubmit() {
-    const itemData = this.homeHeroSecForm.value;
-
-    if (this.isEditMode && this.currentItemIndex !== null) {
-      this.updateItem(itemData);
-    } else {
-      this.saveItem(itemData);
-      this.isEditMode = true;
-    }
+    // Check if an image is selected
     if (this.selectedImage) {
       const formData = new FormData();
-      formData.append('hero_sec_image_video', this.selectedImage, this.selectedImage.name);
 
-      // this.yourService.uploadImage(formData).subscribe(
-      //   (response) => {
-         // console.log('Image uploaded successfully:', response);
-          // Assuming the response contains the image URL
-         // const imageUrl = response.imageUrl; // Adjust based on your API response
-          
-          // Store the image URL in local storage
-        //  localStorage.setItem('uploadedImageUrl', imageUrl);
+      // Append the selected image file to the FormData
+      formData.append('file', this.selectedImage, this.selectedImage.name);
+      // Append other form values to the FormData
+      formData.append('hero_sec_main_heading', this.homeHeroSecForm.get('hero_sec_main_heading')?.value);
+      formData.append('hero_sec_sub_heading', this.homeHeroSecForm.get('hero_sec_sub_heading')?.value);
 
-          // Update the image preview with the uploaded image URL
-         // this.imagePreview = imageUrl; // Use the URL returned from the server
+      // Mark all form controls as touched
+      this.homeHeroSecForm.markAllAsTouched();
 
-          // Optionally reset the form or show a success message
-          this.homeHeroSecForm.reset();
-          this.selectedImage = null;
-      //   },
-      //   (error) => {
-      //     console.error('Error uploading image:', error);
-      //   }
-      // );
-   // }
+      // Check if the form is valid
+      if (this.homeHeroSecForm.valid) {
+        this.homeHeroSecForm.disable(); // Disable the form to prevent multiple submissions
+
+        // Call the service to send the FormData to the backend
+        this.master.addHeroSectionData(formData).subscribe({
+          next: (response) => {
+            console.log('Upload successful', response);
+            // Handle success response
+          },
+          error: (error) => {
+            console.error('Upload failed', error);
+            // Handle error response
+          },
+          complete: () => {
+            this.homeHeroSecForm.enable(); // Re-enable the form after the request completes
+          }
+        });
+      }
+    } else {
+      console.error('No image selected');
     }
   }
 }

@@ -154,7 +154,7 @@ export class HomeSection2LandingInfoCardComponent {
     }
     if (this.selectedImage) {
       const formData = new FormData();
-      formData.append('image', this.selectedImage, this.selectedImage.name);
+      formData.append('homeSec2_image', this.selectedImage, this.selectedImage.name);
 
       // this.yourService.uploadImage(formData).subscribe(
       //   (response) => {

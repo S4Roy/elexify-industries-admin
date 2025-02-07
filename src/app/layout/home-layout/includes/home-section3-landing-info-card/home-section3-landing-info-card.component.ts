@@ -45,7 +45,7 @@ export class HomeSection3LandingInfoCardComponent {
   // }
 
   constructor(private fb: FormBuilder) {
-  //   // Initialize the form
+  //   Initialize the form
   this.homeSec3Form = this.fb.group({
     sec3_main_heading: [null, Validators.required],
     sec3_title1: [null, Validators.required],
@@ -57,6 +57,7 @@ export class HomeSection3LandingInfoCardComponent {
     sec3_title3: [null, Validators.required],
     sec3_des3: [null, Validators.required],
     sec3_link3: [null, Validators.required],
+    homeSec3_image: [null] // Form control for the image
   });
 
   }
@@ -159,7 +160,7 @@ export class HomeSection3LandingInfoCardComponent {
     }
     if (this.selectedImage) {
       const formData = new FormData();
-      formData.append('image', this.selectedImage, this.selectedImage.name);
+      formData.append('homeSec3_image', this.selectedImage, this.selectedImage.name);
 
       // this.yourService.uploadImage(formData).subscribe(
       //   (response) => {

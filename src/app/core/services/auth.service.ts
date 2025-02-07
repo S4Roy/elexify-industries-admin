@@ -30,8 +30,8 @@ export class AuthService {
     return this.httpService.delete('api/User/DeleteUserByEmail/' + email);
   }
   userSuccessLogin(data: any, rememberme: boolean = false, encodedUrl: string) {
-  // userSuccessLogin(data: any, encodedUrl: string) {
-  console.log(data,rememberme,encodedUrl,"ttttttttt");
+    // userSuccessLogin(data: any, encodedUrl: string) {
+    console.log(data,rememberme,encodedUrl,"ttttttttt");
     let user = {
       email: data?.email,
       is_admin: data?.is_admin,

@@ -10,7 +10,10 @@
                 <div class="w-2/5 grow">
                     <!-- <app-thumbnail></app-thumbnail> -->
                     <div>
-                        <label for="image">Choose Your File or Image:</label> <br>
+                        <!-- <label for="image">Choose Your File or Image:</label> <br> -->
+                        <div class="text-left font-medium text-sm text-black mb-3">
+                            Upload Image
+                        </div>
                         <input type="file" formControlName="homeSec3_image" (change)="onFileSelected($event)" accept="image/*" />
                     </div>
                     <div class="mb-3"></div>

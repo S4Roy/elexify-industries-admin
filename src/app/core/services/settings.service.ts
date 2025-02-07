@@ -6,6 +6,7 @@ import { HttpService } from './http.service';
 })
 export class SettingsService {
   constructor(private httpService: HttpService) {}
+  // needed
   addVendor(payload: any) {
     if (payload.id) {
       return this.httpService.put('api/Vendor', payload);

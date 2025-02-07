@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { RouterModule,Router,ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/services/auth.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -44,7 +42,7 @@ export class LoginComponent {
     });
   }
   submitLogin() {
-    console.log(this.loginForm,"loginnnnnnnnnnnnnn");
+    console.log(this.loginForm,"loginnnnnn");
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
       this.loginForm.disable();
@@ -52,10 +50,11 @@ export class LoginComponent {
       this.authService.adminLogin(this.loginForm.getRawValue()).subscribe({
         next: (res: any) => {
           console.log(res,"resssssss");
+        //  this.router.navigate(['admin/dashboard']);
           this.authService.userSuccessLogin(res, true, this.encodedUrl);       
         },
         error: (err: any) => {
-          console.log(err,"errrrrrrrrrr");
+          console.log(err,"errrrr");
           this.loginForm.enable();
           this.toastr.error('Please check the email and password','', {
             timeOut: 2000,
