@@ -28,7 +28,7 @@ export class MenuComponent {
   @Input() itineraryCancel: any = null;
   @Input() cancel: any = null;
   @Input() details: any = null;
-  @Output() deleteItem = new EventEmitter<any>();
+       @Output() deleteItem = new EventEmitter<any>();
   @Output() cancelItem = new EventEmitter<any>();
   @Output() initModal = new EventEmitter<any>();
   @Output() initTransferAccountModal = new EventEmitter<any>();

@@ -21,7 +21,7 @@ export class FaqsCategoryComponent {
       })
       .afterClosed()
       .subscribe((res: any) => {
-        console.log(res);
+       
       });
   }
 }

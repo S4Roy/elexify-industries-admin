@@ -1,71 +1,55 @@
-<!-- <p>home-section2-landing-info-card works!</p> -->
-<!-- <div class="flex gap-2"> -->
-    <!-- <div class="w-2/5 grow "> -->
-        <!-- <app-thumbnail></app-thumbnail> -->
-    <!-- </div> -->
-
-    <!-- <div class="bg-white p-2 rounded">
-        <form class="space-y-6" [formGroup]="itemForm" (ngSubmit)="onSubmit()">  
-           <div class="w-2/5 grow"> -->
-    <div>
-        <form [formGroup]="homeSec2Form" (ngSubmit)="onSubmit()">
-            <div class="flex gap-3">
-                <div class="w-2/5 grow">
-                    <div>
-                        <!-- <label for="image">Choose Your File or Image:</label> <br> -->
-                        <div class="text-left font-medium text-sm text-black mb-3">
-                            Upload Image
-                        </div>
-                        <input type="file" formControlName="homeSec2_image" (change)="onFileSelected($event)" accept="image/*" />
-                    </div>
-                    <!-- <div class="mb-3"></div> -->
-                    <div *ngIf="imagePreview">
-                        <h3>Image Preview:</h3> 
-                        <div class="w-full bg-white p-5 h-full rounded flex items-center justify-center">
-                            <div class="flex flex-col items-center justify-center">
-                            <img [src]="imagePreview" alt="Image Preview" />
-                            <!-- <div>Upload Image Here</div>
-                            <div class="text-center text-red-600 font-normal italic">
-                                Mimimum size required 1920 width 640 height
-                            </div> -->
-                            </div>
-                        </div>
-                        <!-- <img [src]="imagePreview" alt="Image Preview" style="max-width: 300px; max-height: 300px;" /> -->
-                    </div>
-                    <!-- <button type="submit" [disabled]="!selectedImage">Upload</button> -->
+<div>
+    <form [formGroup]="homeSec2Form" (ngSubmit)="onSubmit()">
+        <div class="flex gap-3">
+            <div class="w-2/5 grow">
+                <div class="w-full bg-white p-5 h-full rounded flex items-center justify-center">       
+                    <div class="flex flex-col items-center justify-center relative">
+                        <span class="absolute top-0 right-0" *ngIf="imagePreview">
+                            <app-menu  [delete]="'gg'" (deleteItem)="deleteItem($event)" ></app-menu>
+                         </span> 
+                        <ng-container *ngIf="!imagePreview">
+                            <label class="flex flex-col items-center justify-center">
+                                <img src="assets/placeholder-image-outline.png" 
+                                alt="Upload Image" />
+                                <div style="text-align: left;">Upload Image Here</div>
+                                <!-- <div class="text-center text-red-600 font-normal italic">
+                                    Minimum size required: 1920 width x 640 height
+                                </div> -->
+                                    <input hidden type="file" class="d-none" 
+                                (change)="onFileSelected($event)" accept="image/*" />
+                                </label>
+                        </ng-container> 
+                        <div *ngIf="imagePreview" class="mt-3">
+                            <img [src]="imagePreview" alt="Image Preview" class="preview-image" />       
+                        </div>  
+                    </div> 
                 </div>
-                <div class="w-3/5 bg-white p-3 rounded space-y-6">
-                    <div class="">
-                        <input formControlName="homeSec2_main_heading" type="text" [placeholder]="'Add heading here'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+            </div>
+            <div class="w-3/5 bg-white p-3 rounded space-y-6">
+                <div class="">
+                    <input formControlName="homeSec2_main_heading" type="text" [placeholder]="'Add heading here'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
+                <div class="">
+                    <input formControlName="homeSec2_sub_heading" type="text" [placeholder]="'Add sub heading here'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
+                <div class="">
+                    <textarea formControlName="homeSec2_description" [placeholder]="'Add description'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                </div>
+                <div class="mb-3"></div>
+                <div class="flex justify-end gap-2">   
+                    <div>
+                        <button  class="ai-button" [disabled]="homeSec2Form.disabled">
+                          {{homeSec2Form.disabled ? "Please wait..." : (homeSec2Form.value.id ? "Update" : "Save") }} 
+                        </button>
                     </div>
-                    <div class="">
-                        <input formControlName="homeSec2_sub_heading" type="text" [placeholder]="'Add sub heading here'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                    </div>
-                    <div class="">
-                        <textarea formControlName="homeSec2_description" [placeholder]="'Add description'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                    </div>
-                    <div class="mb-3"></div>
-                    <div class="flex justify-end">   
-                        <div>
-                            <button  class="ai-button"> Save</button>
-                        </div>
-                        <div>
-                            <button  class="ai-button"> Cancel</button>
-                        </div>    
-                    </div>
-
-                </div>  
-                    <!-- <button class="ai-button" (click)="save()" type="button">
-                        {{ isEditMode ? 'Update' : 'Save' }}
-            </button> -->
-                <!-- <div class="space-x-6">
-                    <button class="ai-button"> Save </button>
-                    <button class="ai-button"> Cancel </button>
-                </div> -->
-            </div>     
-        </form>
-    </div>
-<!-- </div> -->
+                    <div>
+                        <button  class="ai-button"> Cancel</button>
+                    </div>    
+                </div>
+            </div>  
+        </div>     
+    </form>
+</div>

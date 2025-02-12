@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { EnquiryComponent } from '../main/enquiry/enquiry.component';
+import { AnnouncementNoticeComponent } from '../main/announcement-notice/announcement-notice.component';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -16,6 +17,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     MatSelectModule,
     EnquiryComponent,
+    // AnnouncementNoticeComponent,
     RouterModule
   ],
   templateUrl: './dashboard.component.html',

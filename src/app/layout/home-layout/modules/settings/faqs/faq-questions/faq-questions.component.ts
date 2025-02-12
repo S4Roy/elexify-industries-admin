@@ -21,7 +21,7 @@ item_list: any = [];
       })
       .afterClosed()
       .subscribe((res: any) => {
-        console.log(res);
+        
       });
   }
 }

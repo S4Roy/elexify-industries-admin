@@ -36,7 +36,7 @@ export class EnquiryComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.masterService.getLatestEnquiryList(params).pipe(delay(0)).subscribe(
       (res: any) => {
-        console.log(res,"EnquiryList ressssssssss");
+        
          this.latestEnquiryList = res['results'];
          this.enquiryTotalCountChange.emit(res.total_count);
       },

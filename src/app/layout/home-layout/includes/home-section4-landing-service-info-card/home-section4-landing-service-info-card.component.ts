@@ -35,7 +35,6 @@ export class HomeSection4LandingServiceInfoCardComponent {
       //   })
       //   .afterClosed()
       //   .subscribe((res: any) => {
-      //     console.log(res);
       //   });
   }
 

@@ -31,7 +31,7 @@ export class AuthService {
   }
   userSuccessLogin(data: any, rememberme: boolean = false, encodedUrl: string) {
     // userSuccessLogin(data: any, encodedUrl: string) {
-    console.log(data,rememberme,encodedUrl,"ttttttttt");
+
     let user = {
       email: data?.email,
       is_admin: data?.is_admin,
@@ -43,7 +43,7 @@ export class AuthService {
       user_type: data?.user_type,
       username: data?.username,
     };
-    console.log(user,"userrrrrr");
+    
     //if (rememberme == true) {
     // if (true) {
     //   localStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));

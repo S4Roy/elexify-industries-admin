@@ -1,0 +1,12 @@
+<p>announcement-notice works!</p>
+<div class="container">
+    <div class="card" *ngFor="let item of items">
+      <img src="{{ item.image }}" alt="{{ item.title }}">
+      <div class="card-content">
+        <p class="announcement">{{ item.announcement }}</p>
+        <p class="title">{{ item.title }}</p>
+        <p class="views">{{ item.views }}</p>
+        <button class="button">See Details</button>
+      </div>
+    </div>
+</div>

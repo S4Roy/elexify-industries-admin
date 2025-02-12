@@ -1,52 +1,18 @@
-<!-- <p>home-hero-section-landing-info-card works!</p> -->
-<div>
-    <form [formGroup]="homeHeroSecForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-        <div class="flex gap-3">
-            <div class="w-2/5 grow">
-                <div>
-                    <!-- <label for="image">Choose Your File or Image:</label> <br> -->
-                    <!-- <div class="text-left font-medium text-sm text-black mb-3">
-                        Upload Image
-                    </div> -->
-                    <input type="file" formControlName="file" 
-                    (change)="onFileSelected($event)" accept="image/*" />
-                </div>
-                <!-- <div class="mb-3"></div> -->
-                <div *ngIf="imagePreview">
-                    <!-- <h3>Image Preview:</h3>  -->
-                    <div class="w-full bg-white p-5 h-full rounded flex items-center justify-center">
-                        <div class="flex flex-col items-center justify-center">
-                            <img [src]="imagePreview" alt="Image Preview" />
-                            <!-- <div>Upload Image Here</div>
-                            <div class="text-center text-red-600 font-normal italic">
-                                Mimimum size required 1920 width 640 height
-                            </div> -->
-                        </div>
-                    </div>
-                    <!-- <img [src]="imagePreview" alt="Image Preview" style="max-width: 300px; max-height: 300px;" /> -->
-                </div>
-                <!-- <button type="submit" [disabled]="!selectedImage">Upload</button> -->
-            </div>
-            <div class="w-3/5 bg-white p-3 rounded space-y-6">
-                <div class="">
-                    <input formControlName="hero_sec_main_heading" type="text" [placeholder]="'Add heading here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
-                <div class="">
-                    <input formControlName="hero_sec_sub_heading" type="text" [placeholder]="'Add sub heading here'"
-                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
-                <div class="mb-3"></div>
-                <div class="flex justify-end">   
-                    <div>
-                        <button  class="ai-button"> Save</button>
-                    </div>
-                    <div>
-                        <button  class="ai-button"> Cancel</button>
-                    </div>    
-                </div>
-
-            </div>  
-        </div>     
-    </form>
+<div class="grid grid-cols-3  gap-4">
+    <button (click)="addItem()" class="border rounded flex justify-center items-center">
+      <mat-icon class="me-1">add</mat-icon>Add New
+    </button>
+    
+    <!-- <ng-container *ngFor="let item of [1, 2, 3, 1, 2, 3, 4]"> -->     
+    <ng-container *ngFor="let item of heroSectionData">     
+      <div class="relative p-4 border rounded flex justify-center"  [matTooltip]="item?.hero_sec_main_heading">
+        <span class="absolute top-0 right-0">
+          <app-menu (initModal)="addItem($event)" [modalItem]="item" [delete]="item" (deleteItem)="deleteItem($event)"></app-menu>
+        </span>
+        <img *ngIf="item.file_type === 'image'" class="block h-40" [src]="item.hero_sec_image_video" alt="Hero Image" />
+        <video class="block h-40" *ngIf="item.file_type === 'video'" [src]="item.hero_sec_image_video" controls>
+            Your browser does not support the video tag.
+        </video>
+      </div>
+    </ng-container>
 </div>

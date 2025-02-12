@@ -15,16 +15,19 @@ import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { MasterService } from '../../../../core/services/master.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-section3-landing-info-card',
-  imports: [ FormsModule,
-      ReactiveFormsModule,
-      NgxEditorModule,
-      //MatIcon,MatMenu,
-      MatMenuModule,MatButtonModule, 
-      MatIconModule,RouterModule,
-      NgIf],
+  imports: [FormsModule,
+    ReactiveFormsModule,
+    NgxEditorModule,
+    MenuComponent,
+    //MatIcon,MatMenu,
+    MatMenuModule, MatButtonModule,
+    MatIconModule, RouterModule,
+    NgIf],
   templateUrl: './home-section3-landing-info-card.component.html',
   styleUrl: './home-section3-landing-info-card.component.scss'
 })
@@ -33,156 +36,114 @@ export class HomeSection3LandingInfoCardComponent {
   homeSec3Form: FormGroup;
   isEditMode: boolean = false; // Flag to check if we are in edit mode
   currentItemIndex: number | null = null; // To track the current item index
-
-  //myForm: FormGroup;
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
 
-  // constructor(private fb: FormBuilder) {
-  //   this.myForm = this.fb.group({
-  //  image: [null] // Form control for the image
-  //   });
-  // }
-
-  constructor(private fb: FormBuilder) {
-  //   Initialize the form
-  this.homeSec3Form = this.fb.group({
-    sec3_main_heading: [null, Validators.required],
-    sec3_title1: [null, Validators.required],
-    sec3_des1: [null, Validators.required],
-    sec3_link1: [null, Validators.required],
-    sec3_title2: [null, Validators.required],
-    sec3_des2: [null, Validators.required],
-    sec3_link2: [null, Validators.required],
-    sec3_title3: [null, Validators.required],
-    sec3_des3: [null, Validators.required],
-    sec3_link3: [null, Validators.required],
-    homeSec3_image: [null] // Form control for the image
-  });
+  constructor(private fb: FormBuilder,
+    private toastr: ToastrService,
+    private master: MasterService
+  ) {
+    //   Initialize the form
+    this.homeSec3Form = this.fb.group({
+      sec3_main_heading: [null, Validators.required],
+      sec3_sub_heading: [null],
+      sec3_title1: [null, Validators.required],
+      sec3_des1: [null, Validators.required],
+      sec3_link1: [null, Validators.required],
+      sec3_title2: [null, Validators.required],
+      sec3_des2: [null, Validators.required],
+      sec3_link2: [null, Validators.required],
+      sec3_title3: [null, Validators.required],
+      sec3_des3: [null, Validators.required],
+      sec3_link3: [null, Validators.required],
+      file: [null],// Form control for the image
+      id: [null]
+    });
 
   }
 
   ngOnInit(): void {
-    this.loadItems();
-  }
-
-  // Method to save or update the item
-  // save() {
-  //   const itemData = this.homeSec3Form.value;
-
-  //   if (this.isEditMode && this.currentItemIndex !== null) {
-  //     this.updateItem(itemData);
-  //   } else {
-  //     this.saveItem(itemData);
-  //     this.isEditMode = true;
-  //   }
-  // }
-
-  // Method to save a new item
-  saveItem(itemData: any) {
-    const items = this.getItemsFromLocalStorage();
-    items.push(itemData);
-    localStorage.setItem('items', JSON.stringify(items));
-    this.homeSec3Form.patchValue(items); // Update the form with the saved data
-    //this.resetForm();
-    console.log('Item saved:', itemData);
-  }
-
-  // Method to update an existing item
-  updateItem(itemData: any) {
-    const items = this.getItemsFromLocalStorage();
-    if (this.currentItemIndex !== null) {
-      items[this.currentItemIndex] = itemData; // Update the item at the current index
-      localStorage.setItem('items', JSON.stringify(items));
-      //this.resetForm();
-      console.log('Item updated:', itemData);
-    }
-  }
-
-  // Method to reset the form
-  // resetForm() {
-  //   this.homeSec3Form.reset();
-  //   this.isEditMode = false; // Reset to create mode
-  //   this.currentItemIndex = null; // Reset the current item index
-  // }
-
-  // Method to load items from local storage
-  loadItems() {
-    const items = this.getItemsFromLocalStorage();
-    // You can implement logic to display these items or set them for editing
-    console.log('Loaded items:', items);
-  }
-
-  // Helper method to get items from local storage
-  getItemsFromLocalStorage() {
-    const items = localStorage.getItem('items');
-    return items ? JSON.parse(items) : [];
-  }
-
-  // Method to set the component in edit mode with existing item data
-  editItem(index: number) {
-    const items = this.getItemsFromLocalStorage();
-    this.homeSec3Form.setValue(items[index]); // Set the form values to the selected item
-    this.isEditMode = true; // Set to edit mode
-    this.currentItemIndex = index; // Set the current item index
+    this.getMoreAboutAnctplData();
   }
 
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
+      this.homeSec3Form.patchValue({
+        file: target.files[0]
+      })
       this.selectedImage = target.files[0];
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result; // Set the image preview
+
       };
       reader.readAsDataURL(this.selectedImage);
-      this.confirmUpload();
+    }
+    else {
+      this.homeSec3Form.patchValue({
+        file: null
+      })
     }
   }
 
-  confirmUpload() {
-    const confirmation = confirm('Are you sure you want to upload this image?');
-    if (!confirmation) {
-      this.selectedImage = null; // Reset if not confirmed
-      this.imagePreview = null; // Reset preview
-      this.homeSec3Form.reset(); // Reset the form
-    }
+  getMoreAboutAnctplData(data?: any) {
+    let params: URLSearchParams = new URLSearchParams();
+    this.master.getMore_about_anctplData(params).pipe().subscribe(
+      (res: any) => {
+        this.homeSec3Form.patchValue({
+          sec3_main_heading: res.sec3_main_heading,
+          sec3_sub_heading: res.sec3_sub_heading,
+          sec3_title1: res.sec3_title1,
+          sec3_des1: res.sec3_des1,
+          sec3_link1: res.sec3_link1,
+          sec3_title2: res.sec3_title2,
+          sec3_des2: res.sec3_des2,
+          sec3_link2: res.sec3_link2,
+          sec3_title3: res.sec3_des3,
+          sec3_des3: res.sec3_des3,
+          sec3_link3: res.sec3_link3,
+          id: res?.setting_id
+        });
+        this.imagePreview = res?.homeSec3_image
+      },
+      err => {
+        this.toastr.error(err.error.msg, '', {
+          timeOut: 1000,
+        });
+        // this.loading = LoadingState.Ready;
+      }
+    );
   }
+
 
   onSubmit() {
-    const itemData = this.homeSec3Form.value;
 
-    if (this.isEditMode && this.currentItemIndex !== null) {
-      this.updateItem(itemData);
-    } else {
-      this.saveItem(itemData);
-      this.isEditMode = true;
+    this.homeSec3Form.markAllAsTouched();
+    if (this.homeSec3Form?.valid) {
+      this.homeSec3Form.disable();
+      let formData = this.homeSec3Form.getRawValue();
+      if (!formData.id) {
+        delete formData.id
+      }
+      this.master.addSection_3_Data(formData).subscribe({
+        next: (response) => {
+          this.toastr.success('Data Saved Successfully!', '', {
+            timeOut: 1000, // Display for 1 seconds
+          });
+        },
+        error: (error) => {
+          console.error('Upload failed', error);
+          this.homeSec3Form.enable();
+
+        },
+        complete: () => {
+          this.homeSec3Form.enable();
+        }
+      });
     }
-    if (this.selectedImage) {
-      const formData = new FormData();
-      formData.append('homeSec3_image', this.selectedImage, this.selectedImage.name);
-
-      // this.yourService.uploadImage(formData).subscribe(
-      //   (response) => {
-         // console.log('Image uploaded successfully:', response);
-          // Assuming the response contains the image URL
-         // const imageUrl = response.imageUrl; // Adjust based on your API response
-          
-          // Store the image URL in local storage
-        //  localStorage.setItem('uploadedImageUrl', imageUrl);
-
-          // Update the image preview with the uploaded image URL
-         // this.imagePreview = imageUrl; // Use the URL returned from the server
-
-          // Optionally reset the form or show a success message
-          this.homeSec3Form.reset();
-          this.selectedImage = null;
-      //   },
-      //   (error) => {
-      //     console.error('Error uploading image:', error);
-      //   }
-      // );
-   // }
-    }
+  }
+  deleteItem(item?: any) {
+    this.imagePreview = null;
   }
 }

@@ -11,9 +11,10 @@ import { HomeSection2LandingInfoCardComponent } from '../../../includes/home-sec
 import { HomeSection3LandingInfoCardComponent } from '../../../includes/home-section3-landing-info-card/home-section3-landing-info-card.component';
 import { HomeSection4LandingServiceInfoCardComponent } from '../../../includes/home-section4-landing-service-info-card/home-section4-landing-service-info-card.component';
 import { HomeHeroSectionLandingInfoCardComponent } from '../../../includes/home-hero-section-landing-info-card/home-hero-section-landing-info-card.component';
-import { HomeAwardsCertificateSectionInfoCardComponent } from '../../../includes/home-awards-certificate-section-info-card/home-awards-certificate-section-info-card.component';
+
 import { HomeProgressSectionInfoCardComponent } from '../../../includes/home-progress-section-info-card/home-progress-section-info-card.component';
 import { HomeCareerSectionInfoCardComponent } from '../../../includes/home-career-section-info-card/home-career-section-info-card.component';
+import { HomeMediaInfoCardComponent } from '../../../includes/home-media-info-card/home-media-info-card.component';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,7 @@ import { HomeCareerSectionInfoCardComponent } from '../../../includes/home-caree
     HomeSection2LandingInfoCardComponent,
     HomeSection3LandingInfoCardComponent,
     HomeSection4LandingServiceInfoCardComponent,
-  HomeAwardsCertificateSectionInfoCardComponent,
+    HomeMediaInfoCardComponent,
 HomeProgressSectionInfoCardComponent,
 HomeCareerSectionInfoCardComponent],
   templateUrl: './home.component.html',

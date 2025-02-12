@@ -16,27 +16,49 @@ export class MasterService {
     private toastr: ToastrService
   ) { }
 
-
   // Enquiry List Page
   getLatestEnquiryList(params: any) {
     return this.httpService.get('admin/dashboard/latest-enquiries', params);
-   // return this.http.get(environment.apiEndpoint + 'master/security_question/?'+ params);
   }
-
   getLatestAnnouncementList(params: any) {
     return this.httpService.get('admin/dashboard/latest-announcement', params);
   }
 
-  addHeroSectionData(payload:any) {
-    return this.httpService.post('admin/home/section/save/sec_1', payload);
-  //  /api/v1/home/section/save/sec_1
-  }
 
-  updateHeroSectionData(id: number, payload: any) {
-    return this.httpService.post('admin/dashboard/latest-announcement' + id + '/', payload);
+  //  sec_1/hero section
+  addHeroSectionData(payload: any) {
+    return this.httpService.postFormData('admin/home/section/save/hero', payload); 
   }
-
   getHeroSectionData(params: any) {
-    return this.httpService.get('admin/home/section/info/sec_1', params);
+    return this.httpService.get('admin/home/section/info/hero', params);
   }
+  updateHeroSectionData(id: number, payload: any) {
+   // return this.httpService.post('admin/dashboard/latest-announcement' + id + '/', payload);
+  }
+  deleteHeroSectionData( payload: any) { 
+    return this.httpService.post('admin/home/section/delete/hero' , payload);
+  }
+
+
+  // sec_2/about-anctpl    
+  addSection_2_Data(payload: any) {
+    return this.httpService.postFormData('admin/home/section/save/about-anctpl', payload);
+  }
+  getAbout_anctplData(params: any) {
+    return this.httpService.get('admin/home/section/info/about-anctpl', params);
+  }
+  updateSection_2_Data(id: number, payload: any) {
+    //return this.httpService.post('admin/dashboard/latest-announcement' + id + '/', payload);
+  }
+
+
+  // sec_3/more-about-anctpl
+  addSection_3_Data(payload: any) {
+    return this.httpService.postFormData('admin/home/section/save/more-about-anctpl', payload);
+  }
+  getMore_about_anctplData(params: any) {
+    return this.httpService.get('admin/home/section/info/more-about-anctpl', params);
+  }
+
+
 }

@@ -1,96 +1,96 @@
-<!-- <p>home-section3-landing-info-card works!</p> -->
-<!-- <div class="flex gap-3"> -->
-    <!-- <div class="w-2/5 grow ">
-        <app-thumbnail></app-thumbnail>
-    </div> -->
-    <!-- <div class="w-3/5 bg-white p-3 rounded"> -->
-    <div>
-        <form [formGroup]="homeSec3Form" (ngSubmit)="onSubmit()">
-            <div class="flex gap-3">
-                <div class="w-2/5 grow">
-                    <!-- <app-thumbnail></app-thumbnail> -->
-                    <div>
-                        <!-- <label for="image">Choose Your File or Image:</label> <br> -->
-                        <div class="text-left font-medium text-sm text-black mb-3">
-                            Upload Image
+<div>
+    <form [formGroup]="homeSec3Form" (ngSubmit)="onSubmit()">
+        <div class="flex gap-3">
+            <div class="w-2/5 grow">
+                <div class="w-full bg-white p-5 h-full rounded flex items-center justify-center">
+                    <div class="flex flex-col items-center justify-center relative">
+                        <span class="absolute top-0 right-0" *ngIf="imagePreview">
+                            <app-menu  [delete]="'gg'" (deleteItem)="deleteItem($event)" ></app-menu>
+                            </span>
+                        <ng-container *ngIf="!imagePreview">
+                            <label class="flex flex-col items-center justify-center">
+                                <img src="assets/placeholder-image-outline.png" 
+                                alt="Upload Image" />
+                                <div style="text-align: left;">Upload Image Here</div>
+                                <!-- <div class="text-center text-red-600 font-normal italic">
+                                    Minimum size required: 1920 width x 640 height
+                                </div> -->
+                                    <input hidden type="file" class="d-none" 
+                                (change)="onFileSelected($event)" accept="image/*" />
+                                </label>
+                        </ng-container> 
+                        <div *ngIf="imagePreview" class="mt-3">
+                            <img [src]="imagePreview" alt="Image Preview" class="preview-image" />
                         </div>
-                        <input type="file" formControlName="homeSec3_image" (change)="onFileSelected($event)" accept="image/*" />
-                    </div>
-                    <div class="mb-3"></div>
-                    <div *ngIf="imagePreview">
-                        <h3>Image Preview:</h3> <br>
-                        <div class="w-full bg-white p-5 h-full rounded flex items-center justify-center">
-                            <div class="flex flex-col items-center justify-center">
-                              <img [src]="imagePreview" alt="Image Preview" />
-                              <!-- <div>Upload Image Here</div>
-                              <div class="text-center text-red-600 font-normal italic">
-                                Mimimum size required 1920 width 640 height
-                              </div> -->
-                            </div>
-                        </div>
-                        <!-- <img [src]="imagePreview" alt="Image Preview" style="max-width: 300px; max-height: 300px;" /> -->
-                    </div>
-                </div>  
-                <div class="w-3/5 bg-white p-3 rounded space-y-6">
+                    </div> 
+                </div>
+            </div>  
+            <div class="w-3/5 bg-white p-3 rounded space-y-6">
+                <div class="">
+                    <input formControlName="sec3_main_heading" type="text" [placeholder]="'Add main heading here'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
+                <div class="">
+                    <input formControlName="sec3_sub_heading" type="text" [placeholder]="'Add sub heading here'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
+                <div class="bg-white py-2 rounded space-y-2">
                     <div class="">
-                        <input formControlName="sec3_main_heading" type="text" [placeholder]="'Add main heading here'"
+                        <input formControlName="sec3_title1" type="text" [placeholder]="'Add title here'"
                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                     </div>
-                    <div class="bg-white py-2 rounded space-y-2">
-                        <div class="">
-                            <input formControlName="sec3_title1" type="text" [placeholder]="'Add title here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                        </div>
-                        <div class="">
-                            <input formControlName="sec3_des1" type="text" [placeholder]="'Add description here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                        </div>
-                        <div class="">
-                            <textarea formControlName="sec3_link1"   [placeholder]="'Add link or url here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                        </div>
+                    <div class="">
+                        <input formControlName="sec3_des1" type="text" [placeholder]="'Add description here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                     </div>
-                    <div class="mb-3"></div>
-                    <div class="bg-white py-2 rounded space-y-2">
-                        <div class="">
-                            <input formControlName="sec3_title2" type="text" [placeholder]="'Add title here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                        </div>
-                        <div class="">
-                            <input formControlName="sec3_des2" type="text" [placeholder]="'Add description here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                        </div>
-                        <div class="">
-                            <textarea formControlName="sec3_link2" [placeholder]="'Add link or url here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                        </div>
+                    <div class="">
+                        <textarea formControlName="sec3_link1"   [placeholder]="'Add link or url here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
                     </div>
-                    <div class="mb-3"></div>
-                    <div class="bg-white py-2 rounded space-y-2">
-                        <div class="">
-                            <input formControlName="sec3_title3" type="text" [placeholder]="'Add title here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                        </div>
-                        <div class="">
-                            <input formControlName="sec3_des3" type="text" [placeholder]="'Add description here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                        </div>
-                        <div class="">
-                            <textarea formControlName="sec3_link3" [placeholder]="'Add link or url here'"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                        </div>
+                </div>
+                <div class="mb-3"></div>
+                <div class="bg-white py-2 rounded space-y-2">
+                    <div class="">
+                        <input formControlName="sec3_title2" type="text" [placeholder]="'Add title here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                     </div>
-                    <div class="mb-3"></div>
-                    <div class="flex justify-end">   
-                        <div>
-                            <button  class="ai-button"> Save</button>
-                        </div>
-                        <div>
-                            <button  class="ai-button"> Cancel</button>
-                        </div>    
+                    <div class="">
+                        <input formControlName="sec3_des2" type="text" [placeholder]="'Add description here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                     </div>
-                </div> 
-            </div>   
-        </form>
-    </div>
-<!-- </div> -->
+                    <div class="">
+                        <textarea formControlName="sec3_link2" [placeholder]="'Add link or url here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                    </div>
+                </div>
+                <div class="mb-3"></div>
+                <div class="bg-white py-2 rounded space-y-2">
+                    <div class="">
+                        <input formControlName="sec3_title3" type="text" [placeholder]="'Add title here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                    </div>
+                    <div class="">
+                        <input formControlName="sec3_des3" type="text" [placeholder]="'Add description here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                    </div>
+                    <div class="">
+                        <textarea formControlName="sec3_link3" [placeholder]="'Add link or url here'"
+                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                    </div>
+                </div>
+                <div class="mb-3"></div>
+                <div class="flex justify-end gap-2">   
+                    <div>
+                        <button  class="ai-button" [disabled]="homeSec3Form.disabled">
+                            {{homeSec3Form.disabled ? "Please wait..." : (homeSec3Form.value.id ? "Update" : "Save") }} 
+                        </button>
+                    </div>
+                    <div>
+                        <button  class="ai-button"> Cancel</button>
+                    </div>    
+                </div>
+            </div> 
+        </div>   
+    </form>
+</div>
+

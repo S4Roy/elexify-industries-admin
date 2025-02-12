@@ -10,6 +10,11 @@ const routes: Routes = [
     component: LoginComponent,
     data: { pageTitle: 'Login' },
   },
+  {
+    path: 'forgot-password',
+    component: ForgetPasswordComponent,
+    //data: { pageTitle: 'Login' },
+  },
 
   // {
   //     path: 'login',

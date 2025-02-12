@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { isImage } from '../../../../global';
 
 @Component({
   selector: 'app-side-nav',
@@ -52,29 +53,34 @@ export class SideNavComponent {
         {
           label: 'Media Management',
           icon: 'format_list_bulleted',
+          image_path:'assets/sidebar_icon/media_management.svg',
           url: '/services',
         },
         {
           label: 'Enquiry Management',
           icon: 'contacts',
+          image_path:'assets/sidebar_icon/enquery_management.svg',
           url: '/main/enquiry',
         },
         {
           label: 'Career Management',
           icon: 'format_list_bulleted',
+          image_path:'assets/sidebar_icon/career_managment.svg',
           url: '/services',
         },
         {
           label: 'Clientele',
           icon: 'format_list_bulleted',
+          image_path:'assets/sidebar_icon/clientele.svg',
           url: '/services',
         },
         {
           label: 'Awards',
           icon: 'format_list_bulleted',
+          image_path:'assets/sidebar_icon/award-updated-icon.svg',
           url: '/services',
         }
-      
+
       ],
     },
     {
@@ -84,11 +90,13 @@ export class SideNavComponent {
         {
           label: 'Settings',
           icon: 'settings',
+          image_path:'assets/sidebar_icon/settings.svg',
           url: '/settings',
         },
         {
           label: 'User',
           icon: 'contacts',
+          image_path:'assets/sidebar_icon/users.svg',
           url: '/user',
         },
       ],

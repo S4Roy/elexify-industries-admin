@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeLayoutComponent } from '../../home-layout.component';
 import { EnquiryComponent } from './enquiry/enquiry.component';
+import { AnnouncementNoticeComponent } from './announcement-notice/announcement-notice.component';
 
 const routes: Routes = [
   {
@@ -11,8 +12,12 @@ const routes: Routes = [
     children: [
       {
         path: 'enquiry',
-        component: EnquiryComponent,
+        component: EnquiryComponent
       },
+      {
+        path: 'announcement-notice',
+        component: AnnouncementNoticeComponent
+      }
     ],
   },
 ];

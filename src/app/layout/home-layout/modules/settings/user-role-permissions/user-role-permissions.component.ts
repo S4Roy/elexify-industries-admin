@@ -23,7 +23,7 @@ export class UserRolePermissionsComponent {
         })
         .afterClosed()
         .subscribe((res: any) => {
-          console.log(res);
+         
         });
     }
 }

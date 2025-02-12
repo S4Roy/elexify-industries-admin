@@ -57,7 +57,7 @@ export class NewFaqQuestionComponent {
     });
   }
   submitLogin() {
-    console.log("save button hit...");
+    
     // this.faqForm.markAllAsTouched();
     // if (this.faqForm.valid) {
     //   this.faqForm.disable();

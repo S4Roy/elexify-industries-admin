@@ -21,7 +21,7 @@ export class PartnersComponent {
       })
       .afterClosed()
       .subscribe((res: any) => {
-        console.log(res);
+        
       });
   }
 }

@@ -1,0 +1,32 @@
+<!-- <p>home-media-info-card works!</p> -->
+<div>
+    <form  >
+        <div class="flex gap-3">
+            <div class="w-3/5 bg-white p-3 rounded space-y-6">
+                <div class="">
+                    <input  type="text" [placeholder]="'Add title here'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
+                <div class="">
+                    <textarea  [placeholder]="'Add description here'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                </div>
+                <div class="">
+                    <textarea  [placeholder]="'Add certificate here'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                </div>
+                <div class="mb-3"></div>
+                <div class="flex justify-end gap-2">   
+                    <div>
+                        <!-- <button  class="ai-button" [disabled]="homeSec2Form.disabled">
+                          {{homeSec2Form.disabled ? "Please wait..." : (homeSec2Form.value.id ? "Update" : "Save") }} 
+                        </button> -->
+                    </div>
+                    <div>
+                        <button  class="ai-button"> Cancel</button>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
