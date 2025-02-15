@@ -10,7 +10,8 @@ import { PartnersComponent } from '../../../includes/master/partners/partners.co
 
 @Component({
   selector: 'app-about',
-  imports: [InfoCardComponent,TaggedSectionComponent,MatIconModule,PartnersComponent,AboutRoadmapInfoCardComponent,ThumbnailComponent],
+  // imports: [InfoCardComponent,TaggedSectionComponent,MatIconModule,PartnersComponent,AboutRoadmapInfoCardComponent,ThumbnailComponent],
+  imports: [InfoCardComponent,MatIconModule,PartnersComponent,ThumbnailComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss'
 })

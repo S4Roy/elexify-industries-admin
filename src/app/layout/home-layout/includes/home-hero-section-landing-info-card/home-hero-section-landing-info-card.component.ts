@@ -41,10 +41,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 export class HomeHeroSectionLandingInfoCardComponent {
 
   homeHeroSecForm: FormGroup;
-  isEditMode: boolean = false; // Flag to check if we are in edit mode
-  currentItemIndex: number | null = null; // To track the current item index
+
   heroSectionData: any = [];
-  //myForm: FormGroup;
+ 
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
 
@@ -66,7 +65,7 @@ export class HomeHeroSectionLandingInfoCardComponent {
   }
 
   ngOnInit(): void {
-    this.loadItems();
+    
     this.getHeroSectionData();
   }
 
@@ -84,78 +83,7 @@ export class HomeHeroSectionLandingInfoCardComponent {
        }
       });
   }
-  // formItem(){
-  //   return this.fb.control({
-  //     hero_sec_main_heading: [''],
-  //     hero_sec_sub_heading: [''],
-  //     file: [''] // Form control for the image
-  //   })
-  // }
-  // addForm() {
-
-  // }
-
-  // Method to save or update the item
-  // save() {
-  //   const itemData = this.homeHeroSecForm.value;
-
-  //   if (this.isEditMode && this.currentItemIndex !== null) {
-  //     this.updateItem(itemData);
-  //   } else {
-  //     this.saveItem(itemData);
-  //     this.isEditMode = true;
-  //   }
-  // }
-
-  // Method to save a new item LocalStorage Work
-  saveItem(itemData: any) {
-    const items = this.getItemsFromLocalStorage();
-    items.push(itemData);
-    localStorage.setItem('items', JSON.stringify(items));
-    this.homeHeroSecForm.patchValue(items); // Update the form with the saved data
-    //this.resetForm();
-    //console.log('Item saved:', itemData);
-  }
-
-  // Method to update an existing item LocalStorage Work
-  updateItem(itemData: any) {
-    const items = this.getItemsFromLocalStorage();
-    if (this.currentItemIndex !== null) {
-      items[this.currentItemIndex] = itemData; // Update the item at the current index
-      localStorage.setItem('items', JSON.stringify(items));
-      //this.resetForm();
-     // console.log('Item updated:', itemData);
-    }
-  }
-
-  //Method to reset the form
-  // resetForm() {
-  //   this.homeHeroSecForm.reset();
-  //   this.isEditMode = false; // Reset to create mode
-  //   this.currentItemIndex = null; // Reset the current item index
-  // }
-
-  // Method to load items from local storage
-  loadItems() {
-    const items = this.getItemsFromLocalStorage();
-    // You can implement logic to display these items or set them for editing
-    console.log('Loaded items:', items);
-  }
-
-  // Helper method to get items from local storage
-  getItemsFromLocalStorage() {
-    const items = localStorage.getItem('items');
-    return items ? JSON.parse(items) : [];
-  }
-
-  // Method to set the component in edit mode with existing item data
-  editItem(index: number) {
-    const items = this.getItemsFromLocalStorage();
-    this.homeHeroSecForm.setValue(items[index]); // Set the form values to the selected item
-    this.isEditMode = true; // Set to edit mode
-    this.currentItemIndex = index; // Set the current item index
-  }
-
+  
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
@@ -204,46 +132,6 @@ export class HomeHeroSectionLandingInfoCardComponent {
         // this.loading = LoadingState.Ready;
       }
     );
-  }
-
-
-  // fileUploader(ev:any, form:any, formKey:any, fileTypeExtention?:any){
-  //   if(ev){
-  //     const fileType: any[] = fileTypeExtention;
-  //     let file=ev.target.files[0];
-  //     const filesExtention = file['name'].split(".").pop().toLowerCase();
-  //     const uploadDataType = fileType.find((x:any)=>x == filesExtention)
-  //     if(uploadDataType && filesExtention.match(uploadDataType.toLowerCase())) {  
-  //       form.get(formKey)?.patchValue(file);      
-  //     }else{
-  //       this.toaster.warning('File Format Not Matched')
-  //     }
-  //   }else{
-  //     form.get(formKey)?.patchValue(null); 
-  //   }
-  // }
-  getFilePreview(data: any) {
-    //return this.masterService.getFilePreviewer(data)
-    if (typeof (data) == 'string') {
-      // return Helper.getIcon(data)
-      return;
-    } else {
-      let exc = data['name']?.split(".").pop().toLowerCase();
-      if (exc != 'pdf') {
-        return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
-      } else {
-        // return Helper.getIcon(data.name)
-        return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
-      }
-    }
-  }
-  fileConverter(data: any) {
-    // return this.masterService.fileConverter(data)
-    if (typeof (data) == 'string') {
-      return data;
-    } else {
-      return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
-    }
   }
 
   addDetails() {

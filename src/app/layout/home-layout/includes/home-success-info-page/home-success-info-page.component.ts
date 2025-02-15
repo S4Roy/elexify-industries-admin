@@ -17,18 +17,19 @@ import { ToastrService } from 'ngx-toastr';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-home-section4-landing-service-info-card',
+  selector: 'app-home-success-info-page',
   imports: [
     FormsModule, NgSelectModule,
     ReactiveFormsModule,
     NgxEditorModule, MatIconModule],
-  templateUrl: './home-section4-landing-service-info-card.component.html',
-  styleUrl: './home-section4-landing-service-info-card.component.scss'
+  templateUrl: './home-success-info-page.component.html',
+  styleUrl: './home-success-info-page.component.scss'
 })
-export class HomeSection4LandingServiceInfoCardComponent {
-  
+export class HomeSuccessInfoPageComponent {
   formGroup!: FormGroup;
-  servicesList :any=[];
+  successStoryList :any=[];
+  blogList :any=[];
+
 
   constructor(private fb: FormBuilder,
     private master : MasterService,
@@ -36,21 +37,23 @@ export class HomeSection4LandingServiceInfoCardComponent {
   ) {
     this.formGroup = this.fb.group({
       id: [null],
-      services: [null]
+      blogs: [null]
     });
   }
 
   ngOnInit(): void {
-    this.getPopularServiceList();
-    this.getServicesList();
+    this.getBlogList()
+    this.getSuccessStoryList()
   }
 
-  getServicesList() {
+  getSuccessStoryList() {
     let params: URLSearchParams = new URLSearchParams();
-    this.master.getServicesList(params).pipe().subscribe(
+    this.master.getSuccessStoryList(params).pipe().subscribe(
       (res: any) => {
-        console.log(res);
-        this.servicesList = res?.results;
+        let blog = res?.results.map((item:any)=>{
+          return item.id
+        })        
+        this.formGroup.patchValue({id:res?.setting_id,blogs:blog})
       },
       err => {
         this.toastr.error(err.error.msg, '', {
@@ -60,20 +63,11 @@ export class HomeSection4LandingServiceInfoCardComponent {
       }
     );
   }
-
-  getPopularServiceList() {
+  getBlogList() {
     let params: URLSearchParams = new URLSearchParams();
-    this.master.getPopularServiceList(params).pipe().subscribe(
+    this.master.getBlogList(params).pipe().subscribe(
       (res: any) => {
-        console.log(res);
-       // this.serviceList = res?.service_list;
-       let services = res?.results.map((item:any)=>{
-        return item.id
-      })        
-      this.formGroup.patchValue({
-        id:res?.setting_id,
-        services:services
-      })
+        this.blogList = res?.results;
       },
       err => {
         this.toastr.error(err.error.msg, '', {
@@ -83,20 +77,18 @@ export class HomeSection4LandingServiceInfoCardComponent {
       }
     );
   }
-
    onSubmit() {
-    console.log(this.formGroup.getRawValue());
     if(this.formGroup.valid) {
       let formData = this.formGroup.getRawValue();
-      if(!formData.id) {
+      if(!formData.id){
         delete formData.id;
       }
-      this.master.addPopularServices(formData).pipe().subscribe(
+      this.master.addSuccessStory(formData).pipe().subscribe(
         (res:any)=> {
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });
-          this.getPopularServiceList();       
+          this.getSuccessStoryList()
         },
         err => {
           this.toastr.error(err.error.msg,'',{
@@ -106,6 +98,4 @@ export class HomeSection4LandingServiceInfoCardComponent {
       )
     }
   }
-
-
 }

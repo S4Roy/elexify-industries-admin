@@ -467,6 +467,50 @@ export function onFileUploadedToBase64(
     });
   }
 }
+export function onFileSelected(
+  formGroup: FormGroup,
+  event: any,
+  sourceKey: any,
+  toastr: ToastrService,
+  allowedTypes: string[] = ['image/jpeg', 'image/png'], // Default allowed types are JPEG and PNG
+  fileNameKey: any,
+) {
+  if (event.target.files.length > 0) {
+    const files = event.target.files;
+    const maxSize: number = 10000000; // Default max size is 5MB
+
+   
+      const file = event.target.files[0];
+      if (file.size > maxSize) {
+        toastr.error('File size exceeds the limit');
+        return; // Skip this file and continue with the next one
+      }
+
+      // Check file type
+      if (!allowedTypes.includes(file.type)) {
+        toastr.error('File type is not allowed');
+        return; // Skip this file and continue with the next one
+      }
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+    
+        // Append the Base64 string to the array in the form group
+        formGroup.patchValue({
+          [sourceKey]: file,
+          [fileNameKey]: reader.result,
+        });
+      };
+
+      reader.readAsDataURL(file);
+    
+  } else {
+    formGroup.patchValue({
+      [sourceKey]: null,
+      [fileNameKey]: null,
+    });
+  }
+}
 export function onFileUploadedToBase64Array(
   formGroup: FormGroup,
   index: number,

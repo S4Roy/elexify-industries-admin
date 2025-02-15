@@ -21,14 +21,22 @@ import { MenuComponent } from '../../menu/menu.component';
   styleUrl: './new-hero-section.component.scss'
 })
 export class NewHeroSectionComponent {
+
   homeHeroSecForm!: FormGroup;
-  toogleTextPassword: boolean = false;
   encodedUrl: any = null;
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   videoPreview: string | ArrayBuffer | null = null;
   hasError: boolean = false;
+  hasVdError: boolean = false;
+  hasSzError: boolean = false;
   file_type: any = '';
+  errorMessage1: string = ''; // Variable to hold error message
+  errorMessage2: string = '';
+  errorMessage3: string = ''
+  maxLength1: number = 125;
+  maxLength2: number = 125;
+  isSubmitted: boolean = false; // Flag to track form submission
 
   constructor(
     private fb: FormBuilder,
@@ -48,21 +56,25 @@ export class NewHeroSectionComponent {
     }
 
     this.homeHeroSecForm = this.fb.group({
-      hero_sec_main_heading: [data?.hero_sec_main_heading ?? "",[Validators.required]],
-      hero_sec_sub_heading: [data?.hero_sec_sub_heading ?? "",[Validators.required]],
+      hero_sec_main_heading: [data?.hero_sec_main_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength1)]],
+      hero_sec_sub_heading: [data?.hero_sec_sub_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength2)]],
       file: [""] // Form control for the image
     });
   }
 
-  onFileSelected(event: Event) {
-   // console.log(event, "eventttttt")
-    const target = event.target as HTMLInputElement;
+  get hero_sec_main_heading() {
+    return this.homeHeroSecForm.get('hero_sec_main_heading');
+  }
+  get hero_sec_sub_heading() {
+    return this.homeHeroSecForm.get('hero_sec_sub_heading');
+  }
 
+  onFileSelected(event: Event) {
+    const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.homeHeroSecForm.patchValue({
         file: target.files[0]
       })
-
       this.selectedImage = target.files[0];
       const reader = new FileReader();
       reader.onload = () => {
@@ -74,52 +86,68 @@ export class NewHeroSectionComponent {
         }
 
       };
-      // Validation
-      //if (target.files[0].width < 1920 || target.files[0].height < 640) {
-      if (target.files[0].size < 24576) {
-        this.hasError = true; // Flag validation error
-        return; // Prevent preview if invalid
-      }
 
-      // reader.readAsDataURL(file);
+      console.log(target.files[0].type, "sizeee");
+      const validFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'video/mp4',];
+      //const validVdFormats = ['video/mp4'];
+      if (!validFormats.includes(target.files[0].type)) {
+        this.hasError = true;
+        this.errorMessage1 = 'Only .png, .jpg, .gif and .jpeg formats are supported.';
+        return; // Prevent further processing
+      } else if (target.files[0].size < 24576) {
+        this.hasSzError = true;
+        this.errorMessage3 = 'Minimum size required: 1920 width x 640 height';
+        return;
+      }
+      //  else if (!validVdFormats.includes(target.files[0].type)) {
+      //   this.hasVdError = true;
+      //   this.errorMessage2 = 'Only .mp4 format is supported.';
+      //   return; 
+      // }else if (target.files[0].size < 24576) {
+      //   this.hasSzError = true;
+      //   this.errorMessage3 = 'Minimum size required: 1920 width x 640 height';
+      //   return; 
+      // }
+
+      // If both checks pass, reset error state
+      this.hasError = false;
+      this.hasVdError = false;
+      this.hasSzError = false;
+      this.errorMessage1 = '';
+      this.errorMessage2 = '';
+      this.errorMessage3 = '';
+
+
       this.hasError = false; // Reset error flag if valid
       reader.readAsDataURL(this.selectedImage);
-     // this.confirmUpload();
+
     }
     else {
       this.homeHeroSecForm.patchValue({
         file: null
       })
     }
-
-  }
-  cancelImage() {
-    // Implement your cancel image logic here
-  //  console.log('Cancel Image Clicked!');
   }
 
-  // confirmUpload() {
-  //   const confirmation = confirm('Are you sure you want to upload this image?');
-  //   if (!confirmation) {
-  //     this.selectedImage = null; // Reset if not confirmed
-  //     this.imagePreview = null; // Reset preview
-  //     this.homeHeroSecForm.reset(); // Reset the form
-  //   }
+  deleteItem(item?: any) {
+    this.imagePreview = null;
+    this.videoPreview = null;
+  }
+
+  // editItem(item: any) {
+  //   document.getElementById("chooseFile")?.click()
   // }
+
   submitHeroSecData() {
-
-    // Mark all form controls as touched
+    this.isSubmitted = true;
     this.homeHeroSecForm.markAllAsTouched();
-
-    // Check if the form is valid
     if (this.homeHeroSecForm.valid) {
-      this.homeHeroSecForm.disable(); // Disable the form to prevent multiple submissions
+      this.homeHeroSecForm.disable();
       let formData = this.homeHeroSecForm.getRawValue();
       if (this.data?.id) {
         formData.id = this.data.id;
         formData.setting_id = this.data.setting_id;
       }
-      // Call the service to send the FormData to the backend
       this.master.addHeroSectionData(formData).subscribe({
         next: (response) => {
           console.log('Upload successful', response);
@@ -127,28 +155,17 @@ export class NewHeroSectionComponent {
             timeOut: 1000, // Display for 1 seconds
           });
           this.dialogRef.close(response)
-          // Handle success response
         },
         error: (error) => {
           console.error('Upload failed', error);
           this.homeHeroSecForm.enable();
-          // Handle error response
         },
         complete: () => {
-          this.homeHeroSecForm.enable(); // Re-enable the form after the request completes
+          this.homeHeroSecForm.enable();
         }
       });
     }
 
   }
 
-
-  deleteItem(item?: any) {
-    this.imagePreview = null;
-    this.videoPreview = null;
-  }
-  // editItem(item: any) {
-  //   document.getElementById("chooseFile")?.click()
-
-  // }
 }

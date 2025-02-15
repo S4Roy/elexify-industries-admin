@@ -17,13 +17,14 @@ import { RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MasterService } from '../../../../core/services/master.service';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-home-section2-landing-info-card',
   imports: [
     FormsModule,
     ReactiveFormsModule,
     NgxEditorModule,
-    MenuComponent,
+   // MenuComponent,
     //MatIcon,MatMenu,
     MatMenuModule, MatButtonModule,
     MatIconModule, RouterModule,
@@ -38,6 +39,10 @@ export class HomeSection2LandingInfoCardComponent {
   homeSec2Form: FormGroup;
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+  maxLength: number = 40; // Set your maximum character limit here
+  maxLength2: number = 40;
+  maxLength3: number = 75;
+  isSubmitted:boolean= false;
 
   constructor(private fb: FormBuilder,
     private toastr: ToastrService,
@@ -45,12 +50,24 @@ export class HomeSection2LandingInfoCardComponent {
   ) {
     // this.imagePreview = data?.hero_sec_image_video
     this.homeSec2Form = this.fb.group({
-      homeSec2_main_heading: [''],
-      homeSec2_sub_heading: [''],
-      homeSec2_description: [''],
+      homeSec2_main_heading: ['',[Validators.required,Validators.maxLength(this.maxLength)]],
+      homeSec2_sub_heading: ['',[Validators.required,Validators.maxLength(this.maxLength2)]],
+      homeSec2_description: ['',[Validators.required,Validators.maxLength(this.maxLength)]],
       file: [null],
-      id: [null]
+      id: [null],
+      is_fdel:['n']
     });
+  }
+  get homeSec2_main_heading() {
+    return this.homeSec2Form.get('homeSec2_main_heading');
+  }
+
+  get homeSec2_sub_heading() {
+    return this.homeSec2Form.get('homeSec2_sub_heading');
+  }
+
+  get homeSec2_description() {
+    return this.homeSec2Form.get('homeSec2_description');
   }
 
   ngOnInit(): void {
@@ -90,7 +107,8 @@ export class HomeSection2LandingInfoCardComponent {
           homeSec2_main_heading: res.homeSec2_main_heading,
           homeSec2_sub_heading: res.homeSec2_sub_heading,
           homeSec2_description: res.homeSec2_description,
-          id: res?.setting_id
+          id: res?.setting_id,
+          
         });
         this.imagePreview = res?.homeSec2_image
       },
@@ -104,6 +122,7 @@ export class HomeSection2LandingInfoCardComponent {
   }
 
   onSubmit() {
+    this.isSubmitted = false;
     this.homeSec2Form.markAllAsTouched();
     
     if (this.homeSec2Form.valid) {
@@ -129,7 +148,11 @@ export class HomeSection2LandingInfoCardComponent {
   }
   
   deleteItem(item?: any) {
-    this.imagePreview = null;
+   this.imagePreview = null;
+    this.homeSec2Form.patchValue({
+      is_fdel:'y' 
+    })
+    this.onSubmit();
   }
 
 }

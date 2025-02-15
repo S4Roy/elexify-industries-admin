@@ -9,10 +9,11 @@ import { RouterModule,Router,ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/services/auth.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule,MatCheckboxModule,RouterModule],
+  imports: [ReactiveFormsModule,MatCheckboxModule,RouterModule,NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -21,6 +22,7 @@ export class LoginComponent {
   toogleTextPassword: boolean = false;
   encodedUrl: any = null;
   credentialerror: boolean =false;
+  showloginpassword: boolean = false
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -71,6 +73,9 @@ export class LoginComponent {
         },
       });
     }
+  }
+  togglePasswordView() {
+    this.showloginpassword = !this.showloginpassword; // Toggle the boolean value
   }
 
   // proceedtoResetPassword() {

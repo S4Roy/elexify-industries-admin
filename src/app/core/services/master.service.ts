@@ -60,5 +60,95 @@ export class MasterService {
     return this.httpService.get('admin/home/section/info/more-about-anctpl', params);
   }
 
+// AwardCertificate / Media
+  getAwardCertificateList(params: any) {
+    return this.httpService.get('admin/home/section/info/award-certificate', params);
+  }
+  addAwardCertificate(payload: any) {
+    return this.httpService.post('admin/home/section/save/award-certificate', payload);
+  }
 
+// services
+  getPopularServiceList(params: any) {
+    return this.httpService.get('admin/home/section/info/popular-service', params);
+  }
+  addPopularServices(payload:any) {
+    return this.httpService.post('admin/home/section/save/popular-service',payload);
+  }
+
+
+  // SuccessStories
+  getSuccessStoryList(params: any) {
+    return this.httpService.get('admin/home/section/info/success-story', params);
+  }
+  addSuccessStory(payload:any) {
+    return this.httpService.post('admin/home/section/save/success-story',payload);
+  }
+
+  // Our Progress
+  getProgressList(params: any) {
+    return this.httpService.get('admin/home/section/info/our-progress', params);
+  }
+  addProgress(payload: any) {
+    return this.httpService.post('admin/home/section/save/our-progress', payload);
+  }
+
+  // career /home/section/info/career
+  getCareerList(params: any) {
+    return this.httpService.get('admin/home/section/info/career', params);
+  }
+  addCareer(payload: any) {
+    return this.httpService.postFormData('admin/home/section/save/career', payload);
+  }
+
+  //admin/gallery-list
+  getGalleryList(params: any) {
+    return this.httpService.get('admin/gallery-list', params);
+  }
+  getBlogList(params: any) {
+    return this.httpService.get('admin/blog-list', params);
+  }
+  getServicesList(params: any) {
+    return this.httpService.get('admin/service-list',params);
+  }
+
+
+  // sats1
+  getSatsList(params: any){
+    return this.httpService.get('admin/home/section/info/about-airindia-sats', params);
+  }
+
+  saveSatsData(payload:any) {
+    return this.httpService.post('admin/home/section/save/about-airindia-sats',payload);
+  }
+
+  // more sats
+  getMoreSatsList(params: any){
+    return this.httpService.get('admin/home/section/info/more-about-airindia-sats', params);
+  }
+
+  saveMoreSatsData(payload:any) {
+    return this.httpService.post('admin/home/section/save/more-about-airindia-sats',payload);
+  }
+
+  // Testimonials
+  getTestimonialsList(params: any) {
+    return this.httpService.get('admin/home/section/info/news-event', params);
+  }
+  saveTestimonials(payload: any) {
+    return this.httpService.post('admin/home/section/save/news-event', payload);
+  }
+
+  //admin/news-list
+
+  getNewsList(params: any) {
+    return this.httpService.get('admin/news-list', params);
+  }
+
+  getClientList(params: any) {
+    return this.httpService.get('admin/client-list', params);
+  }
+
+
+  
 }

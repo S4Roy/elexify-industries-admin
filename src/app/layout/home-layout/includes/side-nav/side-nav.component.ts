@@ -40,7 +40,7 @@ export class SideNavComponent {
             },
             {
               label: 'Our Services',
-              url: '/pages/our-services',
+             // url: '/pages/our-services',
               exact: true,
             },
           ],
@@ -48,37 +48,37 @@ export class SideNavComponent {
         {
           label: 'Service Management',
           icon: 'format_list_bulleted',
-          url: '/services',
+          //url: '/services',
         },
         {
           label: 'Media Management',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/media_management.svg',
-          url: '/services',
+       //   url: '/services',
         },
         {
           label: 'Enquiry Management',
           icon: 'contacts',
           image_path:'assets/sidebar_icon/enquery_management.svg',
-          url: '/main/enquiry',
+        //  url: '/main/enquiry',
         },
         {
           label: 'Career Management',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/career_managment.svg',
-          url: '/services',
+        //  url: '/services',
         },
         {
           label: 'Clientele',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/clientele.svg',
-          url: '/services',
+        //  url: '/services',
         },
         {
           label: 'Awards',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/award-updated-icon.svg',
-          url: '/services',
+        //  url: '/services',
         }
 
       ],
@@ -91,13 +91,13 @@ export class SideNavComponent {
           label: 'Settings',
           icon: 'settings',
           image_path:'assets/sidebar_icon/settings.svg',
-          url: '/settings',
+         // url: '/settings',
         },
         {
           label: 'User',
           icon: 'contacts',
           image_path:'assets/sidebar_icon/users.svg',
-          url: '/user',
+        //  url: '/user',
         },
       ],
     },
