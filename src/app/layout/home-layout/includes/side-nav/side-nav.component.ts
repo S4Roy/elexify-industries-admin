@@ -48,7 +48,7 @@ export class SideNavComponent {
         {
           label: 'Service Management',
           icon: 'format_list_bulleted',
-          //url: '/services',
+          url: '/services',
         },
         {
           label: 'Media Management',
@@ -91,13 +91,13 @@ export class SideNavComponent {
           label: 'Settings',
           icon: 'settings',
           image_path:'assets/sidebar_icon/settings.svg',
-         // url: '/settings',
+          url: '/settings',
         },
         {
           label: 'User',
           icon: 'contacts',
           image_path:'assets/sidebar_icon/users.svg',
-        //  url: '/user',
+          url: '/user',
         },
       ],
     },

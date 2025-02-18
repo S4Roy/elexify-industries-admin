@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     NgxEditorModule,
-   // MenuComponent,
+    // MenuComponent,
     //MatIcon,MatMenu,
     MatMenuModule, MatButtonModule,
     MatIconModule, RouterModule,
@@ -39,10 +39,10 @@ export class HomeSection2LandingInfoCardComponent {
   homeSec2Form: FormGroup;
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
-  maxLength: number = 40; // Set your maximum character limit here
-  maxLength2: number = 40;
-  maxLength3: number = 75;
-  isSubmitted:boolean= false;
+  maxLength: number = 200; // Set your maximum character limit here
+  maxLength2: number = 200;
+  maxLength3: number = 400;
+  isSubmitted: boolean = false;
 
   constructor(private fb: FormBuilder,
     private toastr: ToastrService,
@@ -50,12 +50,12 @@ export class HomeSection2LandingInfoCardComponent {
   ) {
     // this.imagePreview = data?.hero_sec_image_video
     this.homeSec2Form = this.fb.group({
-      homeSec2_main_heading: ['',[Validators.required,Validators.maxLength(this.maxLength)]],
-      homeSec2_sub_heading: ['',[Validators.required,Validators.maxLength(this.maxLength2)]],
-      homeSec2_description: ['',[Validators.required,Validators.maxLength(this.maxLength)]],
+      homeSec2_main_heading: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
+      homeSec2_sub_heading: ['', [Validators.required, Validators.maxLength(this.maxLength2)]],
+      homeSec2_description: ['', [Validators.required, Validators.maxLength(this.maxLength3)]],
       file: [null],
       id: [null],
-      is_fdel:['n']
+      is_fdel: ['n']
     });
   }
   get homeSec2_main_heading() {
@@ -90,7 +90,7 @@ export class HomeSection2LandingInfoCardComponent {
         }
       };
       reader.readAsDataURL(this.selectedImage);
-     
+
     }
     else {
       this.homeSec2Form.patchValue({
@@ -108,7 +108,7 @@ export class HomeSection2LandingInfoCardComponent {
           homeSec2_sub_heading: res.homeSec2_sub_heading,
           homeSec2_description: res.homeSec2_description,
           id: res?.setting_id,
-          
+
         });
         this.imagePreview = res?.homeSec2_image
       },
@@ -120,11 +120,15 @@ export class HomeSection2LandingInfoCardComponent {
       }
     );
   }
-
+//   onReset() {
+//   this.imagePreview = null;
+//   this.homeSec2Form.reset();
+//   //this.getAboutAnctplData();
+//  }
   onSubmit() {
-    this.isSubmitted = false;
+    this.isSubmitted = true;
     this.homeSec2Form.markAllAsTouched();
-    
+
     if (this.homeSec2Form.valid) {
       this.homeSec2Form.disable(); // Disable the form to prevent multiple submissions
       let formData = this.homeSec2Form.getRawValue();
@@ -135,9 +139,9 @@ export class HomeSection2LandingInfoCardComponent {
         next: (response) => {
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
-          });  
+          });
         },
-        error: (error) => {   
+        error: (error) => {
           this.homeSec2Form.enable();
         },
         complete: () => {
@@ -146,11 +150,11 @@ export class HomeSection2LandingInfoCardComponent {
       });
     }
   }
-  
+
   deleteItem(item?: any) {
-   this.imagePreview = null;
+    this.imagePreview = null;
     this.homeSec2Form.patchValue({
-      is_fdel:'y' 
+      is_fdel: 'y'
     })
     this.onSubmit();
   }

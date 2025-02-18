@@ -4,20 +4,27 @@ import { MasterService } from '../../../../core/services/master.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from 'ngx-editor';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-home-testimonials-info',
-  imports: [NgSelectModule, FormsModule, ReactiveFormsModule,CommonModule],
+  imports: [NgSelectModule, FormsModule, ReactiveFormsModule, CommonModule, NgIf],
   templateUrl: './home-testimonials-info.component.html',
   styleUrl: './home-testimonials-info.component.scss'
 })
 export class HomeTestimonialsInfoComponent {
 
-  awardCertificateList: any = [];
   formGroup!: FormGroup;
-  testimonialsList :any =[];
+  newsList: any = [];
+  client_teleList: any[] = []
+
+  testimonialsList: any[] = [];
+  confirmationMessage: string = '';
+  msg:string ='';
+  maxLength1: number = 40;
+  maxLength2: number = 500;
+  isSubmitted: boolean = false; // Flag to track form submission
 
   constructor(
     private toastr: ToastrService,
@@ -26,13 +33,20 @@ export class HomeTestimonialsInfoComponent {
   ) {
     this.formGroup = this.fb.group({
       "id": [null],
-      "title": [null, Validators.required],
-      "description": [null, Validators.required],
+      "title": ['', [Validators.required, Validators.maxLength(this.maxLength1)]],
+      "description": ['', [Validators.required, Validators.maxLength(this.maxLength2)]],
       "news": [null],
       "client_tele": [null]
     })
   }
- 
+
+  get title() {
+    return this.formGroup.get('title');
+  }
+  get description() {
+    return this.formGroup.get('description');
+  }
+
   ngOnInit(): void {
     this.getTestimonialsList();
     this.getNewsList();
@@ -40,37 +54,76 @@ export class HomeTestimonialsInfoComponent {
   }
 
   onNewsChange(selectedItems: any[]) {
-    console.log(selectedItems,"selectedItemsselectedItemsselectedItems")
-    if (selectedItems.length > 4) {
-      // If more than 5 items are selected, remove the last selected item
+   // console.log(selectedItems.length);
+    if (selectedItems?.length > 10) {
       selectedItems.pop();
       this.formGroup.patchValue({ news: selectedItems });
-      alert('You can only select up to 5 items.'); // Optional alert
+      this.confirmationMessage = 'You can only select up to 10 items.';
+      setTimeout(() => {
+        this.confirmationMessage = '';
+      }, 10000); // 10000 milliseconds = 10 seconds
+      this.getTestimonialsList();
+    } else {
+      this.confirmationMessage = '';
     }
   }
 
+  // onClientChange(selectedClientItems: any[]) {
+  //   if(selectedClientItems.length >2) {
+  //     selectedClientItems.pop();
+  //     this.formGroup.patchValue({client_tele:selectedClientItems});
+  //     this.msg='You can only select up to 3 items.';
+  //     setTimeout(() => {
+  //       this.msg = '';
+  //     }, 10000); // 10000 milliseconds = 10 seconds
+  //     this.getTestimonialsList();
+  //   } else {
+  //     this.msg = '';
+  //   }
+  // }
+
+  onClientChange(selectedClients: any[]) {
+    if (selectedClients.length > 3) {
+      // If more than 3 items are selected, remove the last selected item
+      selectedClients.pop();
+      this.formGroup.patchValue({ client_tele: selectedClients });
+      this.toastr.error("You can only select up to 3 clients.", '', {
+        timeOut: 10000,
+      });
+      // Set the confirmation message
+      // this.msg = 'You can only select up to 3 clients.';
+
+      // // Clear the confirmation message after 10 seconds
+      // setTimeout(() => {
+      //   this.msg = '';
+      // }, 10000); // 10000 milliseconds = 10 seconds
+       this.getTestimonialsList();
+    } else {
+      this.msg = '';
+    }
+  }
   getTestimonialsList() {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getTestimonialsList(params).pipe().subscribe(
       (res: any) => {
-        console.log(res,"TestimonialsListTestimonialsListTestimonialsListTestimonialsList");
+        //console.log(res, "TestimonialsListTestimonialsListTestimonialsListTestimonialsList");
         let nw: any = Array.isArray(res?.news)
           ? res.news.map((item: any) => item.id)
           : [];
 
-          let clt: any = Array.isArray(res?.client_tele)
+        let clt: any = Array.isArray(res?.client_tele)
           ? res.client_tele.map((item: any) => item.id)
           : [];
-        
+
         this.testimonialsList = res;
         this.formGroup.patchValue({
           title: res.title,
           description: res.description,
           news: nw,
-          client_tele:clt,
+          client_tele: clt,
           id: res?.setting_id
         });
-        console.log(this.formGroup.value);
+        //console.log(this.formGroup.value);
 
       },
       err => {
@@ -86,7 +139,8 @@ export class HomeTestimonialsInfoComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getNewsList(params).pipe().subscribe(
       (res: any) => {
-        //console.log(res);
+        // console.log(res,"newslistttttt");
+        this.newsList = res?.results;
       },
       err => {
         this.toastr.error(err.error.msg, '', {
@@ -101,7 +155,8 @@ export class HomeTestimonialsInfoComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getClientList(params).pipe().subscribe(
       (res: any) => {
-       // console.log(res);
+        //console.log(res,"clientlistttttt");
+        this.client_teleList = res.results
       },
       err => {
         this.toastr.error(err.error.msg, '', {
@@ -113,24 +168,30 @@ export class HomeTestimonialsInfoComponent {
   }
 
   onSubmit() {
-    console.log(this.formGroup.getRawValue());
+    // console.log(this.formGroup.getRawValue());
+    this.isSubmitted = true;
+    this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
+      this.formGroup.disable();
       let formData = this.formGroup.getRawValue()
       if (!formData?.id) {
         delete formData?.id
       }
-      this.master.saveTestimonials(formData).pipe().subscribe(
+      this.master.saveTestimonials(formData).subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });
-          this.testimonialsList();
+          this.getTestimonialsList();
+          this.formGroup.enable();
         },
         err => {
-          this.toastr.error(err.error.msg, '', {
-            timeOut: 1000,
-          });
+          this.toastr.error('Error saving data', '', { timeOut: 1000 });
+          this.formGroup.enable();
+          // this.toastr.error(err.error.msg, '', {
+          //   timeOut: 1000,
+          // });
           // this.loading = LoadingState.Ready;
         }
       );

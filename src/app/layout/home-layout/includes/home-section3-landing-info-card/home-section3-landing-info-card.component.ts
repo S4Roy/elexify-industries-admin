@@ -38,9 +38,9 @@ export class HomeSection3LandingInfoCardComponent {
   currentItemIndex: number | null = null; // To track the current item index
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
-  maxLength1: number = 65;
-  maxLength2: number = 40;
-  maxLength3: number = 15;
+  maxLength1: number = 200;
+  maxLength2: number = 200;
+  maxLength3: number = 50;
   maxLength4: number = 20;
   maxLength5: number = 60;
   maxLength6: number = 15;
@@ -167,6 +167,10 @@ export class HomeSection3LandingInfoCardComponent {
       }
     );
   }
+
+  // onReset() {
+  //   this.homeSec3Form.reset();
+  // }
 
 
   onSubmit() {

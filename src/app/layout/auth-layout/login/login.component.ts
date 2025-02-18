@@ -5,15 +5,15 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { RouterModule,Router,ActivatedRoute } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/services/auth.service';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule,MatCheckboxModule,RouterModule,NgIf],
+  imports: [ReactiveFormsModule, MatCheckboxModule, RouterModule, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -21,7 +21,7 @@ export class LoginComponent {
   loginForm!: FormGroup;
   toogleTextPassword: boolean = false;
   encodedUrl: any = null;
-  credentialerror: boolean =false;
+  credentialerror: boolean = false;
   showloginpassword: boolean = false
   constructor(
     private fb: FormBuilder,
@@ -44,28 +44,26 @@ export class LoginComponent {
     });
   }
   submitLogin() {
-    
+
     this.loginForm.markAllAsTouched();
+
     if (this.loginForm.valid) {
       this.loginForm.disable();
-      
       this.authService.adminLogin(this.loginForm.getRawValue()).subscribe({
         next: (res: any) => {
-         
-          this.authService.userSuccessLogin(res, true, this.encodedUrl);       
+          this.authService.userSuccessLogin(res, true, this.encodedUrl);
         },
         error: (err: any) => {
-      
+
           this.loginForm.enable();
           // this.toastr.error('Please check the email and password','', {
           //   timeOut: 2000,
           // });
           // this.authService.userSuccessLogin({token:'gregrehberhbe',email:'email@ff.ff'}, true, this.encodedUrl);
-         
 
         },
         complete: () => {
-        
+
           this.loginForm.enable();
           this.toastr.success('Logged in Successfully!', 'Welcome!', {
             timeOut: 1000, // Display for 1 seconds

@@ -14,7 +14,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { CommonModule, JsonPipe, NgIf } from '@angular/common';
 import { MasterService } from '../../../../core/services/master.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -27,13 +27,14 @@ import { ToastrService } from 'ngx-toastr';
     //MatIcon,MatMenu,
     MatMenuModule, MatButtonModule,
     MatIconModule, RouterModule,
-    NgIf],
+    NgIf,JsonPipe,CommonModule],
   templateUrl: './home-sats-info.component.html',
   styleUrl: './home-sats-info.component.scss'
 })
 export class HomeSatsInfoComponent {
 
   formGroup!: FormGroup;
+  isSubmitted : boolean =false;
 
   constructor(
       private toastr: ToastrService,
@@ -53,6 +54,17 @@ export class HomeSatsInfoComponent {
         "employees_label_val":[null, Validators.required],
       })
     }
+
+    get heading_text_1(){
+      return this.formGroup.get('heading_text_1')
+    }
+
+    get description() {
+      return this.formGroup.get('description')
+    }
+    get heading_text_2() {
+      return this.formGroup.get('heading_text_2')
+    }
    
     ngOnInit(): void {
       this.getSatsList();
@@ -62,7 +74,6 @@ export class HomeSatsInfoComponent {
       let params: URLSearchParams = new URLSearchParams();
       this.master.getSatsList(params).pipe().subscribe(
         (res: any) => {
-         
           this.formGroup.patchValue({
             heading_text_1: res.heading_text_1,
             heading_text_2: res.heading_text_2,
@@ -86,14 +97,13 @@ export class HomeSatsInfoComponent {
       );
     }
   
-  
     onSubmit() {
-  
+      this.isSubmitted = true;
       this.formGroup.markAllAsTouched();
       if (this.formGroup?.valid) {
         this.formGroup.disable();
         let formData = this.formGroup.getRawValue();
-        console.log(formData)
+        console.log(this.formGroup)
         if (!formData.id) {
           delete formData.id
         }

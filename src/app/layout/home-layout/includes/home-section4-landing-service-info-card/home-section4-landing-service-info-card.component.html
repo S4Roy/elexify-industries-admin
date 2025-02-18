@@ -3,23 +3,28 @@
         <div class="flex justify-end gap-3">
             <div class="w-[100%] bg-white p-3 rounded space-y-6">
                 <div class="">
-                   <!-- <ng-select [addTag]="true" [multiple]="true">  
+                    <!-- <ng-select [addTag]="true" [multiple]="true">  
                    </ng-select> -->
-                   <ng-select bindLabel="name" formControlName="services" bindValue="id"
-                        [items]="servicesList" [multiple]="true">
-                   </ng-select>
+                    <ng-select bindLabel="name" formControlName="services" bindValue="id"
+                        placeholder="Select Services (up to 6)" (change)="onServicesChange($event)"
+                        [items]="servicesList" [multiple]="true" >
+                    </ng-select>
+                    <!-- [compareWith]="compareItems" -->
+                    <div *ngIf="errmsg" class="text-red-500 mt-2">
+                        {{ errmsg }}
+                    </div>
                 </div>
                 <div class="mb-3"></div>
 
                 <div class="flex justify-end gap-2">
                     <div>
-                        <button class="ai-button" (click)="onSubmit()" [disabled]="formGroup.disabled"> 
+                        <button class="ai-button" (click)="onSubmit()" [disabled]="formGroup.disabled">
                             {{formGroup.disabled ? "Please wait..." : (formGroup.value.id ? "Update" : "Save") }}
                         </button>
                     </div>
-                    <div>
+                    <!-- <div>
                         <button class="ai-button"> Cancel</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

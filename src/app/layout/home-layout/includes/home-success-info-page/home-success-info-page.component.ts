@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MasterService } from '../../../../core/services/master.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgIf } from '@angular/common';
 //import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -21,7 +22,7 @@ import { ToastrService } from 'ngx-toastr';
   imports: [
     FormsModule, NgSelectModule,
     ReactiveFormsModule,
-    NgxEditorModule, MatIconModule],
+    NgxEditorModule, MatIconModule,NgIf],
   templateUrl: './home-success-info-page.component.html',
   styleUrl: './home-success-info-page.component.scss'
 })
@@ -45,7 +46,22 @@ export class HomeSuccessInfoPageComponent {
     this.getBlogList()
     this.getSuccessStoryList()
   }
-
+  confirmationMessage: string = '';
+  onBlogsChange(selectedItems: any[]) {
+     // console.log(selectedItems.length);
+      if (selectedItems?.length > 2) {
+        selectedItems.pop();
+        this.formGroup.patchValue({ blogs: selectedItems });
+        this.confirmationMessage = 'You can only select up to 3 items.';
+        setTimeout(() => {
+          this.confirmationMessage = '';
+        }, 10000); // 10000 milliseconds = 10 seconds
+        this.getSuccessStoryList();
+      } else {
+        this.confirmationMessage = '';
+      }
+  }
+  
   getSuccessStoryList() {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getSuccessStoryList(params).pipe().subscribe(
@@ -78,7 +94,10 @@ export class HomeSuccessInfoPageComponent {
     );
   }
    onSubmit() {
-    if(this.formGroup.valid) {
+    this.formGroup.markAllAsTouched();
+      
+    if (this.formGroup.valid) {
+      this.formGroup.disable();
       let formData = this.formGroup.getRawValue();
       if(!formData.id){
         delete formData.id;

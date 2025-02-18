@@ -1,4 +1,7 @@
-<!-- <p>new-hero-section works!</p> -->
+<!-- <p>add-new-user works!</p> -->
+ <!-- <form [formGroup]="formGroup">
+
+ </form> -->
 <div class="fixed inset-0 overflow-hidden">
     <div class="absolute inset-0 overflow-hidden">
         <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
@@ -6,64 +9,46 @@
                 <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                     <div class="p-1 add-new-title sm:px-6">
                         <h2 class="flex justify-between items-center font-semibold text-white" id="slide-over-title">
-                            <!-- Hero Information -->
-                            {{data ? "Update Hero Information" : "Add Hero Information"}}
+                            {{data ? "Update Service" : "Add Service "}}
                             <button color="warn" mat-dialog-close mat-icon-button>
                                 <mat-icon class="text-red-700">close</mat-icon>
                             </button>
                         </h2>
                     </div>
                     <div class="relative  my-3 flex-1 px-4 sm:px-6">
-                        <form class="space-y-6" [formGroup]="homeHeroSecForm">
+                        <form class="space-y-6" [formGroup]="formGroup">
                             <div>
-                                <!-- <label class="block text-sm/6 font-medium text-gray-900">Partner name</label> -->
+                                <label class="block text-sm/6 font-medium text-gray-900">Name</label>
                                 <div class="mt-2">
-                                    <div>
-                                        <textarea formControlName="hero_sec_main_heading" type="text"
-                                            [placeholder]="'Heading*'"
-                                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                                        </textarea>
-
-                                        <div *ngIf="isSubmitted && hero_sec_main_heading?.errors?.['required']"
-                                            class="text-red-500">
-                                            <b> Heading is required* </b>
-                                        </div>
-                                        <div *ngIf="isSubmitted && hero_sec_main_heading?.errors?.['maxlength']"
-                                            class="text-red-500">
-                                            <b>Maximum {{ maxLength1 }} characters allowed.</b>
-                                            <!-- <div class="text-gray-500">
-                                                <b>
-                                                    Text limit: {{ maxLength1 }} characters. Please enter your text within
-                                                    this limit.
-                                                </b>   
-                                                 {{ hero_sec_main_heading?.value.length }} - {{ maxLength1 }} characters       
-                                            </div>   -->
-                                        </div>
-
-
-                                    </div>
+                                    <input formControlName="name" type="text"
+                                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                                 </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm/6 font-medium text-gray-900">Description</label>
                                 <div class="mt-2">
-                                    <textarea formControlName="hero_sec_sub_heading" type="text"
-                                        [placeholder]="'Sub Heading*'"
-                                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                                    </textarea>
-
-                                    <div *ngIf="isSubmitted && hero_sec_sub_heading?.errors?.['required']"
-                                        class="text-red-500">
-                                        <b>Sub Heading Required* </b>
-                                    </div>
-                                    <div *ngIf="isSubmitted && hero_sec_sub_heading?.errors?.['maxlength']"
-                                        class="text-red-500">
-                                        <b>Maximum {{ maxLength2 }} characters allowed.</b>
-                                        <!-- <div class="text-gray-500">
-                                            <div>Text limit: {{ maxLength2 }} characters. Please enter your text within this
-                                                limit.</div>
-                                            {{ hero_sec_sub_heading?.value.length }} - {{ maxLength2 }} characters
-                                        </div> -->
-                                    </div>
-
-
+                                    <input formControlName="description" type="text"
+                                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm/6 font-medium text-gray-900">Caption Text</label>
+                                <div class="mt-2">
+                                    <input formControlName="caption_text" type="text"
+                                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                                </div>
+                            </div>
+                            <div>
+                                <label for="status"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an
+                                    option</label>
+                                <div class="mt-2">
+                                    <select id="status" formControlName="status"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="border relative">
@@ -82,8 +67,8 @@
                                                         height</div>
                                                     <div class="mb-3"></div>
                                                     <div class="mb-3"></div>
-                                                    <div style="color: red;">Upload files in .png, .jpg, .jpeg
-                                                 formats only</div>
+                                                    <div style="color: red;">Upload files in .png, .jpg, .jpeg, .gif, or
+                                                        .mp4 formats only</div>
                                                 </div>
 
                                                 <div *ngIf="isSubmitted || hasError || hasSzError"
@@ -119,10 +104,9 @@
                         </form>
                     </div>
                     <div>
-                        <button (click)="submitHeroSecData()" [disabled]="homeHeroSecForm.disabled"
+                        <button (click)="onSubmit()" [disabled]="formGroup.disabled"
                             class="flex border w-full justify-center px-3 py-3 text-green-500">
-                            {{ homeHeroSecForm.disabled ? "Please wait..." : (data ? "Update & Continue" : "Save &
-                            Continue") }}
+                            {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
                         </button>
                     </div>
                 </div>

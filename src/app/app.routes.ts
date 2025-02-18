@@ -63,6 +63,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'services',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/services/services.module').then(
+        (m) => m.ServicesModule
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: 'auth',
     loadChildren: () =>
       import('./layout/auth-layout/auth-layout.module').then(

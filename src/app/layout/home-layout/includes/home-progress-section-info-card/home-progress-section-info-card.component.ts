@@ -16,6 +16,7 @@ export class HomeProgressSectionInfoCardComponent {
   progressList: any = [];
   galleryList: any = []
   formGroup!: FormGroup;
+  isSubmitted :boolean = false;
   constructor(
     private toastr: ToastrService,
     private master: MasterService,
@@ -28,6 +29,26 @@ export class HomeProgressSectionInfoCardComponent {
       "gallery": [null]
     })
   }
+  get title() {
+    return this.formGroup.get('title');
+  }
+
+  confirmationMessage: string = '';
+  onGalleryChange(selectedItems: any[]) {
+     // console.log(selectedItems.length);
+      if (selectedItems?.length > 1) {
+        selectedItems.pop();
+        this.formGroup.patchValue({ gallery: selectedItems });
+        this.confirmationMessage = 'You can only select up to 2 items.';
+        setTimeout(() => {
+          this.confirmationMessage = '';
+        }, 10000); // 10000 milliseconds = 10 seconds
+        this.getProgressList();
+      } else {
+        this.confirmationMessage = '';
+      }
+  }
+  
 
   ngOnInit(): void {
     this.getProgressList();
@@ -66,7 +87,7 @@ export class HomeProgressSectionInfoCardComponent {
           gallery: glry,
           id: res?.setting_id
         });
-        console.log(this.formGroup.value);
+       // console.log(this.formGroup.value);
 
       },
       err => {
@@ -79,7 +100,8 @@ export class HomeProgressSectionInfoCardComponent {
   }
 
   onSubmit() {
-    console.log(this.formGroup.getRawValue());
+    this.isSubmitted =true;
+   // console.log(this.formGroup.getRawValue());
     if (this.formGroup.valid) {
       let formData = this.formGroup.getRawValue()
       if (!formData?.id) {
@@ -87,7 +109,7 @@ export class HomeProgressSectionInfoCardComponent {
       }
       this.master.addProgress(formData).pipe().subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
           this.getProgressList()
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds

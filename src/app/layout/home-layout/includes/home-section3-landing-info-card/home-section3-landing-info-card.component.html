@@ -1,7 +1,7 @@
 <div>
     <form [formGroup]="homeSec3Form">
         <!-- <div class="flex gap-3"> -->
-            <!-- <div class="w-2/5 grow">
+        <!-- <div class="w-2/5 grow">
                 <div class="w-full bg-white p-5 h-full rounded flex items-center justify-center">
                     <div class="flex flex-col items-center justify-center relative">
                         <span class="absolute top-0 right-0" *ngIf="imagePreview">
@@ -27,188 +27,201 @@
             </div>   -->
         <div class="w-[100%] bg-white p-3 rounded space-y-6">
             <!-- <div class="w-3/5 bg-white p-3 rounded space-y-6"> -->
+            <div class="">
+                <input formControlName="sec3_main_heading" type="text" [placeholder]="'Heading*'"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                <div *ngIf="isSubmitted && sec3_main_heading?.errors?.['required']" class="text-red-500">
+                    <b>Heading is required*</b>
+                </div>
+                <div *ngIf="isSubmitted && sec3_main_heading?.errors?.['maxlength']" class="text-red-500">
+                   <b>Maximum {{ maxLength1 }} characters allowed.</b> 
+                </div>
+                <!-- <div class="text-gray-500">
+                    <div>Text limit: {{ maxLength1 }} characters. Please enter your text within this
+                        limit.</div>
+                    {{ sec3_main_heading?.value.length }} - {{ maxLength1 }} characters
+                </div> -->
+
+            </div>
+            <div class="">
+                <input formControlName="sec3_sub_heading" type="text" [placeholder]="'Sub heading*'"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                <div *ngIf="isSubmitted && sec3_sub_heading?.errors?.['required']" class="text-red-500">
+                    <b>Sub heading is required*</b>
+                </div>
+                <div *ngIf="isSubmitted && sec3_sub_heading?.errors?.['maxlength']" class="text-red-500">
+                    <b>Maximum {{ maxLength2 }} characters allowed.</b> 
+                </div>
+                <!-- <div class="text-gray-500">
+                    <div>Text limit: {{ maxLength2 }} characters. Please enter your text within this
+                        limit.</div>
+                    {{ sec3_sub_heading?.value.length }} - {{ maxLength2 }} characters
+                </div> -->
+
+            </div>
+            <div class="bg-white py-2 rounded space-y-2">
                 <div class="">
-                    <input formControlName="sec3_main_heading" type="text" [placeholder]="'Heading'"
+                    <input formControlName="sec3_title1" type="text" [placeholder]="'Title*'"
                         class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                        <div *ngIf="sec3_main_heading?.errors?.['maxlength']" class="text-red-500">
-                            Maximum {{ maxLength1 }} characters allowed.
-                        </div>
-                        <div class="text-gray-500">
-                            <div>Text limit: {{ maxLength1 }} characters. Please enter your text within this
-                                limit.</div>
-                            {{ sec3_main_heading?.value.length }} / {{ maxLength1 }} characters
-                        </div>
-                        <div *ngIf="isSubmitted && sec3_main_heading?.errors?.['required']" class="text-red-500">
-                            Value Required
-                        </div>
+                    <div *ngIf="isSubmitted && sec3_title1?.errors?.['required']" class="text-red-500">
+                        <b>Title is required* </b>
+                    </div>
+                    <div *ngIf="isSubmitted && sec3_title1?.errors?.['maxlength']" class="text-red-500">
+                        <b>Maximum {{ maxLength3 }} characters allowed.</b> 
+                    </div>
+                    <!-- <div class="text-gray-500">
+                        <div>Text limit: {{ maxLength3 }} characters. Please enter your text within this
+                            limit.</div>
+                        {{ sec3_title1?.value.length }} - {{ maxLength3 }} characters
+                    </div> -->
+
                 </div>
                 <div class="">
-                    <input formControlName="sec3_sub_heading" type="text" [placeholder]="'Sub heading'"
+                    <input formControlName="sec3_des1" type="text" [placeholder]="'Description*'"
                         class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                        <div *ngIf="sec3_sub_heading?.errors?.['maxlength']" class="text-red-500">
-                            Maximum {{ maxLength2 }} characters allowed.
-                        </div>
-                        <div class="text-gray-500">
-                            <div>Text limit: {{ maxLength2 }} characters. Please enter your text within this
-                                limit.</div>
-                            {{ sec3_sub_heading?.value.length }} / {{ maxLength2 }} characters
-                        </div>
-                        <div *ngIf="isSubmitted && sec3_sub_heading?.errors?.['required']" class="text-red-500">
-                            Value Required
-                        </div>
+                    <div *ngIf="isSubmitted && sec3_des1?.errors?.['required']" class="text-red-500">
+                        <b>Description is required*</b>
+                    </div>
+                    <div *ngIf="isSubmitted && sec3_des1?.errors?.['maxlength']" class="text-red-500">
+                        <b>Maximum {{ maxLength4 }} characters allowed.</b> 
+                    </div>
+                    <!-- <div class="text-gray-500">
+                        <div>Text limit: {{ maxLength4 }} characters. Please enter your text within this
+                            limit.</div>
+                        {{ sec3_des1?.value.length }} - {{ maxLength4 }} characters
+                    </div> -->
+
                 </div>
-                <div class="bg-white py-2 rounded space-y-2">
-                    <div class="">
-                        <input formControlName="sec3_title1" type="text" [placeholder]="'Title'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                            <div *ngIf="sec3_title1?.errors?.['maxlength']" class="text-red-500">
-                                Maximum {{ maxLength3 }} characters allowed.
-                            </div>
-                            <div class="text-gray-500">
-                                <div>Text limit: {{ maxLength3 }} characters. Please enter your text within this
-                                    limit.</div>
-                                {{ sec3_title1?.value.length }} / {{ maxLength3 }} characters
-                            </div>
-                            <div *ngIf="isSubmitted && sec3_title1?.errors?.['required']" class="text-red-500">
-                                Title Required
-                            </div>
+                <div class="">
+                    <textarea formControlName="sec3_link1" [placeholder]="'Link* or URL* - Sample URL (like https://www.example.com/sample)'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                    <div *ngIf="isSubmitted && sec3_link1?.errors?.['required']" class="text-red-500">
+                        <b>Link or URL is Required</b>
                     </div>
-                    <div class="">
-                        <input formControlName="sec3_des1" type="text" [placeholder]="'Description'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                            <div *ngIf="sec3_des1?.errors?.['maxlength']" class="text-red-500">
-                                Maximum {{ maxLength4 }} characters allowed.
-                            </div>
-                            <div class="text-gray-500">
-                                <div>Text limit: {{ maxLength4 }} characters. Please enter your text within this
-                                    limit.</div>
-                                {{ sec3_des1?.value.length }} / {{ maxLength4 }} characters
-                            </div>
-                            <div *ngIf="isSubmitted && sec3_des1?.errors?.['required']" class="text-red-500">
-                                Description Required
-                            </div>
-                    </div>
-                    <div class="">
-                        <textarea formControlName="sec3_link1"   [placeholder]="'Link or Url'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                            <!-- <div *ngIf="sec3_link1?.errors?.['maxlength']" class="text-red-500">
+                    <!-- <div *ngIf="sec3_link1?.errors?.['maxlength']" class="text-red-500">
                                 Maximum {{ maxLength5 }} characters allowed.
                             </div>
                             <div class="text-gray-500">
                                 {{ sec3_link1?.value.length }} / {{ maxLength5 }} characters
                             </div> -->
-                            <div *ngIf="isSubmitted && sec3_link1?.errors?.['required']" class="text-red-500">
-                                Link or Url Required
-                            </div>
-                    </div>
+
                 </div>
-                <div class="mb-3"></div>
-                <div class="bg-white py-2 rounded space-y-2">
-                    <div class="">
-                        <input formControlName="sec3_title2" type="text" [placeholder]="'Title'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                            <div *ngIf="sec3_title2?.errors?.['maxlength']" class="text-red-500">
-                                Maximum {{ maxLength6 }} characters allowed.
-                            </div>
-                            <div class="text-gray-500">
-                                <div>Text limit: {{ maxLength6 }} characters. Please enter your text within this
-                                    limit.</div>
-                                {{ sec3_title2?.value.length }} / {{ maxLength6 }} characters
-                            </div>
-                            <div *ngIf="isSubmitted && sec3_title2?.errors?.['required']" class="text-red-500">
-                                Title Required
-                            </div>
+            </div>
+            <div class="mb-3"></div>
+            <div class="bg-white py-2 rounded space-y-2">
+                <div class="">
+                    <input formControlName="sec3_title2" type="text" [placeholder]="'Title*'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                    <div *ngIf="isSubmitted && sec3_title2?.errors?.['required']" class="text-red-500">
+                        <b>Title is required*</b>
                     </div>
-                    <div class="">
-                        <input formControlName="sec3_des2" type="text" [placeholder]="'Description'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                            <div *ngIf="sec3_des2?.errors?.['maxlength']" class="text-red-500">
-                                Maximum {{ maxLength7 }} characters allowed.
-                            </div>
-                            <div class="text-gray-500">
-                                <div>Text limit: {{ maxLength7 }} characters. Please enter your text within this
-                                    limit.</div>
-                                {{ sec3_des2?.value.length }} / {{ maxLength7 }} characters
-                            </div>
-                            <div *ngIf="isSubmitted && sec3_des2?.errors?.['required']" class="text-red-500">
-                                Description Required
-                            </div>
+                    <div *ngIf="isSubmitted && sec3_title2?.errors?.['maxlength']" class="text-red-500">
+                        <b>Maximum {{ maxLength6 }} characters allowed.</b> 
                     </div>
-                    <div class="">
-                        <textarea formControlName="sec3_link2" [placeholder]="'Link or Url'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                            <!-- <div *ngIf="sec3_link2?.errors?.['maxlength']" class="text-red-500">
+                    <!-- <div class="text-gray-500">
+                        <div>Text limit: {{ maxLength6 }} characters. Please enter your text within this
+                            limit.</div>
+                        {{ sec3_title2?.value.length }} - {{ maxLength6 }} characters
+                    </div> -->
+
+                </div>
+                <div class="">
+                    <input formControlName="sec3_des2" type="text" [placeholder]="'Description*'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                    <div *ngIf="isSubmitted && sec3_des2?.errors?.['required']" class="text-red-500">
+                        <b>Description is required*</b>
+                    </div>
+                    <div *ngIf="isSubmitted && sec3_des2?.errors?.['maxlength']" class="text-red-500">
+                        <b> Maximum {{ maxLength7 }} characters allowed. </b>
+                    </div>
+                    <!-- <div class="text-gray-500">
+                        <div>Text limit: {{ maxLength7 }} characters. Please enter your text within this
+                            limit.</div>
+                        {{ sec3_des2?.value.length }} - {{ maxLength7 }} characters
+                    </div> -->
+
+                </div>
+                <div class="">
+                    <textarea formControlName="sec3_link2" [placeholder]="'Link* or URL* - Sample URL (like https://www.example.com/sample)'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </textarea>
+                    <div *ngIf="isSubmitted && sec3_link2?.errors?.['required']" class="text-red-500">
+                        <b>Link or URL is required</b> 
+                    </div>
+                    <!-- <div *ngIf="sec3_link2?.errors?.['maxlength']" class="text-red-500">
                                 Maximum {{ maxLength8 }} characters allowed.
                             </div>
                             <div class="text-gray-500">
                                 {{ sec3_link2?.value.length }} / {{ maxLength8 }} characters
                             </div> -->
-                            <div *ngIf="isSubmitted && sec3_link2?.errors?.['required']" class="text-red-500">
-                                Link or Url Required
-                            </div>
-                            
-                    </div>
+                    
+
                 </div>
-                <div class="mb-3"></div>
-                <div class="bg-white py-2 rounded space-y-2">
-                    <div class="">
-                        <input formControlName="sec3_title3" type="text" [placeholder]="'Title'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                            <div *ngIf="sec3_title3?.errors?.['maxlength']" class="text-red-500">
-                                Maximum {{ maxLength9 }} characters allowed.
-                            </div>
-                            <div class="text-gray-500">
-                                <div>Text limit: {{ maxLength9 }} characters. Please enter your text within this
-                                    limit.</div>
-                                {{ sec3_title3?.value.length }} / {{ maxLength9 }} characters
-                            </div>
-                            <div *ngIf="isSubmitted && sec3_title3?.errors?.['required']" class="text-red-500">
-                                Title Required
-                            </div>
+            </div>
+            <div class="mb-3"></div>
+            <div class="bg-white py-2 rounded space-y-2">
+                <div class="">
+                    <input formControlName="sec3_title3" type="text" [placeholder]="'Title*'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+
+                    <div *ngIf="isSubmitted && sec3_title3?.errors?.['required']" class="text-red-500">
+                        <b>Title is required*</b> 
+                    </div>    
+                    <div *ngIf="isSubmitted && sec3_title3?.errors?.['maxlength']" class="text-red-500">
+                        <b>Maximum {{ maxLength9 }} characters allowed.</b> 
                     </div>
-                    <div class="">
-                        <input formControlName="sec3_des3" type="text" [placeholder]="'Description'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                            <div *ngIf="sec3_des3?.errors?.['maxlength']" class="text-red-500">
-                                Maximum {{ maxLength10 }} characters allowed.
-                            </div>
-                            <div class="text-gray-500">
-                                <div>Text limit: {{ maxLength10 }} characters. Please enter your text within this
-                                    limit.</div>
-                                {{ sec3_des3?.value.length }} / {{ maxLength10 }} characters
-                            </div>
-                            <div *ngIf="isSubmitted && sec3_des3?.errors?.['required']" class="text-red-500">
-                                Description Required
-                            </div>
-                            
+                    <!-- <div class="text-gray-500">
+                        <div>Text limit: {{ maxLength9 }} characters. Please enter your text within this
+                            limit.</div>
+                        {{ sec3_title3?.value.length }} - {{ maxLength9 }} characters
+                    </div> -->
+                    
+                </div>
+                <div class="">
+                    <input formControlName="sec3_des3" type="text" [placeholder]="'Description*'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                    <div *ngIf="isSubmitted && sec3_des3?.errors?.['required']" class="text-red-500">
+                        <b> Description is required* </b>
                     </div>
-                    <div class="">
-                        <textarea formControlName="sec3_link3" [placeholder]="'Link or Url'"
-                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                            <!-- <div *ngIf="sec3_link3?.errors?.['maxlength']" class="text-red-500">
+                    <div *ngIf="isSubmitted && sec3_des3?.errors?.['maxlength']" class="text-red-500">
+                        <b>Maximum {{ maxLength10 }} characters allowed.</b> 
+                    </div>
+                    <!-- <div class="text-gray-500">
+                        <div>Text limit: {{ maxLength10 }} characters. Please enter your text within this
+                            limit.</div>
+                        {{ sec3_des3?.value.length }} - {{ maxLength10 }} characters
+                    </div> -->
+                   
+
+                </div>
+                <div class="">
+                    <textarea formControlName="sec3_link3" [placeholder]="'Link* or URL* - Sample URL (like https://www.example.com/sample)'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </textarea>
+                    <div *ngIf="isSubmitted && sec3_link3?.errors?.['required']" class="text-red-500">
+                        <b>Link or URL is Required</b> 
+                    </div>
+                    <!-- <div *ngIf="sec3_link3?.errors?.['maxlength']" class="text-red-500">
                                 Maximum {{ maxLength11 }} characters allowed.
                             </div>
                             <div class="text-gray-500">
                                 {{ sec3_link3?.value.length }} / {{ maxLength11 }} characters
                             </div> -->
-                            <div *ngIf="isSubmitted && sec3_link3?.errors?.['required']" class="text-red-500">
-                                Link or Url Required
-                            </div> 
-                    </div>
+                    
                 </div>
-                <div class="mb-3"></div>
-                <div class="flex justify-end gap-2">   
-                    <div>
-                        <button  class="ai-button"  (click)="onSubmit()" [disabled]="homeSec3Form.disabled">
-                            {{homeSec3Form.disabled ? "Please wait..." : (homeSec3Form.value.id ? "Update" : "Save") }} 
-                        </button>
-                    </div>
-                    <div>
-                        <button  class="ai-button"> Cancel</button>
-                    </div>    
+            </div>
+            <div class="mb-3"></div>
+            <div class="flex justify-end gap-2">
+                <div>
+                    <button class="ai-button" (click)="onSubmit()" [disabled]="homeSec3Form.disabled">
+                        {{homeSec3Form.disabled ? "Please wait..." : (homeSec3Form.value.id ? "Update" : "Save") }}
+                    </button>
                 </div>
+                <!-- <div>
+                    <button class="ai-button" (click)="onReset()"> Cancel</button>
+                </div> -->
+            </div>
             <!-- </div>  -->
-        </div>   
+        </div>
     </form>
 </div>
-

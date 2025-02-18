@@ -40,6 +40,13 @@ export class HomeCareerSectionInfoCardComponent {
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   imagePreview2: string | ArrayBuffer | null = null;
+  maxLength1:number = 100;
+  maxLength2: number = 500;
+  isSubmitted: boolean = false; // Flag to track form submission
+  hasError: boolean=false;
+  errorMessage1: string='';
+  careerList: any;
+
 
   constructor(private fb: FormBuilder,
     private toastr: ToastrService,
@@ -47,14 +54,22 @@ export class HomeCareerSectionInfoCardComponent {
   ) {
     // this.imagePreview = data?.hero_sec_image_video
     this.formGroup = this.fb.group({
-      title: [null, Validators.required],
-      description: [""],
-      file: [null],
-      file_certificates: [null],
-      id: [null],
-      is_fdel: ['n'],
-      is_fdel_cer: ['n']
+      "title": ["",[Validators.required, Validators.maxLength(this.maxLength1)]],
+      "description": ["",[Validators.required, Validators.maxLength(this.maxLength2)]],
+      "file": [null],
+      "file_certificates": [null],
+      "id": [null],
+      "is_fdel": ['n'],
+      "is_fdel_cer": ['n']
     });
+  }
+
+  get title() {
+    //console.log(this.formGroup.get('title'),"tttttttttttttttttttttttttttt")
+    return this.formGroup.get('title');
+  }
+  get description() {
+    return this.formGroup.get('description');
   }
 
   ngOnInit(): void {
@@ -65,7 +80,8 @@ export class HomeCareerSectionInfoCardComponent {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.formGroup.patchValue({
-        file: target.files[0]
+        file: target.files[0],
+        is_fdel:['n']
       })
       this.selectedImage = target.files[0];
       const reader = new FileReader();
@@ -79,15 +95,18 @@ export class HomeCareerSectionInfoCardComponent {
     }
     else {
       this.formGroup.patchValue({
-        file: null
+        file: null,
+       // is_fdel:['n']
       })
     }
   }
   onFileSelectedCertificate(event: Event) {
+    console.log(event,"eventtt");
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.formGroup.patchValue({
-        file_certificates: target.files[0]
+        file_certificates: target.files[0],
+        is_fdel_cer: ['n']
       })
       this.selectedImage = target.files[0];
       const reader = new FileReader();
@@ -97,29 +116,39 @@ export class HomeCareerSectionInfoCardComponent {
           this.imagePreview2 = reader.result; // Set the image preview
         }
       };
+      console.log(target.files[0].type, "sizeee");
+      const validFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+      //const validVdFormats = ['video/mp4'];
+     
+      if (!validFormats.includes(target.files[0].type)) {
+        this.hasError = true;
+        this.errorMessage1 = 'Only .png, .jpg and .jpeg formats are supported.';
+        return; // Prevent further processing
+      }
+      this.hasError = false;
+      this.errorMessage1 = '';
       reader.readAsDataURL(this.selectedImage);
     }
     else {
       this.formGroup.patchValue({
-        file_certificates: null
+        file_certificates: null,
+      //  is_fdel_cer: ['n']
       })
     }
   }
-
-
 
   getCareerListData(data?: any) {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getCareerList(params).pipe().subscribe(
       (res: any) => {
-        let img: any = res.file;
-        // let crt:any = res?.certifcates?.map((x:any)=>{
-        //   return x.file_path;
-        // })
+        this.careerList= res;
+        console.log("res",res);
+        let img: any = res?.file_path;
+       
         let crt: any = Array.isArray(res?.certifcates)
-          ? res.certifcates.map((x: any) => x.file_path)
+          ? res?.certifcates?.map((x: any) => x.file_path)
           : [];
-        console.log(img, crt, "test career img");
+       console.log(img, crt, "test career img");
 
         this.formGroup.patchValue({
           title: res.title,
@@ -129,6 +158,7 @@ export class HomeCareerSectionInfoCardComponent {
           id: res?.setting_id
         });
         this.imagePreview = res?.file_path
+        this.imagePreview2 = crt[0] != "" && crt[0] != null ? crt[0] : null;
         // this.imagePreview2 = res?.certifcates?.map((x:any)=>{
         //   return x.file_path;
         // })
@@ -149,8 +179,8 @@ export class HomeCareerSectionInfoCardComponent {
   }
 
   onSubmit() {
+    this.isSubmitted = true;
     this.formGroup.markAllAsTouched();
-
     if (this.formGroup.valid) {
       this.formGroup.disable(); // Disable the form to prevent multiple submissions
       // const formData = new FormData();
@@ -163,6 +193,7 @@ export class HomeCareerSectionInfoCardComponent {
       //   formData.append('file_certificates',this.formGroup.value.file_certificates)
 
       let formData = this.formGroup.getRawValue();
+      console.log(formData,"formDataaaa")
       if (!formData.id) {
         delete formData.id
       }
@@ -172,6 +203,7 @@ export class HomeCareerSectionInfoCardComponent {
             timeOut: 1000, // Display for 1 seconds
           });
           this.getCareerListData();
+        //  this.formGroup.enable();
         },
         error: (error) => {
           this.formGroup.enable();
@@ -183,20 +215,25 @@ export class HomeCareerSectionInfoCardComponent {
     }
   }
 
-  deleteItem(item?: any) {
+  deleteItem1(item?: any) {
+    console.log(item,"itemmmmmmmmmmmmmmmmmmmmmmm");
     this.imagePreview = null;
     this.formGroup.patchValue({
-      is_fdel: 'y'
+      file: null,
+      is_fdel:'y'
     })
     this.onSubmit();
 
   }
 
   deleteItem2(item?: any) {
+    console.log(item);
     this.imagePreview2 = null;
     this.formGroup.patchValue({
-      is_fdel_cer: 'y'
+      file_certificates: null,
+      is_fdel_cer:'y'
     })
+   
     this.onSubmit();
   }
 

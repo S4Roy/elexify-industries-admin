@@ -138,8 +138,15 @@ export class MasterService {
   saveTestimonials(payload: any) {
     return this.httpService.post('admin/home/section/save/news-event', payload);
   }
+  deleteMoreSatsData(payload: any){
+    return this.httpService.post('admin/home/section/delete/more-about-airindia-sats/image', payload);
+  }
 
   //admin/news-list
+
+  getAwardList(params: any) {
+    return this.httpService.get('admin/award-list', params);
+  }
 
   getNewsList(params: any) {
     return this.httpService.get('admin/news-list', params);
@@ -148,6 +155,16 @@ export class MasterService {
   getClientList(params: any) {
     return this.httpService.get('admin/client-list', params);
   }
+
+
+
+
+
+
+
+  //  getServiceManagementList(params:any)  { //admin/service/list?page=1&limit=10&sort_order=asc%2Fdesc&sort_by=name%2Fcreated_at
+  //     return this.httpService.get('admin/service/list', params);
+  //   }
 
 
   

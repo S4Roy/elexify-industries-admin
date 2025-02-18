@@ -1,28 +1,25 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../../core/services/auth.service';
-import { ThumbnailComponent } from '../../thumbnail/thumbnail.component';
+import { ThumbnailComponent } from '../../../includes/thumbnail/thumbnail.component';
+import { MenuComponent } from '../../../includes/menu/menu.component';
 import { NgIf } from '@angular/common';
-import { MasterService } from '../../../../../core/services/master.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { MenuComponent } from '../../menu/menu.component';
+import { MasterServiceManagementService } from '../../../../../core/services/master-service-management.service';
 
 
 @Component({
-  selector: 'app-new-hero-section',
-  imports: [MatDialogModule,
-    MenuComponent, MatIconModule, MatButtonModule, ReactiveFormsModule, NgIf],
-  templateUrl: './new-hero-section.component.html',
-  styleUrl: './new-hero-section.component.scss'
+  selector: 'app-add-new-services',
+  imports: [MatDialogModule, MatIconModule, MatButtonModule, ReactiveFormsModule, MenuComponent, NgIf],
+  templateUrl: './add-new-services.component.html',
+  styleUrl: './add-new-services.component.scss'
 })
-export class NewHeroSectionComponent {
-
-  homeHeroSecForm!: FormGroup;
+export class AddNewServicesComponent {
+  formGroup!: FormGroup;
   encodedUrl: any = null;
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
@@ -37,42 +34,37 @@ export class NewHeroSectionComponent {
   maxLength1: number = 300;
   maxLength2: number = 300;
   isSubmitted: boolean = false; // Flag to track form submission
-
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private route: ActivatedRoute,
-    private master: MasterService,
     private authService: AuthService,
-    public dialogRef: MatDialogRef<NewHeroSectionComponent>,
+    private masterServiceManagement: MasterServiceManagementService,
+    public dialogRef: MatDialogRef<AddNewServicesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-
+    console.log(this.data);
+   // this.formGroup.patchValue(this.data);
+   
     this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
-    if (data?.file_type == 'image') {
-      this.imagePreview = data?.hero_sec_image_video
-    } else {
-      this.videoPreview = data?.hero_sec_image_video
-    }
-
-    this.homeHeroSecForm = this.fb.group({
-      hero_sec_main_heading: [data?.hero_sec_main_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength1)]],
-      hero_sec_sub_heading: [data?.hero_sec_sub_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength2)]],
+    this.formGroup = this.fb.group({
+      name: [""],
+      description: [""],
+      caption_text: [""],
+      status: [""],
       file: [""] // Form control for the image
+      // hero_sec_main_heading: [data?.hero_sec_main_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength1)]],
+      // hero_sec_sub_heading: [data?.hero_sec_sub_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength2)]],
+      // file: [""] // Form control for the image
     });
-  }
-
-  get hero_sec_main_heading() {
-    return this.homeHeroSecForm.get('hero_sec_main_heading');
-  }
-  get hero_sec_sub_heading() {
-    return this.homeHeroSecForm.get('hero_sec_sub_heading');
+    this.data? this.formGroup.patchValue(this.data) : null
   }
 
   onFileSelected(event: Event) {
+    console.log(event,"eventtttttttttttttt");
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
-      this.homeHeroSecForm.patchValue({
+      this.formGroup.patchValue({
         file: target.files[0]
       })
       this.selectedImage = target.files[0];
@@ -116,12 +108,12 @@ export class NewHeroSectionComponent {
       this.errorMessage1 = '';
       this.errorMessage2 = '';
       this.errorMessage3 = '';
-
+      console.log(this.selectedImage)
       reader.readAsDataURL(this.selectedImage);
 
     }
     else {
-      this.homeHeroSecForm.patchValue({
+      this.formGroup.patchValue({
         file: null
       })
     }
@@ -132,21 +124,23 @@ export class NewHeroSectionComponent {
     this.videoPreview = null;
   }
 
-  // editItem(item: any) {
-  //   document.getElementById("chooseFile")?.click()
-  // }
-
-  submitHeroSecData() {
-    this.isSubmitted = true;
-    this.homeHeroSecForm.markAllAsTouched();
-    if (this.homeHeroSecForm.valid) {
-      this.homeHeroSecForm.disable();
-      let formData = this.homeHeroSecForm.getRawValue();
+  onSubmit() {
+    // this.isSubmitted = true;
+    this.formGroup.markAllAsTouched();
+    if (this.formGroup.valid) {
+      this.formGroup.disable();
+      let formData = this.formGroup.getRawValue();
       if (this.data?.id) {
         formData.id = this.data.id;
-        formData.setting_id = this.data.setting_id;
+        //formData.setting_id = this.data.setting_id;
       }
-      this.master.addHeroSectionData(formData).subscribe({
+      let apiUrl = 
+      this.data ? this.masterServiceManagement.editServiceManagement(formData)
+        :
+        this.masterServiceManagement.addServiceManagement(formData)
+      
+      // this.masterServiceManagement.addServiceManagement(formData)
+      apiUrl.subscribe({
         next: (response) => {
           console.log('Upload successful', response);
           this.toastr.success('Data Saved Successfully!', '', {
@@ -156,13 +150,14 @@ export class NewHeroSectionComponent {
         },
         error: (error) => {
           console.error('Upload failed', error);
-          this.homeHeroSecForm.enable();
+          this.formGroup.enable();
         },
         complete: () => {
-          this.homeHeroSecForm.enable();
+          this.formGroup.enable();
         }
       });
     }
 
   }
+
 }

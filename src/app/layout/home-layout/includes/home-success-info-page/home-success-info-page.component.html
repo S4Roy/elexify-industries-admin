@@ -5,9 +5,15 @@
                 <div class="">
                     <!-- <ng-select [addTag]="true" [multiple]="true">  
                    </ng-select> -->
-                    <ng-select bindLabel="blog_title" formControlName="blogs" bindValue="id"
-                        [items]="blogList" [multiple]="true">
+                    <ng-select bindLabel="blog_title" formControlName="blogs" 
+                    bindValue="id" (change)="onBlogsChange($event)"
+                    [items]="blogList" [placeholder]="'Select Blogs (up to 3)'" 
+                    [multiple]="true">
                     </ng-select>
+                    <div *ngIf="confirmationMessage" class="text-red-500 mt-2">
+                        <b>{{ confirmationMessage }}</b> 
+                    </div>
+    
                 </div>
                 <div class="mb-3"></div>
 
@@ -17,9 +23,9 @@
                             {{formGroup.disabled ? "Please wait..." : (formGroup.value.id ? "Update" : "Save") }}
                         </button>
                     </div>
-                    <div>
+                    <!-- <div>
                         <button class="ai-button"> Cancel</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
     </form>
