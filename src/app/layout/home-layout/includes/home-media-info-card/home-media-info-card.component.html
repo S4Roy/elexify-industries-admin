@@ -1,0 +1,46 @@
+<!-- <p>home-media-info-card works!</p> -->
+<div>
+    <!-- <form [formGroup]="formGroup" (ngSubmit)="onSubmit()"> -->
+    <form [formGroup]="formGroup" >
+            <div class="w-[100%] bg-white p-3 rounded space-y-6">
+                <div class="">
+                    <input type="text" formControlName="heading_text_1" [placeholder]="'Heading*'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
+                <div class="">
+                    <textarea formControlName="heading_text_2" [placeholder]="'Description'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                </div>
+                <div class="">
+                    <textarea formControlName="certificate" [placeholder]="'Certificate'"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                </div>
+                <div class="mb-3"></div>
+
+                <div class="">
+                    <ng-select bindLabel="award_title" 
+                    formControlName="awards" bindValue="id"
+                    (change)="onAwardsChange($event)"
+                    [items]="awardList" [multiple]="true" 
+                    [placeholder]="'Select Awards (up to 3)'">
+                        
+                    </ng-select>
+                    <div *ngIf="confirmationMessage" class="text-red-500 mt-2">
+                        <b>{{ confirmationMessage }}</b> 
+                    </div>
+                </div>
+                <div class="mb-3"></div>
+
+                <div class="flex justify-end gap-2">
+                    <div>
+                        <button class="ai-button" (click)="onSubmit()" [disabled]="formGroup.disabled"> 
+                            {{formGroup.disabled ? "Please wait..." : (formGroup.value.id ? "Update" : "Save") }}
+                        </button>
+                    </div>
+                    <!-- <div>
+                        <button class="ai-button">Cancel</button>
+                    </div> -->
+                </div>
+            </div>
+    </form>
+</div>

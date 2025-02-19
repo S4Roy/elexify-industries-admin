@@ -1,0 +1,73 @@
+<nav class="bg-gray-100">
+  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-2">
+    <div class="relative flex h-12 items-center justify-between">
+      <div class="h-[100%] flex items-center">
+        <div class="flex shrink-0 items-center">
+          <button (click)="toggleSideNav.emit(isNavOpen)">
+            <img class="h-8 w-auto" src="assets/{{
+                isNavOpen ? 'arrow-left-linear.png' : 'menu.png'
+              }}" alt="icon" />
+          </button>
+          <ng-container *ngIf="!isNavOpen">
+            <div>
+              <img class="h-8 w-auto" src="assets/air-india.png" alt="Your Company" />
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="open-outlet flex justify-end items-center">
+        <mat-icon class="mx-4">notifications</mat-icon>
+
+        <!-- Profile dropdown -->
+        <div class="">
+          <button class="flex items-center justify-center" [matMenuTriggerFor]="menu">
+            <img alt="" src="assets/avatar.jpg" class="inline-block size-7 rounded-full ring-1 ring-red-600" /><span
+              class="mx-3 flex flex-col leading-3 items-start justify-start">
+              <span class="block text-sm text-black">Air India Admin</span>
+              <small class="block text-gray-500">Super Admin</small>
+            </span>
+            <mat-icon class="ml-4">keyboard_arrow_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <div class="profile-menu">
+              <img alt="" src="assets/avatar.jpg" class="inline-block size-7 rounded-full ring-1 ring-red-600" />
+              <div class="right-side">
+                <div class="item">
+                  {{ userDetails?.name }}
+                </div>
+                <div class="item email">{{ userDetails?.email }}</div>
+                <div class="item">
+                  <a class="text-primary" routerLink="/settings/basic-information">
+                    My Account</a>
+                  <span class="dot mx-2"></span>
+                  <a href="javascript:void(0)" (click)="signOut()" class="text-danger">Sign Out</a>
+                </div>
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
+            <!-- <button mat-menu-item>
+              <mat-icon>security</mat-icon>
+              <span class="txt-spn">Change Password</span></button><button mat-menu-item>
+              <mat-icon>help</mat-icon>
+              <span class="txt-spn">Help & Support</span>
+            </button> -->
+
+            <!-- <button mat-menu-item>
+              <mat-icon>call</mat-icon>
+              <span class="txt-spn">Request a call</span>
+            </button> -->
+            <button mat-menu-item>
+              <mat-icon>contact_support</mat-icon>
+              <span class="txt-spn">Contact Support</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>download</mat-icon>
+              <span class="txt-spn">User Manual</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

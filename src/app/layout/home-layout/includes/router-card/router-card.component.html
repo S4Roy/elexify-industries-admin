@@ -1,0 +1,15 @@
+<div class="relative flex items-end p-4 border rounded bg-white overflow-hidden">
+  <div class="settings-bg-card"></div>
+  <div class="flex flex-col w-4/5">
+    <div class="w-12 h-12 ring-4 mb-2 ring-red-200 text-white rounded-full">
+      <div class="w-full flex justify-center items-center h-full bg-red-500 rounded-full">
+        <img class="block h-8" [src]="item?.icon ?? 'assets/faq.png'" alt="" />
+      </div>
+    </div>
+    <span class="text-sm font-medium">{{ item?.label }}</span>
+    <span class="block text-xs text-gray-500">{{ item?.description }}</span>
+  </div>
+  <a [routerLink]="[item?.router_path]" class="w-1/5 flex justify-end cursor-pointer">
+    <img src="assets/arrow-right.png" alt="" />
+  </a>
+</div>

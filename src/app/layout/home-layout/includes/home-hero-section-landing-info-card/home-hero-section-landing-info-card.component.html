@@ -1,0 +1,18 @@
+<div class="grid grid-cols-3  gap-4">
+    <button (click)="addItem()" class="border rounded flex justify-center items-center">
+      <mat-icon class="me-1">add</mat-icon>Add New
+    </button>
+    
+    <!-- <ng-container *ngFor="let item of [1, 2, 3, 1, 2, 3, 4]"> -->     
+    <ng-container *ngFor="let item of heroSectionData">     
+      <div class="relative p-4 border rounded flex justify-center"  [matTooltip]="item?.hero_sec_main_heading">
+        <span class="absolute top-0 right-0">
+          <app-menu (initModal)="addItem($event)" [modalItem]="item" [delete]="item" (deleteItem)="deleteItem($event)"></app-menu>
+        </span>
+        <img *ngIf="item.file_type === 'image'" class="block h-40" [src]="item.hero_sec_image_video" alt="Hero Image" />
+        <video class="block h-40" *ngIf="item.file_type === 'video'" [src]="item.hero_sec_image_video" controls>
+            Your browser does not support the video tag.
+        </video>
+      </div>
+    </ng-container>
+</div>

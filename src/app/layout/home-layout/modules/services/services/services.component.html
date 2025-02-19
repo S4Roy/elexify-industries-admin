@@ -1,0 +1,53 @@
+<!-- <p>services works!</p> -->
+<div class="relative overflow-x-auto">
+    <div class="m-3 flex justify-between items-center">
+      <div class="flex flex-col items-start">
+        <span class="text-base font-medium">Service Lists</span>
+        <span class="block text-gray-500 text-xs">2 Services added</span>
+      </div>
+      <button (click)="addItem()" class="ai-button">+ Add New</button>
+    </div>
+    <hr />
+    <div class="m-3">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+          <tr>
+            <!-- <th scope="col"></th> -->
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Caption Text</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of service_list">
+            <tr>
+              <!-- <td scope="row" class="font-medium text-gray-900 whitespace-nowrap"></td> -->
+              <td >
+                {{item.name}}
+              </td>
+              <td >
+                {{item.description}}
+              </td>
+              <td>{{item.caption_text}}</td>
+              <td>{{item.status}}</td>
+              
+              <td class="text-center">
+                <!-- <app-menu [modalItem]="1" [delete]="deleteItems(item?.id)"></app-menu> -->
+                <app-menu (initModal)="editItem($event)" [modalItem]="item" 
+                [delete]="item" (deleteItem)="deleteItems($event)"></app-menu>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="!service_list?.length">
+            <tr>
+              <td class="text-center" colspan="5">NO ITEMS FOUND</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+</div>
+<router-outlet></router-outlet>
+

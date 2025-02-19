@@ -1,0 +1,17 @@
+<div class="flex p-2 pb-0 mt-2 mb-0 system-bg" *ngIf="breadcrumbs?.length">
+  <!-- {{breadcrumbs?.length}} -->
+  <ng-container *ngIf="settingsOutlet || usersOutlet">
+    <a class="font-medium flex items-center" [routerLink]="">
+      OTHERS
+      <img src="assets/double-arrow.png" alt="arrow" class="mx-1 inline-block size-5" />
+    </a>
+  </ng-container>
+  <ng-container *ngFor="let item of breadcrumbs; let l = last">
+    <!-- {{breadcrumbs | json}} -->
+    <a class="font-medium flex items-center" [routerLink]="[item?.url]" [routerLinkActiveOptions]="{ exact: true }"
+      routerLinkActive="text-green-600">
+      {{ item?.label | uppercase }}
+      <img src="assets/double-arrow.png" alt="arrow" class="mx-1 inline-block size-5" />
+    </a>
+  </ng-container>
+</div>
