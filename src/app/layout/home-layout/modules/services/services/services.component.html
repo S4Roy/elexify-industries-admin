@@ -3,16 +3,15 @@
     <div class="m-3 flex justify-between items-center">
       <div class="flex flex-col items-start">
         <span class="text-base font-medium">Service Lists</span>
-        <span class="block text-gray-500 text-xs">2 Services added</span>
+        <span class="block text-gray-500 text-xs">{{rows.length}} Services added</span>
       </div>
       <button (click)="addItem()" class="ai-button">+ Add New</button>
     </div>
     <hr />
-    <div class="m-3">
+     <!--<div class="m-3 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <!-- <th scope="col"></th> -->
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Caption Text</th>
@@ -23,7 +22,6 @@
         <tbody>
           <ng-container *ngFor="let item of service_list">
             <tr>
-              <!-- <td scope="row" class="font-medium text-gray-900 whitespace-nowrap"></td> -->
               <td >
                 {{item.name}}
               </td>
@@ -34,7 +32,7 @@
               <td>{{item.status}}</td>
               
               <td class="text-center">
-                <!-- <app-menu [modalItem]="1" [delete]="deleteItems(item?.id)"></app-menu> -->
+               
                 <app-menu (initModal)="editItem($event)" [modalItem]="item" 
                 [delete]="item" (deleteItem)="deleteItems($event)"></app-menu>
               </td>
@@ -46,8 +44,54 @@
             </tr>
           </ng-container>
         </tbody>
-      </table>
-    </div>
+      </table>    
+    </div> -->
+    <input type="text" style="padding:8px;margin:15px auto;width:30%;" placeholder="Type to filter the name column..." 
+      (keyup)="updateFilter($event)" />
+
+    <ng-container *ngIf="rows.length > 0">
+      <ngx-datatable
+        #table
+        class="material"
+        [columns]="columns"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        rowHeight="auto"
+        [limit]="1"
+        [rows]="rows">
+
+      <ng-container *ngFor="let column of columns">
+        <ngx-datatable-column [name]="column.name" [prop]="column.prop">
+          <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
+            <ng-container *ngIf="column.prop === 'action'; else defaultTemplate">
+                <span  matRipple mat-button [matMenuTriggerFor]="menu" matTooltip="View content" class="hover-effect">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">  
+                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                  </svg>
+                </span>
+              <mat-menu #menu="matMenu">
+                  <ng-container class="menu-content">
+                      <ol class="p-4">
+                          <li class="p-1" (click)="editItem(row)">
+                            Edit
+                          </li>
+                          <li class="p-1" (click)="deleteItems(row)">
+                            Delete
+                        </li>
+                      </ol>
+                  </ng-container>
+              </mat-menu>
+            </ng-container>
+            <ng-template #defaultTemplate>
+              {{row[column.prop]}}
+            </ng-template>
+
+          </ng-template>
+        </ngx-datatable-column>
+      </ng-container>
+    </ngx-datatable>
+    </ng-container>
 </div>
 <router-outlet></router-outlet>
 

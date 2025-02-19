@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MenuComponent } from '../../../includes/menu/menu.component';
+import { Component, ViewChild } from '@angular/core';
+//import { MenuComponent } from '../../../includes/menu/menu.component';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 //import { AddNewUserComponent } from '../add-new-user/add-new-user.component';
@@ -9,26 +9,42 @@ import { MasterServiceManagementService } from '../../../../../core/services/mas
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { MasterService } from '../../../../../core/services/master.service';
+import { ColumnMode, DatatableComponent, NgxDatatableModule, SelectionType } from '@swimlane/ngx-datatable';
+import { MatMenuModule } from '@angular/material/menu';
+ 
 
 @Component({
   selector: 'app-services',
-  imports: [MenuComponent, NgFor, NgIf, RouterOutlet],
+  imports: [NgFor, NgIf, RouterOutlet, NgxDatatableModule, MatMenuModule],
   templateUrl: './services.component.html',
-  styleUrl: './services.component.scss'
+  styleUrl: './services.component.scss',
+  providers: [MasterServiceManagementService],
 })
 export class ServicesComponent {
 
+  //@ViewChild(DatatableComponent) table: DatatableComponent<any> | any;
+
+  rows: any[] = [];
   service_list: any = [];
+  columns:any[] = [
+    { name: 'Name', prop: 'name' },
+    { name: 'Description', prop: 'description' },
+    { name: 'Caption Text', prop: 'caption_text' },
+    { name: 'Status', prop: 'status' },
+    { name: 'Action', prop: 'action' },
+  ];
+  ColumnMode = ColumnMode;
+  temp: any[] = [];
+
   constructor(private dialog: MatDialog,
-    private masterServiceManagement: MasterServiceManagementService,
-    private toastr: ToastrService,
-    private master: MasterService,
-    private sanitizer: DomSanitizer,
-
-  ) {
-   // this.data? this.formGroup.patchValue(this.data) : null
-
-  }
+              private masterServiceManagement: MasterServiceManagementService,
+              private toastr: ToastrService,
+              private master: MasterService,
+              private sanitizer: DomSanitizer) 
+              {
+                // this.data? this.formGroup.patchValue(this.data) : null
+                this.rows = [];
+              }
 
   ngOnInit() {
     this.getServiceManagementListData();
@@ -41,37 +57,18 @@ export class ServicesComponent {
         disableClose: true,
       })
       .afterClosed()
-      .subscribe((res: any) => {
-        this.getServiceManagementListData();
-
-      });
+        .subscribe((res: any) => {
+          this.getServiceManagementListData();
+        });
   }
-  // getHeroSectionData(data?: any) {
-  //   let params: URLSearchParams = new URLSearchParams();
-  //   this.master.getHeroSectionData(params).pipe().subscribe(
-  //     (res: any) => {
-  //      // console.log(res, "heroSectionData ressssssssss");
-  //       this.heroSectionData = res;
-  //     },
-  //     err => {
-  //       this.toastr.error(err.error.msg, '', {
-  //         timeOut: 1000,
-  //       });
-  //       // this.loading = LoadingState.Ready;
-  //     }
-  //   );
-  // }
 
   getServiceManagementListData(data?: any) {
-
     let params: URLSearchParams = new URLSearchParams();
     params.set('page_size', '0');
-
     this.masterServiceManagement.getServiceManagementList(params).pipe().subscribe(
       (res: any) => {
-        console.log(res,"testttttt");
-        // console.log(res, "heroSectionData ressssssssss");
-        this.service_list = res.results;
+        //this.service_list = res.results;
+        this.rows = res.results;
       },
       err => {
         this.toastr.error(err.error.msg, '', {
@@ -86,11 +83,9 @@ export class ServicesComponent {
     console.log(item);
     const deletePayload = {
       id: item.id, 
-     // setting_id: item.setting_id,
     };
     this.masterServiceManagement.deleteServiceManagementList(deletePayload).subscribe({
       next: (response) => {
-       // console.log('Upload successful', response);
         this.toastr.success('Item Deleted Successfully!', '', {
           timeOut: 1000, // Display for 1 seconds
         });
@@ -108,20 +103,35 @@ export class ServicesComponent {
   }
 
   editItem(item:any){
-
-        this.dialog
-      .open(AddNewServicesComponent, {
-        data: item,
-        disableClose: true,
-      })
-      .afterClosed()
+    this.dialog
+    .open(AddNewServicesComponent, {
+      data: item,
+      disableClose: true,
+    })
+    .afterClosed()
       .subscribe((res: any) => {
-
+        this.getServiceManagementListData();
       });
-
   }
-    
-    
-  
+
+  updateFilter(event?:any) {
+    const val = event.target.value.toLowerCase();
+    let abc: any = this.rows.filter(function (d:any) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || 
+             d.description.toLowerCase().indexOf(val) !== -1 || 
+             d.caption_text.toLowerCase().indexOf(val) !== -1 ||  
+             d.status.toLowerCase().indexOf(val) !== -1 || !val ;
+    });
+    if (val){
+      this.rows = abc;
+    }else if (val === ''){
+      this.getServiceManagementListData();
+    }
+    // this.rows = this.temp.filter(function (d:any) {
+    //   return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    // });
+    // Whenever the filter changes, always go back to the first page
+    // this.table.offset = 0;
+  } 
 
 }
