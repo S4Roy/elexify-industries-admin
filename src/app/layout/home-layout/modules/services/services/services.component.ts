@@ -25,7 +25,6 @@ export class ServicesComponent {
   //@ViewChild(DatatableComponent) table: DatatableComponent<any> | any;
 
   rows: any[] = [];
-  service_list: any = [];
   columns:any[] = [
     { name: 'Name', prop: 'name' },
     { name: 'Description', prop: 'description' },
@@ -47,22 +46,20 @@ export class ServicesComponent {
               }
 
   ngOnInit() {
-    this.getServiceManagementListData();
+    this.getServiceManagementList();
   }
 
   addItem(data: any = null) {
-    this.dialog
-      .open(AddNewServicesComponent, {
-        data: data,
-        disableClose: true,
-      })
-      .afterClosed()
-        .subscribe((res: any) => {
-          this.getServiceManagementListData();
-        });
+    this.dialog.open(AddNewServicesComponent, {
+      data: data,
+      disableClose: true,
+    })
+    .afterClosed().subscribe((res: any) => {
+      this.getServiceManagementList();
+    });
   }
 
-  getServiceManagementListData(data?: any) {
+  getServiceManagementList(data?: any) {
     let params: URLSearchParams = new URLSearchParams();
     params.set('page_size', '0');
     this.masterServiceManagement.getServiceManagementList(params).pipe().subscribe(
@@ -89,7 +86,7 @@ export class ServicesComponent {
         this.toastr.success('Item Deleted Successfully!', '', {
           timeOut: 1000, // Display for 1 seconds
         });
-        this.getServiceManagementListData();
+        this.getServiceManagementList();
        
       },
       error: (error) => {
@@ -103,15 +100,13 @@ export class ServicesComponent {
   }
 
   editItem(item:any){
-    this.dialog
-    .open(AddNewServicesComponent, {
+    this.dialog.open(AddNewServicesComponent, {
       data: item,
       disableClose: true,
     })
-    .afterClosed()
-      .subscribe((res: any) => {
-        this.getServiceManagementListData();
-      });
+    .afterClosed().subscribe((res: any) => {
+      this.getServiceManagementList();
+    });
   }
 
   updateFilter(event?:any) {
@@ -124,13 +119,10 @@ export class ServicesComponent {
     });
     if (val){
       this.rows = abc;
-    }else if (val === ''){
-      this.getServiceManagementListData();
     }
-    // this.rows = this.temp.filter(function (d:any) {
-    //   return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    // });
-    // Whenever the filter changes, always go back to the first page
+    else if (val === ''){
+      this.getServiceManagementList();
+    }
     // this.table.offset = 0;
   } 
 
