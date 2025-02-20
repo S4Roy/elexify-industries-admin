@@ -29,9 +29,8 @@ export class NewsEventComponent implements OnInit {
   rows: any[] = [];
   columns:any[] = [
     { name: 'Title', prop: 'title' },
-    { name: 'Type', prop: 'type' },
-    // { name: 'Caption Text', prop: 'caption_text' },
-    // { name: 'Status', prop: 'status' },
+    { name: 'Description', prop: 'description' },
+    { name: 'Status', prop: 'status' },
     { name: 'Action', prop: 'action' },
   ];
   ColumnMode = ColumnMode;

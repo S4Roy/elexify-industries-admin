@@ -24,6 +24,7 @@ export class AwardsComponent implements OnInit {
   rows: any[] = [];
   columns:any[] = [
     { name: 'Title', prop: 'title' },
+    { name: 'Description', prop: 'description' },
     { name: 'Status', prop: 'status' },
     { name: 'Image', prop: 'award_images' },
     { name: 'Action', prop: 'action' },
