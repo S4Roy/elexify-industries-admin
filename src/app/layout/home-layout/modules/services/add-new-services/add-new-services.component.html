@@ -29,8 +29,6 @@
                                 <div class="mt-2">
                                     <textarea formControlName="description" type="text"
                                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                                    <!-- <input formControlName="description" type="text"
-                                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" /> -->
                                 </div>
                             </div>
                             <div>
@@ -64,7 +62,6 @@
                                                 <img src="assets/placeholder-image-outline.png" alt="Upload Image" />
                                                 <div *ngIf="!isSubmitted || !hasError  || !hasSzError"
                                                     class="text-center text-red-600 font-normal italic">
-                                                    <!-- <div>Upload Image Here</div> -->
                                                     <div style="color: red;">Minimum size required: 1920 width x 640
                                                         height</div>
                                                     <div class="mb-3"></div>
@@ -78,15 +75,7 @@
                                                     <div *ngIf="hasError"><b>{{errorMessage1}}</b></div>
                                                     <div *ngIf="hasVdError"><b>{{errorMessage2}}</b> </div>
                                                     <div *ngIf="hasSzError"><b>{{errorMessage3}}</b></div>
-
-                                                    <!-- Minimum size required: 1920 width x 640 height -->
-                                                    <!-- Only .png, .jpg, .jpeg .gif format image upload here -->
-
                                                 </div>
-                                                <!-- <div *ngIf="hasError"
-                                                    class="text-center text-red-600 font-normal italic">
-                                                    Only .png, .jpg, .jpeg format image upload here
-                                                </div> -->
                                                 <input id="chooseFile" hidden type="file" class="d-none"
                                                     (change)="onFileSelected($event)" accept="video/*,image/*" />
                                             </label>

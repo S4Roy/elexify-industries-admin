@@ -63,6 +63,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'auth',
+    loadChildren: () =>
+      import('./layout/auth-layout/auth-layout.module').then(
+        (m) => m.AuthLayoutModule
+      ),
+    canActivate: [guestGuard],
+  },
+  {
     path: 'services',
     loadChildren: () =>
       import('./layout/home-layout/modules/services/services.module').then(
@@ -71,12 +79,46 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'auth',
+    path: 'media',
     loadChildren: () =>
-      import('./layout/auth-layout/auth-layout.module').then(
-        (m) => m.AuthLayoutModule
+      import('./layout/home-layout/modules/media-management/media-management.module').then(
+        (m) => m.MediaManagementModule
       ),
-    canActivate: [guestGuard],
+  },
+  {
+    path: 'enquiry',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/enquiry-management/enquiry-management.module').then(
+        (m) => m.EnquiryManagementModule
+      ),
+  },
+  {
+    path: 'career',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/career-management/career-management.module').then(
+        (m) => m.CareerManagementModule
+      ),
+  },
+  {
+    path: 'clientele',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/clientele/clientele.module').then(
+        (m) => m.ClienteleModule
+      ),
+  },
+  {
+    path: 'awards',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/awards/awards.module').then(
+        (m) => m.AwardsModule
+      ),
+  },
+  {
+    path: 'newsevent',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/news-event/news-event.module').then(
+        (m) => m.NewsEventModule
+      ),
   },
   {
     path: '**',

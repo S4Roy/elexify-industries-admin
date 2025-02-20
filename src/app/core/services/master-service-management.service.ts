@@ -37,4 +37,19 @@ export class MasterServiceManagementService {
   deleteServiceManagementList(payload:any) {
     return this.httpService.post('admin/service/delete' ,payload);
   }
+
+  // AWARDS
+  awardList(payload: any){
+    return this.httpService.postFormData('admin/award/list', payload);
+  }
+  addAward(payload: any){
+    return this.httpService.postFormData('admin/award/add', payload);
+  }
+  editAward(payload: any){
+    return this.httpService.postFormData('admin/award/edit', payload);
+  }
+
+  deleteAward(payload: any){
+    return this.httpService.postFormData('admin/award/delete', payload);
+  }
 }
