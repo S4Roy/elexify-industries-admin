@@ -68,9 +68,7 @@ export class ServicesComponent {
         this.rows = res.results;
       },
       err => {
-        this.toastr.error(err.error.msg, '', {
-          timeOut: 1000,
-        });
+        this.toastr.error(err.error.msg, '', { timeOut: 1000 });
         // this.loading = LoadingState.Ready;
       }
     );
@@ -83,11 +81,8 @@ export class ServicesComponent {
     };
     this.masterServiceManagement.deleteServiceManagementList(deletePayload).subscribe({
       next: (response) => {
-        this.toastr.success('Item Deleted Successfully!', '', {
-          timeOut: 1000, // Display for 1 seconds
-        });
+        this.toastr.success('Item Deleted Successfully!', '', { timeOut: 1000 });
         this.getServiceManagementList();
-       
       },
       error: (error) => {
         console.error('Upload failed', error);
@@ -111,14 +106,14 @@ export class ServicesComponent {
 
   updateFilter(event?:any) {
     const val = event.target.value.toLowerCase();
-    let abc: any = this.rows.filter(function (d:any) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || 
-             d.description.toLowerCase().indexOf(val) !== -1 || 
-             d.caption_text.toLowerCase().indexOf(val) !== -1 ||  
-             d.status.toLowerCase().indexOf(val) !== -1 || !val ;
+    let searchItem: any = this.rows.filter(function (item:any) {
+      return item.name.toLowerCase().indexOf(val) !== -1 || 
+             item.description.toLowerCase().indexOf(val) !== -1 || 
+             item.caption_text.toLowerCase().indexOf(val) !== -1 ||  
+             item.status.toLowerCase().indexOf(val) !== -1 || !val ;
     });
     if (val){
-      this.rows = abc;
+      this.rows = searchItem;
     }
     else if (val === ''){
       this.getServiceManagementList();
