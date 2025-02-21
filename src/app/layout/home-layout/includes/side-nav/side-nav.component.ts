@@ -54,38 +54,50 @@ export class SideNavComponent {
           label: 'Media Management',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/media_management.svg',
-          url: '/media/media-management',
+          url: '/media',
         },
         {
           label: 'Enquiry Management',
           icon: 'contacts',
           image_path:'assets/sidebar_icon/enquery_management.svg',
-          url: '/enquiry/enquiry-management',
+          url: '/enquiry',
         },
         {
           label: 'Career Management',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/career_managment.svg',
-          url: '/career/career-management',
+          url: '/career',
         },
         {
           label: 'Clientele',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/clientele.svg',
-          url: '/clientele/clientele',
+          url: '/clientele',
         },
         {
           label: 'Awards',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/award-updated-icon.svg',
-          url: '/awards/awards',
+          url: '/awards',
         },
         {
           label: 'News & Events',
           icon: 'format_list_bulleted',
           image_path:'assets/sidebar_icon/award-updated-icon.svg',
-          url: '/newsevent/news-event',
-        }
+          url: '/newsevent',
+        },
+        {
+          label: 'Tender',
+          icon: 'format_list_bulleted',
+          image_path:'assets/sidebar_icon/award-updated-icon.svg',
+          url: '/tender',
+        },
+        // {
+        //   label: 'Gallery',
+        //   icon: 'format_list_bulleted',
+        //   image_path:'assets/sidebar_icon/award-updated-icon.svg',
+        //   url: '/gallery',
+        // }
       ],
     },
     {

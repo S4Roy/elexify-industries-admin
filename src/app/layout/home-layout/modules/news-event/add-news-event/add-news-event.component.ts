@@ -20,8 +20,8 @@ import { MenuComponent } from '../../../includes/menu/menu.component';
 })
 export class AddNewsEventComponent implements OnInit {
 
-  addUrl: string = 'admin/clientele/add';
-  editUrl: string = 'admin/clientele/edit';
+  addUrl: string = 'admin/news/add';
+  editUrl: string = 'admin/news/edit';
 
   formGroup!: FormGroup;
   encodedUrl: any = null;

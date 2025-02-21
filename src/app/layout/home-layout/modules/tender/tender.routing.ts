@@ -1,6 +1,6 @@
-import { Routes, RouterModule } from '@angular/router';
-import { ClienteleComponent } from './clientele.component';
 import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { TenderComponent } from './tender.component';
 import { HomeLayoutComponent } from '../../home-layout.component';
 
 const routes: Routes = [
@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',component: HomeLayoutComponent,
     children: [
       {
-        path: '', component: ClienteleComponent,
+        path: '', component: TenderComponent,
       },
     ]
   }
@@ -19,4 +19,5 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 
-export class ClienteleRoutes {}
+export class TenderRoutes {}
+

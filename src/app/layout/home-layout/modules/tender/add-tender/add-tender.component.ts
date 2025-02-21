@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { MenuComponent } from '../../../includes/menu/menu.component';
 import { NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,18 +11,17 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../../core/services/auth.service';
 import { HttpService } from '../../../../../core/services/http.service';
 import { AddAwardsComponent } from '../../awards/add-awards/add-awards.component';
-import { MenuComponent } from '../../../includes/menu/menu.component';
 
 @Component({
-  selector: 'app-add-clientele',
-  templateUrl: './add-clientele.component.html',
-  styleUrls: ['./add-clientele.component.css'],
+  selector: 'app-add-tender',
+  templateUrl: './add-tender.component.html',
+  styleUrls: ['./add-tender.component.css'],
   imports: [MatDialogModule, MatIconModule, MatButtonModule, ReactiveFormsModule, MenuComponent, NgIf],
 })
-export class AddClienteleComponent implements OnInit {
+export class AddTenderComponent implements OnInit {
 
-  addUrl: string = 'admin/clientele/add';
-  editUrl: string = 'admin/clientele/edit';
+  addUrl: string = 'admin/tender/add';
+  editUrl: string = 'admin/tender/edit';
 
   formGroup!: FormGroup;
   encodedUrl: any = null;
@@ -45,19 +45,22 @@ export class AddClienteleComponent implements OnInit {
             private route: ActivatedRoute,
             private authService: AuthService,
             private httpService: HttpService,
-            public dialogRef: MatDialogRef<AddClienteleComponent>,
+            public dialogRef: MatDialogRef<AddTenderComponent>,
             @Inject(MAT_DIALOG_DATA) public data: any) 
             {
               console.log(this.data);
               this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
               this.formGroup = this.fb.group({
-                client_name  : ['', Validators.required],
-                company_name : ['', Validators.required],
-                designation : ['', Validators.required],
+                tender_name  : ['', Validators.required],
+                tender_no : ['', Validators.required],
                 description: ['', Validators.required],
-                client_feedback: [''],
+                start_at  : ['', Validators.required],
+                end_at   : ['', Validators.required],
+                corrigendum_tender   : ['', Validators.required],
+                tender_status   : ['', Validators.required],
                 status: ['', Validators.required],
-                file: [''] // Form control for the image
+                file: [''], // Form control for the image
+                file_co  : [''],
               });
               this.data ? this.formGroup.patchValue(this.data) : null;
             }
@@ -148,5 +151,5 @@ export class AddClienteleComponent implements OnInit {
       });
     }
   }
-
+  
 }

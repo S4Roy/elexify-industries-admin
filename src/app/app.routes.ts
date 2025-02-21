@@ -121,6 +121,20 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'tender',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/tender/tender.module').then(
+        (m) => m.TenderModule
+      ),
+  },
+  {
+    path: 'gallery',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/gallery/gallery.module').then(
+        (m) => m.GalleryModule
+      ),
+  },
+  {
     path: '**',
     component: P404Component,
     data: {

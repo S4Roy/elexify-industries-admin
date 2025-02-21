@@ -1,4 +1,4 @@
-<div class="fixed inset-0 overflow-hidden">
+<!-- <div class="fixed inset-0 overflow-hidden">
 <div class="absolute inset-0 overflow-hidden">
   <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
     <div class="pointer-events-auto relative w-screen max-w-md">
@@ -6,7 +6,7 @@
 
         <div class="p-1 add-new-title sm:px-6">
           <h2 class="flex justify-between items-center font-semibold text-white" id="slide-over-title">
-            {{data ? "Update News & Event" : "Add News & Event"}}
+            {{data ? "Update Tender" : "Add Tender"}}
             <button color="warn" mat-dialog-close mat-icon-button>
               <mat-icon class="text-red-700">close</mat-icon>
             </button>
@@ -16,45 +16,56 @@
         <div class="relative  my-3 flex-1 px-4 sm:px-6">
           <form class="space-y-6" [formGroup]="formGroup">
               <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Title*</label>
+                <label class="block text-sm/6 font-medium text-gray-900">Tender Name*</label>
                 <div class="mt-2">
-                    <input formControlName="title" type="text"
+                    <input formControlName="tender_name" type="text"
                       class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                 </div>
               </div>
               <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Type*</label>
+                <label class="block text-sm/6 font-medium text-gray-900">Tender No*</label>
                 <div class="mt-2">
-                    <input formControlName="type" type="text"
+                    <input formControlName="tender_no" type="text"
                       class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                 </div>
               </div>
-              <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Short Description</label>
-                <div class="mt-2">
-                  <input formControlName="short_description" type="text"
-                  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
-                </div>
               </div>
               <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Description</label>
+                <label class="block text-sm/6 font-medium text-gray-900">Description*</label>
                 <div class="mt-2">
                   <textarea formControlName="description" type="text"
                   class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
                 </div>
               </div>
               <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Website Link</label>
+                <label class="block text-sm/6 font-medium text-gray-900">Start At*</label>
                 <div class="mt-2">
-                  <input formControlName="website_link" type="text"
+                  <input formControlName="start_at" type="date"
                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                 </div>
               </div>
               <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Published At*</label>
+                <label class="block text-sm/6 font-medium text-gray-900">End At*</label>
                 <div class="mt-2">
-                  <input formControlName="published_at" type="date"
+                  <input formControlName="end_at " type="date"
                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900">Corrigendum Tender</label>
+                <div class="mt-2">
+                  <input formControlName="corrigendum_tender" type="text"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                </div>
+              </div>
+              <div>
+                <label for="tender_status " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Tender Status*</label>
+                <div class="mt-2">
+                    <select id="tender_status " formControlName="tender_status "
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <option value="open">Open</option>
+                      <option value="close">Close</option>
+                    </select>
                 </div>
               </div>
               <div>
@@ -115,4 +126,4 @@
     </div>
   </div>
 </div>
-</div>
+</div> -->

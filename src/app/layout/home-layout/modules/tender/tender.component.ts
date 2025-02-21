@@ -1,32 +1,32 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { AddTenderComponent } from './add-tender/add-tender.component';
+import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterOutlet } from '@angular/router';
 import { NgxDatatableModule, ColumnMode } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../../../core/services/http.service';
-import { AddEnquiryManagementComponent } from './add-enquiry-management/add-enquiry-management.component';
 
 @Component({
-  selector: 'app-enquiry-management',
-  templateUrl: './enquiry-management.component.html',
-  styleUrls: ['./enquiry-management.component.css'],
+  selector: 'app-tender',
+  templateUrl: './tender.component.html',
+  styleUrls: ['./tender.component.css'],
   imports: [NgFor, NgIf, RouterOutlet, NgxDatatableModule, MatMenuModule],
 })
-export class EnquiryManagementComponent implements OnInit {
+export class TenderComponent implements OnInit {
 
-  listUrl: any = 'admin/inquiry/list';
-  // addUrl: string = 'admin/inquiry/add';
-  // editUrl: string = 'admin/inquiry/edit';
-  deleteUrl: string = 'admin/inquiry/delete';
+  listUrl: any = 'admin/tender/tender-list';
+  // addUrl: string = 'admin/tender/add';
+  // editUrl: string = 'admin/tender/edit';
+  deleteUrl: string = 'admin/tender/delete';
 
   rows: any[] = [];
   columns:any[] = [
-    { name: 'Name', prop: 'name' },
-    { name: 'Email', prop: 'email' },
-    { name: 'Message', prop: 'message' },
-    { name: 'Purpose Type', prop: 'purpose_type' },
+    { name: 'Tender Name', prop: 'tender_name' },
+    { name: 'Tender No', prop: 'tender_no' },
+    { name: 'Description', prop: 'description' },
+    { name: 'Tender Status', prop: 'tender_status' },
     { name: 'Action', prop: 'action' },
   ];
   ColumnMode = ColumnMode;
@@ -37,10 +37,10 @@ export class EnquiryManagementComponent implements OnInit {
               private dialog: MatDialog) {  }
 
   ngOnInit() {
-    this.getEnquiryList();
+    this.getTenderList();
   }
 
-  getEnquiryList(){
+  getTenderList(){
     let params: URLSearchParams = new URLSearchParams();
     params.set('page_size', '0');
     this.httpService.get(this.listUrl, params).pipe().subscribe(
@@ -56,38 +56,38 @@ export class EnquiryManagementComponent implements OnInit {
   updateFilter(event?:any) {
     const val = event.target.value.toLowerCase();
     let searchItem: any = this.rows.filter(function (item:any) {
-      return item.name.toLowerCase().indexOf(val) !== -1 || 
-             item.email.toLowerCase().indexOf(val) !== -1 ||  
-             item.message.toLowerCase().indexOf(val) !== -1 || 
-             item.purpose_type.toLowerCase().indexOf(val) !== -1 || !val ;
+      return item.tender_name.toLowerCase().indexOf(val) !== -1 || 
+              item.tender_no.toLowerCase().indexOf(val) !== -1 ||  
+              item.description.toLowerCase().indexOf(val) !== -1 || 
+              item.tender_status.toLowerCase().indexOf(val) !== -1 || !val ;
     });
     if (val){
       this.rows = searchItem;
     }
     else if (val === ''){
-      this.getEnquiryList();
+      this.getTenderList();
     }
     // this.table.offset = 0;
   } 
 
-  // addItem(data: any = null) {
-  //   this.dialog.open(AddEnquiryManagementComponent, {
-  //     data: data,
-  //     disableClose: true,
-  //   })
-  //   .afterClosed().subscribe((res: any) => {
-  //     this.getEnquiryList();
-  //   });
-  // }
+  addItem(data: any = null) {
+    this.dialog.open(AddTenderComponent, {
+      data: data,
+      disableClose: true,
+    })
+    .afterClosed().subscribe((res: any) => {
+      this.getTenderList();
+    });
+  }
 
-  remarks(item:any){
+  editItem(item:any){
     console.log(item);
-    this.dialog.open(AddEnquiryManagementComponent, {
+    this.dialog.open(AddTenderComponent, {
       data: item,
       disableClose: true,
     })
     .afterClosed().subscribe((res: any) => {
-      this.getEnquiryList();
+      this.getTenderList();
     });
   }
 
@@ -99,7 +99,7 @@ export class EnquiryManagementComponent implements OnInit {
     this.httpService.post(this.deleteUrl, payload).subscribe({
       next: (response) => {
         this.toastr.success('Item Deleted Successfully!', '', { timeOut: 1000 });
-        this.getEnquiryList();
+        this.getTenderList();
       },
       error: (error) => {
         console.error('Upload failed', error);

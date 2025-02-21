@@ -4,7 +4,14 @@ import { MediaManagementComponent } from './media-management.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
-  { path: 'media-management', component: MediaManagementComponent}
+  {
+    path: '',component: HomeLayoutComponent,
+    children: [
+      {
+        path: '', component: MediaManagementComponent,
+      },
+    ]
+  }
 ];
 
 @NgModule({

@@ -95,6 +95,7 @@ export class ServicesComponent {
   }
 
   editItem(item:any){
+    console.log(item);
     this.dialog.open(AddNewServicesComponent, {
       data: item,
       disableClose: true,

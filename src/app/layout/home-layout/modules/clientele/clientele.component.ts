@@ -6,7 +6,6 @@ import { RouterOutlet } from '@angular/router';
 import { NgxDatatableModule, ColumnMode } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../../../core/services/http.service';
-import { AddAwardsComponent } from '../awards/add-awards/add-awards.component';
 import { AddClienteleComponent } from './add-clientele/add-clientele.component';
 
 @Component({
