@@ -10,23 +10,23 @@ import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-awards',
-  imports: [NgFor, NgIf, RouterOutlet, NgxDatatableModule, MatMenuModule],
   templateUrl: './awards.component.html',
-  styleUrls: ['./awards.component.css']
+  styleUrls: ['./awards.component.css'],
+  imports: [NgFor, NgIf, RouterOutlet, NgxDatatableModule, MatMenuModule],
 })
 export class AwardsComponent implements OnInit {
 
-  addUrl: string = 'admin/award/add';
-  editUrl: string = 'admin/award/edit';
-  deleteUrl: string = 'admin/award/delete';
   listUrl: any = 'admin/award/list';
+  // addUrl: string = 'admin/award/add';
+  // editUrl: string = 'admin/award/edit';
+  deleteUrl: string = 'admin/award/delete';
 
   rows: any[] = [];
   columns:any[] = [
     { name: 'Title', prop: 'title' },
     { name: 'Description', prop: 'description' },
     { name: 'Status', prop: 'status' },
-    { name: 'Image', prop: 'award_images' },
+    // { name: 'Image', prop: 'award_images' },
     { name: 'Action', prop: 'action' },
   ];
   ColumnMode = ColumnMode;
@@ -56,9 +56,8 @@ export class AwardsComponent implements OnInit {
   updateFilter(event?:any) {
     const val = event.target.value.toLowerCase();
     let searchItem: any = this.rows.filter(function (item:any) {
-      return item.name.toLowerCase().indexOf(val) !== -1 || 
-             item.description.toLowerCase().indexOf(val) !== -1 || 
-             item.caption_text.toLowerCase().indexOf(val) !== -1 ||  
+      return item.title.toLowerCase().indexOf(val) !== -1 || 
+             item.description.toLowerCase().indexOf(val) !== -1 ||  
              item.status.toLowerCase().indexOf(val) !== -1 || !val ;
     });
     if (val){

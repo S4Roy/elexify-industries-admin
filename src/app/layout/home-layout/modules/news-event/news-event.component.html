@@ -2,8 +2,8 @@
 <div class="relative overflow-x-auto">
   <div class="m-3 flex justify-between items-center">
     <div class="flex flex-col items-start">
-      <span class="text-base font-medium">Service Lists</span>
-      <span class="block text-gray-500 text-xs">{{rows.length}} Services added</span>
+      <span class="text-base font-medium">News List</span>
+      <span class="block text-gray-500 text-xs">{{rows.length}} News & Events added</span>
     </div>
     <button (click)="addItem()" class="ai-button">+ Add New</button>
   </div>
@@ -40,8 +40,8 @@
             <mat-menu #menu="matMenu">
               <ng-container class="menu-content">
                 <ol class="p-4">
-                  <li class="p-1" (click)="editItem(row)"> Edit </li>
-                  <li class="p-1" (click)="deleteItems(row)"> Delete </li>
+                  <li class="p-1" (click)="editItem(row)" style="cursor: pointer;"> Edit </li>
+                  <li class="p-1" (click)="deleteItems(row)" style="cursor: pointer;"> Delete </li>
                 </ol>
               </ng-container>
             </mat-menu>
@@ -57,4 +57,3 @@
 </div>
 
 <router-outlet></router-outlet>
-

@@ -21,10 +21,10 @@ import { AddNewsEventComponent } from './add-news-event/add-news-event.component
 })
 export class NewsEventComponent implements OnInit {
 
-  addUrl: string = 'admin/news/add';
-  editUrl: string = 'admin/news/edit';
-  deleteUrl: string = 'admin/news/delete';
   listUrl: any = 'admin/news/list';
+  // addUrl: string = 'admin/news/add';
+  // editUrl: string = 'admin/news/edit';
+  deleteUrl: string = 'admin/news/delete';
 
   rows: any[] = [];
   columns:any[] = [
@@ -60,9 +60,8 @@ export class NewsEventComponent implements OnInit {
   updateFilter(event?:any) {
     const val = event.target.value.toLowerCase();
     let searchItem: any = this.rows.filter(function (item:any) {
-      return item.name.toLowerCase().indexOf(val) !== -1 || 
-              item.description.toLowerCase().indexOf(val) !== -1 || 
-              item.caption_text.toLowerCase().indexOf(val) !== -1 ||  
+      return item.title.toLowerCase().indexOf(val) !== -1 || 
+              item.description.toLowerCase().indexOf(val) !== -1 ||  
               item.status.toLowerCase().indexOf(val) !== -1 || !val ;
     });
     if (val){
