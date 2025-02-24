@@ -10,6 +10,8 @@ import { ThumbnailComponent } from '../../../includes/thumbnail/thumbnail.compon
 import { MenuComponent } from '../../../includes/menu/menu.component';
 import { NgIf } from '@angular/common';
 import { MasterServiceManagementService } from '../../../../../core/services/master-service-management.service';
+import { environment } from '../../../../../../environments/environment';
+
 
 
 @Component({
@@ -28,6 +30,8 @@ export class AddNewServicesComponent {
   hasVdError: boolean = false;
   hasSzError: boolean = false;
   file_type: any = '';
+  deleteFileFlag: any;
+  serviceFileUrl: any;
   errorMessage1: string = ''; // Variable to hold error message
   errorMessage2: string = '';
   errorMessage3: string = ''
@@ -57,7 +61,10 @@ export class AddNewServicesComponent {
       // hero_sec_sub_heading: [data?.hero_sec_sub_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength2)]],
       // file: [""] // Form control for the image
     });
-    this.data? this.formGroup.patchValue(this.data) : null
+    this.data? this.formGroup.patchValue(this.data) : null;
+    this.data && this.data.file_path ? this.formGroup.controls['file'].patchValue(environment.API_BASE_URL+this.data.file_path) : null;
+   
+    this.serviceFileUrl = this.data && this.data.file_path ? environment.API_BASE_URL+this.data.file_path : '';
   }
 
   onFileSelected(event: Event) {
