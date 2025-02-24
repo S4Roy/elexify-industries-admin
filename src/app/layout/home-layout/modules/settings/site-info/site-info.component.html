@@ -1,0 +1,186 @@
+<div class="w-full bg-white p-3 rounded">
+  <div class="flex justify-between">
+    <div class="px-4 sm:px-0">
+      <h3 class="text-base/7 font-semibold text-gray-900">Site Information</h3>
+      <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">
+        Manage site details of application.
+      </p>
+    </div>
+    <div class="flex items-center">
+      <button
+        *ngIf="editInfo"
+        (click)="editInfo = false"
+        class="rounded-full btn bg-red-600 mx-2 px-3.5 py-1.5 text-sm font-normal text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+      >
+        Cancel
+      </button>
+      <button
+        (click)="updateData()"
+        type="button"
+        class="px-2 py-1 outline-1 text-xs font-medium text-center inline-flex items-center border-red-500 text-red-500 border rounded-full"
+      >
+        <mat-icon class="text-xs font-medium">{{ editInfo ? "save" : "edit" }}</mat-icon>
+        {{ editInfo ? "Update" : "Edit" }} Info
+      </button>
+    </div>
+  </div>
+  <div class="mt-4 border-t border-gray-100" [formGroup]="formGroup">
+    <div class="flex">
+      <dl class="w-3/4 divide-y divide-gray-100">
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm/6 font-medium text-gray-900">Site name</dt>
+          <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <ng-container *ngIf="!editInfo">{{
+              siteDetails?.name
+            }}</ng-container>
+            <ng-container *ngIf="editInfo">
+              <mat-form-field>
+                <input
+                  formControlName="name"
+                  matInput
+                  [class.is-invalid]="!Global.isInputValid(formGroup, 'name')"
+                  placeholder="Type Here"
+                />
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(formGroup, 'name', 'required')
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm/6 font-medium text-gray-900">Site Email</dt>
+          <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <ng-container *ngIf="!editInfo">{{
+              siteDetails?.email
+            }}</ng-container>
+            <ng-container *ngIf="editInfo">
+              <mat-form-field>
+                <input
+                  formControlName="email"
+                  matInput
+                  [class.is-invalid]="!Global.isInputValid(formGroup, 'email')"
+                  placeholder="Type Here"
+                />
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(formGroup, 'email', 'required')
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm/6 font-medium text-gray-900">Site Mobile</dt>
+          <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <ng-container *ngIf="!editInfo">{{
+              siteDetails?.mobile
+            }}</ng-container>
+            <ng-container *ngIf="editInfo">
+              <mat-form-field>
+                <input
+                  formControlName="mobile"
+                  matInput
+                  [class.is-invalid]="!Global.isInputValid(formGroup, 'mobile')"
+                  placeholder="Type Here"
+                />
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(formGroup, 'mobile', 'required')
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm/6 font-medium text-gray-900">Address</dt>
+          <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <ng-container *ngIf="!editInfo">
+              {{ siteDetails?.address ? siteDetails?.address : "NA" }}
+            </ng-container>
+            <ng-container *ngIf="editInfo">
+              <mat-form-field>
+                <textarea
+                  formControlName="address"
+                  matInput
+                  [class.is-invalid]="
+                    !Global.isInputValid(formGroup, 'address')
+                  "
+                  placeholder="Type Here"
+                  matInput
+                ></textarea>
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(formGroup, 'address', 'required')
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+          </dd>
+        </div>
+      </dl>
+      <div class="w-1/4 px-2 relative">
+        <span *ngIf="editInfo" class="absolute right-2 top-2">
+          <app-menu
+            [modalItem]="true"
+            (initModal)="chooseFile.click()"
+          ></app-menu>
+        </span>
+        <ng-container
+          *ngIf="siteDetails?.logo && !formGroup.value.preview_path"
+        >
+          <ng-container
+            [ngTemplateOutlet]="imageTemplate"
+            [ngTemplateOutletContext]="{
+        preview_path: Global.BACKEND_URL + siteDetails?.logo,
+       
+      }"
+          ></ng-container>
+        </ng-container>
+        <ng-container *ngIf="formGroup.value.preview_path">
+          <ng-container
+            [ngTemplateOutlet]="imageTemplate"
+            [ngTemplateOutletContext]="{
+            preview_path: formGroup.value.preview_path,
+           
+          }"
+          ></ng-container>
+        </ng-container>
+        <input
+          #chooseFile
+          type="file"
+          hidden
+          (change)="
+            Global.onFileSelected(
+              formGroup,
+              $event,
+              'logo',
+              toastr,
+              ['image/jpeg', 'image/png'],
+              'preview_path'
+            )
+          "
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #imageTemplate let-preview_path="preview_path">
+  <img
+    [src]="preview_path"
+    alt="Logo"
+    class="aspect-square w-full rounded-md bg-gray-200 object-contain group-hover:opacity-75 lg:aspect-auto lg:h-80"
+  />
+</ng-template>

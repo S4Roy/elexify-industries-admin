@@ -31,13 +31,18 @@ export class SettingsComponent {
     {
       label: 'Privacy & Policies',
       description: 'Add Privacy & Policies',
-      router_path: '/settings/faq/questions',
+      router_path: '/settings/privacy-policies',
       icon: 'assets/list-outline.png',
     },
     {
       label: 'FAQ Category',
       description: '5 Category added',
       router_path: '/settings/faq/questions',
+    },
+    {
+      label: 'Site Info',
+      description: 'Manage Site Info',
+      router_path: '/settings/site-info',
     },
   ];
 }

@@ -33,4 +33,22 @@ export class SettingsService {
   deleteFAQ(payload: any) {
     return this.httpService.post('admin/faq/delete', payload);
   }
+  siteInfoDetails() {
+    return this.httpService.get(`admin/setting/site-info/details`);
+  }
+  updateSiteInfoDetails(payload: any) {
+    return this.httpService.postFormData(
+      `admin/setting/save/site-info`,
+      payload
+    );
+  }
+  pageDetails(params: URLSearchParams) {
+    return this.httpService.get(`admin/setting/cms/page/details?${params.toString()}`);
+  }
+  updatePageDetails(payload: any) {
+    return this.httpService.post(
+      `admin/setting/cms/page/${payload?.page_id?'edit':'add'}`,
+      payload
+    );
+  }
 }

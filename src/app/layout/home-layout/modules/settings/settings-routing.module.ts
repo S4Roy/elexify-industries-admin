@@ -8,6 +8,7 @@ import { FaqsCategoryComponent } from './faqs/faqs-category/faqs-category.compon
 import { FaqQuestionsComponent } from './faqs/faq-questions/faq-questions.component';
 import { UserRolePermissionsComponent } from './user-role-permissions/user-role-permissions.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { SiteInfoComponent } from './site-info/site-info.component';
 
 const routes: Routes = [
   {
@@ -65,7 +66,31 @@ const routes: Routes = [
             data: { pageTitle: 'terms-conditions', breadcrumb: '' },
           },
         ]
-      }
+      },
+      {
+        path: 'privacy-policies',
+        component: SettingsLayoutComponent,
+        data: { pageTitle: 'privacy-policies', breadcrumb: 'Privacy & Policies' },
+        children: [
+          {
+            path: '',
+            component: TermsConditionsComponent,
+            data: { pageTitle: 'privacy-policies', breadcrumb: '' },
+          },
+        ]
+      },
+      {
+        path: 'site-info',
+        component: SettingsLayoutComponent,
+        data: { pageTitle: 'Site Info', breadcrumb: 'Site Info' },
+        children: [
+          {
+            path: '',
+            component: SiteInfoComponent,
+            data: { pageTitle: 'site-info', breadcrumb: '' },
+          },
+        ]
+      },
     ],
   },
 ];

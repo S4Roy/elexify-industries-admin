@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SettingsService } from '../../../../core/services/settings.service';
 
 @Component({
   selector: 'app-settings-layout',
@@ -8,5 +9,9 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './settings-layout.component.scss'
 })
 export class SettingsLayoutComponent {
+constructor(private settingService:SettingsService){
 
+}
+fetchCMSDetails(){
+}
 }
