@@ -1,6 +1,6 @@
 export default class PaginationOptions {
-  skip: number = 0;
-  pageSize: number = 10;
-  totalCount: number = 0;
-  totalPages: number = 0;
+  limit: number = 10;
+  page: number = 1;
+  total_pages: number = 0;
+  total_records: number = 0;
 }

@@ -148,3 +148,13 @@ button.save-button {
   font-weight: 500;
   color: rgba(31, 191, 117, 1);
 }
+.table-wrapper {
+  height: calc(100vh - 230px);
+  overflow: auto;
+}
+tr.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: inherit;
+}

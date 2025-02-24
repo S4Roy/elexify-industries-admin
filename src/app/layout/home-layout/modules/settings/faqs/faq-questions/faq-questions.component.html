@@ -1,45 +1,70 @@
 <div class="relative overflow-x-auto">
-    <div class="m-3 flex justify-between items-center">
-      <div class="flex flex-col items-start">
-        <span class="text-base font-medium">FAQ’s Lists</span>
-        <span class="block text-gray-500 text-xs">4 questions added</span>
-      </div>
-      <button (click)="addItem()" class="ai-button">+ Add New</button>
-    </div>
-    <hr />
-    <div class="m-3">
-      <table
-        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  <div class="m-3 flex justify-between items-center">
+    <div class="flex flex-col items-start">
+      <span class="text-base font-medium">FAQ’s Lists</span>
+      <span class="block text-gray-500 text-xs"
+        >{{ paginationOption.total_records }} questions added</span
       >
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-          <tr>
-            <th scope="col">Category Name</th>
-            <th scope="col">Publish Date & Time</th>
-            <th scope="col">Number Of Questions</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let item of item_list">
-            <tr>
-              <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
-                Rahul Roy
-              </td>
-              <td>rahulgmal.ffo</td>
-              <td></td>
-              <td></td>
-              <td class="text-center">
-                <app-menu [modalItem]="1" [delete]="1"></app-menu>
-              </td>
-            </tr>
+    </div>
+    <button
+      (click)="addItem({ faq_category_id: filterOption.list_type })"
+      class="ai-button"
+    >
+      + Add New
+    </button>
+  </div>
+  <hr />
+  <div class="m-3">
+    <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500">
+      <li class="me-1">
+        <a
+          href="javascript:void(0)"
+          (click)="onlistTypeChange({ id: '' })"
+          aria-current="page"
+          [class]="filterOption.list_type == '' ? ' active' : ''"
+          class="inline-block p-2 rounded-t-lg"
+          >All</a
+        >
+      </li>
+      <li class="me-2" *ngFor="let item of category_list">
+        <a
+          (click)="onlistTypeChange(item)"
+          href="javascript:void(0)"
+          [class]="filterOption.list_type == item.id ? 'active' : ''"
+          class="inline-block p-2 rounded-t-lg hover:text-gray-600 hover:bg-gray-50"
+          >{{ item?.category_name }}</a
+        >
+      </li>
+    </ul>
+    <div class="table-wrapper py-2">
+      <ng-container *ngFor="let item of item_list; let i = index">
+        <div class="flex flex-col mb-3">
+          <div
+            class="flex justify-between rounded-lg items-center bg-gray-100 p-2"
+          >
+            <span (click)="toogleRow(i)">
+              <a href="javascript:void(0)" class="text-red-600 text-xl me-1">{{
+                hideElement[i] ? "-" : "+"
+              }}</a>
+              {{ item?.question }}</span
+            >
+            <app-menu
+              [modalItem]="item"
+              (initModal)="addItem($event)"
+            ></app-menu>
+          </div>
+          <ng-container *ngIf="hideElement[i]">
+            <div class="m-2">
+              {{ item?.answer }}
+            </div>
           </ng-container>
-          <ng-container *ngIf="!item_list?.length">
-            <tr>
-              <td class="text-center" colspan="4">NO ITEMS FOUND</td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!item_list?.length">
+        <div class="flex flex-col mb-3">
+          <div class="m-2">NO ITEMS FOUND</div>
+        </div>
+      </ng-container>
     </div>
   </div>
-  
+</div>

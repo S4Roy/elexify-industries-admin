@@ -17,7 +17,7 @@
             </h2>
           </div>
           <div class="relative my-3 flex-1 px-4 sm:px-6">
-            <form class="space-y-6" [formGroup]="loginForm">
+            <form class="space-y-6" [formGroup]="formGroup">
               <div>
                 <label class="block text-sm/6 font-medium text-gray-900"
                   >Category name
@@ -25,8 +25,8 @@
                     class="text-red-500"
                     *ngIf="
                       Global.isInputRuleAvailable(
-                        loginForm,
-                        'email',
+                        formGroup,
+                        'category_name',
                         'required'
                       )
                     "
@@ -36,16 +36,16 @@
                 <div class="mt-2">
                   <mat-form-field>
                     <input
-                      formControlName="email"
+                      formControlName="category_name"
                       matInput
                       [class.is-invalid]="
-                        !Global.isInputValid(loginForm, 'email')
+                        !Global.isInputValid(formGroup, 'category_name')
                       "
                       placeholder="Type Here"
                     />
                     <mat-error
                       *ngIf="
-                        !Global.isInputRuleValid(loginForm, 'email', 'required')
+                        !Global.isInputRuleValid(formGroup, 'category_name', 'required')
                       "
                     >
                       This field is required
@@ -56,11 +56,11 @@
             </form>
           </div>
           <button
-            (click)="submitLogin()"
-            [disabled]="loginForm.disabled"
+            (click)="onSubmit()"
+            [disabled]="formGroup.disabled"
             class="save-button"
           >
-            {{ loginForm.disabled ? "Please wait..." : "Save & Continue" }}
+            {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
           </button>
         </div>
       </div>

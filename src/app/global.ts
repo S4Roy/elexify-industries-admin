@@ -473,37 +473,34 @@ export function onFileSelected(
   sourceKey: any,
   toastr: ToastrService,
   allowedTypes: string[] = ['image/jpeg', 'image/png'], // Default allowed types are JPEG and PNG
-  fileNameKey: any,
+  fileNameKey: any
 ) {
   if (event.target.files.length > 0) {
     const files = event.target.files;
     const maxSize: number = 10000000; // Default max size is 5MB
 
-   
-      const file = event.target.files[0];
-      if (file.size > maxSize) {
-        toastr.error('File size exceeds the limit');
-        return; // Skip this file and continue with the next one
-      }
+    const file = event.target.files[0];
+    if (file.size > maxSize) {
+      toastr.error('File size exceeds the limit');
+      return; // Skip this file and continue with the next one
+    }
 
-      // Check file type
-      if (!allowedTypes.includes(file.type)) {
-        toastr.error('File type is not allowed');
-        return; // Skip this file and continue with the next one
-      }
-      var reader = new FileReader();
+    // Check file type
+    if (!allowedTypes.includes(file.type)) {
+      toastr.error('File type is not allowed');
+      return; // Skip this file and continue with the next one
+    }
+    var reader = new FileReader();
 
-      reader.onloadend = function () {
-    
-        // Append the Base64 string to the array in the form group
-        formGroup.patchValue({
-          [sourceKey]: file,
-          [fileNameKey]: reader.result,
-        });
-      };
+    reader.onloadend = function () {
+      // Append the Base64 string to the array in the form group
+      formGroup.patchValue({
+        [sourceKey]: file,
+        [fileNameKey]: reader.result,
+      });
+    };
 
-      reader.readAsDataURL(file);
-    
+    reader.readAsDataURL(file);
   } else {
     formGroup.patchValue({
       [sourceKey]: null,
@@ -637,33 +634,15 @@ export function humanize(str: string) {
 }
 export function resetPaginationOptions() {
   return {
-    pageSize: 15,
-    skip: 0,
-    totalCount: 0,
-    totalPages: 0,
-    hasNextPage: false,
-    hasPreviousPage: false,
-    nextPage: null,
-    previousPage: null,
+    limit: 10,
+    page: 1,
+    total_pages: 0,
+    total_records: 0,
   };
 }
 export function resetTableFilterOptions() {
   return {
-    IsMyRequest: 'false',
-    SearchQuery: '',
-    id: '',
-    RoleId: '',
-    Status: '',
-    ApprovalStage: '',
-    AccountApprovalStatus: STATUS.PENDING,
-    RequestAdvanceMoneyStatus: STATUS.PENDING,
-    cityName: '',
-    approval: '',
-    ExpenseType: '',
-    companyAccountId: '',
-    branchId: '',
-    Year: CUURENT_YEAR,
-    Month: CUURENT_MONTH,
+    list_type: '',
   };
 }
 export function openBase64File(base64: string) {

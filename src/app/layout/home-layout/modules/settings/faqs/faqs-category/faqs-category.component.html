@@ -2,43 +2,60 @@
   <div class="m-3 flex justify-between items-center">
     <div class="flex flex-col items-start">
       <span class="text-base font-medium">Category List</span>
-      <span class="block text-gray-500 text-xs">4 Category added</span>
+      <span class="block text-gray-500 text-xs"
+        >{{ paginationOption.total_records }} Category added</span
+      >
     </div>
     <button (click)="addItem()" class="ai-button">+ Add New</button>
   </div>
   <hr />
   <div class="m-3">
-    <table
-      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-    >
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-        <tr>
-          <th scope="col">Category Name</th>
-          <th scope="col">Publish Date & Time</th>
-          <th scope="col">Number Of Questions</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let item of item_list">
-          <tr>
-            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
-              Rahul Roy
-            </td>
-            <td>rahulgmal.ffo</td>
-            <td></td>
-            <td></td>
-            <td class="text-center">
-              <app-menu [modalItem]="1" [delete]="1"></app-menu>
-            </td>
+    <div class="table-wrapper">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      >
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+          <tr class="sticky">
+            <th scope="col">Category Name</th>
+            <th scope="col">Publish Date & Time</th>
+            <th scope="col">Number Of Questions</th>
+            <th></th>
           </tr>
-        </ng-container>
-        <ng-container *ngIf="!item_list?.length">
-          <tr>
-            <td class="text-center" colspan="4">NO ITEMS FOUND</td>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of item_list">
+            <tr>
+              <td
+                scope="row"
+                class="font-medium text-gray-900 whitespace-nowrap"
+              >
+                {{ item?.category_name }}
+              </td>
+              <td>{{ item?.created_at | date : "short" }}</td>
+              <td>{{ item?.faq_count }}</td>
+              <td class="text-center">
+                <app-menu
+                  [modalItem]="item"
+                  (initModal)="addItem($event)"
+                  [delete]="item"
+                  (deleteItem)="deleteItem($event)"
+                ></app-menu>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="!item_list?.length">
+            <tr>
+              <td class="text-center" colspan="4">NO ITEMS FOUND</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <ng-container>
+      <pagination
+        [pagination]="paginationOption"
+        (pageChange)="onPageChange($event)"
+      ></pagination>
+    </ng-container>
   </div>
 </div>

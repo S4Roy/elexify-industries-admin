@@ -6,21 +6,31 @@ import { HttpService } from './http.service';
 })
 export class SettingsService {
   constructor(private httpService: HttpService) {}
-  // needed
-  addVendor(payload: any) {
-    if (payload.id) {
-      return this.httpService.put('api/Vendor', payload);
+
+  faqCategoryList(params: URLSearchParams) {
+    return this.httpService.get(`admin/faq/category/list?${params.toString()}`);
+  }
+  submitFaqCategory(payload: any) {
+    if (payload?.id) {
+      return this.httpService.post('admin/faq/category/edit', payload);
     } else {
-      return this.httpService.post('api/Vendor', payload);
+      return this.httpService.post('admin/faq/category/add', payload);
     }
   }
-  getVendors(payload: any) {
-    return this.httpService.getList('api/Vendor/GetVendors', payload);
+  deleteFaqCategory(payload: any) {
+    return this.httpService.post('admin/faq/category/delete', payload);
   }
-  deleteVendor(id: string) {
-    return this.httpService.delete('api/Vendor/' + id);
-  }  
-  getExpenseCategory(id: string) {
-    return this.httpService.get('api/ExpenseCategory/' + id);
+  faqList(params: URLSearchParams) {
+    return this.httpService.get(`admin/faq/list?${params.toString()}`);
+  }
+  submitFAQ(payload: any) {
+    if (payload?.id) {
+      return this.httpService.post('admin/faq/edit', payload);
+    } else {
+      return this.httpService.post('admin/faq/add', payload);
+    }
+  }
+  deleteFAQ(payload: any) {
+    return this.httpService.post('admin/faq/delete', payload);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormGroup,
@@ -6,7 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -16,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import * as Global from '../../../../../../../global';
 import { NgIf } from '@angular/common';
+import { SettingsService } from '../../../../../../../core/services/settings.service';
 @Component({
   selector: 'app-new-faq-category',
   imports: [
@@ -32,44 +37,43 @@ import { NgIf } from '@angular/common';
 })
 export class NewFaqCategoryComponent {
   Global = Global;
-  loginForm!: FormGroup;
-  toogleTextPassword: boolean = false;
-  encodedUrl: any = null;
+  formGroup!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private settingService: SettingsService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<NewFaqCategoryComponent>
   ) {
-    this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
-
-    this.loginForm = this.fb.group({
-      email: [
-        null,
-        Validators.compose([
-          Validators.required,
-          Validators.pattern('^[a-zA-Z0-9 _-]+$'),
-        ]),
+    this.formGroup = this.fb.group({
+      category_name: [
+        this.data?.category_name ?? null,
+        Validators.compose([Validators.required]),
       ],
-      password: [null, Validators.compose([Validators.required])],
+      status: [
+        this.data?.status ?? 'active',
+        Validators.compose([Validators.required]),
+      ],
     });
   }
-  submitLogin() {
-    this.loginForm.markAllAsTouched();
-    if (this.loginForm.valid) {
-      this.loginForm.disable();
-      this.authService.adminLogin(this.loginForm.getRawValue()).subscribe({
+  onSubmit() {
+    this.formGroup.markAllAsTouched();
+    if (this.formGroup.valid) {
+      this.formGroup.disable();
+      let formData = this.formGroup.getRawValue();
+      if (this.data?.id) {
+        formData.id = this.data.id;
+      }
+      this.settingService.submitFaqCategory(formData).subscribe({
         next: (res: any) => {
-          this.authService.userSuccessLogin(res, true, this.encodedUrl);
+          this.dialogRef.close(res);
+          this.toastr.success(
+            `Category ${!formData.id ? 'added' : 'updated'} Successfully`
+          );
         },
         error: (err: any) => {
-          this.loginForm.enable();
-        },
-        complete: () => {
-          this.loginForm.enable();
-          this.toastr.success('Logged in Successfully!', 'Welcome!', {
-            timeOut: 1000, // Display for 1 seconds
-          });
+          this.formGroup.enable();
         },
       });
     }
