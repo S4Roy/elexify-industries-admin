@@ -34,11 +34,11 @@ export class SettingsComponent {
       router_path: '/settings/privacy-policies',
       icon: 'assets/list-outline.png',
     },
-    {
-      label: 'FAQ Category',
-      description: 'Manage Category',
-      router_path: '/settings/faq/category',
-    },
+    // {
+    //   label: 'FAQ Category',
+    //   description: 'Manage Category',
+    //   router_path: '/settings/faq/category',
+    // },
     {
       label: 'Site Info',
       description: 'Manage Site Info',

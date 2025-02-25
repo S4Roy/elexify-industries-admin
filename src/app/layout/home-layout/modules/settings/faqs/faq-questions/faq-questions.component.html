@@ -54,7 +54,9 @@
             </span>
             <app-menu
             [modalItem]="item"
+            [delete]="item"
             (initModal)="addItem($event)"
+            (deleteItem)="deleteItem($event)"
           ></app-menu>
            </span>
           </div>
