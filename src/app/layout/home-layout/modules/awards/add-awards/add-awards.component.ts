@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MenuComponent } from '../../../includes/menu/menu.component';
 import { NgIf } from '@angular/common';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-add-awards',
@@ -37,6 +38,7 @@ export class AddAwardsComponent implements OnInit {
   maxLength1: number = 300;
   maxLength2: number = 300;
   isSubmitted: boolean = false; // Flag to track form submission
+  serviceFileUrl: any;
 
   constructor(
             private fb: FormBuilder,
@@ -48,6 +50,7 @@ export class AddAwardsComponent implements OnInit {
             @Inject(MAT_DIALOG_DATA) public data: any) 
             {
               console.log(this.data);
+              // console.log(this.data['award_images'][0]);
               this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
               this.formGroup = this.fb.group({
                 title : ["", Validators.required],
@@ -57,6 +60,10 @@ export class AddAwardsComponent implements OnInit {
                 file: [""] // Form control for the image
               });
               this.data ? this.formGroup.patchValue(this.data) : null;
+              this.data && this.data.file_path ? this.formGroup.controls['file'].patchValue(environment.API_BASE_URL+this.data.file_path) : null;
+              this.serviceFileUrl = this.data && this.data.file_path ? environment.API_BASE_URL+this.data.file_path : '';
+              // this.data && this.data['award_images'][0].file_path ? this.formGroup.controls['file'].patchValue(environment.API_BASE_URL+this.data['award_images'][0].file_path) : null;
+              // this.serviceFileUrl = this.data && this.data['award_images'][0].file_path ? environment.API_BASE_URL+this.data['award_images'][0].file_path : '';
             }
 
   ngOnInit(): void {}

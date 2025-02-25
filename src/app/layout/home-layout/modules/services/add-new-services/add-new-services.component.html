@@ -18,21 +18,21 @@
                     <div class="relative  my-3 flex-1 px-4 sm:px-6">
                         <form class="space-y-6" [formGroup]="formGroup">
                             <div>
-                                <label class="block text-sm/6 font-medium text-gray-900">Name</label>
+                                <label class="block text-sm/6 font-medium text-gray-900">Name*</label>
                                 <div class="mt-2">
                                     <input formControlName="name" type="text"
                                         class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm/6 font-medium text-gray-900">Description</label>
+                                <label class="block text-sm/6 font-medium text-gray-900">Description*</label>
                                 <div class="mt-2">
                                     <textarea formControlName="description" type="text"
                                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm/6 font-medium text-gray-900">Caption Text</label>
+                                <label class="block text-sm/6 font-medium text-gray-900">Caption Text*</label>
                                 <div class="mt-2">
                                     <input formControlName="caption_text" type="text"
                                         class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
@@ -40,8 +40,7 @@
                             </div>
                             <div>
                                 <label for="status"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an
-                                    option</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an Option*</label>
                                 <div class="mt-2">
                                     <select id="status" formControlName="status"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">

@@ -53,32 +53,22 @@ export class EnquiryManagementComponent implements OnInit {
       });
   }
 
-  updateFilter(event?:any) {
-    const val = event.target.value.toLowerCase();
-    let searchItem: any = this.rows.filter(function (item:any) {
-      return item.name.toLowerCase().indexOf(val) !== -1 || 
-             item.email.toLowerCase().indexOf(val) !== -1 ||  
-             item.message.toLowerCase().indexOf(val) !== -1 || 
-             item.purpose_type.toLowerCase().indexOf(val) !== -1 || !val ;
-    });
-    if (val){
-      this.rows = searchItem;
-    }
-    else if (val === ''){
-      this.getEnquiryList();
-    }
-    // this.table.offset = 0;
-  } 
-
-  // addItem(data: any = null) {
-  //   this.dialog.open(AddEnquiryManagementComponent, {
-  //     data: data,
-  //     disableClose: true,
-  //   })
-  //   .afterClosed().subscribe((res: any) => {
-  //     this.getEnquiryList();
+  // updateFilter(event?:any) {
+  //   const val = event.target.value.toLowerCase();
+  //   let searchItem: any = this.rows.filter(function (item:any) {
+  //     return item.name.toLowerCase().indexOf(val) !== -1 || 
+  //            item.email.toLowerCase().indexOf(val) !== -1 ||  
+  //            item.message.toLowerCase().indexOf(val) !== -1 || 
+  //            item.purpose_type.toLowerCase().indexOf(val) !== -1 || !val ;
   //   });
-  // }
+  //   if (val){
+  //     this.rows = searchItem;
+  //   }
+  //   else if (val === ''){
+  //     this.getEnquiryList();
+  //   }
+  //   // this.table.offset = 0;
+  // } 
 
   remarks(item:any){
     console.log(item);

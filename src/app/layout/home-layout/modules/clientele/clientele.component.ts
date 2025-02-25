@@ -27,7 +27,7 @@ export class ClienteleComponent implements OnInit {
     { name: 'Company Name', prop: 'company_name' },
     { name: 'Client Feedback', prop: 'client_feedback' },
     { name: 'Description', prop: 'description' },
-    { name: 'status', prop: 'status' },
+    { name: 'Status', prop: 'status' },
     { name: 'Action', prop: 'action' },
   ];
   ColumnMode = ColumnMode;
