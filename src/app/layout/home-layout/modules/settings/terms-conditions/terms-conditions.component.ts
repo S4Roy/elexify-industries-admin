@@ -21,7 +21,6 @@ import { ActivatedRoute } from '@angular/router';
     ReactiveFormsModule,
     NgxEditorModule,
     MatIconModule,
-    NgIf,
   ],
   templateUrl: './terms-conditions.component.html',
   styleUrl: './terms-conditions.component.scss',

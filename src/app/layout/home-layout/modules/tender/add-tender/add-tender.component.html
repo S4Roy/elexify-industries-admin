@@ -256,11 +256,7 @@
             ></app-menu>
           </span>
           <ng-container *ngIf="formGroup.value.file_preview">
-            <img
-              class="rounded-md w-full bg-gray-200 object-fit"
-              [src]="formGroup.value.file_preview"
-              alt=" Media"
-            />
+           <a target="_blank" [href]="formGroup.value.file_preview">Attachment</a>
           </ng-container>
           <ng-container *ngIf="!formGroup.value.file_preview">
             <div
@@ -282,7 +278,7 @@
               $event,
               'file',
               toastr,
-              ['image/jpeg', 'image/png'],
+              allowedTypes,
               'file_preview'
             )
           "
@@ -401,11 +397,7 @@
             ></app-menu>
           </span>
           <ng-container *ngIf="formGroup.value.file_co_preview">
-            <img
-              class="rounded-md w-full bg-gray-200 object-fit"
-              [src]="formGroup.value.file_co_preview"
-              alt=" Media"
-            />
+           <a target="_blank" [href]="formGroup.value.file_co_preview">Attachment</a>
           </ng-container>
           <ng-container *ngIf="!formGroup.value.file_co_preview">
             <div
@@ -427,7 +419,7 @@
               $event,
               'file_co',
               toastr,
-              ['image/jpeg', 'image/png'],
+              allowedTypes,
               'file_co_preview'
             )
           "

@@ -39,10 +39,15 @@ export class SideNavComponent {
               exact: true,
             },
             {
-              label: 'Our Services',
-             // url: '/pages/our-services',
+              label: 'Why AI Sats',
+              url: '/pages/why-ai-sats',
               exact: true,
             },
+            // {
+            //   label: 'Our Services',
+            //  url: '/pages/our-services',
+            //   exact: true,
+            // },
           ],
         },
         {

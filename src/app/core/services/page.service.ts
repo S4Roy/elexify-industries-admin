@@ -76,4 +76,46 @@ export class PageService {
   deleteTender(payload: any) {
     return this.httpService.post(`admin/tender/delete`, payload);
   }
+  fetchMoreAboutPage() {
+    return this.httpService.get(`admin/more-about/page`);
+  }
+  saveMoreAboutUsBanner(payload: any) {
+    return this.httpService.postFormData(
+      'admin/more-about/section/save/banner',
+      payload
+    );
+  }
+  saveMoreAboutUsText(payload: any) {
+    return this.httpService.postFormData(
+      'admin/more-about/section/save/about-text',
+      payload
+    );
+  }
+  saveCompanyInfo(payload: any) {
+    return this.httpService.post(
+      'admin/more-about/section/save/company-info',
+      payload
+    );
+  }
+  saveMainContent(payload: any) {
+    return this.httpService.post(
+      'admin/more-about/section/save/main-content',
+      payload
+    );
+  }
+  saveAboutMoreClients(payload: any) {
+    return this.httpService.post(
+      'admin/more-about/section/save/clients',
+      payload
+    );
+  }  
+  saveAboutMoreClientReviews(payload: any) {
+    return this.httpService.post(
+      'admin/more-about/section/save/client-review',
+      payload
+    );
+  }
+  fetchClients() {
+    return this.httpService.get(`admin/client-list`);
+  }
 }

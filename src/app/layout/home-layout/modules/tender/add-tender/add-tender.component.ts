@@ -6,6 +6,7 @@ import {
   FormGroup,
   FormBuilder,
   FormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -15,7 +16,6 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Validators } from 'ngx-editor';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../../core/services/auth.service';
 import { HttpService } from '../../../../../core/services/http.service';
@@ -51,7 +51,7 @@ import moment from 'moment';
 export class AddTenderComponent implements OnInit {
   Global = Global;
 
-  formGroup!: FormGroup;
+  formGroup: FormGroup;
 
   data: any = null;
   category_list: any = [];
@@ -82,7 +82,13 @@ export class AddTenderComponent implements OnInit {
       file_co_preview: [null],
     });
   }
-
+  allowedTypes = [
+    'application/pdf', // PDF
+    'application/msword', // DOC
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // DOCX
+    'application/zip', // ZIP
+    
+];
   ngOnInit(): void {
     this.tenderCategoryList();
     if (this.id) {
@@ -153,7 +159,11 @@ export class AddTenderComponent implements OnInit {
     this.pageService.tenderDetails(this.id).subscribe({
       next: (res: any) => {
         this.data = res;
-        this.formGroup.patchValue(this.data)
+        this.formGroup.patchValue(this.data);
+        this.formGroup.patchValue({
+        file_preview:this.data?.attachment?Global.API_URL+'/'+this.data?.attachment:null,
+        file_co_preview:this.data?.corrigendum_attachment?Global.API_URL+'/'+this.data?.corrigendum_attachment:null
+        })
       },
       error: (err) => {},
     });

@@ -4,6 +4,7 @@ import { HomeLayoutComponent } from '../../home-layout.component';
 import { AboutComponent } from './about/about.component';
 import { EnquiryComponent } from '../main/enquiry/enquiry.component';
 import { HomeComponent } from './home/home.component';
+import { WhyAiSatsComponent } from './why-ai-sats/why-ai-sats.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
         path: 'about',
         component: AboutComponent,
         data: { pageTitle: 'About', breadcrumb: 'About' },
+      },
+      {
+        path: 'why-ai-sats',
+        component: WhyAiSatsComponent,
+        data: { pageTitle: 'Why Air India Sats', breadcrumb: 'Why Air India Sats' },
       },
       {
         path: 'our-services',
