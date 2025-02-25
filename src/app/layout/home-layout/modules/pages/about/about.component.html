@@ -93,7 +93,10 @@
     </div>
   </div>
   <div class="w-full mt-3 bg-white p-3">
-    <div class="flex gap-3 ">
+    <h3 class="text-center">
+      About Content
+    </h3>
+    <div class="flex gap-3">
       <div class="w-2/5 grow" [formGroup]="aboutTextForm">
         <div class="h-60">
           <div
@@ -238,7 +241,7 @@
         </form>
       </div>
     </div>
-    <hr>
+    <hr />
     <div class="flex mt-3 justify-end">
       <button
         (click)="onTextSubmit()"
@@ -249,43 +252,392 @@
       </button>
     </div>
   </div>
-  <!-- <div class="w-full mt-3 bg-white p-3" >
-    <form class="space-y-6" [formGroup]="aboutTextForm">
+  <form class="w-full mt-3 bg-white p-3" [formGroup]="partnerForm">
+    <h3 class="text-center">
+      Partnering for Progress and Profit
+    </h3>
+    <div class="space-y-6" >
+      <mat-form-field>
+        <input
+          formControlName="display_text"
+          matInput
+          [class.is-invalid]="!Global.isInputValid(partnerForm, 'display_text')"
+          placeholder="Type Here"
+        />
+        <mat-error
+          *ngIf="!Global.isInputRuleValid(partnerForm, 'display_text', 'required')"
+        >
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <ng-select formControlName="parters" [multiple]="true">
+        <ng-option *ngFor="let item of partner_list" [value]="item.id">
+          <div class="option-item">
+            <img
+              [src]="Global.API_URL + '/' + item.file_path"
+              alt="{{ item.company_name }}"
+              style="width: 30px; height: 30px; margin-right: 10px"
+            />
+            {{ item.company_name }}
+          </div>
+        </ng-option>
+      </ng-select>
+    </div>
+    <hr />
+    <div class="flex mt-3 justify-end">
+      <button
+        (click)="onPartnerSubmit()"
+        [disabled]="partnerForm.disabled"
+        class="ai-button"
+      >
+        {{ partnerForm.disabled ? "Please wait..." : "Save & Continue" }}
+      </button>
+    </div>
+  </form>
+  <form class="w-full mt-3 bg-white p-3" [formGroup]="excellenceForm">
+    <h3 class="text-center">Your Roadmap to Business Excellence</h3>
+
+   <div class="text-center">
+    <mat-form-field class="w-[70%]">
+      <input
+        formControlName="heading"
+        matInput
+        [class.is-invalid]="
+          !Global.isInputValid(excellenceForm, 'heading')
+        "
+        placeholder="Type Heading Here"
+      />
+      <mat-error
+        *ngIf="
+          !Global.isInputRuleValid(excellenceForm, 'heading', 'required')
+        "
+      >
+        This field is required
+      </mat-error>
+    </mat-form-field>
+   </div>
+    <div class="flex gap-3">
+      
+      <div class="w-3/5 bg-white p-3 rounded">
+        <div class="space-y-1">
+          <div
+          class="block w-full mb-2 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+          <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+          <div class="h-28">
+            <ngx-editor [editor]="editor" formControlName="content" [placeholder]="'Add content'"></ngx-editor>
+          </div>
+        </div>
           <mat-form-field>
             <input
-              formControlName="title"
+              formControlName="list_title"
               matInput
               [class.is-invalid]="
-                !Global.isInputValid(aboutTextForm, 'title')
+                !Global.isInputValid(excellenceForm, 'list_title')
               "
-              placeholder="Type Here"
+              placeholder="Type Title 1 Here"
             />
             <mat-error
               *ngIf="
-                !Global.isInputRuleValid(aboutTextForm, 'title', 'required')
+                !Global.isInputRuleValid(
+                  excellenceForm,
+                  'list_title',
+                  'required'
+                )
               "
             >
               This field is required
             </mat-error>
           </mat-form-field>
-      <ng-select>
-        <ng-option *ngFor="let item of galleryList" [value]="item.id">
-          <div class="option-item">
-              <img [src]="item.file_path" alt="{{ item.title }}" style="width: 30px; height: 30px; margin-right: 10px;" />
-              {{ item.title }}
+          <mat-form-field>
+            <textarea
+              formControlName="list_description"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(excellenceForm, 'list_description')
+              "
+              placeholder="Type Description 1 Here"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  excellenceForm,
+                  'list_description',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              formControlName="list_title_1"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(excellenceForm, 'list_title_1')
+              "
+              placeholder="Type Title 2 Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  excellenceForm,
+                  'list_title_1',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <textarea
+              formControlName="list_description_1"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(excellenceForm, 'list_description_1')
+              "
+              placeholder="Type Description 2 Here"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  excellenceForm,
+                  'list_description_1',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              formControlName="list_title_2"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(excellenceForm, 'list_title_2')
+              "
+              placeholder="Type Title 3 Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  excellenceForm,
+                  'list_title_2',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <textarea
+              formControlName="list_description_2"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(excellenceForm, 'list_description_2')
+              "
+              placeholder="Type Description 3 Here"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  excellenceForm,
+                  'list_description_2',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="w-1/5 grow py-3 px-1" >
+        <div
+        class="w-full border h-full rounded flex items-center justify-center relative"
+      >
+        <span
+          *ngIf="excellenceForm.value.file_preview"
+          class="absolute right-2 top-2"
+        >
+          <app-menu
+            [modalItem]="true"
+            (initModal)="excellenceFormFile.click()"
+          ></app-menu>
+        </span>
+        <ng-container *ngIf="excellenceForm.value.file_preview">
+          <img
+            class="rounded-md w-full bg-gray-200 object-cover h-60"
+            [src]="excellenceForm.value.file_preview"
+            alt="Banner Image"
+          />
+        </ng-container>
+        <ng-container *ngIf="!excellenceForm.value.file_preview">
+          <div
+            class="flex flex-col items-center justify-center"
+            (click)="excellenceFormFile.click()"
+          >
+            <img src="assets/placeholder-image-outline.png" alt="" />
+            <div>Upload Image Here</div>
+            <div class="text-center text-red-600 font-normal italic">
+              Mimimum size required 1920 width 640 height
             </div>
-        </ng-option>
-      </ng-select>
-    </form>
-    <hr>
+          </div>
+        </ng-container>
+      </div>
+      <input
+        type="file"
+        #excellenceFormFile
+        hidden
+        (change)="
+          Global.onFileSelected(
+            excellenceForm,
+            $event,
+            'file',
+            toastr,
+            ['image/jpeg', 'image/png'],
+            'file_preview'
+          )
+        "
+      />
+      </div> 
+      <div class="w-1/5 grow" >
+        <div class="flex flex-col justify-between h-full">
+          <div class="h-96  py-3 px-1">
+            <div
+              class="w-full border h-full rounded flex items-center justify-center relative"
+            >
+              <span
+                *ngIf="excellenceForm.value.file_1_preview"
+                class="absolute right-2 top-2"
+              >
+                <app-menu
+                  [modalItem]="true"
+                  (initModal)="excellenceFormFile1.click()"
+                ></app-menu>
+              </span>
+              <ng-container *ngIf="excellenceForm.value.file_1_preview">
+                <img
+                  class="rounded-md w-full bg-gray-200 object-cover h-60"
+                  [src]="excellenceForm.value.file_1_preview"
+                  alt="Banner Image"
+                />
+              </ng-container>
+              <ng-container *ngIf="!excellenceForm.value.file_1_preview">
+                <div
+                  class="flex flex-col items-center justify-center"
+                  (click)="excellenceFormFile1.click()"
+                >
+                  <img src="assets/placeholder-image-outline.png" alt="" />
+                  <div>Upload Image Here</div>
+                  <div class="text-center text-red-600 font-normal italic">
+                    Mimimum size required 1920 width 640 height
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <input
+              type="file"
+              #excellenceFormFile1
+              hidden
+              (change)="
+                Global.onFileSelected(
+                  excellenceForm,
+                  $event,
+                  'file_1',
+                  toastr,
+                  ['image/jpeg', 'image/png'],
+                  'file_1_preview'
+                )
+              "
+            />
+          </div>
+          <div>
+            <mat-form-field>
+              <input
+                formControlName="subject"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(excellenceForm, 'subject')
+                "
+                placeholder="Type Subject Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    excellenceForm,
+                    'subject',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <textarea
+                formControlName="description"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(excellenceForm, 'description')
+                "
+                placeholder="Type Description Here"
+              ></textarea>
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    excellenceForm,
+                    'description',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
     <div class="flex mt-3 justify-end">
       <button
-        (click)="onTextSubmit()"
-        [disabled]="aboutTextForm.disabled"
+        (click)="excellenceFormSubmit()"
+        [disabled]="excellenceForm.disabled"
         class="ai-button"
       >
-        {{ aboutTextForm.disabled ? "Please wait..." : "Save & Continue" }}
+        {{ excellenceForm.disabled ? "Please wait..." : "Save & Continue" }}
       </button>
     </div>
-  </div> -->
+  </form>
+  <form class="w-full mt-3 bg-white p-3" [formGroup]="newsEvetsForm">
+    <div class="space-y-6" >
+    <h3 class="text-center">News & Event</h3>
+      <ng-select formControlName="news_event" [multiple]="true">
+        <ng-option *ngFor="let item of news_list" [value]="item.id">
+          <div class="option-item">
+            <!-- <img
+              [src]="Global.API_URL + '/' + item.file_path"
+              alt="{{ item.company_name }}"
+              style="width: 30px; height: 30px; margin-right: 10px"
+            /> -->
+            {{ item.title }}
+          </div>
+        </ng-option>
+      </ng-select>
+    </div>
+    <hr />
+    <div class="flex mt-3 justify-end">
+      <button
+        (click)="onPartnerSubmit()"
+        [disabled]="newsEvetsForm.disabled"
+        class="ai-button"
+      >
+        {{ newsEvetsForm.disabled ? "Please wait..." : "Save & Continue" }}
+      </button>
+    </div>
+  </form>
 </div>

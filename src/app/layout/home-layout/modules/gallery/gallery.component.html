@@ -1,3 +1,30 @@
-<p>
-  gallery works!
-</p>
+<div class="absolute flex justify-end right-5 top-14">
+  <div class="flex">
+    <button
+      (click)="addItem()"
+      type="button"
+      class="px-2 py-1 outline-1 text-xs font-medium text-center inline-flex items-center border-red-500 text-red-500 border rounded-full"
+    >
+      <mat-icon class="text-xs font-medium">add</mat-icon>
+      Add New Media
+    </button>
+  </div>
+</div>
+<div class="gallery-wrapper">
+  <div class="grid p-3 grid-cols-5 gap-4">
+    <ng-container *ngFor="let item of item_list">
+      <div class="h-40 relative p-4 border rounded items-center flex">
+        <span class="absolute top-0 right-0">
+          <app-menu [modalItem]="item" (initModal)="addItem($event)" [delete]="item" (deleteItem)="deleteItem($event)"></app-menu>
+        </span>
+        <img [matTooltip]="item?.title" class="block  bg-gray-200 object-cover" [src]="Global.API_URL+'/'+item?.file_path" [alt]="item?.title" />
+      </div>
+    </ng-container>
+  </div>
+</div>
+<ng-container>
+  <pagination
+    [pagination]="paginationOption"
+    (pageChange)="onPageChange($event)"
+  ></pagination>
+</ng-container>

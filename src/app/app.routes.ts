@@ -81,8 +81,8 @@ export const routes: Routes = [
   {
     path: 'media',
     loadChildren: () =>
-      import('./layout/home-layout/modules/media-management/media-management.module').then(
-        (m) => m.MediaManagementModule
+      import('./layout/home-layout/modules/gallery/gallery.module').then(
+        (m) => m.GalleryModule
       ),
   },
   {

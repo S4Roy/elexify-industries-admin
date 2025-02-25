@@ -11,7 +11,7 @@
     <a class="font-medium flex items-center" [routerLink]="[item?.url]" [routerLinkActiveOptions]="{ exact: true }"
       routerLinkActive="text-green-600">
       {{ item?.label | uppercase }}
-      <img src="assets/double-arrow.png" alt="arrow" class="mx-1 inline-block size-5" />
+      <img src="assets/double-arrow.png" *ngIf="!l" alt="arrow" class="mx-1 inline-block size-5" />
     </a>
   </ng-container>
 </div>

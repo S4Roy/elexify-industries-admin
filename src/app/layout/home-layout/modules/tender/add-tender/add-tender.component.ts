@@ -1,155 +1,161 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MenuComponent } from '../../../includes/menu/menu.component';
-import { NgIf } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import { NgFor, NgIf } from '@angular/common';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormBuilder,
+  FormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Validators } from 'ngx-editor';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../../core/services/auth.service';
 import { HttpService } from '../../../../../core/services/http.service';
 import { AddAwardsComponent } from '../../awards/add-awards/add-awards.component';
-
+import * as Global from '../../../../../global';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
+import { PageService } from '../../../../../core/services/page.service';
+import moment from 'moment';
 @Component({
   selector: 'app-add-tender',
   templateUrl: './add-tender.component.html',
-  styleUrls: ['./add-tender.component.css'],
-  imports: [MatDialogModule, MatIconModule, MatButtonModule, ReactiveFormsModule, MenuComponent, NgIf],
+  styleUrls: ['./add-tender.component.scss'],
+  imports: [
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgIf,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MenuComponent,
+    MatRadioModule,
+    NgFor,
+  ],
 })
 export class AddTenderComponent implements OnInit {
-
-  addUrl: string = 'admin/tender/add';
-  editUrl: string = 'admin/tender/edit';
+  Global = Global;
 
   formGroup!: FormGroup;
-  encodedUrl: any = null;
-  selectedImage: File | null = null;
-  imagePreview: string | ArrayBuffer | null = null;
-  videoPreview: string | ArrayBuffer | null = null;
-  hasError: boolean = false;
-  hasVdError: boolean = false;
-  hasSzError: boolean = false;
-  file_type: any = '';
-  errorMessage1: string = ''; // Variable to hold error message
-  errorMessage2: string = '';
-  errorMessage3: string = ''
-  maxLength1: number = 300;
-  maxLength2: number = 300;
-  isSubmitted: boolean = false; // Flag to track form submission
 
+  data: any = null;
+  category_list: any = [];
+  id: any = null;
   constructor(
-            private fb: FormBuilder,
-            private toastr: ToastrService,
-            private route: ActivatedRoute,
-            private authService: AuthService,
-            private httpService: HttpService,
-            public dialogRef: MatDialogRef<AddTenderComponent>,
-            @Inject(MAT_DIALOG_DATA) public data: any) 
-            {
-              console.log(this.data);
-              this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
-              this.formGroup = this.fb.group({
-                tender_name  : ['', Validators.required],
-                tender_no : ['', Validators.required],
-                description: ['', Validators.required],
-                start_at  : ['', Validators.required],
-                end_at   : ['', Validators.required],
-                corrigendum_tender   : ['', Validators.required],
-                tender_status   : ['', Validators.required],
-                status: ['', Validators.required],
-                file: [''], // Form control for the image
-                file_co  : [''],
-              });
-              this.data ? this.formGroup.patchValue(this.data) : null;
-            }
-
-  ngOnInit(): void {}
-
-  onFileSelected(event: Event) {
-    console.log(event);
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length > 0) {
-      this.formGroup.patchValue({
-        file: target.files[0]
-      })
-      this.selectedImage = target.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        // this.imagePreview = reader.result; // Set the image preview
-        if (this.selectedImage?.type.startsWith('video/')) {
-          this.videoPreview = reader.result; // Set the video preview
-        } else if (this.selectedImage?.type.startsWith('image/')) {
-          this.imagePreview = reader.result; // Set the image preview
-        }
-      };
-
-      console.log(target.files[0].type, "sizeee");
-      const validFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'video/mp4',];
-      //const validVdFormats = ['video/mp4'];
-      if (!validFormats.includes(target.files[0].type)) {
-        this.hasError = true;
-        this.errorMessage1 = 'Only .png, .jpg, .gif, .jpeg and .mp4 formats are supported.';
-        return; // Prevent further processing
-      } else if (target.files[0].size < 24576) {
-        this.hasSzError = true;
-        this.errorMessage3 = 'Minimum size required: 1920 width x 640 height';
-        return;
-      }
-
-      // If both checks pass, reset error state
-      this.hasError = false;
-      this.hasVdError = false;
-      this.hasSzError = false;
-      this.errorMessage1 = '';
-      this.errorMessage2 = '';
-      this.errorMessage3 = '';
-      console.log(this.selectedImage)
-      reader.readAsDataURL(this.selectedImage);
-    }
-    else {
-      this.formGroup.patchValue({
-        file: null
-      })
-    }
+    private fb: FormBuilder,
+    public toastr: ToastrService,
+    private route: ActivatedRoute,
+    private pageService: PageService,
+    private router: Router
+  ) {
+    this.id = this.route.snapshot.params['id'];
+    this.formGroup = this.fb.group({
+      tender_category_id: [null, Validators.required],
+      tender_name: [null, Validators.required],
+      tender_no: [null, Validators.required],
+      description: [null, Validators.required],
+      start_at: [null, Validators.required],
+      end_at: [null, Validators.required],
+      corrigendum_tender: ['yes', Validators.required],
+      tender_status: ['open', Validators.required],
+      status: ['active', Validators.required],
+      corrigendum_start_at: [null],
+      corrigendum_end_at: [null],
+      file: [null], // Form control for the image
+      file_preview: [null], // Form control for the image
+      file_co: [null],
+      file_co_preview: [null],
+    });
   }
 
-  deleteItem(item?: any) {
-    this.imagePreview = null;
-    this.videoPreview = null;
+  ngOnInit(): void {
+    this.tenderCategoryList();
+    if (this.id) {
+      this.tenderDetails();
+    }
   }
 
   onSubmit() {
-    // this.isSubmitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       this.formGroup.disable();
       let formData = this.formGroup.getRawValue();
-      console.log(formData)
+
       if (this.data?.id) {
         formData.id = this.data.id;
+        formData.is_fdel = 'n';
+        formData.is_fco_del = 'n';
       }
-      let apiUrl = 
-      this.data ? this.httpService.postFormData(this.editUrl, formData) : this.httpService.postFormData(this.addUrl, formData)
-      
-      apiUrl.subscribe({
-        next: (response) => {
-          console.log('Upload successful', response);
-          this.toastr.success('Data Saved Successfully!', '', {
-            timeOut: 1000, // Display for 1 seconds
-          });
-          this.dialogRef.close(response)
-        },
-        error: (error) => {
-          console.error('Upload failed', error);
+      delete formData.file_preview;
+      if (!formData?.file) {
+        delete formData.file;
+      }
+      delete formData.file_co_preview;
+      if (!formData?.file_co) {
+        delete formData.file_co;
+      }
+      if (formData.start_at) {
+        formData.start_at = moment(formData.start_at).format('YYYY-MM-DD');
+      }
+      if (formData.end_at) {
+        formData.end_at = moment(formData.end_at).format('YYYY-MM-DD');
+      }
+      if (formData.corrigendum_start_at) {
+        formData.corrigendum_start_at = moment(
+          formData.corrigendum_start_at
+        ).format('YYYY-MM-DD');
+      }
+      if (formData.corrigendum_end_at) {
+        formData.corrigendum_end_at = moment(
+          formData.corrigendum_end_at
+        ).format('YYYY-MM-DD');
+      }
+      this.pageService.submitTender(formData).subscribe({
+        next: (res: any) => {
+          this.toastr.success(
+            `Tender ${!formData.id ? 'added' : 'updated'} Successfully`
+          );
+          this.router.navigateByUrl('/tender');
           this.formGroup.enable();
         },
-        complete: () => {
+        error: (err: any) => {
           this.formGroup.enable();
-        }
+        },
       });
     }
   }
-  
+  tenderCategoryList() {
+    this.pageService.tenderCategoryList().subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.category_list = results ?? [];
+        // this.paginationOption = { limit, page, total_pages, total_records };
+      },
+      error: (err) => {},
+    });
+  }
+  tenderDetails() {
+    this.pageService.tenderDetails(this.id).subscribe({
+      next: (res: any) => {
+        this.data = res;
+        this.formGroup.patchValue(this.data)
+      },
+      error: (err) => {},
+    });
+  }
 }

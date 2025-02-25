@@ -19,6 +19,7 @@
             <th scope="col">Category Name</th>
             <th scope="col">Publish Date & Time</th>
             <th scope="col">Number Of Questions</th>
+            <th scope="col">Status</th>
             <th></th>
           </tr>
         </thead>
@@ -33,6 +34,7 @@
               </td>
               <td>{{ item?.created_at | date : "short" }}</td>
               <td>{{ item?.faq_count }}</td>
+              <td>{{ item?.status }}</td>
               <td class="text-center">
                 <app-menu
                   [modalItem]="item"
@@ -45,7 +47,7 @@
           </ng-container>
           <ng-container *ngIf="!item_list?.length">
             <tr>
-              <td class="text-center" colspan="4">NO ITEMS FOUND</td>
+              <td class="text-center" colspan="4">No Items Found</td>
             </tr>
           </ng-container>
         </tbody>

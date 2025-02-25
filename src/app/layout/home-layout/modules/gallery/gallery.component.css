@@ -1,0 +1,4 @@
+.gallery-wrapper {
+    height: calc(100vh - 159px);
+    overflow: auto;
+  }

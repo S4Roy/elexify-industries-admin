@@ -3,7 +3,7 @@ import { AddTenderComponent } from './add-tender/add-tender.component';
 import { NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NgxDatatableModule, ColumnMode } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../../../core/services/http.service';
@@ -34,7 +34,7 @@ export class TenderComponent implements OnInit {
 
   constructor(private httpService: HttpService, 
               private toastr: ToastrService,
-              private dialog: MatDialog) {  }
+              private dialog: MatDialog,private router:Router) {  }
 
   ngOnInit() {
     this.getTenderList();
@@ -71,24 +71,12 @@ export class TenderComponent implements OnInit {
   } 
 
   addItem(data: any = null) {
-    this.dialog.open(AddTenderComponent, {
-      data: data,
-      disableClose: true,
-    })
-    .afterClosed().subscribe((res: any) => {
-      this.getTenderList();
-    });
+    this.router.navigateByUrl("/tender/add")
   }
 
   editItem(item:any){
-    console.log(item);
-    this.dialog.open(AddTenderComponent, {
-      data: item,
-      disableClose: true,
-    })
-    .afterClosed().subscribe((res: any) => {
-      this.getTenderList();
-    });
+    this.router.navigateByUrl("/tender/edit/"+item?.id)
+
   }
 
   deleteItems(item:any) {

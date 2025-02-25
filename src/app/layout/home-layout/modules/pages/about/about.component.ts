@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import * as Global from '../../../../../global';
 import { ToastrService } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { Editor, NgxEditorModule } from 'ngx-editor';
 @Component({
   selector: 'app-about',
   imports: [
@@ -29,7 +30,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatInputModule,
     NgIf,
     MenuComponent,
-    NgSelectModule
+    NgSelectModule,
+    NgFor,
+    NgxEditorModule,
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
@@ -39,11 +42,18 @@ export class AboutComponent {
   pageData: any = null;
   bannerForm: FormGroup;
   aboutTextForm: FormGroup;
+  partnerForm: FormGroup;
+  news_list: any = [];
+  partner_list: any = [];
+  excellenceForm: FormGroup;
+  newsEvetsForm: FormGroup;
+  editor!: Editor;
   constructor(
     private pageService: PageService,
     private fb: FormBuilder,
     public toastr: ToastrService
   ) {
+    this.editor = new Editor();
     this.bannerForm = this.fb.group({
       id: [null, Validators.required],
       display_text: [null, Validators.required],
@@ -56,10 +66,40 @@ export class AboutComponent {
       heading_txt: [null, Validators.required],
       sub_heading_txt: [null, Validators.required],
       content: [null, Validators.required],
-      is_fdel: [false],
+      is_fdel: ['n'],
       file: [null],
       file_preview: [null],
     });
+    this.partnerForm = this.fb.group({
+      id: [null, Validators.required],
+      display_text: [null, Validators.required],
+      parters: [],
+    });
+    this.excellenceForm = this.fb.group({
+      id: [null, Validators.required],
+      heading: [null, Validators.required],
+      content: [null, Validators.required],
+      list_title: [null, Validators.required],
+      list_description: [null, Validators.required],
+      list_title_1: [null, Validators.required],
+      list_description_1: [null, Validators.required],
+      list_title_2: [null, Validators.required],
+      list_description_2: [null, Validators.required],
+      subject: [null, Validators.required],
+      description: [null, Validators.required],
+      is_fdel: ['n'],
+      is_fdel_1: ['n'],
+      file: [null],
+      file_preview: [null],
+      file_1: [null],
+      file_1_preview: [null],
+    });
+    this.newsEvetsForm = this.fb.group({
+      id: [null, Validators.required],
+      news_event: [null, Validators.required],
+    });
+    this.fetchNewsEventsList();
+    this.fetchPartnerList();
     this.fetchAboutPage();
   }
   fetchAboutPage() {
@@ -70,8 +110,9 @@ export class AboutComponent {
           id: this.pageData?.banner?.id ?? null,
           display_text: this.pageData?.banner?.display_text ?? null,
           file_preview: this.pageData?.banner?.file_path
-            ? Global.API_URL+'/' + this.pageData?.banner?.file_path
+            ? Global.API_URL + '/' + this.pageData?.banner?.file_path
             : null,
+          is_fdel: ['n'],
         });
         this.aboutTextForm.patchValue({
           id: this.pageData?.about_text?.id ?? null,
@@ -80,8 +121,59 @@ export class AboutComponent {
           sub_heading_txt: this.pageData?.about_text?.sub_heading_txt ?? null,
           content: this.pageData?.about_text?.content ?? null,
           file_preview: this.pageData?.about_text?.file_path
-            ? Global.API_URL+'/' + this.pageData?.about_text?.file_path
+            ? Global.API_URL + '/' + this.pageData?.about_text?.file_path
             : null,
+        });
+        this.partnerForm.patchValue({
+          id: this.pageData?.partner_text?.id ?? null,
+          display_text: this.pageData?.partner_text?.display_text ?? null,
+          parters: this.pageData?.partner_text?.partner_list ?? [],
+        });
+
+        this.excellenceForm.patchValue({
+          id: this.pageData?.main_content?.id ?? null,
+          heading: this.pageData?.main_content?.heading ?? null,
+          content: this.pageData?.main_content?.content ?? null,
+          description: this.pageData?.main_content?.description ?? null,
+          subject: this.pageData?.main_content?.subject ?? null,
+          file_preview: this.pageData?.main_content?.file_path
+            ? Global.API_URL + '/' + this.pageData?.main_content?.file_path
+            : null,
+          file_1_preview: this.pageData?.main_content?.file_path_1
+            ? Global.API_URL + '/' + this.pageData?.main_content?.file_path_1
+            : null,
+          is_fdel: ['n'],
+          is_fdel_1: ['n'],
+        });
+        this.pageData?.main_content?.list_of_content.forEach(
+          (element: any, index: number) => {
+            switch (index) {
+              case 0:
+                this.excellenceForm.patchValue({
+                  list_title: element?.title,
+                  list_description: element?.description,
+                });
+                break;
+              case 1:
+                this.excellenceForm.patchValue({
+                  list_title_1: element?.title,
+                  list_description_1: element?.description,
+                });
+                break;
+              case 2:
+                this.excellenceForm.patchValue({
+                  list_title_2: element?.title,
+                  list_description_2: element?.description,
+                });
+                break;
+              default:
+                break;
+            }
+          }
+        );
+        this.newsEvetsForm.patchValue({
+          id: this.pageData?.news_event?.id ?? null,
+          news_event: this.pageData?.news_event?.list ?? [],
         });
       },
     });
@@ -98,6 +190,7 @@ export class AboutComponent {
       this.pageService.saveAboutUsBanner(formData).subscribe({
         next: (res: any) => {
           this.fetchAboutPage();
+          this.bannerForm.enable();
           this.toastr.success(`Banner Updated Successfully`);
         },
         error: (err: any) => {
@@ -105,7 +198,7 @@ export class AboutComponent {
         },
       });
     }
-  } 
+  }
   onTextSubmit() {
     this.aboutTextForm.markAllAsTouched();
     if (this.aboutTextForm.valid) {
@@ -117,11 +210,80 @@ export class AboutComponent {
       }
       this.pageService.saveAboutUsText(formData).subscribe({
         next: (res: any) => {
+          this.aboutTextForm.reset();
+
           this.fetchAboutPage();
+          this.toastr.success(`Updated Successfully`);
+          this.aboutTextForm.enable();
+        },
+        error: (err: any) => {
+          this.aboutTextForm.enable();
+        },
+      });
+    }
+  }
+  onPartnerSubmit() {
+    this.partnerForm.markAllAsTouched();
+    if (this.partnerForm.valid) {
+      this.partnerForm.disable();
+      let formData = this.partnerForm.getRawValue();
+      this.pageService.saveAboutUsPartner(formData).subscribe({
+        next: (res: any) => {
+          this.fetchAboutPage();
+          this.partnerForm.reset();
+          this.partnerForm.enable();
           this.toastr.success(`Updated Successfully`);
         },
         error: (err: any) => {
-          this.bannerForm.enable();
+          this.partnerForm.enable();
+        },
+      });
+    }
+  }
+  fetchPartnerList() {
+    // let params = new URLSearchParams();
+    // params.set('limit', '100');
+    this.pageService.partnerList().subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.partner_list = results ?? [];
+      },
+      error: (err) => {},
+    });
+  }
+  fetchNewsEventsList() {
+    // let params = new URLSearchParams();
+    // params.set('limit', '100');
+    this.pageService.newsEventsList().subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.news_list = results ?? [];
+      },
+      error: (err) => {},
+    });
+  }
+  excellenceFormSubmit() {
+    this.excellenceForm.markAllAsTouched();
+    if (this.excellenceForm.valid) {
+      this.excellenceForm.disable();
+      let formData = this.excellenceForm.getRawValue();
+      delete formData.file_1_preview;
+      delete formData.file_preview;
+      if (!formData?.file) {
+        delete formData.file;
+      }
+      if (!formData?.file_1) {
+        delete formData.file_1;
+      }
+      this.pageService.saveAboutUsBuisnessExecellence(formData).subscribe({
+        next: (res: any) => {
+          this.fetchAboutPage();
+          this.excellenceForm.reset();
+          this.excellenceForm.enable();
+          this.toastr.success(`Updated Successfully`);
+        },
+        error: (err: any) => {
+          this.excellenceForm.enable();
         },
       });
     }

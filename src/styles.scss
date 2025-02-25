@@ -152,6 +152,10 @@ button.save-button {
   height: calc(100vh - 230px);
   overflow: auto;
 }
+.add-wrapper {
+  height: calc(100vh - 100px);
+  overflow: auto;
+}
 tr.sticky {
   position: sticky;
   top: 0;

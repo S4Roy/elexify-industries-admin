@@ -132,6 +132,32 @@
                   </mat-form-field>
                 </div>
               </div>
+              <div class="mt-2">
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Select"
+                    formControlName="status"
+                    matInput
+                    [class.is-invalid]="
+                      !Global.isInputValid(faqForm, 'status')
+                    "
+                  >
+                    <mat-option value="active">Active</mat-option>
+                    <mat-option value="inactive">Inactive</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      !Global.isInputRuleValid(
+                        faqForm,
+                        'status',
+                        'required'
+                      )
+                    "
+                  >
+                    This field is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
             </form>
           </div>
           <button

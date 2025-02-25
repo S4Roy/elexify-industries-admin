@@ -7,10 +7,10 @@
         <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
           <div class="p-1 add-new-title sm:px-6">
             <h2
-              class="flex  mb-0 justify-between items-center font-semibold text-white"
+              class="flex mb-0 justify-between items-center font-semibold text-white"
               id="slide-over-title"
             >
-              New Faq Category
+              {{ data ? "Update" : "New" }} Faq Category
               <button color="warn" mat-dialog-close mat-icon-button>
                 <mat-icon class="text-red-700">close</mat-icon>
               </button>
@@ -45,7 +45,53 @@
                     />
                     <mat-error
                       *ngIf="
-                        !Global.isInputRuleValid(formGroup, 'category_name', 'required')
+                        !Global.isInputRuleValid(
+                          formGroup,
+                          'category_name',
+                          'required'
+                        )
+                      "
+                    >
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900"
+                  >Status
+                  <span
+                    class="text-red-500"
+                    *ngIf="
+                      Global.isInputRuleAvailable(
+                        formGroup,
+                        'status',
+                        'required'
+                      )
+                    "
+                    >*</span
+                  >
+                </label>
+                <div class="mt-2">
+                  <mat-form-field>
+                    <mat-select
+                      placeholder="Select"
+                      formControlName="status"
+                      matInput
+                      [class.is-invalid]="
+                        !Global.isInputValid(formGroup, 'status')
+                      "
+                    >
+                      <mat-option value="active">Active</mat-option>
+                      <mat-option value="inactive">Inactive</mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          formGroup,
+                          'status',
+                          'required'
+                        )
                       "
                     >
                       This field is required

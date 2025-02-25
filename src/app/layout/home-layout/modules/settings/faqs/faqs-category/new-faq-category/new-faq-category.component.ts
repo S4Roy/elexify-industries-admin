@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import * as Global from '../../../../../../../global';
 import { NgIf } from '@angular/common';
 import { SettingsService } from '../../../../../../../core/services/settings.service';
+import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-new-faq-category',
   imports: [
@@ -31,6 +32,7 @@ import { SettingsService } from '../../../../../../../core/services/settings.ser
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule
   ],
   templateUrl: './new-faq-category.component.html',
   styleUrl: './new-faq-category.component.scss',
