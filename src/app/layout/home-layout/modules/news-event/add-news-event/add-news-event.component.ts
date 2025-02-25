@@ -11,6 +11,7 @@ import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MenuComponent } from '../../../includes/menu/menu.component';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-add-news-event',
@@ -32,6 +33,7 @@ export class AddNewsEventComponent implements OnInit {
   hasVdError: boolean = false;
   hasSzError: boolean = false;
   file_type: any = '';
+  serviceFileUrl: any;
   errorMessage1: string = ''; // Variable to hold error message
   errorMessage2: string = '';
   errorMessage3: string = ''
@@ -61,6 +63,10 @@ export class AddNewsEventComponent implements OnInit {
                 file: [''] // Form control for the image
               });
               this.data ? this.formGroup.patchValue(this.data) : null;
+              this.data && this.data['news_images'][0].file_path ? this.formGroup.controls['file'].patchValue(environment.API_BASE_URL+this.data['news_images'][0].file_path) : null;
+              this.serviceFileUrl = this.data && this.data['news_images'][0].file_path ? environment.API_BASE_URL+this.data['news_images'][0].file_path : '';
+              // this.data && this.data.file_path ? this.formGroup.controls['file'].patchValue(environment.API_BASE_URL+this.data.file_path) : null;
+              // this.serviceFileUrl = this.data && this.data.file_path ? environment.API_BASE_URL+this.data.file_path : '';
             }
 
   ngOnInit(): void {}

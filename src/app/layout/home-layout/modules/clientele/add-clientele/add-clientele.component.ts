@@ -9,8 +9,8 @@ import { Validators } from 'ngx-editor';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../../core/services/auth.service';
 import { HttpService } from '../../../../../core/services/http.service';
-import { AddAwardsComponent } from '../../awards/add-awards/add-awards.component';
 import { MenuComponent } from '../../../includes/menu/menu.component';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-add-clientele',
@@ -32,6 +32,7 @@ export class AddClienteleComponent implements OnInit {
   hasVdError: boolean = false;
   hasSzError: boolean = false;
   file_type: any = '';
+  serviceFileUrl: any;
   errorMessage1: string = ''; // Variable to hold error message
   errorMessage2: string = '';
   errorMessage3: string = ''
@@ -60,6 +61,8 @@ export class AddClienteleComponent implements OnInit {
                 file: [''] // Form control for the image
               });
               this.data ? this.formGroup.patchValue(this.data) : null;
+              this.data && this.data.file_path ? this.formGroup.controls['file'].patchValue(environment.API_BASE_URL+this.data.file_path) : null;
+              this.serviceFileUrl = this.data && this.data.file_path ? environment.API_BASE_URL+this.data.file_path : '';
             }
 
   ngOnInit(): void {}

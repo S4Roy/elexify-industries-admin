@@ -6,7 +6,7 @@
 
         <div class="p-1 add-new-title sm:px-6">
           <h2 class="flex justify-between items-center font-semibold text-white" id="slide-over-title">
-            {{data ? "Update Awards" : "Add Awards "}}
+            {{data ? "Update Award" : "Add Award"}}
             <button color="warn" mat-dialog-close mat-icon-button>
               <mat-icon class="text-red-700">close</mat-icon>
             </button>
@@ -30,14 +30,14 @@
                 </div>
               </div>
               <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Website Link</label>
+                <label class="block text-sm/6 font-medium text-gray-900">Website Link*</label>
                 <div class="mt-2">
                   <input formControlName="website_link" type="text"
                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                 </div>
               </div>
               <div>
-                <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option*</label>
+                <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an Option*</label>
                 <div class="mt-2">
                     <select id="status" formControlName="status"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">

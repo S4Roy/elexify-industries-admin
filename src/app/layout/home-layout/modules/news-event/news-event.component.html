@@ -26,17 +26,18 @@
       [limit]="5"
       [rows]="rows">
 
-    <!-- ACTIONS -->
     <ng-container *ngFor="let column of columns">
       <ngx-datatable-column [name]="column.name" [prop]="column.prop">
         <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
-          <ng-container *ngIf="column.prop === 'action'; else defaultTemplate">
+
+          <ng-container *ngIf="column.prop === 'action'; else statusTemplate">
               <span  matRipple mat-button [matMenuTriggerFor]="menu" matTooltip="View content" class="hover-effect">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical"  viewBox="0 0 16 16">  
                   <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
                 </svg>
               </span>
-
+              
+            <!-- ACTIONS -->
             <mat-menu #menu="matMenu">
               <ng-container class="menu-content">
                 <ol class="p-4">
@@ -45,8 +46,15 @@
                 </ol>
               </ng-container>
             </mat-menu>
-
           </ng-container>
+
+          <!-- STATUS SHOW IN TITLE CASE -->
+          <ng-template #statusTemplate> 
+            <ng-container  *ngIf="column.prop === 'status'; else defaultTemplate"> 
+              <span style="text-transform: capitalize;">{{ row[column.prop]}}</span> 
+            </ng-container>
+          </ng-template>
+
           <ng-template #defaultTemplate> {{row[column.prop]}} </ng-template>
 
         </ng-template>
