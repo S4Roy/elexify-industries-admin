@@ -30,7 +30,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
           message = error?.title;
         }
         toastr.error(message);
-        // authService.userLogout();
+        authService.userLogout();
       } else if (error?.status === 409) {
         toastr.error(error.error[0] ?? 'Conflict Error');
       } else if (error?.status === 415) {

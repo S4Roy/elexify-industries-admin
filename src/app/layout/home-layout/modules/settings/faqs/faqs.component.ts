@@ -13,12 +13,12 @@ export class FaqsComponent {
   faq_nav_list: any = [
     {
       label: 'FAQ Category',
-      description: '4 Category Added',
+      description: 'Manage Category',
       router_path: '/settings/faq/category',
     },
     {
       label: 'Questions',
-      description: '4 Questions Added',
+      description: 'Manage Questions',
       router_path: '/settings/faq/questions',
     },
   ];

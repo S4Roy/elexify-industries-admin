@@ -23,7 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MenuComponent,
     MatIcon,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './site-info.component.html',
   styleUrl: './site-info.component.scss',
@@ -45,6 +45,9 @@ export class SiteInfoComponent {
       address: [null],
       logo: [null],
       preview_path: [null],
+      embed_link: [''],
+      latitude: [null],
+      longitude: [null],
     });
     this.fetchSiteDetails();
   }
@@ -52,7 +55,15 @@ export class SiteInfoComponent {
     this.settingService.siteInfoDetails().subscribe({
       next: (res: any) => {
         this.siteDetails = res;
-        this.formGroup.patchValue(this.siteDetails);
+        this.formGroup.patchValue({
+          name: this.siteDetails?.name,
+          email: this.siteDetails?.email,
+          mobile: this.siteDetails?.mobile,
+          address: this.siteDetails?.address,
+          embed_link: this.siteDetails?.gps_coordinates?.embed_link,
+          latitude: this.siteDetails?.gps_coordinates?.latitude,
+          longitude: this.siteDetails?.gps_coordinates?.longitude,
+        });
       },
       error: (err: any) => {},
     });

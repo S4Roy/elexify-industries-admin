@@ -1,27 +1,13 @@
-<div class="flex justify-between">
-    <div class="p-4 sm:px-0">
-      <h3 class="text-base/7 font-semibold text-gray-900">Page Information</h3>
-      <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">
-        Manage site details of application.
-      </p>
-    </div>
-    <div class="flex items-center">
-      <button
-        *ngIf="editInfo"
-        (click)="editInfo = false"
-        class="rounded-full btn bg-red-600 mx-2 px-3.5 py-1.5 text-sm font-normal text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-      >
-        Cancel
-      </button>
-      <button
-        (click)="updateData()"
-        type="button"
-        class="px-2 py-1 outline-1 text-xs font-medium text-center inline-flex items-center border-red-500 text-red-500 border rounded-full"
-      >
-        <mat-icon class="text-xs font-medium">{{ editInfo ? "save" : "edit" }}</mat-icon>
-        {{ editInfo ? "Update" : "Edit" }} Info
-      </button>
-    </div>
+<div class="absolute flex justify-end right-5 top-14">
+  <button
+  (click)="updateData()"
+  type="button"
+  class="px-2 py-1 outline-1 text-xs font-medium text-center inline-flex items-center border-red-500 text-red-500 border rounded-full"
+>
+  <mat-icon class="text-xs font-medium">{{ editInfo ? "save" : "edit" }}</mat-icon>
+  {{ editInfo ? "Update" : "Edit" }} Template
+</button>
+ 
   </div>
 <div class="flex gap-3" >
     <div class="w-full bg-white p-3 rounded">
@@ -31,9 +17,9 @@
                 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 
                 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 
                 sm:text-sm/6 text-area-sec terms-height">
-                <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                <ngx-editor-menu   [disabled]="!editInfo" [editor]="editor"> </ngx-editor-menu>
                 <div class="inner-height" [formGroup]="formGroup">
-                    <ngx-editor [editor]="editor" formControlName="content" [placeholder]="'Add content'"></ngx-editor>
+                    <ngx-editor  [disabled]="!editInfo" [editor]="editor" formControlName="content" [placeholder]="'Add content'"></ngx-editor>
                 </div>
             </div>
         </form>

@@ -36,8 +36,8 @@ export class SettingsComponent {
     },
     {
       label: 'FAQ Category',
-      description: '5 Category added',
-      router_path: '/settings/faq/questions',
+      description: 'Manage Category',
+      router_path: '/settings/faq/category',
     },
     {
       label: 'Site Info',

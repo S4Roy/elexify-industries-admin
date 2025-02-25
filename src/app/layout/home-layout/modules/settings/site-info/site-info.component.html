@@ -130,6 +130,85 @@
             </ng-container>
           </dd>
         </div>
+        
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm/6 font-medium text-gray-900">Embed Link</dt>
+          <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <ng-container *ngIf="!editInfo">
+              {{ siteDetails?.gps_coordinates?.embed_link ? siteDetails?.gps_coordinates?.embed_link : "NA" }}
+            </ng-container>
+            <ng-container *ngIf="editInfo">
+              <mat-form-field>
+                <textarea
+                  formControlName="embed_link"
+                  matInput
+                  [class.is-invalid]="
+                    !Global.isInputValid(formGroup, 'embed_link')
+                  "
+                  placeholder="Type Here"
+                  matInput
+                ></textarea>
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(formGroup, 'embed_link', 'required')
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm/6 font-medium text-gray-900">Latitude</dt>
+          <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <ng-container *ngIf="!editInfo">{{
+              siteDetails?.gps_coordinates?.latitude
+            }}</ng-container>
+            <ng-container *ngIf="editInfo">
+              <mat-form-field>
+                <input
+                  formControlName="latitude"
+                  matInput
+                  [class.is-invalid]="!Global.isInputValid(formGroup, 'latitude')"
+                  placeholder="Type Here"
+                />
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(formGroup, 'latitude', 'required')
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt class="text-sm/6 font-medium text-gray-900">longitude</dt>
+          <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <ng-container *ngIf="!editInfo">{{
+              siteDetails?.gps_coordinates?.longitude
+            }}</ng-container>
+            <ng-container *ngIf="editInfo">
+              <mat-form-field>
+                <input
+                  formControlName="longitude"
+                  matInput
+                  [class.is-invalid]="!Global.isInputValid(formGroup, 'longitude')"
+                  placeholder="Type Here"
+                />
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(formGroup, 'longitude', 'required')
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+          </dd>
+        </div>
       </dl>
       <div class="w-1/4 px-2 relative">
         <span *ngIf="editInfo" class="absolute right-2 top-2">

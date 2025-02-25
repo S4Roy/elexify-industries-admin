@@ -12,6 +12,7 @@ import { SettingsService } from '../../../../../core/services/settings.service';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-terms-conditions',
@@ -32,9 +33,11 @@ export class TermsConditionsComponent {
   constructor(
     private settingService: SettingsService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
   ) {}
   ngOnInit(): void {
+   
     this.editor = new Editor();
     this.formGroup = this.fb.group({
       page_type: [null, Validators.required],
@@ -42,12 +45,17 @@ export class TermsConditionsComponent {
       content: [null, Validators.required],
       page_id: [null],
     });
+    this.route.data.subscribe((res:any)=>{
+      this.formGroup.patchValue({
+        page_type: res?.page_type ?? null,
+      });
+    })
     this.fetchCMSData();
   }
 
   fetchCMSData() {
     let params = new URLSearchParams();
-    params.set('page_type', 'terms-conditions');
+    params.set('page_type', this.formGroup.value.page_type);
     this.settingService.pageDetails(params).subscribe({
       next: (res: any) => {
         this.formGroup.patchValue({

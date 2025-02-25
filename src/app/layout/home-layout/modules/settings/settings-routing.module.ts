@@ -46,38 +46,55 @@ const routes: Routes = [
       {
         path: 'user-role-permissions',
         component: SettingsLayoutComponent,
-        data: { pageTitle: 'role-permissions', breadcrumb: 'User Role & Permissions' },
+        data: {
+          pageTitle: 'role-permissions',
+          breadcrumb: 'User Role & Permissions',
+        },
         children: [
           {
             path: '',
             component: UserRolePermissionsComponent,
             data: { pageTitle: 'role-permissions', breadcrumb: '' },
           },
-        ]
+        ],
       },
       {
         path: 'terms-conditions',
         component: SettingsLayoutComponent,
-        data: { pageTitle: 'terms-conditions', breadcrumb: 'Terms & Conditions' },
+        data: {
+          pageTitle: 'Terms & Conditions',
+          breadcrumb: 'Terms & Conditions',
+        },
         children: [
           {
             path: '',
             component: TermsConditionsComponent,
-            data: { pageTitle: 'terms-conditions', breadcrumb: '' },
+            data: {
+              pageTitle: 'Terms & Conditions',
+              page_type: 'terms-conditions',
+              breadcrumb: '',
+            },
           },
-        ]
+        ],
       },
       {
         path: 'privacy-policies',
         component: SettingsLayoutComponent,
-        data: { pageTitle: 'privacy-policies', breadcrumb: 'Privacy & Policies' },
+        data: {
+          pageTitle: 'Privacy & Policies',
+          breadcrumb: 'Privacy & Policies',
+        },
         children: [
           {
             path: '',
             component: TermsConditionsComponent,
-            data: { pageTitle: 'privacy-policies', breadcrumb: '' },
+            data: {
+              pageTitle: 'Privacy & Policies',
+              page_type: 'privacy-policies',
+              breadcrumb: '',
+            },
           },
-        ]
+        ],
       },
       {
         path: 'site-info',
@@ -89,7 +106,7 @@ const routes: Routes = [
             component: SiteInfoComponent,
             data: { pageTitle: 'site-info', breadcrumb: '' },
           },
-        ]
+        ],
       },
     ],
   },
