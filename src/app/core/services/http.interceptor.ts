@@ -1,20 +1,23 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, finalize, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const toastr = inject(ToastrService);
+  const spinner = inject(NgxSpinnerService);
   const authReq = req.clone({
     setHeaders: {
       'x-api-key': environment.X_API_KEY,
       Authorization: `Bearer ${authService.getUserToken()}`,
     },
   });
+  spinner.show()
   return next(authReq).pipe(
     catchError((error) => {
       if (error?.status === 401) {
@@ -59,6 +62,9 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
         toastr.error('Something went wrong.');
       }
       return throwError(() => error);
+    }),
+    finalize(()=>{
+      spinner.hide()
     })
   );
 };

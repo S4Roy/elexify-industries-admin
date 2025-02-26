@@ -9,10 +9,11 @@ import { filter } from 'rxjs';
 import { HelpersService } from './core/services/helpers.service';
 import { Title } from '@angular/platform-browser';
 import * as Global from './global';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,NgxSpinnerModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

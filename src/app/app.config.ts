@@ -10,6 +10,7 @@ import {
 } from '@angular/material/core';
 import { provideToastr } from 'ngx-toastr';
 import { httpInterceptor } from './core/services/http.interceptor';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,5 +27,7 @@ export const appConfig: ApplicationConfig = {
 
     provideNativeDateAdapter(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-IN' },
+    NgxSpinnerModule,
+
   ],
 };
