@@ -1,0 +1,118 @@
+<div class="fixed inset-0 overflow-hidden">
+  <div class="absolute inset-0 overflow-hidden">
+    <div
+      class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+    >
+      <div class="pointer-events-auto relative w-screen max-w-md">
+        <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+          <div class="p-1 add-new-title sm:px-6">
+            <h2
+              class="flex mb-0 justify-between items-center font-semibold text-white"
+              id="slide-over-title"
+            >
+              Update Application
+              <button color="warn" mat-dialog-close mat-icon-button>
+                <mat-icon class="text-red-700">close</mat-icon>
+              </button>
+            </h2>
+          </div>
+          <div class="relative my-3 flex-1 px-4 sm:px-6">
+            <form class="space-y-1" [formGroup]="formGroup">
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900"
+                  >Status
+                  <span
+                    class="text-red-500"
+                    *ngIf="
+                      Global.isInputRuleAvailable(
+                        formGroup,
+                        'applicant_status',
+                        'required'
+                      )
+                    "
+                    >*</span
+                  >
+                </label>
+                <div class="mt-2">
+                  <mat-form-field>
+                    <mat-select
+                      placeholder="Select"
+                      formControlName="applicant_status"
+                      matInput
+                      [class.is-invalid]="
+                        !Global.isInputValid(formGroup, 'applicant_status')
+                      "
+                    >
+                      <mat-option
+                        [value]="item?.key"
+                        *ngFor="let item of statusList"
+                        >{{ item?.value }}</mat-option
+                      >
+                    </mat-select>
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          formGroup,
+                          'applicant_status',
+                          'required'
+                        )
+                      "
+                    >
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900"
+                  >Remarks
+                  <span
+                    class="text-red-500"
+                    *ngIf="
+                      Global.isInputRuleAvailable(
+                        formGroup,
+                        'remarks',
+                        'required'
+                      )
+                    "
+                    >*</span
+                  >
+                </label>
+                <div class="mt-2">
+                  <mat-form-field>
+                    <input
+                      formControlName="remarks"
+                      matInput
+                      [class.is-invalid]="
+                        !Global.isInputValid(formGroup, 'remarks')
+                      "
+                      placeholder="Type Here"
+                    />
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          formGroup,
+                          'remarks',
+                          'required'
+                        )
+                      "
+                    >
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+          <button
+            (click)="onSubmit()"
+            [disabled]="formGroup.disabled"
+            class="save-button"
+          >
+            {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

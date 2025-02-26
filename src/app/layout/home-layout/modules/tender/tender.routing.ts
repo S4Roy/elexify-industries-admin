@@ -24,7 +24,7 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: AddTenderComponent,
-        data: { pageTitle: 'Update Tender', breadcrumb: 'Add New Tender' },
+        data: { pageTitle: 'Update Tender', breadcrumb: 'Update Tender' },
       },
     ],
   },

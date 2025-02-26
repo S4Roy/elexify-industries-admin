@@ -1,3 +1,534 @@
-<p>
-  add-career-management works!
-</p>
+<div class="add-wrapper">
+  <form class="space-y-0 p-3" [formGroup]="formGroup">
+    <div class="flex">
+      <div class="w-1/2">
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Opening For
+          <span
+            class="text-red-500"
+            *ngIf="Global.isInputRuleAvailable(formGroup, 'title', 'required')"
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              formControlName="title"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'title')"
+              placeholder="Type Here"
+            />
+            <mat-error
+              *ngIf="!Global.isInputRuleValid(formGroup, 'title', 'required')"
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <span class="mx-2"></span>
+      <div class="w-1/2">
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Job No
+          <span
+            class="text-red-500"
+            *ngIf="Global.isInputRuleAvailable(formGroup, 'job_no', 'required')"
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              formControlName="job_no"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'job_no')"
+              placeholder="Type Here"
+            />
+            <mat-error
+              *ngIf="!Global.isInputRuleValid(formGroup, 'job_no', 'required')"
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Experience Level
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(
+                formGroup,
+                'experience_level',
+                'required'
+              )
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <mat-select
+              placeholder="Select"
+              formControlName="experience_level"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(formGroup, 'experience_level')
+              "
+            >
+              <mat-option
+                [value]="item"
+                *ngFor="
+                  let item of [
+                    'Entry',
+                    'Junior',
+                    'Mid',
+                    'Senior',
+                    'Lead',
+                    'Expert',
+                    'Intern'
+                  ]
+                "
+                >{{ item }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  formGroup,
+                  'experience_level',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Year Of Experience
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(
+                formGroup,
+                'year_of_experience',
+                'required'
+              )
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              formControlName="year_of_experience"
+              matInput
+              type="text"
+              [class.is-invalid]="
+                !Global.isInputValid(formGroup, 'year_of_experience')
+              "
+              placeholder="Type Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  formGroup,
+                  'year_of_experience',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="flex justify-between text-sm/6 font-medium text-gray-900"
+          >Salary
+          <span
+            class="text-red-500"
+            *ngIf="Global.isInputRuleAvailable(formGroup, 'salary', 'required')"
+            >*</span
+          >
+          <div class="flex items-center h-4">
+            <span>Disclosed?</span>
+            <mat-radio-group
+              formControlName="is_salary_not_disclosed"
+              class="mx-2"
+              aria-label="Select an option"
+            >
+              <mat-radio-button value="yes">Yes</mat-radio-button>
+              <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              formControlName="salary"
+              matInput
+              type="number"
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'salary')"
+              placeholder="Type Here"
+            />
+            <span matSuffix>
+              <mat-icon matSuffix>currency_rupee</mat-icon>
+
+              <!-- <input readonly formControlName="currency_name" matInput /> -->
+            </span>
+            <mat-error
+              *ngIf="!Global.isInputRuleValid(formGroup, 'salary', 'required')"
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Location
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(formGroup, 'job_location', 'required')
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              formControlName="job_location"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(formGroup, 'job_location')
+              "
+              placeholder="Type Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(formGroup, 'job_location', 'required')
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Work Mode
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(formGroup, 'work_mode', 'required')
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <mat-select
+              placeholder="Select"
+              formControlName="work_mode"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'work_mode')"
+            >
+              <mat-option
+                [value]="item"
+                *ngFor="
+                  let item of [
+                    'WFO',
+                    'WFH',
+                    'Onsite',
+                    'Hybrid',
+                    'Remote',
+                    'Freelance',
+                    'Contract',
+                    'Internship'
+                  ]
+                "
+                >{{ item }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(formGroup, 'work_mode', 'required')
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >No. Of Vacancy
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(
+                formGroup,
+                'no_of_vacancy',
+                'required'
+              )
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              formControlName="no_of_vacancy"
+              matInput
+              type="number"
+              [class.is-invalid]="
+                !Global.isInputValid(formGroup, 'no_of_vacancy')
+              "
+              placeholder="Type Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(formGroup, 'no_of_vacancy', 'required')
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Job Type
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(formGroup, 'job_type', 'required')
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <mat-select
+              placeholder="Select"
+              formControlName="job_type"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'job_type')"
+            >
+              <mat-option
+                [value]="item"
+                *ngFor="
+                  let item of [
+                    'Full-Time',
+                    'Part-Time',
+                    'Contract',
+                    'Freelance',
+                    'Internship',
+                    'Temporary',
+                    'Remote',
+                    'Hybrid',
+                    'Volunteer'
+                  ]
+                "
+                >{{ item }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(formGroup, 'job_type', 'required')
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Language Known
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(
+                formGroup,
+                'language_known',
+                'required'
+              )
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="language_known"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(formGroup, 'language_known')
+              "
+            >
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  formGroup,
+                  'language_known',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Job Status
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(formGroup, 'job_status', 'required')
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <mat-select
+              placeholder="Select"
+              formControlName="job_status"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'job_status')"
+            >
+              <mat-option value="open">Open</mat-option>
+              <mat-option value="closed">Closed</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(formGroup, 'job_status', 'required')
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Status
+          <span
+            class="text-red-500"
+            *ngIf="Global.isInputRuleAvailable(formGroup, 'status', 'required')"
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <mat-select
+              placeholder="Select"
+              formControlName="status"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'status')"
+            >
+              <mat-option value="active">Active</mat-option>
+              <mat-option value="inactive">Inactive</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="!Global.isInputRuleValid(formGroup, 'status', 'required')"
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm/6 font-medium text-gray-900"
+        >Responsibilities
+        <span
+          class="text-red-500"
+          *ngIf="
+            Global.isInputRuleAvailable(
+              formGroup,
+              'responsibilities',
+              'required'
+            )
+          "
+          >*</span
+        >
+      </label>
+      <div class="mt-2">
+        <mat-form-field>
+          <textarea
+            formControlName="responsibilities"
+            matInput
+            [class.is-invalid]="
+              !Global.isInputValid(formGroup, 'responsibilities')
+            "
+            placeholder="Type Here"
+          ></textarea>
+          <mat-error
+            *ngIf="
+              !Global.isInputRuleValid(
+                formGroup,
+                'responsibilities',
+                'required'
+              )
+            "
+          >
+            This field is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <label class="block text-sm/6 font-medium text-gray-900"
+        >Requirements
+        <span
+          class="text-red-500"
+          *ngIf="
+            Global.isInputRuleAvailable(formGroup, 'requirements', 'required')
+          "
+          >*</span
+        >
+      </label>
+      <div class="mt-2">
+        <mat-form-field>
+          <textarea
+            formControlName="requirements"
+            matInput
+            [class.is-invalid]="!Global.isInputValid(formGroup, 'requirements')"
+            placeholder="Type Here"
+          ></textarea>
+          <mat-error
+            *ngIf="
+              !Global.isInputRuleValid(formGroup, 'requirements', 'required')
+            "
+          >
+            This field is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="flex mt-3 justify-end">
+      <button
+        (click)="onSubmit()"
+        [disabled]="formGroup.disabled"
+        class="ai-button"
+      >
+        {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
+      </button>
+    </div>
+  </form>
+</div>

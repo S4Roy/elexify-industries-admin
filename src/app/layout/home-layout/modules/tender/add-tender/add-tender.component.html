@@ -1,123 +1,147 @@
 <div class="add-wrapper">
   <form class="space-y-0 p-3" [formGroup]="formGroup">
-    
-<div class="grid grid-cols-4 gap-4">
-  <div>
-    <label class="block text-sm/6 font-medium text-gray-900"
-      >Tendor Category
-      <span
-        class="text-red-500"
-        *ngIf="Global.isInputRuleAvailable(formGroup, 'tender_category_id', 'required')"
-        >*</span
-      >
-    </label>
-    <div class="mt-2">
-      <mat-form-field>
-        <mat-select
-          placeholder="Select"
-          formControlName="tender_category_id"
-          matInput
-          [class.is-invalid]="!Global.isInputValid(formGroup, 'tender_category_id')"
-        >
-        <ng-container *ngFor="let item of category_list">
-          <mat-option [value]="item.id">{{item?.category_name}}</mat-option>
-
-        </ng-container>
-        </mat-select>
-        <mat-error
-          *ngIf="!Global.isInputRuleValid(formGroup, 'tender_category_id', 'required')"
-        >
-          This field is required
-        </mat-error>
-      </mat-form-field>
+    <div class="grid grid-cols-4 gap-4">
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Tendor Category
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(
+                formGroup,
+                'tender_category_id',
+                'required'
+              )
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <mat-select
+              placeholder="Select"
+              formControlName="tender_category_id"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(formGroup, 'tender_category_id')
+              "
+            >
+              <ng-container *ngFor="let item of category_list">
+                <mat-option [value]="item.id">{{
+                  item?.category_name
+                }}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  formGroup,
+                  'tender_category_id',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Tender No
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(formGroup, 'tender_no', 'required')
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              formControlName="tender_no"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'tender_no')"
+              placeholder="Type Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(formGroup, 'tender_no', 'required')
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Tender Status
+          <span
+            class="text-red-500"
+            *ngIf="
+              Global.isInputRuleAvailable(
+                formGroup,
+                'tender_status',
+                'required'
+              )
+            "
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <mat-select
+              placeholder="Select"
+              formControlName="tender_status"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(formGroup, 'tender_status')
+              "
+            >
+              <mat-option value="open">Open</mat-option>
+              <mat-option value="closed">Closed</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(formGroup, 'tender_status', 'required')
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Status
+          <span
+            class="text-red-500"
+            *ngIf="Global.isInputRuleAvailable(formGroup, 'status', 'required')"
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <mat-select
+              placeholder="Select"
+              formControlName="status"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'status')"
+            >
+              <mat-option value="active">Active</mat-option>
+              <mat-option value="inactive">Inactive</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="!Global.isInputRuleValid(formGroup, 'status', 'required')"
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
-  </div>
-  <div>
-    <label class="block text-sm/6 font-medium text-gray-900"
-      >Tender No
-      <span
-        class="text-red-500"
-        *ngIf="
-          Global.isInputRuleAvailable(formGroup, 'tender_no', 'required')
-        "
-        >*</span
-      >
-    </label>
-    <div class="mt-2">
-      <mat-form-field>
-        <input
-          formControlName="tender_no"
-          matInput
-          [class.is-invalid]="!Global.isInputValid(formGroup, 'tender_no')"
-          placeholder="Type Here"
-        />
-        <mat-error
-          *ngIf="
-            !Global.isInputRuleValid(formGroup, 'tender_no', 'required')
-          "
-        >
-          This field is required
-        </mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div>
-    <label class="block text-sm/6 font-medium text-gray-900"
-      >Tender Status
-      <span
-        class="text-red-500"
-        *ngIf="Global.isInputRuleAvailable(formGroup, 'tender_status', 'required')"
-        >*</span
-      >
-    </label>
-    <div class="mt-2">
-      <mat-form-field>
-        <mat-select
-          placeholder="Select"
-          formControlName="tender_status"
-          matInput
-          [class.is-invalid]="!Global.isInputValid(formGroup, 'tender_status')"
-        >
-          <mat-option value="open">Open</mat-option>
-          <mat-option value="closed">Closed</mat-option>
-        </mat-select>
-        <mat-error
-          *ngIf="!Global.isInputRuleValid(formGroup, 'tender_status', 'required')"
-        >
-          This field is required
-        </mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div>
-    <label class="block text-sm/6 font-medium text-gray-900"
-      >Status
-      <span
-        class="text-red-500"
-        *ngIf="Global.isInputRuleAvailable(formGroup, 'status', 'required')"
-        >*</span
-      >
-    </label>
-    <div class="mt-2">
-      <mat-form-field>
-        <mat-select
-          placeholder="Select"
-          formControlName="status"
-          matInput
-          [class.is-invalid]="!Global.isInputValid(formGroup, 'status')"
-        >
-          <mat-option value="active">Active</mat-option>
-          <mat-option value="inactive">Inactive</mat-option>
-        </mat-select>
-        <mat-error
-          *ngIf="!Global.isInputRuleValid(formGroup, 'status', 'required')"
-        >
-          This field is required
-        </mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-</div>
     <div>
       <label class="block text-sm/6 font-medium text-gray-900"
         >Tender name
@@ -256,7 +280,9 @@
             ></app-menu>
           </span>
           <ng-container *ngIf="formGroup.value.file_preview">
-           <a target="_blank" [href]="formGroup.value.file_preview">Attachment</a>
+            <a target="_blank" [href]="formGroup.value.file_preview"
+              >Attachment</a
+            >
           </ng-container>
           <ng-container *ngIf="!formGroup.value.file_preview">
             <div
@@ -315,12 +341,13 @@
         <div class="mt-2">
           <mat-form-field>
             <input
-              [readonly]="formGroup.value.corrigendum_tender == 'no'"
+              [readonly]="true"
               matInput
               formControlName="corrigendum_start_at"
               [matDatepicker]="corrigendum_start_date_picker"
             />
             <mat-datepicker-toggle
+              [disabled]="formGroup.value.corrigendum_tender == 'no'"
               matIconSuffix
               [for]="corrigendum_start_date_picker"
             ></mat-datepicker-toggle>
@@ -358,11 +385,13 @@
         <div class="mt-2">
           <mat-form-field>
             <input
+              [readonly]="true"
               matInput
               formControlName="corrigendum_end_at"
               [matDatepicker]="corrigendum_end_date_picker"
             />
             <mat-datepicker-toggle
+              [disabled]="formGroup.value.corrigendum_tender == 'no'"
               matIconSuffix
               [for]="corrigendum_end_date_picker"
             ></mat-datepicker-toggle>
@@ -397,7 +426,9 @@
             ></app-menu>
           </span>
           <ng-container *ngIf="formGroup.value.file_co_preview">
-           <a target="_blank" [href]="formGroup.value.file_co_preview">Attachment</a>
+            <a target="_blank" [href]="formGroup.value.file_co_preview"
+              >Attachment</a
+            >
           </ng-container>
           <ng-container *ngIf="!formGroup.value.file_co_preview">
             <div
@@ -426,7 +457,6 @@
         />
       </div>
     </div>
-
 
     <div class="flex mt-3 justify-end">
       <button

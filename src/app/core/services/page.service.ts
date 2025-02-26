@@ -44,6 +44,9 @@ export class PageService {
   newsEventsList() {
     return this.httpService.get(`admin/news-list`);
   }
+  jobApplicationStatusList() {
+    return this.httpService.get(`admin/job-applicant/status-list`);
+  }
   tenderCategoryList() {
     return this.httpService.get(`admin/tender/category/list`);
   }
@@ -66,12 +69,30 @@ export class PageService {
   }
   tenderDetails(id: any) {
     return this.httpService.get(`admin/tender/details/${id.toString()}`);
+  } 
+  careerList(params: any) {
+    return this.httpService.get(`admin/career/lists?${params.toString()}`);
+  }
+  careerApplicationList(params: any) {
+    return this.httpService.get(`admin/career/applicant/list?${params.toString()}`);
+  }
+  careerDetails(id: any) {
+    return this.httpService.get(`admin/career/details/${id.toString()}`);
   }
   submitTender(payload: any) {
     return this.httpService.postFormData(
       `admin/tender/${payload?.id ? 'edit' : 'add'}`,
       payload
     );
+  }
+  submitCareer(payload: any) {
+    return this.httpService.post(
+      `admin/career/${payload?.id ? 'edit' : 'add'}`,
+      payload
+    );
+  }
+  deleteCareer(payload: any) {
+    return this.httpService.post(`admin/career/delete`, payload);
   }
   deleteTender(payload: any) {
     return this.httpService.post(`admin/tender/delete`, payload);
@@ -117,5 +138,11 @@ export class PageService {
   }
   fetchClients() {
     return this.httpService.get(`admin/client-list`);
+  }
+  careerApplicationEdit(payload: any) {
+    return this.httpService.post(
+      `admin/career/applicant/edit`,
+      payload
+    );
   }
 }
