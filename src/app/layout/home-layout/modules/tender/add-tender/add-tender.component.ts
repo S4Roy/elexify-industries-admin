@@ -161,8 +161,8 @@ export class AddTenderComponent implements OnInit {
         this.data = res;
         this.formGroup.patchValue(this.data);
         this.formGroup.patchValue({
-        file_preview:this.data?.attachment?Global.API_URL+'/'+this.data?.attachment:null,
-        file_co_preview:this.data?.corrigendum_attachment?Global.API_URL+'/'+this.data?.corrigendum_attachment:null
+        file_preview:this.data?.attachment?Global.BACKEND_URL +this.data?.attachment:null,
+        file_co_preview:this.data?.corrigendum_attachment?Global.BACKEND_URL +this.data?.corrigendum_attachment:null
         })
       },
       error: (err) => {},

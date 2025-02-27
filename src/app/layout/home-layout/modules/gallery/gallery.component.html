@@ -17,7 +17,7 @@
         <span class="absolute top-0 right-0">
           <app-menu [modalItem]="item" (initModal)="addItem($event)" [delete]="item" (deleteItem)="deleteItem($event)"></app-menu>
         </span>
-        <img [matTooltip]="item?.title" class="block  bg-gray-200 object-cover" [src]="Global.API_URL+'/'+item?.file_path" [alt]="item?.title" />
+        <img [matTooltip]="item?.title" class="block  bg-gray-200 object-cover" [src]="Global.BACKEND_URL +item?.file_path" [alt]="item?.title" />
       </div>
     </ng-container>
   </div>

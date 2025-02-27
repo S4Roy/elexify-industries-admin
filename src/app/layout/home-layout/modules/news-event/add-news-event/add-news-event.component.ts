@@ -63,10 +63,10 @@ export class AddNewsEventComponent implements OnInit {
                 file: [''] // Form control for the image
               });
               this.data ? this.formGroup.patchValue(this.data) : null;
-              this.data && this.data['news_images'][0].file_path ? this.formGroup.controls['file'].patchValue(environment.API_BASE_URL+this.data['news_images'][0].file_path) : null;
-              this.serviceFileUrl = this.data && this.data['news_images'][0].file_path ? environment.API_BASE_URL+this.data['news_images'][0].file_path : '';
-              // this.data && this.data.file_path ? this.formGroup.controls['file'].patchValue(environment.API_BASE_URL+this.data.file_path) : null;
-              // this.serviceFileUrl = this.data && this.data.file_path ? environment.API_BASE_URL+this.data.file_path : '';
+              this.data && this.data['news_images'][0].file_path ? this.formGroup.controls['file'].patchValue(environment.API_URL+this.data['news_images'][0].file_path) : null;
+              this.serviceFileUrl = this.data && this.data['news_images'][0].file_path ? environment.API_URL+this.data['news_images'][0].file_path : '';
+              // this.data && this.data.file_path ? this.formGroup.controls['file'].patchValue(environment.API_URL+this.data.file_path) : null;
+              // this.serviceFileUrl = this.data && this.data.file_path ? environment.API_URL+this.data.file_path : '';
             }
 
   ngOnInit(): void {}

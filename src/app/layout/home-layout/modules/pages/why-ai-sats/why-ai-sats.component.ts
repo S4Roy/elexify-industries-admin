@@ -65,7 +65,7 @@ export class WhyAiSatsComponent {
     });
     this.aboutTextForm = this.fb.group({
       id: [null, Validators.required],
-      title: [null, Validators.required],
+      title: [null],
       heading_txt: [null, Validators.required],
       content: [null, Validators.required],
       is_fdel: ['n'],
@@ -127,7 +127,7 @@ export class WhyAiSatsComponent {
           id: this.pageData?.banner?.id ?? null,
           display_text: this.pageData?.banner?.display_text ?? null,
           file_preview: this.pageData?.banner?.file_path
-            ? Global.API_URL + '/' + this.pageData?.banner?.file_path
+            ? Global.BACKEND_URL + this.pageData?.banner?.file_path
             : null,
           is_fdel: ['n'],
         });
@@ -139,6 +139,7 @@ export class WhyAiSatsComponent {
           file_preview: this.pageData?.about_text?.file_path
             ? Global.BACKEND_URL + this.pageData?.about_text?.file_path
             : null,
+          is_fdel: 'n',
         });
         this.companyInfoForm.patchValue({
           id: this.pageData?.company_info?.id ?? null,
@@ -193,7 +194,7 @@ export class WhyAiSatsComponent {
         this.clientForm.patchValue({
           id: this.pageData?.clients?.id,
           clients: this.pageData?.clients?.list ?? [],
-        }); 
+        });
         this.reviewForm.patchValue({
           id: this.pageData?.our_reviews?.id,
           client_review: this.pageData?.our_reviews?.list ?? [],
@@ -313,7 +314,7 @@ export class WhyAiSatsComponent {
         },
       });
     }
-  }  
+  }
   onClientReviewSubmit() {
     this.reviewForm.markAllAsTouched();
     if (this.reviewForm.valid) {

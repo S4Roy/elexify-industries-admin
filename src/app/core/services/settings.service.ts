@@ -70,4 +70,21 @@ export class SettingsService {
   userDetails(id: string) {
     return this.httpService.get(`admin/user/details/${id.toString()}`);
   }
+
+  teamList(params: URLSearchParams) {
+    return this.httpService.get(`admin/team/list?${params.toString()}`);
+  }
+  submitTeamMember(payload: any) {
+    if (payload?.id) {
+      return this.httpService.postFormData('admin/team/edit', payload);
+    } else {
+      return this.httpService.postFormData('admin/team/add', payload);
+    }
+  }
+  deleteTeamMember(payload: any) {
+    return this.httpService.post('admin/team/delete', payload);
+  }
+  teamMemberDetails(id: string) {
+    return this.httpService.get(`admin/team/details/${id.toString()}`);
+  }
 }

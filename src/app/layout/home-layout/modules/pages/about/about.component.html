@@ -272,7 +272,7 @@
         <ng-option *ngFor="let item of partner_list" [value]="item.id">
           <div class="option-item">
             <img
-              [src]="Global.API_URL + '/' + item.file_path"
+              [src]="Global.BACKEND_URL  + item.file_path"
               alt="{{ item.company_name }}"
               style="width: 30px; height: 30px; margin-right: 10px"
             />
@@ -619,11 +619,7 @@
       <ng-select formControlName="news_event" [multiple]="true">
         <ng-option *ngFor="let item of news_list" [value]="item.id">
           <div class="option-item">
-            <!-- <img
-              [src]="Global.API_URL + '/' + item.file_path"
-              alt="{{ item.company_name }}"
-              style="width: 30px; height: 30px; margin-right: 10px"
-            /> -->
+            
             {{ item.title }}
           </div>
         </ng-option>

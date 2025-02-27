@@ -27,7 +27,7 @@ import { ToastrService } from 'ngx-toastr';
     //MatIcon,MatMenu,
     MatMenuModule, MatButtonModule,
     MatIconModule, RouterModule,
-    NgIf,JsonPipe,CommonModule],
+    NgIf,CommonModule],
   templateUrl: './home-sats-info.component.html',
   styleUrl: './home-sats-info.component.scss'
 })

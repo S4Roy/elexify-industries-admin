@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { CommonModule } from '@angular/common';
+import * as Global from '../../../../global'
 
 @Component({
   selector: 'app-home-progress-section-info-card',
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home-progress-section-info-card.component.scss'
 })
 export class HomeProgressSectionInfoCardComponent {
+  Global=Global
   progressList: any = [];
   galleryList: any = []
   formGroup!: FormGroup;

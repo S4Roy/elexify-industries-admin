@@ -13,24 +13,24 @@ export class HttpService {
   }
 
   post(uri: string, payload: any) {
-    return this.http.post<any>(`${this.BASE_URL}/${uri}`, payload);
+    return this.http.post<any>(`${this.BASE_URL}${uri}`, payload);
   }
   put(uri: string, payload: any) {
-    return this.http.put<any>(`${this.BASE_URL}/${uri}`, payload);
+    return this.http.put<any>(`${this.BASE_URL}${uri}`, payload);
   }
   postFormData(uri: string, payload: any) {
     let formData: FormData = new FormData();
     for (let key in payload) {
       formData.append(key, payload[key]);
     }
-    return this.http.post<any>(`${this.BASE_URL}/${uri}`, formData);
+    return this.http.post<any>(`${this.BASE_URL}${uri}`, formData);
   }
 
   get(uri: string, payload: any = {}) {
-    return this.http.get<any>(`${this.BASE_URL}/${uri}`, payload);
+    return this.http.get<any>(`${this.BASE_URL}${uri}`, payload);
   }
   delete(uri: string, payload: any = {}) {
-    return this.http.delete<any>(`${this.BASE_URL}/${uri}`, {
+    return this.http.delete<any>(`${this.BASE_URL}${uri}`, {
       body: payload,
       observe: 'response' // To get full response including status codes
     });
@@ -44,7 +44,7 @@ export class HttpService {
     };
 
     return this.http
-      .get(`${this.BASE_URL}/${uri}?${payload?.params??""}`, httpOptions)
+      .get(`${this.BASE_URL}${uri}?${payload?.params??""}`, httpOptions)
       .pipe(
         map((response) => {
           const paginationInfo = response.headers.get('X-Pagination');
@@ -62,7 +62,7 @@ export class HttpService {
       observe: 'response' as const, // Ensuring type compatibility
     };
   
-    return this.http.post(`${this.BASE_URL}/${uri}`, payload, httpOptions)
+    return this.http.post(`${this.BASE_URL}${uri}`, payload, httpOptions)
       .pipe(
         map((response) => {
           const paginationInfo = response.headers.get('X-Pagination');
@@ -74,6 +74,6 @@ export class HttpService {
   }
   downloadFile(uri: string) {
     let httpOptions: Object = { responseType: 'blob' };
-    return this.http.get(`${this.BASE_URL}/${uri}`, httpOptions);
+    return this.http.get(`${this.BASE_URL}${uri}`, httpOptions);
   }
 }

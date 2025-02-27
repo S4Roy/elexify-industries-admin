@@ -16,7 +16,7 @@ import { MenuComponent } from '../../../includes/menu/menu.component';
   selector: 'app-add-enquiry-management',
   templateUrl: './add-enquiry-management.component.html',
   styleUrls: ['./add-enquiry-management.component.css'],
-  imports: [MatDialogModule, MatIconModule, MatButtonModule, ReactiveFormsModule, MenuComponent, NgIf],
+  imports: [MatDialogModule, MatIconModule, MatButtonModule, ReactiveFormsModule],
 })
 export class AddEnquiryManagementComponent implements OnInit {
 

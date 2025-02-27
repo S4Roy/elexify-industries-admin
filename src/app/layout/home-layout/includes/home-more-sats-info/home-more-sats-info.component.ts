@@ -18,6 +18,7 @@ import { RouterModule } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { MasterService } from '../../../../core/services/master.service';
 import { ToastrService } from 'ngx-toastr';
+import * as Global from '../../../../global'
 
 
 @Component({
@@ -31,13 +32,13 @@ import { ToastrService } from 'ngx-toastr';
     //MatIcon,MatMenu,
     MatMenuModule, MatButtonModule,
     MatIconModule, RouterModule,
-    NgIf,
     NgFor,
   ],
   templateUrl: './home-more-sats-info.component.html',
   styleUrl: './home-more-sats-info.component.scss'
 })
 export class HomeMoreSatsInfoComponent {
+  Global=Global
   formGroup: FormGroup;
   selectedImage: File | null = null; // For selected image
   satsList:any = []
@@ -115,7 +116,7 @@ export class HomeMoreSatsInfoComponent {
   }
   filePatch(data:any){
     data.forEach((element:any)=>{
-      this.files.push(this.newItem({ preview_path: element.file_path, file: null ,id:element.id }));
+      this.files.push(this.newItem({ preview_path:Global.BACKEND_URL+ element.file_path, file: null ,id:element.id }));
     })
     console.log(this.formGroup);
     

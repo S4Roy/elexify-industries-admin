@@ -135,6 +135,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'teams',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/teams/teams.module').then(
+        (m) => m.TeamsModule
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     component: P404Component,
     data: {

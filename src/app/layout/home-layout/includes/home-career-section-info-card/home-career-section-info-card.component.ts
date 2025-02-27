@@ -18,7 +18,7 @@ import { RouterModule } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { MasterService } from '../../../../core/services/master.service';
 import { ToastrService } from 'ngx-toastr';
-
+import * as Global from '../../../../global'
 @Component({
   selector: 'app-home-career-section-info-card',
   imports: [
@@ -36,6 +36,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './home-career-section-info-card.component.scss'
 })
 export class HomeCareerSectionInfoCardComponent {
+  Global=Global
   formGroup!: FormGroup;
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
@@ -157,8 +158,8 @@ export class HomeCareerSectionInfoCardComponent {
           file_certificates: crt,
           id: res?.setting_id
         });
-        this.imagePreview = res?.file_path
-        this.imagePreview2 = crt[0] != "" && crt[0] != null ? crt[0] : null;
+        this.imagePreview = Global.BACKEND_URL+ res?.file_path
+        this.imagePreview2 = crt[0] != "" && crt[0] != null ? (Global.BACKEND_URL+crt[0]) : null;
         // this.imagePreview2 = res?.certifcates?.map((x:any)=>{
         //   return x.file_path;
         // })

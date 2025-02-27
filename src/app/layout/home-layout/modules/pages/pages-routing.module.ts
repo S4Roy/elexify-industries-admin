@@ -28,9 +28,9 @@ const routes: Routes = [
         data: { pageTitle: 'About', breadcrumb: 'About' },
       },
       {
-        path: 'why-ai-sats',
+        path: 'why-anctpl',
         component: WhyAiSatsComponent,
-        data: { pageTitle: 'Why Air India Sats', breadcrumb: 'Why Air India Sats' },
+        data: { pageTitle: 'Why ANCTPL', breadcrumb: 'Why ANCTPL?' },
       },
       {
         path: 'our-services',

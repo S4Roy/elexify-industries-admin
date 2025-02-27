@@ -33,7 +33,6 @@ import { MenuComponent } from '../../../includes/menu/menu.component';
     MatSelectModule,
     MatInputModule,
     MatDatepickerModule,
-    MenuComponent,
     MatRadioModule,
     NgFor,
   ],

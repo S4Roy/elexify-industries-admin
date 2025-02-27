@@ -34,7 +34,7 @@
                           </ng-template> -->
                           <ng-option *ngFor="let item of galleryList" [value]="item.id">
                             <div class="option-item">
-                                <img [src]="item.file_path" alt="{{ item.title }}" style="width: 30px; height: 30px; margin-right: 10px;" />
+                                <img [src]="Global.BACKEND_URL+ item.file_path" alt="{{ item.title }}" style="width: 30px; height: 30px; margin-right: 10px;" />
                                 {{ item.title }}
                               </div>
                           </ng-option>

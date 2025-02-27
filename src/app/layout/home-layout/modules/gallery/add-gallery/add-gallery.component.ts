@@ -59,7 +59,7 @@ export class AddGalleryComponent implements OnInit {
         Validators.compose([Validators.required]),
       ],
       file: [null],
-      file_preview: [this.data?.file_path?(Global.API_URL+'/'+this.data?.file_path):null],
+      file_preview: [this.data?.file_path?(Global.BACKEND_URL +this.data?.file_path):null],
     });
   }
   ngOnInit(): void {}

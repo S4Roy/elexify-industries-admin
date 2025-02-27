@@ -139,7 +139,6 @@ export class HomeHeroSectionLandingInfoCardComponent {
 
   
   deleteItem(item?: any) {
-    console.log(item,"itemmmm");
     const deletePayload = {
       id: item.id, 
       setting_id: item.setting_id,
@@ -148,7 +147,6 @@ export class HomeHeroSectionLandingInfoCardComponent {
      this.master.deleteHeroSectionData(deletePayload)
        .subscribe(
          (response) => {  
-           console.log('Item deleted successfully!', response);
            this.getHeroSectionData();
          },
          (error) => {

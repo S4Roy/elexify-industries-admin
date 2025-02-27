@@ -39,8 +39,8 @@ export class SideNavComponent {
               exact: true,
             },
             {
-              label: 'Why AI Sats',
-              url: '/pages/why-ai-sats',
+              label: 'Why ANCTPL?',
+              url: '/pages/why-anctpl',
               exact: true,
             },
             // {
@@ -97,12 +97,12 @@ export class SideNavComponent {
           image_path:'assets/sidebar_icon/award-updated-icon.svg',
           url: '/tender',
         },
-        // {
-        //   label: 'Gallery',
-        //   icon: 'format_list_bulleted',
-        //   image_path:'assets/sidebar_icon/award-updated-icon.svg',
-        //   url: '/gallery',
-        // }
+        {
+          label: 'Teams',
+          icon: 'contacts',
+          image_path:'assets/sidebar_icon/users.svg',
+          url: '/teams',
+        },
       ],
     },
     {
