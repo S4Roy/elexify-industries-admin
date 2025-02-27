@@ -35,6 +35,18 @@ export class PageService {
       payload
     );
   }
+  deleteCareerCtaImage(payload: any) {
+    return this.httpService.post(
+      'admin/about/section/delete/career-cta/image',
+      payload
+    );
+  }
+  saveCareerCta(payload: any) {
+    return this.httpService.post(
+      'admin/about/section/save/career-cta',
+      payload
+    );
+  }
   saveAboutUsNewsEvents(payload: any) {
     return this.httpService.postFormData(
       'admin/about/section/save/news-event',
@@ -69,12 +81,14 @@ export class PageService {
   }
   tenderDetails(id: any) {
     return this.httpService.get(`admin/tender/details/${id.toString()}`);
-  } 
+  }
   careerList(params: any) {
     return this.httpService.get(`admin/career/lists?${params.toString()}`);
   }
   careerApplicationList(params: any) {
-    return this.httpService.get(`admin/career/applicant/list?${params.toString()}`);
+    return this.httpService.get(
+      `admin/career/applicant/list?${params.toString()}`
+    );
   }
   careerDetails(id: any) {
     return this.httpService.get(`admin/career/details/${id.toString()}`);
@@ -129,7 +143,7 @@ export class PageService {
       'admin/more-about/section/save/clients',
       payload
     );
-  }  
+  }
   saveAboutMoreClientReviews(payload: any) {
     return this.httpService.post(
       'admin/more-about/section/save/client-review',
@@ -140,9 +154,6 @@ export class PageService {
     return this.httpService.get(`admin/client-list`);
   }
   careerApplicationEdit(payload: any) {
-    return this.httpService.post(
-      `admin/career/applicant/edit`,
-      payload
-    );
+    return this.httpService.post(`admin/career/applicant/edit`, payload);
   }
 }

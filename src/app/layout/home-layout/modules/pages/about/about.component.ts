@@ -3,12 +3,14 @@ import { InfoCardComponent } from '../../../includes/info-card/info-card.compone
 import { AboutRoadmapInfoCardComponent } from '../../../includes/about-roadmap-info-card/about-roadmap-info-card.component';
 import { TaggedSectionComponent } from '../../../includes/tagged-section/tagged-section.component';
 import { MenuComponent } from '../../../includes/menu/menu.component';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { PartnersComponent } from '../../../includes/master/partners/partners.component';
 import { PageService } from '../../../../../core/services/page.service';
 import {
+  FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -33,6 +35,7 @@ import { Editor, NgxEditorModule } from 'ngx-editor';
     NgSelectModule,
     NgFor,
     NgxEditorModule,
+    CommonModule,
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
@@ -47,6 +50,7 @@ export class AboutComponent {
   partner_list: any = [];
   excellenceForm: FormGroup;
   newsEvetsForm: FormGroup;
+  careerCtaForm: FormGroup;
   editor!: Editor;
   constructor(
     private pageService: PageService,
@@ -98,9 +102,24 @@ export class AboutComponent {
       id: [null, Validators.required],
       news_event: [null, Validators.required],
     });
+    this.careerCtaForm = this.fb.group({
+      id: [null, Validators.required],
+      heading: [null, Validators.required],
+      content: [null, Validators.required],
+      botton_txt: [null, Validators.required],
+      detail_link: [null, Validators.required],
+      files: this.fb.array([]),
+      files_preview: this.fb.array([]),
+    });
     this.fetchNewsEventsList();
     this.fetchPartnerList();
     this.fetchAboutPage();
+  }
+  get files(): FormArray {
+    return this.careerCtaForm.get('files') as FormArray;
+  }
+  get files_preview(): FormArray {
+    return this.careerCtaForm.get('files_preview') as FormArray;
   }
   fetchAboutPage() {
     this.pageService.fetchAboutPage().subscribe({
@@ -175,6 +194,24 @@ export class AboutComponent {
           id: this.pageData?.news_event?.id ?? null,
           news_event: this.pageData?.news_event?.list ?? [],
         });
+        this.files_preview.clear();
+        this.pageData?.career_cta?.files?.forEach((file: any) => {
+          let url = Global.API_URL + '/' + file?.file_path;
+          this.files_preview.push(
+            this.fb.group({
+              file_path: url,
+              id: file?.image_id,
+            })
+          );
+        });
+        this.careerCtaForm.patchValue({
+          id: this.pageData?.career_cta?.id ?? null,
+          botton_txt: this.pageData?.career_cta?.botton_txt ?? null,
+          content: this.pageData?.career_cta?.content ?? null,
+          detail_link: this.pageData?.career_cta?.detail_link ?? null,
+          heading: this.pageData?.career_cta?.heading ?? null,
+        });
+        console.log(this.careerCtaForm.value);
       },
     });
   }
@@ -287,5 +324,58 @@ export class AboutComponent {
         },
       });
     }
+  }
+  onCareerCtaFormSubmit() {
+    this.careerCtaForm.markAllAsTouched();
+    console.log(this.careerCtaForm.getRawValue());
+
+    if (this.careerCtaForm.valid) {
+      this.careerCtaForm.disable();
+      let rawformData = this.careerCtaForm.getRawValue();
+      delete rawformData.files;
+      delete rawformData.files_preview;
+      let formData: FormData = new FormData();
+      for (let key in rawformData) {
+        formData.append(key, rawformData[key]);
+      }
+      if (this.files.value?.length) {
+        for (let i = 0; i < this.files.value.length; i++) {
+          const file = this.files.value[i]; // Get the file at the current index
+          // const key = `files[${i}]`; // Create a unique key for each file
+
+          // Append the file to FormData
+          formData.append('files', file);
+        }
+      }
+      this.pageService.saveCareerCta(formData).subscribe({
+        next: (res: any) => {
+          this.fetchAboutPage();
+          this.careerCtaForm.reset();
+          this.careerCtaForm.enable();
+          this.toastr.success(`Updated Successfully`);
+        },
+        error: (err: any) => {
+          this.careerCtaForm.enable();
+        },
+      });
+    }
+  }
+  deleteItem(item: any) {
+    this.careerCtaForm.reset();
+    this.files.clear();
+    this.files_preview.clear();
+    this.pageService
+      .deleteCareerCtaImage({
+        id: item.id,
+        setting_id: this.pageData?.career_cta?.id,
+      })
+      .subscribe({
+        next: (res: any) => {
+         
+          this.toastr.success(`Deleted Successfully`);
+          this.fetchAboutPage();
+        },
+        error: (err: any) => {},
+      });
   }
 }

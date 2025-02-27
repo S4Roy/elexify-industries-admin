@@ -9,6 +9,9 @@ export class SettingsService {
 
   faqCategoryList(params: URLSearchParams) {
     return this.httpService.get(`admin/faq/category/list?${params.toString()}`);
+  } 
+  userTypeList(params: URLSearchParams) {
+    return this.httpService.get(`admin/user/type?${params.toString()}`);
   }
   submitFaqCategory(payload: any) {
     if (payload?.id) {
@@ -50,5 +53,21 @@ export class SettingsService {
       `admin/setting/cms/page/${payload?.page_id?'edit':'add'}`,
       payload
     );
+  }
+  userList(params: URLSearchParams) {
+    return this.httpService.get(`admin/user/list?${params.toString()}`);
+  }
+  submitUser(payload: any) {
+    if (payload?.id) {
+      return this.httpService.post('admin/user/edit', payload);
+    } else {
+      return this.httpService.post('admin/user/add', payload);
+    }
+  }
+  deleteUser(payload: any) {
+    return this.httpService.post('admin/user/delete', payload);
+  }
+  userDetails(id: string) {
+    return this.httpService.get(`admin/user/details/${id.toString()}`);
   }
 }

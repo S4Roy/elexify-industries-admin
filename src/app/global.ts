@@ -508,6 +508,73 @@ export function onFileSelected(
     });
   }
 }
+export async function onFileSelectedMultiple(
+  formGroup: FormGroup,
+  event: any,
+  sourceKey: any,
+  toastr: ToastrService,
+  allowedTypes: string[] = ['image/jpeg', 'image/png'], // Default allowed types are JPEG and PNG
+  files_preview:any
+) {
+  if (event.target.files.length > 0) {
+    const files = event.target.files;
+    const maxSize: number = 5000000; // Default max size is 5MB
+
+    // Initialize the array in the form group if it doesn't exist
+    if (!formGroup.get(sourceKey)) {
+      formGroup.setControl(sourceKey, new FormControl([]));
+    }
+ if (!formGroup.get(files_preview)) {
+      formGroup.setControl(files_preview, new FormControl([]));
+    }
+
+    const fileArrayControl = formGroup.get(sourceKey) as FormArray;
+    const filePreviewArrayControl = formGroup.get(files_preview) as FormArray;
+    fileArrayControl.clear();
+    filePreviewArrayControl.clear();
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // Check file size
+      if (file.size > maxSize) {
+        toastr.error('File size exceeds the limit');
+        continue; // Skip this file and continue with the next one
+      }
+
+      // Check file type
+      if (!allowedTypes.includes(file.type)) {
+        toastr.error('File type is not allowed');
+        continue; // Skip this file and continue with the next one
+      }
+
+      try {
+        const base64String = await readFileAsDataURL(file);
+        fileArrayControl.push(new FormControl(file));
+        filePreviewArrayControl.push(new FormControl({file_path:base64String}));
+      } catch (error) {
+        toastr.error('Error reading file');
+      }
+    }
+  } else {
+    formGroup.patchValue({
+      [sourceKey]: null,
+    });
+  }
+}
+
+function readFileAsDataURL(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(reader.result as string);
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+}
 export function onFileUploadedToBase64Array(
   formGroup: FormGroup,
   index: number,
