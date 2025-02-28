@@ -10,6 +10,7 @@ export class HelpersService {
   private viewport = new BehaviorSubject<any>({});
   viewport$ = this.viewport.asObservable();
   private formGroup = new BehaviorSubject<any>({});
+  private pageData = new BehaviorSubject<any>({});
   private nextClick = new BehaviorSubject<any>({});
   private backUrl = new BehaviorSubject<any>({});
   private breadcrumbs = new BehaviorSubject<any>([]);
@@ -26,6 +27,12 @@ export class HelpersService {
   }
   updateformGroup(data: any) {
     this.formGroup.next(data);
+  }
+  setPageData( data: any): void {
+    this.pageData.next(data);
+  }
+  getPageData(page_type: any): Observable<any> {
+    return this.pageData.asObservable();
   }
   getNext(): Observable<any> {
     return this.nextClick.asObservable();

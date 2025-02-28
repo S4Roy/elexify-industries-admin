@@ -5,6 +5,8 @@ import { AboutComponent } from './about/about.component';
 import { EnquiryComponent } from '../main/enquiry/enquiry.component';
 import { HomeComponent } from './home/home.component';
 import { WhyAiSatsComponent } from './why-ai-sats/why-ai-sats.component';
+import { PageComponent } from './page/page.component';
+import { pageResolver } from '../../../../core/resolver/page.resolver';
 
 const routes: Routes = [
   {
@@ -36,6 +38,13 @@ const routes: Routes = [
         path: 'our-services',
         component: AboutComponent,
         data: { breadcrumb: 'Our Service', pageTitle: 'Our Service' },
+      },
+      {
+        path: ':page_type',
+        component: PageComponent,
+        resolve: {
+          pageData: pageResolver, // Use the resolver to fetch data based on page_type
+        },      
       },
     ],
   },

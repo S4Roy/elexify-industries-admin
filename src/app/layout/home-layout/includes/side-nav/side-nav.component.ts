@@ -44,11 +44,35 @@ export class SideNavComponent {
               url: '/pages/why-anctpl',
               exact: true,
             },
-            // {
-            //   label: 'Our Services',
-            //  url: '/pages/our-services',
-            //   exact: true,
-            // },
+            {
+              label: 'Services',
+              url: '/pages/service',
+              exact: true,
+            },
+            {
+              label: 'FAQs',
+              url: '/pages/faq',
+              exact: true,
+            },
+            {
+              label: 'Awards',
+              url: '/pages/awards',
+              exact: true,
+            },
+            {
+              label: 'News & Events',
+              url: '/pages/news_event',
+              exact: true,
+            },
+            {
+              label: 'Success Stories',
+              url: '/pages/success_story',
+              exact: true,
+            },{
+              label: 'Gallery',
+              url: '/pages/gallery',
+              exact: true,
+            },
           ],
         },
         {
@@ -97,6 +121,12 @@ export class SideNavComponent {
           icon: 'format_list_bulleted',
           image_path: 'assets/sidebar_icon/award-updated-icon.svg',
           url: '/tender',
+        }, 
+        {
+          label: 'Success Stories',
+          icon: 'format_list_bulleted',
+          image_path: 'assets/sidebar_icon/award-updated-icon.svg',
+          url: '/success-stories',
         },
         {
           label: 'Teams',
@@ -125,8 +155,8 @@ export class SideNavComponent {
       ],
     },
   ];
-  isActiveChild() {    
-    let isPage =this.router.url.startsWith('/pages');
+  isActiveChild() {
+    let isPage = this.router.url.startsWith('/pages');
     return isPage;
   }
 }

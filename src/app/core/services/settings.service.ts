@@ -114,4 +114,21 @@ export class SettingsService {
   userChangePassword(payload: any) {
     return this.httpService.post('admin/user/change-password', payload);
   }
+
+  blogList(params: URLSearchParams) {
+    return this.httpService.get(`admin/blog/list?${params.toString()}`);
+  }
+  submitBlog(payload: any) {
+    if (payload?.id) {
+      return this.httpService.postFormData('admin/blog/edit', payload);
+    } else {
+      return this.httpService.postFormData('admin/blog/add', payload);
+    }
+  }
+  deleteBlog(payload: any) {
+    return this.httpService.post('admin/blog/delete', payload);
+  }
+  blogDetails(id: string) {
+    return this.httpService.get(`admin/blog/details/${id.toString()}`);
+  }
 }

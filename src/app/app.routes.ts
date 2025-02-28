@@ -143,6 +143,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'success-stories',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/blogs/blogs.module').then(
+        (m) => m.BlogsModule
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     component: P404Component,
     data: {

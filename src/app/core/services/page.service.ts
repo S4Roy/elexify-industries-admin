@@ -156,4 +156,58 @@ export class PageService {
   careerApplicationEdit(payload: any) {
     return this.httpService.post(`admin/career/applicant/edit`, payload);
   }
+
+  pageContentInfo(params: any) {
+    return this.httpService.get(
+      `admin/page/page-content/info?${params.toString()}`
+    );
+  }
+  pageContentSaveBanner(payload: any) {
+    return this.httpService.postFormData(
+      'admin/page/page-content/save/banner',
+      payload
+    );
+  }
+  pageContentSaveText(payload: any) {
+    return this.httpService.postFormData(
+      'admin/page/page-content/save/about-text',
+      payload
+    );
+  }
+  pageContentSaveMiddleText(payload: any) {
+    return this.httpService.post(
+      'admin/page/page-content/save/middle-about-text',
+      payload
+    );
+  }
+  pageContentBottomSaveText(payload: any) {
+    return this.httpService.postFormData(
+      'admin/page/page-content/save/bottom-about-text',
+      payload
+    );
+  } 
+  pageContentMediaSaveText(payload: any) {
+    return this.httpService.postFormData(
+      'admin/page/page-content/save/media-about-text',
+      payload
+    );
+  }
+  pageContentSaveFaqText(payload: any) {
+    return this.httpService.post(
+      'admin/page/page-content/save/faq-about-text',
+      payload
+    );
+  }
+  pageContentSaveClienteleText(payload: any) {
+    return this.httpService.post(
+      'admin/page/page-content/save/clientele-about-text',
+      payload
+    );
+  }
+  pageContentSaveGalleryText(payload: any) {
+    return this.httpService.post(
+      'admin/page/page-content/save/gallery-about-text',
+      payload
+    );
+  }
 }
