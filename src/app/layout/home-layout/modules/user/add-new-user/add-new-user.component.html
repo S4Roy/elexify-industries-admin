@@ -161,7 +161,7 @@
                       placeholder="Type Here"
                     />
                     <mat-icon (click)="toogleTextPassword=!toogleTextPassword" matSuffix>{{
-                      !toogleTextPassword ? "visibility" : "visibility_off"
+                      toogleTextPassword ? "visibility" : "visibility_off"
                     }}</mat-icon>
                     <mat-error
                       *ngIf="

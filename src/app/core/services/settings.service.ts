@@ -9,7 +9,7 @@ export class SettingsService {
 
   faqCategoryList(params: URLSearchParams) {
     return this.httpService.get(`admin/faq/category/list?${params.toString()}`);
-  } 
+  }
   userTypeList(params: URLSearchParams) {
     return this.httpService.get(`admin/user/type?${params.toString()}`);
   }
@@ -46,11 +46,13 @@ export class SettingsService {
     );
   }
   pageDetails(params: URLSearchParams) {
-    return this.httpService.get(`admin/setting/cms/page/details?${params.toString()}`);
+    return this.httpService.get(
+      `admin/setting/cms/page/details?${params.toString()}`
+    );
   }
   updatePageDetails(payload: any) {
     return this.httpService.post(
-      `admin/setting/cms/page/${payload?.page_id?'edit':'add'}`,
+      `admin/setting/cms/page/${payload?.page_id ? 'edit' : 'add'}`,
       payload
     );
   }
@@ -86,5 +88,30 @@ export class SettingsService {
   }
   teamMemberDetails(id: string) {
     return this.httpService.get(`admin/team/details/${id.toString()}`);
+  }
+
+  contactPurposeList(params: URLSearchParams) {
+    return this.httpService.get(
+      `admin/contact-purpose/lists?${params.toString()}`
+    );
+  }
+  submitContactPurpose(payload: any) {
+    if (payload?.id) {
+      return this.httpService.post('admin/contact-purpose/edit', payload);
+    } else {
+      return this.httpService.post('admin/contact-purpose/add', payload);
+    }
+  }
+  deleteContactPurpose(payload: any) {
+    return this.httpService.post('admin/contact-purpose/delete', payload);
+  }
+
+  contactPurposeDetails(id: string) {
+    return this.httpService.get(
+      `admin/contact-purpose/details/${id.toString()}`
+    );
+  }
+  userChangePassword(payload: any) {
+    return this.httpService.post('admin/user/change-password', payload);
   }
 }

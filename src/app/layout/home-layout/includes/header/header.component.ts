@@ -7,6 +7,8 @@ import { HelpersService } from '../../../../core/services/helpers.service';
 import { DialogService } from '../../../../core/services/dialog.service';
 import { ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
 import { AuthService } from '../../../../core/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +23,8 @@ export class HeaderComponent {
   constructor(
     private helperService: HelpersService,
     private dialogService: DialogService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {
     this.userDetails = this.helperService.userDetails();
   }
@@ -37,5 +40,17 @@ export class HeaderComponent {
         this.authService.userLogout();
       }
     });
+  }
+  changePassword() {
+    this.dialog
+      .open(ChangePasswordComponent, {
+        data: { userDetails: this.userDetails },
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        if (res) {
+        }
+      });
   }
 }

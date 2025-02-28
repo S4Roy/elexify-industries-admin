@@ -44,5 +44,11 @@ export class SettingsComponent {
       description: 'Manage Site Info',
       router_path: '/settings/site-info',
     },
+    {
+      label: 'Contact Purpose',
+      description: 'Manage Contact Purpose',
+      router_path: '/settings/contact-purpose',
+      icon: 'assets/user-vector.png',
+    },
   ];
 }

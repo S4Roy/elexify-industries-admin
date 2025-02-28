@@ -1,16 +1,17 @@
 import { Component, Input } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { isImage } from '../../../../global';
 
 @Component({
   selector: 'app-side-nav',
-  imports: [NgIf, NgFor, MatIconModule, RouterModule],
+  imports: [NgIf, NgFor, MatIconModule, RouterModule, NgClass],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss',
 })
 export class SideNavComponent {
+  constructor(private router: Router) {}
   @Input() isNavOpen: boolean = true;
   itemList: any = [
     {
@@ -58,49 +59,49 @@ export class SideNavComponent {
         {
           label: 'Media Management',
           icon: 'format_list_bulleted',
-          image_path:'assets/sidebar_icon/media_management.svg',
+          image_path: 'assets/sidebar_icon/media_management.svg',
           url: '/media',
         },
         {
           label: 'Enquiry Management',
           icon: 'contacts',
-          image_path:'assets/sidebar_icon/enquery_management.svg',
+          image_path: 'assets/sidebar_icon/enquery_management.svg',
           url: '/enquiry',
         },
         {
           label: 'Career Management',
           icon: 'format_list_bulleted',
-          image_path:'assets/sidebar_icon/career_managment.svg',
+          image_path: 'assets/sidebar_icon/career_managment.svg',
           url: '/career',
         },
         {
           label: 'Clientele',
           icon: 'format_list_bulleted',
-          image_path:'assets/sidebar_icon/clientele.svg',
+          image_path: 'assets/sidebar_icon/clientele.svg',
           url: '/clientele',
         },
         {
           label: 'Awards',
           icon: 'format_list_bulleted',
-          image_path:'assets/sidebar_icon/award-updated-icon.svg',
+          image_path: 'assets/sidebar_icon/award-updated-icon.svg',
           url: '/awards',
         },
         {
           label: 'News & Events',
           icon: 'format_list_bulleted',
-          image_path:'assets/sidebar_icon/award-updated-icon.svg',
+          image_path: 'assets/sidebar_icon/award-updated-icon.svg',
           url: '/newsevent',
         },
         {
           label: 'Tender',
           icon: 'format_list_bulleted',
-          image_path:'assets/sidebar_icon/award-updated-icon.svg',
+          image_path: 'assets/sidebar_icon/award-updated-icon.svg',
           url: '/tender',
         },
         {
           label: 'Teams',
           icon: 'contacts',
-          image_path:'assets/sidebar_icon/users.svg',
+          image_path: 'assets/sidebar_icon/users.svg',
           url: '/teams',
         },
       ],
@@ -112,16 +113,20 @@ export class SideNavComponent {
         {
           label: 'Settings',
           icon: 'settings',
-          image_path:'assets/sidebar_icon/settings.svg',
+          image_path: 'assets/sidebar_icon/settings.svg',
           url: '/settings',
         },
         {
           label: 'User',
           icon: 'contacts',
-          image_path:'assets/sidebar_icon/users.svg',
+          image_path: 'assets/sidebar_icon/users.svg',
           url: '/user',
         },
       ],
     },
   ];
+  isActiveChild() {    
+    let isPage =this.router.url.startsWith('/pages');
+    return isPage;
+  }
 }

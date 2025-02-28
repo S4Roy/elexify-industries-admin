@@ -1,11 +1,14 @@
-// .child-menu-list{
-//     display: none;
-// }
-// .active {
-//     .child-menu-list{
-//         display: block !important; 
-//     }
-// }
+.child-menu-list.hidden {
+  display: none; /* Hide child menu by default */
+}
+
+.child-menu-list.block {
+  display: block !important; /* Show child menu when active */
+}
+
+a.active .child-menu-list {
+  display: block !important; /* Ensure child menu is shown when parent is active */
+}
 ul.child-menu {
   list-style: none;
   margin: 0;

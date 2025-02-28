@@ -9,6 +9,7 @@ import { FaqQuestionsComponent } from './faqs/faq-questions/faq-questions.compon
 import { UserRolePermissionsComponent } from './user-role-permissions/user-role-permissions.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { SiteInfoComponent } from './site-info/site-info.component';
+import { ContactPurposeComponent } from './contact-purpose/contact-purpose.component';
 
 const routes: Routes = [
   {
@@ -105,6 +106,18 @@ const routes: Routes = [
             path: '',
             component: SiteInfoComponent,
             data: { pageTitle: 'site-info', breadcrumb: '' },
+          },
+        ],
+      },
+      {
+        path: 'contact-purpose',
+        component: SettingsLayoutComponent,
+        data: { pageTitle: 'Contact Purpose', breadcrumb: 'Contact Purpose' },
+        children: [
+          {
+            path: '',
+            component: ContactPurposeComponent,
+            data: { pageTitle: 'Contact Purpose', breadcrumb: '' },
           },
         ],
       },

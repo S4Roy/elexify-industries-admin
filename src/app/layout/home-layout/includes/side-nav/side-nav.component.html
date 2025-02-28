@@ -38,7 +38,7 @@
               </div>
             </a>
             <ng-container *ngIf="menu?.childMenuItems?.length && isNavOpen">
-              <div class="ml-4 child-menu-list">
+              <div class="ml-4 child-menu-list" [ngClass]="{'block': isActiveChild(), 'hidden': !isActiveChild()}">
                 <ul class="child-menu">
                   <ng-container *ngFor="let childMenu of menu?.childMenuItems">
                     <li class="child-item" routerLinkActive=" active" [routerLink]="childMenu?.url"
