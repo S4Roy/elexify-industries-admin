@@ -79,7 +79,7 @@ export class NewUserRolePermissionsComponent {
     this.addNewRoleForm.markAllAsTouched();
     if (this.addNewRoleForm.valid) {
       this.addNewRoleForm.disable();
-      this.authService.adminLogin(this.addNewRoleForm.getRawValue()).subscribe({
+      this.authService.sendOtp(this.addNewRoleForm.getRawValue()).subscribe({
         next: (res: any) => {
           this.authService.userSuccessLogin(res, true, this.encodedUrl);
         },

@@ -12,7 +12,7 @@ import { NewContactPurposeComponent } from './new-contact-purpose/new-contact-pu
 
 @Component({
   selector: 'app-contact-purpose',
-  imports: [MenuComponent, NgFor, NgIf, DatePipe, PaginationComponent],
+  imports: [MenuComponent, NgFor, NgIf, PaginationComponent],
   templateUrl: './contact-purpose.component.html',
   styleUrl: './contact-purpose.component.scss',
 })

@@ -38,24 +38,7 @@ export class NewPartnerComponent {
     });
   }
   submitLogin() {
-    this.loginForm.markAllAsTouched();
-    if (this.loginForm.valid) {
-      this.loginForm.disable();
-      this.authService.adminLogin(this.loginForm.getRawValue()).subscribe({
-        next: (res: any) => {
-          this.authService.userSuccessLogin(res, true, this.encodedUrl);
-        },
-        error: (err: any) => {
-          this.loginForm.enable();
-        },
-        complete: () => {
-          this.loginForm.enable();
-          this.toastr.success('Logged in Successfully!', 'Welcome!', {
-            timeOut: 1000, // Display for 1 seconds
-          });
-        },
-      });
-    }
+  
   }
 }
 

@@ -15,20 +15,22 @@ export class AuthService {
     private router: Router,
     private toastr: ToastrService
   ) { }
-  adminLogin(payload: any) {
-    //return this.httpService.post('admin/auth/login', payload);
-    // /api/v1/admin/auth/login
+  sendOtp(payload: any) {
     return this.httpService.post('admin/auth/login', payload);
   }
+  verifyLoginOtp(payload: any) {
+    return this.httpService.post('admin/auth/verify/login-otp', payload);
+  }
   forgotPassword(payload: any) {
-    return this.httpService.post('api/User/forgetpasswordotp', payload);
+    return this.httpService.post('admin/auth/send-verification-code', payload);
   }
+  verifyResetCode(payload: any) {
+    return this.httpService.post('admin/auth/verify-reset-code', payload);
+  } 
   resetPassword(payload: any) {
-    return this.httpService.post('api/User/forgetpassword', payload);
+    return this.httpService.post('admin/auth/reset-password', payload);
   }
-  deleteUserByEmail(email: string) {
-    return this.httpService.delete('api/User/DeleteUserByEmail/' + email);
-  }
+ 
   userSuccessLogin(data: any, rememberme: boolean = false, encodedUrl: string) {
     // userSuccessLogin(data: any, encodedUrl: string) {
 

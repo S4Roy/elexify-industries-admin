@@ -34,7 +34,6 @@ import { MenuComponent } from '../../../../includes/menu/menu.component';
     MatInputModule,
     MatSelectModule,
     NgIf,
-    NgFor,
     MenuComponent,
   ],
   templateUrl: './add-team-member.component.html',

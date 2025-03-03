@@ -22,8 +22,7 @@ import { HomeTestimonialsInfoComponent } from '../../../includes/home-testimonia
 
 @Component({
   selector: 'app-home',
-  //imports: [InfoCardComponent,TaggedSectionComponent,MatIconModule,PartnersComponent,AboutRoadmapInfoCardComponent,ThumbnailComponent],
-  imports: [ TaggedSectionComponent,MatIconModule,
+  imports: [ MatIconModule,
     HomeHeroSectionLandingInfoCardComponent,
     HomeSection2LandingInfoCardComponent,
     HomeSection3LandingInfoCardComponent,

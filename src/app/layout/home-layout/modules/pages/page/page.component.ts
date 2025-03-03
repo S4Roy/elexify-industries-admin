@@ -30,7 +30,6 @@ import { MenuComponent } from '../../../includes/menu/menu.component';
     MenuComponent,
     NgSelectModule,
     NgxEditorModule,
-    NgFor,
   ],
   templateUrl: './page.component.html',
   styleUrl: './page.component.scss',

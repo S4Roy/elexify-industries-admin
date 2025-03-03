@@ -35,7 +35,7 @@ export class SideNavComponent {
               exact: true,
             },
             {
-              label: 'About',
+              label: 'About Us',
               url: '/pages/about',
               exact: true,
             },
@@ -68,9 +68,31 @@ export class SideNavComponent {
               label: 'Success Stories',
               url: '/pages/success_story',
               exact: true,
-            },{
+            },
+            {
               label: 'Gallery',
               url: '/pages/gallery',
+              exact: true,
+            },
+            {
+              label: 'Career',
+              url: '/pages/career',
+              exact: true,
+            },
+            {
+              label: 'Tender',
+              url: '/pages/tender',
+              exact: true,
+            },
+            {
+              label: 'Clientele',
+              url: '/pages/clientele',
+              exact: true,
+            },
+            ,
+            {
+              label: 'Contact Us',
+              url: '/pages/contact_us',
               exact: true,
             },
           ],
@@ -121,7 +143,7 @@ export class SideNavComponent {
           icon: 'format_list_bulleted',
           image_path: 'assets/sidebar_icon/award-updated-icon.svg',
           url: '/tender',
-        }, 
+        },
         {
           label: 'Success Stories',
           icon: 'format_list_bulleted',
