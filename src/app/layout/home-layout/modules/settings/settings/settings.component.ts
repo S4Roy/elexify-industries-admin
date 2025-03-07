@@ -2,6 +2,7 @@ import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterCardComponent } from '../../../includes/router-card/router-card.component';
+import { SettingsService } from '../../../../../core/services/settings.service';
 
 @Component({
   selector: 'app-settings',
@@ -51,4 +52,30 @@ export class SettingsComponent {
       icon: 'assets/user-vector.png',
     },
   ];
+  constructor(private setingService: SettingsService) {
+    this.fetchSettingsMenu();
+  }
+  fetchSettingsMenu() {
+    this.setingService.menuList().subscribe({
+      next: (res: any) => {
+        this.nav_list = this.getSettingsChildItems(res?.results);
+      },
+      error: (err: any) => {},
+    });
+  }
+  getSettingsChildItems(menuData: any[]): any[] {
+    const settingsChildItems: any[] = [];
+
+    menuData.forEach((section) => {
+      if (section.menuItems) {
+        section.menuItems.forEach((menuItem: any) => {
+          if (menuItem.label === 'Settings' && menuItem.childMenuItems) {
+            settingsChildItems.push(...menuItem.childMenuItems);
+          }
+        });
+      }
+    });
+
+    return settingsChildItems;
+  }
 }

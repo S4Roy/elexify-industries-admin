@@ -10,6 +10,8 @@ import { UserRolePermissionsComponent } from './user-role-permissions/user-role-
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { SiteInfoComponent } from './site-info/site-info.component';
 import { ContactPurposeComponent } from './contact-purpose/contact-purpose.component';
+import { NewCustomPageComponent } from './custom-page/new-custom-page/new-custom-page.component';
+import { CustomPageComponent } from './custom-page/custom-page.component';
 
 const routes: Routes = [
   {
@@ -55,7 +57,7 @@ const routes: Routes = [
           {
             path: '',
             component: UserRolePermissionsComponent,
-            data: { pageTitle: 'role-permissions', breadcrumb: '' },
+            data: { pageTitle: 'Role Permissions', breadcrumb: '' },
           },
         ],
       },
@@ -105,7 +107,7 @@ const routes: Routes = [
           {
             path: '',
             component: SiteInfoComponent,
-            data: { pageTitle: 'site-info', breadcrumb: '' },
+            data: { pageTitle: 'Site Info', breadcrumb: '' },
           },
         ],
       },
@@ -118,6 +120,34 @@ const routes: Routes = [
             path: '',
             component: ContactPurposeComponent,
             data: { pageTitle: 'Contact Purpose', breadcrumb: '' },
+          },
+        ],
+      },
+      {
+        path: 'custom-page',
+        component: SettingsLayoutComponent,
+        data: { pageTitle: 'Custom Page', breadcrumb: 'Custom Page' },
+        children: [
+          {
+            path: '',
+            component: CustomPageComponent,
+            data: { pageTitle: 'Custom Page', breadcrumb: '' },
+          },
+          {
+            path: 'add',
+            component: NewCustomPageComponent,
+            data: {
+              pageTitle: 'New Page',
+              breadcrumb: 'New Page',
+            },
+          },
+          {
+            path: 'edit/:id',
+            component: NewCustomPageComponent,
+            data: {
+              pageTitle: 'Update Page',
+              breadcrumb: 'Update Page',
+            },
           },
         ],
       },

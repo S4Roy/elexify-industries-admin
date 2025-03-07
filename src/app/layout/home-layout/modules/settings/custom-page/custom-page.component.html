@@ -1,10 +1,12 @@
 <div class="relative overflow-x-auto">
     <div class="m-3 flex justify-between items-center">
       <div class="flex flex-col items-start">
-        <span class="text-base font-medium">Roles & Permissions</span>
-        <span class="block text-gray-500 text-xs">{{paginationOption.total_records}} Roles added</span>
+        <span class="text-base font-medium">Pages List</span>
+        <span class="block text-gray-500 text-xs"
+          >{{ paginationOption.total_records }} pages added</span
+        >
       </div>
-      <button [disabled]="true" (click)="addItem()" class="ai-button">+ Add New</button>
+      <button (click)="addItem()" class="ai-button">+ Add New</button>
     </div>
     <hr />
     <div class="m-3">
@@ -14,10 +16,10 @@
         >
           <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr class="sticky">
-              <th scope="col">Role Name</th>
-              <th scope="col" class="text-center">Number Of Users</th>
-              <!-- <th scope="col">Module & Permission</th> -->
-              <th scope="col" class="text-center">Action</th>
+              <th scope="col">Page Title</th>
+              <th scope="col">Publish Date & Time</th>
+              <th scope="col">Status</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -27,14 +29,16 @@
                   scope="row"
                   class="font-medium text-gray-900 whitespace-nowrap"
                 >
-                  {{ item?.role_display_name }}
+                  {{ item?.category_name }}
                 </td>
-                <td class="text-center">{{ item?.user_count }}</td>
-                <!-- <td class="text-center">{{ item?.status }}</td> -->
+                <td>{{ item?.created_at | date : "dd-MM-yy" }}</td>
+                <td>{{ item?.status }}</td>
                 <td class="text-center">
                   <app-menu
                     [modalItem]="item"
                     (initModal)="addItem($event)"
+                    [delete]="item"
+                    (deleteItem)="deleteItem($event)"
                   ></app-menu>
                 </td>
               </tr>
@@ -54,4 +58,5 @@
         ></pagination>
       </ng-container>
     </div>
-</div>
+  </div>
+  

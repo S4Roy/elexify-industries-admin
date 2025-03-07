@@ -131,4 +131,46 @@ export class SettingsService {
   blogDetails(id: string) {
     return this.httpService.get(`admin/blog/details/${id.toString()}`);
   }
+  menuList() {
+    return this.httpService.get(`admin/user/menu`);
+  }
+  roleList(params: URLSearchParams) {
+    return this.httpService.get(`admin/role/list?${params.toString()}`);
+  }
+  permissionList(params: URLSearchParams) {
+    return this.httpService.get(
+      `admin/role/permission-list?${params.toString()}`
+    );
+  }
+  updatePermissions(payload: any) {
+    return this.httpService.post('admin/role/permission-edit', payload);
+  }
+  customPageDetails(params: URLSearchParams) {
+    return this.httpService.get(
+      `admin/setting/cms/custom-page/details?${params.toString()}`
+    );
+  }
+  customPageList(params: URLSearchParams) {
+    return this.httpService.get(
+      `admin/setting/cms/custom-page?${params.toString()}`
+    );
+  }
+  submitCustomPage(payload: any) {
+    return this.httpService.post(
+      `admin/setting/cms/custom-page/${payload?.page_id ? 'edit' : 'add'}`,
+      payload
+    );
+  }
+  updateCustomPageStatus(payload: any) {
+    return this.httpService.post(
+      'admin/setting/cms/custom-page/status-change',
+      payload
+    );
+  }
+  deleteCustomPage(payload: any) {
+    return this.httpService.post(
+      'admin/setting/cms/custom-page/delete',
+      payload
+    );
+  }
 }

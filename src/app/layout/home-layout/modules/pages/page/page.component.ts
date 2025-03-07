@@ -44,6 +44,8 @@ export class PageComponent {
   aboutTextForm: FormGroup;
   middleAboutTextForm!: FormGroup;
   bottomAboutTextForm!: FormGroup;
+  careerAboutTextForm!: FormGroup;
+  contactUsAboutTextForm!: FormGroup;
   constructor(
     private helperService: HelpersService,
     private route: ActivatedRoute,
@@ -85,6 +87,30 @@ export class PageComponent {
       description: [null, Validators.required],
       button_name: [null],
       details_link: [null],
+    });
+    this.careerAboutTextForm = this.fb.group({
+      id: [null, Validators.required],
+      heading_txt: [null, Validators.required],
+      sub_heading_txt: [null, Validators.required],
+      role_data: [null, Validators.required],
+      role_data_txt: [null, Validators.required],
+      location_data: [null, Validators.required],
+      location_data_txt: [null, Validators.required],
+      txt_heading_1: [null, Validators.required],
+      text_1: [null, Validators.required],
+      hr_email: [null, Validators.required],
+    });
+    this.contactUsAboutTextForm = this.fb.group({
+      id: [null, Validators.required],
+      title: [null, Validators.required],
+      heading_txt: [null, Validators.required],
+      sub_heading_txt: [null, Validators.required],
+      phone: [null],
+      mobile: [null],
+      fax: [null],
+      email: [null],
+      main_office_address: [null],
+      map_link: [null],
     });
     this.initBottomTextForm();
   }
@@ -207,6 +233,44 @@ export class PageComponent {
               this.pageData?.bottom_content?.list_content_3?.file_path
             : null,
         });
+        if (this.page_type === 'career') {
+          this.careerAboutTextForm.patchValue({
+            id: this.pageData?.about_text?.id ?? null,
+            heading_txt: this.pageData?.about_text?.heading_txt ?? null,
+            sub_heading_txt: this.pageData?.about_text?.sub_heading_txt ?? null,
+            role_data: this.pageData?.about_text?.role?.count
+              ? String(this.pageData?.about_text?.role?.count)
+              : null,
+            role_data_txt: this.pageData?.about_text?.role?.text_name ?? null,
+            location_data: this.pageData?.about_text?.location?.count
+              ? String(this.pageData?.about_text?.location?.count)
+              : null,
+            location_data_txt:
+              this.pageData?.about_text?.location?.text_name ?? null,
+            txt_heading_1: this.pageData?.about_text?.txt_heading_1 ?? null,
+            text_1: this.pageData?.about_text?.text_1 ?? null,
+            hr_email: this.pageData?.about_text?.hr_email ?? null,
+          });
+        }
+        if (this.page_type === 'contact_us') {
+          this.contactUsAboutTextForm.patchValue({
+            id: this.pageData?.contact_info?.id ?? null,
+            title: this.pageData?.contact_info?.title ?? null,
+            heading_txt: this.pageData?.contact_info?.heading_txt ?? null,
+            sub_heading_txt:
+              this.pageData?.contact_info?.sub_heading_txt ?? null,
+            phone: this.pageData?.contact_info?.phone ?? null,
+            mobile: this.pageData?.contact_info?.mobile ?? null,
+            fax: this.pageData?.contact_info?.fax ?? null,
+            email: this.pageData?.contact_info?.email ?? null,
+            main_office_address:
+              this.pageData?.contact_info?.office_address?.main_office
+                ?.address ?? null,
+            map_link:
+              this.pageData?.contact_info?.office_address?.main_office
+                ?.map_link ?? null,
+          });
+        }
       },
       error: (err: any) => {},
     });
@@ -338,6 +402,54 @@ export class PageComponent {
         },
       });
     }
+  } 
+  onClienteleTextSubmit() {
+    this.aboutTextForm.markAllAsTouched();
+    if (this.aboutTextForm.valid) {
+      this.aboutTextForm.disable();
+      let formData = {
+        id: this.aboutTextForm.getRawValue().id,
+        heading_txt: this.aboutTextForm.getRawValue().heading_txt,
+        sub_heading_txt: this.aboutTextForm.getRawValue().description,
+      };
+
+      this.pageService.pageContentSaveClienteleText(formData).subscribe({
+        next: (res: any) => {
+          this.aboutTextForm.reset();
+
+          this.fetchPageSiteInfo();
+          this.toastr.success(`Updated Successfully`);
+          this.aboutTextForm.enable();
+        },
+        error: (err: any) => {
+          this.aboutTextForm.enable();
+        },
+      });
+    }
+  }
+  onContactTextSubmit() {
+    this.aboutTextForm.markAllAsTouched();
+    if (this.aboutTextForm.valid) {
+      this.aboutTextForm.disable();
+      let formData = {
+        id: this.aboutTextForm.getRawValue().id,
+        heading_txt: this.aboutTextForm.getRawValue().heading_txt,
+        sub_heading_txt: this.aboutTextForm.getRawValue().description,
+      };
+
+      this.pageService.pageContentSaveContactUsText(formData).subscribe({
+        next: (res: any) => {
+          this.aboutTextForm.reset();
+
+          this.fetchPageSiteInfo();
+          this.toastr.success(`Updated Successfully`);
+          this.aboutTextForm.enable();
+        },
+        error: (err: any) => {
+          this.aboutTextForm.enable();
+        },
+      });
+    }
   }
   onMiddleTextSubmit() {
     this.middleAboutTextForm.markAllAsTouched();
@@ -391,6 +503,46 @@ export class PageComponent {
         },
         error: (err: any) => {
           this.bottomAboutTextForm.enable();
+        },
+      });
+    }
+  }
+  onCareerTextSubmit() {
+    this.careerAboutTextForm.markAllAsTouched();
+    if (this.careerAboutTextForm.valid) {
+      this.careerAboutTextForm.disable();
+      let formData = this.careerAboutTextForm.getRawValue();
+
+      this.pageService.pageContentSaveCareerText(formData).subscribe({
+        next: (res: any) => {
+          this.careerAboutTextForm.reset();
+
+          this.fetchPageSiteInfo();
+          this.toastr.success(`Updated Successfully`);
+          this.careerAboutTextForm.enable();
+        },
+        error: (err: any) => {
+          this.careerAboutTextForm.enable();
+        },
+      });
+    }
+  }
+  onContactUsInfoTextSubmit() {
+    this.contactUsAboutTextForm.markAllAsTouched();
+    if (this.contactUsAboutTextForm.valid) {
+      this.contactUsAboutTextForm.disable();
+      let formData = this.contactUsAboutTextForm.getRawValue();
+
+      this.pageService.pageContentSaveContactUsInfoText(formData).subscribe({
+        next: (res: any) => {
+          this.contactUsAboutTextForm.reset();
+
+          this.fetchPageSiteInfo();
+          this.toastr.success(`Updated Successfully`);
+          this.contactUsAboutTextForm.enable();
+        },
+        error: (err: any) => {
+          this.contactUsAboutTextForm.enable();
         },
       });
     }

@@ -3,6 +3,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { isImage } from '../../../../global';
+import { SettingsService } from '../../../../core/services/settings.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -11,7 +12,6 @@ import { isImage } from '../../../../global';
   styleUrl: './side-nav.component.scss',
 })
 export class SideNavComponent {
-  constructor(private router: Router) {}
   @Input() isNavOpen: boolean = true;
   itemList: any = [
     {
@@ -177,6 +177,19 @@ export class SideNavComponent {
       ],
     },
   ];
+  constructor(private router: Router, private settingService: SettingsService) {
+    this.fetchMenuList();
+  }
+  fetchMenuList() {
+    this.settingService.menuList().subscribe({
+      next: (res: any) => {
+        this.itemList = res?.results;
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
   isActiveChild() {
     let isPage = this.router.url.startsWith('/pages');
     return isPage;

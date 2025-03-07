@@ -1,36 +1,61 @@
 <div class="fixed inset-0 overflow-hidden">
   <div class="absolute inset-0 overflow-hidden">
-    <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+    <div
+      class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+    >
       <div class="pointer-events-auto relative w-screen max-w-md">
         <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
           <div class="p-1 add-new-title sm:px-6">
-            <h2 class="flex  mb-0 justify-between items-center font-semibold text-white" id="slide-over-title">
-              Add New Role
+            <h2
+              class="flex mb-0 justify-between items-center font-semibold text-white"
+              id="slide-over-title"
+            >
+              {{ data ? "Update" : " Add New " }} Role & Permission
               <button color="warn" mat-dialog-close mat-icon-button>
                 <mat-icon class="text-red-700">close</mat-icon>
               </button>
             </h2>
           </div>
-          <div class="relative my-3 flex-1 px-4 sm:px-6">
-            <form class="space-y-6" [formGroup]="addNewRoleForm">
+          <div
+            class="relative my-3 flex-1 px-4 sm:px-6"
+            style="height: calc(100vh - 120px); overflow-y: auto"
+          >
+            <form class="space-y-1" [formGroup]="formGroup">
               <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Role name
-                  <span class="text-red-500" *ngIf="
-                        Global.isInputRuleAvailable(
-                          addNewRoleForm,
-                          'role',
-                          'required'
-                        )
-                      ">*</span>
+                <label class="block text-sm/6 font-medium text-gray-900"
+                  >Role name
+                  <span
+                    class="text-red-500"
+                    *ngIf="
+                      Global.isInputRuleAvailable(
+                        formGroup,
+                        'role_display_name',
+                        'required'
+                      )
+                    "
+                    >*</span
+                  >
                 </label>
                 <div class="mt-2">
                   <mat-form-field>
-                    <input formControlName="role" matInput [class.is-invalid]="
-                          !Global.isInputValid(addNewRoleForm, 'role')
-                        " placeholder="Type Here" />
-                    <mat-error *ngIf="
-                          !Global.isInputRuleValid(addNewRoleForm, 'role', 'required')
-                        ">
+                    <input
+                      [readonly]="true"
+                      formControlName="role_display_name"
+                      matInput
+                      [class.is-invalid]="
+                        !Global.isInputValid(formGroup, 'role_display_name')
+                      "
+                      placeholder="Type Here"
+                    />
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          formGroup,
+                          'role_display_name',
+                          'required'
+                        )
+                      "
+                    >
                       This field is required
                     </mat-error>
                   </mat-form-field>
@@ -40,29 +65,78 @@
                     <h2>Permissions</h2>
                   </label>
                 </div>
-                <div class="mt-2">
-                  <div> <h5>Service Management</h5> </div>
-                  <ng-container *ngFor="let section of section_list">
-                    <mat-checkbox [value]="section.id">{{ section?.name }}</mat-checkbox>
+                <ng-container formArrayName="permissionModule">
+                  <ng-container
+                    *ngFor="
+                      let item of permissionModule.controls;
+                      let i = index
+                    "
+                  >
+                    <div class="mt-2" [formGroupName]="i">
+                      <div>
+                        <h5>{{ item?.value?.section_name }}</h5>
+                      </div>
+                      <ng-container formArrayName="permissions">
+                        <ng-container
+                          *ngFor="
+                            let section of permissions(i).controls;
+                            let j = index
+                          "
+                        >
+                          <ng-container [formGroupName]="j">
+                            <mat-checkbox
+                              formControlName="isCheck"
+                              [value]="section.value.id"
+                            >
+                              {{ section?.value?.action }}
+                            </mat-checkbox>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+
+                      <!-- Handle sub-sections -->
+                      <ng-container formArrayName="sub_section_name">
+                        <ng-container
+                          *ngFor="
+                            let subSection of subSections(i).controls;
+                            let j = index
+                          "
+                        >
+                          <div [formGroupName]="j">
+                            <h6>{{ subSection?.value?.section_name }}</h6>
+                            <ng-container formArrayName="permissions">
+                              <ng-container
+                                *ngFor="
+                                  let permission of subSectionPermissions(i, j)
+                                    .controls;
+                                  let k = index
+                                "
+                              >
+                                <ng-container [formGroupName]="k">
+                                  <mat-checkbox
+                                    formControlName="isCheck"
+                                    [value]="permission.value.id"
+                                  >
+                                    {{ permission?.value?.action }}
+                                  </mat-checkbox>
+                                </ng-container>
+                              </ng-container>
+                            </ng-container>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                    </div>
                   </ng-container>
-                  <div> <h5>Pages</h5> </div>
-                  <ng-container *ngFor="let section of section_list">
-                    <mat-checkbox [value]="section.id">{{ section?.name }}</mat-checkbox>
-                  </ng-container>
-                  <div> <h5>Media Management</h5> </div>
-                  <ng-container *ngFor="let section of section_list">
-                    <mat-checkbox [value]="section.id">{{ section?.name }}</mat-checkbox>
-                  </ng-container>
-                  <div> <h5>Contact Management</h5> </div>
-                  <ng-container *ngFor="let section of section_list">
-                    <mat-checkbox [value]="section.id">{{ section?.name }}</mat-checkbox>
-                  </ng-container>
-                </div>
+                </ng-container>
               </div>
             </form>
           </div>
-          <button (click)="submitLogin()" [disabled]="addNewRoleForm.disabled" class="save-button">
-            {{ addNewRoleForm.disabled ? "Please wait..." : "Save & Continue" }}
+          <button
+            (click)="onPermissionUpdate()"
+            [disabled]="formGroup.disabled"
+            class="save-button"
+          >
+            {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
           </button>
         </div>
       </div>

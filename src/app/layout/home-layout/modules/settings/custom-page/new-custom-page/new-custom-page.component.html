@@ -1,0 +1,65 @@
+<!-- <div class="absolute flex justify-end right-5 top-14">
+  <button
+    (click)="updateData()"
+    type="button"
+    class="px-2 py-1 outline-1 text-xs font-medium text-center inline-flex items-center border-red-500 text-red-500 border rounded-full"
+  >
+    <mat-icon class="text-xs font-medium">{{
+      editInfo ? "save" : "edit"
+    }}</mat-icon>
+    {{ editInfo ? "Update" : "Edit" }} Template
+  </button>
+</div> -->
+<div class="flex gap-3">
+  <div class="w-full bg-white p-3 rounded">
+    <form class="space-y-1" [formGroup]="formGroup">
+      <div>
+        <label class="block text-sm/6 font-medium text-gray-900"
+          >Page Title
+          <span
+            class="text-red-500"
+            *ngIf="Global.isInputRuleAvailable(formGroup, 'title', 'required')"
+            >*</span
+          >
+        </label>
+        <div class="mt-2">
+          <mat-form-field>
+            <input
+              formControlName="title"
+              matInput
+              [class.is-invalid]="!Global.isInputValid(formGroup, 'title')"
+              placeholder="Type Here"
+            />
+            <mat-error
+              *ngIf="!Global.isInputRuleValid(formGroup, 'title', 'required')"
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div
+        class="block w-full mb-3 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
+      >
+        <ngx-editor-menu [editor]="editor">
+        </ngx-editor-menu>
+        <div class="inner-height">
+          <ngx-editor
+            [editor]="editor"
+            formControlName="content"
+            [placeholder]="'Add content'"
+          ></ngx-editor>
+        </div>
+      </div>
+      <div class="flex mt-3  justify-end">
+        <button
+          (click)="onSubmit()"
+          [disabled]="formGroup.disabled"
+          class="ai-button"
+        >
+          {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

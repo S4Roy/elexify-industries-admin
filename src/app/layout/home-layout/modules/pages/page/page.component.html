@@ -92,6 +92,296 @@
       </button>
     </div>
   </div>
+  <ng-container *ngIf="['contact_us'].includes(page_type)">
+    <form class="w-full mt-3 bg-white p-3" [formGroup]="aboutTextForm">
+      <h3 class="text-center">Content</h3>
+      <div class="flex gap-3">
+        <div class="w-full bg-white p-3 rounded">
+          <div class="space-y-1">
+            <div>
+              <div class="">
+                <mat-form-field>
+                  <input
+                    formControlName="heading_txt"
+                    matInput
+                    [class.is-invalid]="
+                      !Global.isInputValid(aboutTextForm, 'heading_txt')
+                    "
+                    placeholder="Type Heading Here"
+                  />
+                  <mat-error
+                    *ngIf="
+                      !Global.isInputRuleValid(
+                        aboutTextForm,
+                        'heading_txt',
+                        'required'
+                      )
+                    "
+                  >
+                    This field is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="">
+              <mat-form-field>
+                <textarea
+                  formControlName="description"
+                  matInput
+                  [class.is-invalid]="
+                    !Global.isInputValid(aboutTextForm, 'description')
+                  "
+                  placeholder="Type description Here"
+                ></textarea>
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(
+                      aboutTextForm,
+                      'description',
+                      'required'
+                    )
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <div class="flex mt-3 justify-end">
+        <button
+          (click)="onContactTextSubmit()"
+          [disabled]="aboutTextForm.disabled"
+          class="ai-button"
+        >
+          {{ aboutTextForm.disabled ? "Please wait..." : "Save & Continue" }}
+        </button>
+      </div>
+    </form>
+    <form class="w-full mt-3 bg-white p-3" [formGroup]="contactUsAboutTextForm">
+      <h3 class="text-center">Contact Info</h3>
+      <div class="flex gap-3">
+        <div class="w-full bg-white p-3 rounded">
+          <div class="space-y-1">
+            <mat-form-field>
+              <input
+                formControlName="title"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(contactUsAboutTextForm, 'title')
+                "
+                placeholder="Type Heading Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'title',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                formControlName="heading_txt"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(contactUsAboutTextForm, 'heading_txt')
+                "
+                placeholder="Type Heading Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'heading_txt',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                formControlName="sub_heading_txt"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(
+                    contactUsAboutTextForm,
+                    'sub_heading_txt'
+                  )
+                "
+                placeholder="Type Sub Heading Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'sub_heading_txt',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                formControlName="phone"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(contactUsAboutTextForm, 'phone')
+                "
+                placeholder="Type Phone Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'phone',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                formControlName="mobile"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(contactUsAboutTextForm, 'mobile')
+                "
+                placeholder="Type Mobile Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'mobile',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                formControlName="fax"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(contactUsAboutTextForm, 'fax')
+                "
+                placeholder="Type FAX Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'fax',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                formControlName="email"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(contactUsAboutTextForm, 'email')
+                "
+                placeholder="Type Email Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'email',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <textarea
+                formControlName="main_office_address"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(
+                    contactUsAboutTextForm,
+                    'main_office_address'
+                  )
+                "
+                placeholder="Type Address Here"
+              ></textarea>
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'main_office_address',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <textarea
+                formControlName="map_link"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(contactUsAboutTextForm, 'map_link')
+                "
+                placeholder="Type Link Here"
+              ></textarea>
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    contactUsAboutTextForm,
+                    'map_link',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <div class="flex mt-3 justify-end">
+        <button
+          (click)="onContactUsInfoTextSubmit()"
+          [disabled]="contactUsAboutTextForm.disabled"
+          class="ai-button"
+        >
+          {{
+            contactUsAboutTextForm.disabled
+              ? "Please wait..."
+              : "Save & Continue"
+          }}
+        </button>
+      </div>
+    </form>
+  </ng-container>
   <ng-container *ngIf="['faq'].includes(page_type)">
     <form class="w-full mt-3 bg-white p-3" [formGroup]="aboutTextForm">
       <h3 class="text-center">Content</h3>
@@ -163,6 +453,77 @@
       </div>
     </form>
   </ng-container>
+  <ng-container *ngIf="['clientele'].includes(page_type)">
+    <form class="w-full mt-3 bg-white p-3" [formGroup]="aboutTextForm">
+      <h3 class="text-center">Content</h3>
+      <div class="flex gap-3">
+        <div class="w-full bg-white p-3 rounded">
+          <form class="space-y-1" [formGroup]="aboutTextForm">
+            <div>
+              <div class="">
+                <mat-form-field>
+                  <input
+                    formControlName="heading_txt"
+                    matInput
+                    [class.is-invalid]="
+                      !Global.isInputValid(aboutTextForm, 'heading_txt')
+                    "
+                    placeholder="Type Heading Here"
+                  />
+                  <mat-error
+                    *ngIf="
+                      !Global.isInputRuleValid(
+                        aboutTextForm,
+                        'heading_txt',
+                        'required'
+                      )
+                    "
+                  >
+                    This field is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="">
+              <mat-form-field>
+                <textarea
+                  formControlName="description"
+                  matInput
+                  [class.is-invalid]="
+                    !Global.isInputValid(aboutTextForm, 'description')
+                  "
+                  placeholder="Type description Here"
+                ></textarea>
+                <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(
+                      aboutTextForm,
+                      'description',
+                      'required'
+                    )
+                  "
+                >
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <hr />
+      <div class="flex mt-3 justify-end">
+        <button
+          (click)="onClienteleTextSubmit()"
+          [disabled]="aboutTextForm.disabled"
+          class="ai-button"
+        >
+          {{ aboutTextForm.disabled ? "Please wait..." : "Save & Continue" }}
+        </button>
+      </div>
+    </form>
+  </ng-container>
   <ng-container *ngIf="['gallery'].includes(page_type)">
     <form class="w-full mt-3 bg-white p-3" [formGroup]="aboutTextForm">
       <h3 class="text-center">Content</h3>
@@ -210,7 +571,7 @@
       </div>
     </form>
   </ng-container>
-  <ng-container *ngIf="['awards','news_event'].includes(page_type)">
+  <ng-container *ngIf="['awards', 'news_event'].includes(page_type)">
     <form class="w-full mt-3 bg-white p-3" [formGroup]="aboutTextForm">
       <h3 class="text-center">Content</h3>
       <div class="flex gap-3">
@@ -382,7 +743,7 @@
       </div>
     </form>
   </ng-container>
-  <ng-container *ngIf="['service', 'success_story'].includes(page_type)">
+  <ng-container *ngIf="['service'].includes(page_type)">
     <form class="w-full mt-3 bg-white p-3" [formGroup]="aboutTextForm">
       <h3 class="text-center">Content</h3>
       <div class="flex gap-3">
@@ -660,7 +1021,7 @@
       </div>
     </form>
   </ng-container>
-  <ng-container *ngIf="['service', 'success_story'].includes(page_type)">
+  <ng-container *ngIf="['service'].includes(page_type)">
     <form class="w-full mt-3 bg-white p-3" [formGroup]="middleAboutTextForm">
       <h3 class="text-center">Middle Content</h3>
       <div class="flex gap-3">
@@ -776,7 +1137,7 @@
       </div>
     </form>
   </ng-container>
-  <ng-container *ngIf="['service', 'success_story'].includes(page_type)">
+  <ng-container *ngIf="['service'].includes(page_type)">
     <form class="w-full mt-3 bg-white p-3" [formGroup]="bottomAboutTextForm">
       <h3 class="text-center">Bottom Content</h3>
       <div class="w-full bg-white p-3 rounded">
@@ -1236,6 +1597,232 @@
         >
           {{
             bottomAboutTextForm.disabled ? "Please wait..." : "Save & Continue"
+          }}
+        </button>
+      </div>
+    </form>
+  </ng-container>
+  <ng-container *ngIf="['career'].includes(page_type)">
+    <form class="w-full mt-3 bg-white p-3" [formGroup]="careerAboutTextForm">
+      <h3 class="text-center">Content</h3>
+
+      <div class="flex items-center">
+        <div class="w-[40%]">
+          <div class="flex justify-between">
+            <mat-form-field class="w-[30%]">
+              <input
+                formControlName="role_data"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(careerAboutTextForm, 'role_data')
+                "
+                placeholder="Type Data Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    careerAboutTextForm,
+                    'role_data',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-[67%]">
+              <input
+                formControlName="role_data_txt"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(careerAboutTextForm, 'role_data_txt')
+                "
+                placeholder="Type Text Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    careerAboutTextForm,
+                    'role_data_txt',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="flex justify-between">
+            <mat-form-field class="w-[30%]">
+              <input
+                formControlName="location_data"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(careerAboutTextForm, 'location_data')
+                "
+                placeholder="Type Data Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    careerAboutTextForm,
+                    'location_data',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-[67%]">
+              <input
+                formControlName="location_data_txt"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(careerAboutTextForm, 'location_data_txt')
+                "
+                placeholder="Type Heading Here"
+              />
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    careerAboutTextForm,
+                    'location_data_txt',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="w-[60%] ms-2">
+          <mat-form-field class="w-[100%]">
+            <input
+              formControlName="heading_txt"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(careerAboutTextForm, 'heading_txt')
+              "
+              placeholder="Type Heading Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  careerAboutTextForm,
+                  'heading_txt',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-[100%]">
+            <textarea
+              formControlName="sub_heading_txt"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(careerAboutTextForm, 'sub_heading_txt')
+              "
+              placeholder="Type Sub Heading Here"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  careerAboutTextForm,
+                  'sub_heading_txt',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="w-[40%]">
+          <div class="flex justify-between">
+            <mat-form-field class="w-[100%]">
+              <textarea
+                formControlName="txt_heading_1"
+                matInput
+                [class.is-invalid]="
+                  !Global.isInputValid(careerAboutTextForm, 'txt_heading_1')
+                "
+                placeholder="Type Heading Here"
+              ></textarea>
+              <mat-error
+                *ngIf="
+                  !Global.isInputRuleValid(
+                    careerAboutTextForm,
+                    'txt_heading_1',
+                    'required'
+                  )
+                "
+              >
+                This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="w-[60%] ms-2">
+          <mat-form-field class="w-[100%]">
+            <input
+              formControlName="text_1"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(careerAboutTextForm, 'text_1')
+              "
+              placeholder="Type Text Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  careerAboutTextForm,
+                  'text_1',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-[100%]">
+            <input
+              formControlName="hr_email"
+              matInput
+              [class.is-invalid]="
+                !Global.isInputValid(careerAboutTextForm, 'hr_email')
+              "
+              placeholder="Type Email Here"
+            />
+            <mat-error
+              *ngIf="
+                !Global.isInputRuleValid(
+                  careerAboutTextForm,
+                  'hr_email',
+                  'required'
+                )
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <hr />
+      <div class="flex mt-3 justify-end">
+        <button
+          (click)="onCareerTextSubmit()"
+          [disabled]="careerAboutTextForm.disabled"
+          class="ai-button"
+        >
+          {{
+            careerAboutTextForm.disabled ? "Please wait..." : "Save & Continue"
           }}
         </button>
       </div>

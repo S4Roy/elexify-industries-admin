@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: '', component: GalleryComponent,
-        data: { pageTitle: '', breadcrumb: 'Media' },
+        data: { pageTitle: '', breadcrumb: 'Gallery' },
 
       },
     ]

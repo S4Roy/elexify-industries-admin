@@ -60,10 +60,10 @@ export class HelpersService {
     let userData = this.authService.getUserData();
     if (userData !== null) {
       let parseData = JSON.parse(userData);
-      if (!parseData?.userRoles?.length) {
+      if (!parseData?.user_role_id) {
         return '';
       }
-      let roleId = parseData?.userRoles[0]?.id ?? null;
+      let roleId = parseData?.user_role_id ?? null;
       return roleId;
     } else {
       return null;

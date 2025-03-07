@@ -210,4 +210,22 @@ export class PageService {
       payload
     );
   }
+  pageContentSaveCareerText(payload: any) {
+    return this.httpService.post(
+      'admin/page/page-content/save/career-about-text',
+      payload
+    );
+  }
+  pageContentSaveContactUsText(payload: any) {
+    return this.httpService.post(
+      'admin/page/page-content/save/contact-us-about-text',
+      payload
+    );
+  }
+  pageContentSaveContactUsInfoText(payload: any) {
+    return this.httpService.post(
+      'admin/page/page-content/save/contact-us-contact-info',
+      payload
+    );
+  }
 }
