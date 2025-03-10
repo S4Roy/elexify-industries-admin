@@ -816,3 +816,6 @@ export function YEARS() {
 
   return years;
 }
+export function getFileExtension(filePath:string) {
+  return filePath.split('.').pop();
+}

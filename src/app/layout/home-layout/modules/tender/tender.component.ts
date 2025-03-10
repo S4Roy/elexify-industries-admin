@@ -1,102 +1,79 @@
 import { Component, OnInit } from '@angular/core';
-import { AddTenderComponent } from './add-tender/add-tender.component';
-import { NgFor, NgIf } from '@angular/common';
+import * as Global from '../../../../global';
+import PaginationOptions from '../../../../core/models/PaginationOptions';
 import { MatDialog } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
-import { Router, RouterOutlet } from '@angular/router';
-import { NgxDatatableModule, ColumnMode } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
-import { HttpService } from '../../../../core/services/http.service';
+import { Router, RouterModule } from '@angular/router';
+import { PaginationComponent } from '../../includes/pagination/pagination.component';
+import { MenuComponent } from '../../includes/menu/menu.component';
+import { MatIconModule } from '@angular/material/icon';
+import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { PageService } from '../../../../core/services/page.service';
 
 @Component({
   selector: 'app-tender',
   templateUrl: './tender.component.html',
   styleUrls: ['./tender.component.css'],
-  imports: [NgFor, NgIf, RouterOutlet, NgxDatatableModule, MatMenuModule],
+  imports: [
+    PaginationComponent,
+    MenuComponent,
+    MatIconModule,
+    NgFor,
+    MatTooltipModule,
+    NgIf,
+    RouterModule,
+    TitleCasePipe,
+    DatePipe
+  ],
 })
 export class TenderComponent implements OnInit {
-
-  listUrl: any = 'admin/tender/tender-list';
-  // addUrl: string = 'admin/tender/add';
-  // editUrl: string = 'admin/tender/edit';
-  deleteUrl: string = 'admin/tender/delete';
-
-  rows: any[] = [];
-  columns:any[] = [
-    { name: 'Tender Name', prop: 'tender_name' },
-    { name: 'Tender No', prop: 'tender_no' },
-    { name: 'Description', prop: 'description' },
-    { name: 'Tender Status', prop: 'tender_status' },
-    { name: 'Action', prop: 'action' },
-  ];
-  ColumnMode = ColumnMode;
-  temp: any[] = [];
-
-  constructor(private httpService: HttpService, 
-              private toastr: ToastrService,
-              private dialog: MatDialog,private router:Router) {  }
-
-  ngOnInit() {
-    this.getTenderList();
+  Global = Global;
+  item_list: any = [];
+  showMore : boolean [] = [];
+  paginationOption: PaginationOptions;
+  constructor(
+    private dialog: MatDialog,
+    private pageService: PageService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {
+    this.paginationOption = Global.resetPaginationOptions();
+    this.fetchTenderList();
   }
-
-  getTenderList(){
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('page_size', '0');
-    this.httpService.get(this.listUrl, params).pipe().subscribe(
-      (res: any) => {
-        console.log(res);
-        this.rows = res.results;
-      },
-      err => {
-        this.toastr.error(err.error.msg, '', { timeOut: 1000 });
-      });
-  }
-
-  updateFilter(event?:any) {
-    const val = event.target.value.toLowerCase();
-    let searchItem: any = this.rows.filter(function (item:any) {
-      return item.tender_name.toLowerCase().indexOf(val) !== -1 || 
-              item.tender_no.toLowerCase().indexOf(val) !== -1 ||  
-              item.description.toLowerCase().indexOf(val) !== -1 || 
-              item.tender_status.toLowerCase().indexOf(val) !== -1 || !val ;
-    });
-    if (val){
-      this.rows = searchItem;
-    }
-    else if (val === ''){
-      this.getTenderList();
-    }
-    // this.table.offset = 0;
-  } 
-
+  ngOnInit(): void {}
   addItem(data: any = null) {
-    this.router.navigateByUrl("/tender/add")
+    this.router.navigateByUrl(
+      '/tender/' + (data?.id ? 'edit/' + data.id : 'add')
+    );
   }
-
-  editItem(item:any){
-    this.router.navigateByUrl("/tender/edit/"+item?.id)
-
-  }
-
-  deleteItems(item:any) {
-    console.log(item);
-    const payload = {
-      id: item.id, 
-    };
-    this.httpService.post(this.deleteUrl, payload).subscribe({
-      next: (response) => {
-        this.toastr.success('Item Deleted Successfully!', '', { timeOut: 1000 });
-        this.getTenderList();
+  fetchTenderList() {
+    let params = new URLSearchParams();
+    if (this.paginationOption.page) {
+      params.set('page', String(this.paginationOption.page));
+    }
+    this.pageService.tenderList(params).subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.item_list = results ?? [];
+        this.paginationOption = { limit, page, total_pages, total_records };
       },
-      error: (error) => {
-        console.error('Upload failed', error);
-      // this.formGroup.enable();
+      error: (err) => {
+        this.item_list = [];
       },
-      complete: () => {
-      // this.formGroup.enable();
-      }
     });
   }
-
+  deleteItem(item: any) {
+    this.pageService.deleteTender({ id: item.id }).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`Deleted Successfully`);
+        this.fetchTenderList();
+      },
+      error: (err: any) => {},
+    });
+  }
+  onPageChange(data: any) {
+    this.paginationOption.page = data;
+    this.fetchTenderList();
+  }
 }

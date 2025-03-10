@@ -1,0 +1,5 @@
+.tender-wrapper {
+    height: calc(100vh - 139px);
+    overflow: auto;
+    background-color: #f8f8f8;
+  }

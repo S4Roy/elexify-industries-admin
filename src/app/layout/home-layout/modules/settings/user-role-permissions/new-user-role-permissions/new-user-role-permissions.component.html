@@ -65,7 +65,7 @@
                     <h2>Permissions</h2>
                   </label>
                 </div>
-                <ng-container formArrayName="permissionModule">
+                <div class="bg-red-100 p-2" formArrayName="permissionModule">
                   <ng-container
                     *ngFor="
                       let item of permissionModule.controls;
@@ -74,7 +74,9 @@
                   >
                     <div class="mt-2" [formGroupName]="i">
                       <div>
-                        <h5>{{ item?.value?.section_name }}</h5>
+                        <h4 class="text-black">
+                          {{ item?.value?.section_name }}
+                        </h4>
                       </div>
                       <ng-container formArrayName="permissions">
                         <ng-container
@@ -103,7 +105,9 @@
                           "
                         >
                           <div [formGroupName]="j">
-                            <h6>{{ subSection?.value?.section_name }}</h6>
+                            <h5 class="text-black">
+                              {{ subSection?.value?.section_name }}
+                            </h5>
                             <ng-container formArrayName="permissions">
                               <ng-container
                                 *ngFor="
@@ -127,7 +131,7 @@
                       </ng-container>
                     </div>
                   </ng-container>
-                </ng-container>
+                </div>
               </div>
             </form>
           </div>

@@ -77,7 +77,7 @@ export class PageService {
     return this.httpService.post(`admin/media/gallery/delete`, payload);
   }
   tenderList(params: any) {
-    return this.httpService.get(`admin/tender/list?${params.toString()}`);
+    return this.httpService.get(`admin/tender/tender-list?${params.toString()}`);
   }
   tenderDetails(id: any) {
     return this.httpService.get(`admin/tender/details/${id.toString()}`);

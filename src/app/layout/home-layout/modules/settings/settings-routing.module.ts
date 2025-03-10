@@ -142,7 +142,7 @@ const routes: Routes = [
             },
           },
           {
-            path: 'edit/:id',
+            path: 'update/:id',
             component: NewCustomPageComponent,
             data: {
               pageTitle: 'Update Page',

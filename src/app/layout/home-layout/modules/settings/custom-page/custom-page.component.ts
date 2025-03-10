@@ -49,7 +49,7 @@ export class CustomPageComponent {
     });
   }
   deleteItem(item: any) {
-    this.settingService.deleteCustomPage({ id: item.id }).subscribe({
+    this.settingService.deleteCustomPage({ page_id: item.id }).subscribe({
       next: (res: any) => {
         this.toastr.success(`Page Deleted Successfully`);
         this.fetchCustomPageList();

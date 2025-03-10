@@ -47,6 +47,7 @@ export class NewCustomPageComponent {
   ngOnInit(): void {
     this.editor = new Editor();
     this.formGroup = this.fb.group({
+      page_id: [null],
       title: [null, Validators.required],
       content: ['null', Validators.required],
       status: ['active', Validators.required],

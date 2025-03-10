@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: '',
     component: HomeLayoutComponent,
-    // data: { pageTitle: '', breadcrumb: 'Tender Management ' },
+    data: { pageTitle: '', breadcrumb: 'Tender Management ' },
     children: [
       {
         path: '',
