@@ -103,7 +103,6 @@ export class HomeSatsInfoComponent {
       if (this.formGroup?.valid) {
         this.formGroup.disable();
         let formData = this.formGroup.getRawValue();
-        console.log(this.formGroup)
         if (!formData.id) {
           delete formData.id
         }

@@ -15,11 +15,14 @@
         Cancel
       </button>
       <button
+        *ngIf="permissions.includes('add') || permissions.includes('edit')"
         (click)="updateData()"
         type="button"
         class="px-2 py-1 outline-1 text-xs font-medium text-center inline-flex items-center border-red-500 text-red-500 border rounded-full"
       >
-        <mat-icon class="text-xs font-medium">{{ editInfo ? "save" : "edit" }}</mat-icon>
+        <mat-icon class="text-xs font-medium">{{
+          editInfo ? "save" : "edit"
+        }}</mat-icon>
         {{ editInfo ? "Update" : "Edit" }} Info
       </button>
     </div>
@@ -130,12 +133,16 @@
             </ng-container>
           </dd>
         </div>
-        
+
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt class="text-sm/6 font-medium text-gray-900">Embed Link</dt>
           <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
             <ng-container *ngIf="!editInfo">
-              {{ siteDetails?.gps_coordinates?.embed_link ? siteDetails?.gps_coordinates?.embed_link : "NA" }}
+              {{
+                siteDetails?.gps_coordinates?.embed_link
+                  ? siteDetails?.gps_coordinates?.embed_link
+                  : "NA"
+              }}
             </ng-container>
             <ng-container *ngIf="editInfo">
               <mat-form-field>
@@ -150,7 +157,11 @@
                 ></textarea>
                 <mat-error
                   *ngIf="
-                    !Global.isInputRuleValid(formGroup, 'embed_link', 'required')
+                    !Global.isInputRuleValid(
+                      formGroup,
+                      'embed_link',
+                      'required'
+                    )
                   "
                 >
                   This field is required
@@ -170,7 +181,9 @@
                 <input
                   formControlName="latitude"
                   matInput
-                  [class.is-invalid]="!Global.isInputValid(formGroup, 'latitude')"
+                  [class.is-invalid]="
+                    !Global.isInputValid(formGroup, 'latitude')
+                  "
                   placeholder="Type Here"
                 />
                 <mat-error
@@ -195,7 +208,9 @@
                 <input
                   formControlName="longitude"
                   matInput
-                  [class.is-invalid]="!Global.isInputValid(formGroup, 'longitude')"
+                  [class.is-invalid]="
+                    !Global.isInputValid(formGroup, 'longitude')
+                  "
                   placeholder="Type Here"
                 />
                 <mat-error

@@ -4,13 +4,21 @@
       <div class="h-[100%] flex items-center">
         <div class="flex shrink-0 items-center">
           <button (click)="toggleSideNav.emit(isNavOpen)">
-            <img class="h-8 w-auto" src="assets/{{
+            <img
+              class="h-8 w-auto"
+              src="assets/{{
                 isNavOpen ? 'arrow-left-linear.png' : 'menu.png'
-              }}" alt="icon" />
+              }}"
+              alt="icon"
+            />
           </button>
           <ng-container *ngIf="!isNavOpen">
             <div>
-              <img class="h-8 w-auto" src="assets/air-india.png" alt="Your Company" />
+              <img
+                class="h-8 w-auto"
+                src="assets/air-india.png"
+                alt="Your Company"
+              />
             </div>
           </ng-container>
         </div>
@@ -20,27 +28,52 @@
 
         <!-- Profile dropdown -->
         <div class="">
-          <button class="flex items-center justify-center" [matMenuTriggerFor]="menu">
-            <img alt="" src="assets/avatar.jpg" class="inline-block size-7 rounded-full ring-1 ring-red-600" /><span
-              class="mx-3 flex flex-col leading-3 items-start justify-start">
-              <span class="block text-sm text-black">Air India Admin</span>
-              <small class="block text-gray-500">Super Admin</small>
+          <button
+            class="flex items-center justify-center"
+            [matMenuTriggerFor]="menu"
+          >
+            <img
+              alt=""
+              src="assets/avatar.jpg"
+              class="inline-block size-7 rounded-full ring-1 ring-red-600"
+            /><span
+              class="mx-3 flex flex-col leading-3 items-start justify-start"
+            >
+              <span class="block text-sm text-black">{{
+                helperService.userDetails()?.name
+              }}</span>
+              <small class="block text-gray-500">{{
+                helperService.userDetails()?.display_role_name
+              }}</small>
             </span>
             <mat-icon class="ml-4">keyboard_arrow_down</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
             <div class="profile-menu">
-              <img alt="" src="assets/avatar.jpg" class="inline-block size-7 rounded-full ring-1 ring-red-600" />
+              <img
+                alt=""
+                src="assets/avatar.jpg"
+                class="inline-block size-7 rounded-full ring-1 ring-red-600"
+              />
               <div class="right-side">
                 <div class="item">
                   {{ userDetails?.name }}
                 </div>
                 <div class="item email">{{ userDetails?.email }}</div>
                 <div class="item">
-                  <a class="text-primary" routerLink="/settings/basic-information">
-                    My Account</a>
+                  <a
+                    class="text-primary"
+                    routerLink="/settings/basic-information"
+                  >
+                    My Account</a
+                  >
                   <span class="dot mx-2"></span>
-                  <a href="javascript:void(0)" (click)="signOut()" class="text-danger">Sign Out</a>
+                  <a
+                    href="javascript:void(0)"
+                    (click)="signOut()"
+                    class="text-danger"
+                    >Sign Out</a
+                  >
                 </div>
               </div>
             </div>
@@ -61,7 +94,6 @@
               <mat-icon>password</mat-icon>
               <span class="txt-spn">Change Password</span>
             </button>
-            
           </mat-menu>
         </div>
       </div>

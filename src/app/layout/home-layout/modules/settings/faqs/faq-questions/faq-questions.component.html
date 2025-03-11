@@ -7,6 +7,7 @@
       >
     </div>
     <button
+      *ngIf="permissions.includes('add')"
       (click)="addItem({ faq_category_id: filterOption.list_type })"
       class="ai-button"
     >
@@ -15,7 +16,10 @@
   </div>
   <hr />
   <div class="m-3">
-    <ul *ngIf="category_list?.length" class="flex flex-wrap text-sm font-medium text-center text-gray-500">
+    <ul
+      *ngIf="category_list?.length"
+      class="flex flex-wrap text-sm font-medium text-center text-gray-500"
+    >
       <li class="me-1">
         <a
           href="javascript:void(0)"
@@ -48,17 +52,17 @@
               }}</a>
               {{ item?.question }}</span
             >
-           <span class="flex justify-end">
-            <span class="mx-2">
-              {{item?.status}}
+            <span class="flex justify-end">
+              <span class="mx-2">
+                {{ item?.status }}
+              </span>
+              <app-menu
+                [modalItem]="permissions.includes('edit') ? item : null"
+                (initModal)="addItem($event)"
+                (deleteItem)="deleteItem($event)"
+                [delete]="permissions.includes('delete') ? item : null"
+              ></app-menu>
             </span>
-            <app-menu
-            [modalItem]="item"
-            [delete]="item"
-            (initModal)="addItem($event)"
-            (deleteItem)="deleteItem($event)"
-          ></app-menu>
-           </span>
           </div>
           <ng-container *ngIf="hideElement[i]">
             <div class="m-2">

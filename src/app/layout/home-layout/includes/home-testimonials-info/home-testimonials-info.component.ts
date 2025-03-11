@@ -54,7 +54,6 @@ export class HomeTestimonialsInfoComponent {
   }
 
   onNewsChange(selectedItems: any[]) {
-   // console.log(selectedItems.length);
     if (selectedItems?.length > 10) {
       selectedItems.pop();
       this.formGroup.patchValue({ news: selectedItems });
@@ -106,7 +105,6 @@ export class HomeTestimonialsInfoComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getTestimonialsList(params).pipe().subscribe(
       (res: any) => {
-        //console.log(res, "TestimonialsListTestimonialsListTestimonialsListTestimonialsList");
         let nw: any = Array.isArray(res?.news)
           ? res.news.map((item: any) => item.id)
           : [];
@@ -123,7 +121,6 @@ export class HomeTestimonialsInfoComponent {
           client_tele: clt,
           id: res?.setting_id
         });
-        //console.log(this.formGroup.value);
 
       },
       err => {
@@ -139,7 +136,6 @@ export class HomeTestimonialsInfoComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getNewsList(params).pipe().subscribe(
       (res: any) => {
-        // console.log(res,"newslistttttt");
         this.newsList = res?.results;
       },
       err => {
@@ -155,7 +151,6 @@ export class HomeTestimonialsInfoComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getClientList(params).pipe().subscribe(
       (res: any) => {
-        //console.log(res,"clientlistttttt");
         this.client_teleList = res.results
       },
       err => {
@@ -168,7 +163,6 @@ export class HomeTestimonialsInfoComponent {
   }
 
   onSubmit() {
-    // console.log(this.formGroup.getRawValue());
     this.isSubmitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
@@ -179,7 +173,6 @@ export class HomeTestimonialsInfoComponent {
       }
       this.master.saveTestimonials(formData).subscribe(
         (res: any) => {
-          //console.log(res);
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });

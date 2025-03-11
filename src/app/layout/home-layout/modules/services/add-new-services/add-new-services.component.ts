@@ -47,7 +47,6 @@ export class AddNewServicesComponent {
     public dialogRef: MatDialogRef<AddNewServicesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(this.data);
    // this.formGroup.patchValue(this.data);
    
     this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
@@ -68,7 +67,6 @@ export class AddNewServicesComponent {
   }
 
   onFileSelected(event: Event) {
-    console.log(event,"eventtttttttttttttt");
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.formGroup.patchValue({
@@ -86,7 +84,6 @@ export class AddNewServicesComponent {
 
       };
 
-      console.log(target.files[0].type, "sizeee");
       const validFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'video/mp4',];
       //const validVdFormats = ['video/mp4'];
       if (!validFormats.includes(target.files[0].type)) {
@@ -115,7 +112,6 @@ export class AddNewServicesComponent {
       this.errorMessage1 = '';
       this.errorMessage2 = '';
       this.errorMessage3 = '';
-      console.log(this.selectedImage)
       reader.readAsDataURL(this.selectedImage);
 
     }
@@ -149,7 +145,6 @@ export class AddNewServicesComponent {
       // this.masterServiceManagement.addServiceManagement(formData)
       apiUrl.subscribe({
         next: (response) => {
-          console.log('Upload successful', response);
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });

@@ -38,7 +38,6 @@ export class HomeMediaInfoCardComponent {
     this.getAwardList();
   }
   onAwardsChange(selectedItems: any[]) {
-    // console.log(selectedItems.length);
      if (selectedItems?.length > 2) {
        selectedItems.pop();
        this.formGroup.patchValue({ awards: selectedItems });
@@ -76,7 +75,6 @@ export class HomeMediaInfoCardComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getAwardCertificateList(params).pipe().subscribe(
       (res: any) => {
-       // console.log(res);
         let awd: any = Array.isArray(res?.award_list)
           ? res.award_list.map((item: any) => item.id)
           : [];
@@ -89,7 +87,6 @@ export class HomeMediaInfoCardComponent {
           awards: awd,
           id: res?.setting_id
         });
-       // console.log(this.formGroup.value);
 
       },
       err => {
@@ -101,7 +98,6 @@ export class HomeMediaInfoCardComponent {
     );
   }
   onSubmit() {
-   // console.log(this.formGroup.getRawValue());
    this.formGroup.markAllAsTouched();
       
     if (this.formGroup.valid) {
@@ -112,7 +108,6 @@ export class HomeMediaInfoCardComponent {
       }
       this.master.addAwardCertificate(formData).pipe().subscribe(
         (res: any) => {
-         // console.log(res);
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });

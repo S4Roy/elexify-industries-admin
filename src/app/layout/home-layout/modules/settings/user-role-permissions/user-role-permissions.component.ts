@@ -12,63 +12,63 @@ import { NewUserRolePermissionsComponent } from './new-user-role-permissions/new
 
 @Component({
   selector: 'app-user-role-permissions',
-  imports: [MenuComponent, NgFor, NgIf, PaginationComponent],
+  imports: [NgFor, NgIf, PaginationComponent],
   templateUrl: './user-role-permissions.component.html',
-  styleUrl: './user-role-permissions.component.scss'
+  styleUrl: './user-role-permissions.component.scss',
 })
 export class UserRolePermissionsComponent {
   Global = Global;
-    item_list: any = [];
-    paginationOption: PaginationOptions;
-    constructor(
-      private dialog: MatDialog,
-      private settingService: SettingsService,
-      private toastr: ToastrService,
-    ) {
-      this.paginationOption = Global.resetPaginationOptions();
-      this.contactPurposeList();
-    }
-    addItem(data: any = null) {
-      this.dialog
-        .open(NewUserRolePermissionsComponent, {
-          data: data,
-          disableClose: true,
-        })
-        .afterClosed()
-        .subscribe((res: any) => {
-          if (res) {
-            this.contactPurposeList();
-          }
-        });
-    }
-    contactPurposeList() {
-      let params = new URLSearchParams();
-      params.set('sort_by', 'id');
-      params.set('sort_order', 'asc');
-      if (this.paginationOption.page) {
-        params.set('page', String(this.paginationOption.page));
-      }
-      this.settingService.roleList(params).subscribe({
-        next: (res: any) => {
-          const { results, limit, page, total_pages, total_records } = res;
-          this.item_list = results ?? [];
-          this.paginationOption = { limit, page, total_pages, total_records };
-        },
-        error: (err) => {},
-      });
-    }
-    deleteItem(item: any) {
-      this.settingService.deleteContactPurpose({ id: item.id }).subscribe({
-        next: (res: any) => {
-          this.toastr.success(`Purpose Deleted Successfully`);
-          this.contactPurposeList();
-        },
-        error: (err: any) => {},
-      });
-    }
-    onPageChange(data: any) {
-      this.paginationOption.page = data;
-      this.contactPurposeList();
-    }
+  item_list: any = [];
+  paginationOption: PaginationOptions;
+  constructor(
+    private dialog: MatDialog,
+    private settingService: SettingsService,
+    private toastr: ToastrService
+  ) {
+    this.paginationOption = Global.resetPaginationOptions();
+    this.contactPurposeList();
   }
-  
+
+  addItem(data: any = null) {
+    this.dialog
+      .open(NewUserRolePermissionsComponent, {
+        data: data,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        if (res) {
+          this.contactPurposeList();
+        }
+      });
+  }
+  contactPurposeList() {
+    let params = new URLSearchParams();
+    params.set('sort_by', 'id');
+    params.set('sort_order', 'asc');
+    if (this.paginationOption.page) {
+      params.set('page', String(this.paginationOption.page));
+    }
+    this.settingService.roleList(params).subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.item_list = results ?? [];
+        this.paginationOption = { limit, page, total_pages, total_records };
+      },
+      error: (err) => {},
+    });
+  }
+  deleteItem(item: any) {
+    this.settingService.deleteContactPurpose({ id: item.id }).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`Purpose Deleted Successfully`);
+        this.contactPurposeList();
+      },
+      error: (err: any) => {},
+    });
+  }
+  onPageChange(data: any) {
+    this.paginationOption.page = data;
+    this.contactPurposeList();
+  }
+}

@@ -30,6 +30,7 @@ export class FaqQuestionsComponent {
   ) {
     this.filterOption = Global.resetTableFilterOptions();
     this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
     this.fetchFaqCategoryList();
     this.fetchFaqList();
   }
@@ -96,5 +97,17 @@ export class FaqQuestionsComponent {
   }
   toogleRow(i: number) {
     this.hideElement[i] = !this.hideElement[i];
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService
+      .checkPermission({ sec: 'setting', sub_sec: 'faq' })
+      .subscribe({
+        next: (res: any) => {
+          const { sub_section_name } = res?.results[0];
+          const { permissions } = sub_section_name[0];          
+          this.permissions = permissions;
+        },
+      });
   }
 }

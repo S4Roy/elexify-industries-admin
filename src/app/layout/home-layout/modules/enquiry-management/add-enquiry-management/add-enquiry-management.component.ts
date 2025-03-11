@@ -47,7 +47,6 @@ export class AddEnquiryManagementComponent implements OnInit {
             public dialogRef: MatDialogRef<AddClienteleComponent>,
             @Inject(MAT_DIALOG_DATA) public data: any) 
             {
-              console.log(this.data);
               this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
               this.formGroup = this.fb.group({
                 id: this.data.id,
@@ -59,67 +58,13 @@ export class AddEnquiryManagementComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // onFileSelected(event: Event) {
-  //   console.log(event);
-  //   const target = event.target as HTMLInputElement;
-  //   if (target.files && target.files.length > 0) {
-  //     this.formGroup.patchValue({
-  //       file: target.files[0]
-  //     })
-  //     this.selectedImage = target.files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       // this.imagePreview = reader.result; // Set the image preview
-  //       if (this.selectedImage?.type.startsWith('video/')) {
-  //         this.videoPreview = reader.result; // Set the video preview
-  //       } else if (this.selectedImage?.type.startsWith('image/')) {
-  //         this.imagePreview = reader.result; // Set the image preview
-  //       }
-  //     };
-
-  //     console.log(target.files[0].type, "sizeee");
-  //     const validFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'video/mp4',];
-  //     //const validVdFormats = ['video/mp4'];
-  //     if (!validFormats.includes(target.files[0].type)) {
-  //       this.hasError = true;
-  //       this.errorMessage1 = 'Only .png, .jpg, .gif, .jpeg and .mp4 formats are supported.';
-  //       return; // Prevent further processing
-  //     } else if (target.files[0].size < 24576) {
-  //       this.hasSzError = true;
-  //       this.errorMessage3 = 'Minimum size required: 1920 width x 640 height';
-  //       return;
-  //     }
-
-  //     // If both checks pass, reset error state
-  //     this.hasError = false;
-  //     this.hasVdError = false;
-  //     this.hasSzError = false;
-  //     this.errorMessage1 = '';
-  //     this.errorMessage2 = '';
-  //     this.errorMessage3 = '';
-  //     console.log(this.selectedImage)
-  //     reader.readAsDataURL(this.selectedImage);
-  //   }
-  //   else {
-  //     this.formGroup.patchValue({
-  //       file: null
-  //     })
-  //   }
-  // }
-
-  // deleteItem(item?: any) {
-  //   this.imagePreview = null;
-  //   this.videoPreview = null;
-  // }
-
+  
   onSubmit() {
-    console.log(this.formGroup.value);
     
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       this.formGroup.disable();
       // let formData = this.formGroup.getRawValue();
-      // console.log(formData)
       // if (this.data?.id) {
       //   formData.id = this.data.id;
       // }
@@ -127,7 +72,6 @@ export class AddEnquiryManagementComponent implements OnInit {
       
       apiUrl.subscribe({
         next: (response) => {
-          console.log('Upload successful', response);
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });

@@ -1,60 +1,65 @@
 <div class="relative overflow-x-auto">
-    <div class="m-3 flex justify-between items-center">
-      <div class="flex flex-col items-start">
-        <span class="text-base font-medium">Contact Purpose List</span>
-        <span class="block text-gray-500 text-xs"
-          >{{ paginationOption.total_records }} Purpose added</span
-        >
-      </div>
-      <button (click)="addItem()" class="ai-button">+ Add New</button>
+  <div class="m-3 flex justify-between items-center">
+    <div class="flex flex-col items-start">
+      <span class="text-base font-medium">Contact Purpose List</span>
+      <span class="block text-gray-500 text-xs"
+        >{{ paginationOption.total_records }} Purpose added</span
+      >
     </div>
-    <hr />
-    <div class="m-3">
-      <div class="table-wrapper">
-        <table
-          class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-        >
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr class="sticky">
-              <th scope="col">Contact Purpose Name</th>
-              <th scope="col" class="text-center">Status</th>
-              <th class="text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container *ngFor="let item of item_list">
-              <tr>
-                <td
-                  scope="row"
-                  class="font-medium text-gray-900 whitespace-nowrap"
-                >
-                  {{ item?.name }}
-                </td>
-                <td class="text-center">{{ item?.status }}</td>
-                <td class="text-center">
-                  <app-menu
-                    [modalItem]="item"
-                    (initModal)="addItem($event)"
-                    [delete]="item"
-                    (deleteItem)="deleteItem($event)"
-                  ></app-menu>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="!item_list?.length">
-              <tr>
-                <td class="text-center" colspan="4">No Items Found</td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
-      </div>
-      <ng-container>
-        <pagination
-          [pagination]="paginationOption"
-          (pageChange)="onPageChange($event)"
-        ></pagination>
-      </ng-container>
-    </div>
+    <button
+      *ngIf="permissions.includes('add')"
+      (click)="addItem()"
+      class="ai-button"
+    >
+      + Add New
+    </button>
   </div>
-  
+  <hr />
+  <div class="m-3">
+    <div class="table-wrapper">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      >
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+          <tr class="sticky">
+            <th scope="col">Contact Purpose Name</th>
+            <th scope="col" class="text-center">Status</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of item_list">
+            <tr>
+              <td
+                scope="row"
+                class="font-medium text-gray-900 whitespace-nowrap"
+              >
+                {{ item?.name }}
+              </td>
+              <td class="text-center">{{ item?.status }}</td>
+              <td class="text-center">
+                <app-menu
+                  [modalItem]="permissions.includes('edit') ? item : null"
+                  (initModal)="addItem($event)"
+                  [delete]="permissions.includes('delete') ? item : null"
+                  (deleteItem)="deleteItem($event)"
+                ></app-menu>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="!item_list?.length">
+            <tr>
+              <td class="text-center" colspan="4">No Items Found</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <ng-container>
+      <pagination
+        [pagination]="paginationOption"
+        (pageChange)="onPageChange($event)"
+      ></pagination>
+    </ng-container>
+  </div>
+</div>

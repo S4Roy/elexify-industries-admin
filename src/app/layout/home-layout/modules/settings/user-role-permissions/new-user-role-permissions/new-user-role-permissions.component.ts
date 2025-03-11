@@ -7,7 +7,7 @@ import {
   FormArray,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -52,8 +52,10 @@ export class NewUserRolePermissionsComponent {
     private helpers: HelpersService,
     private authService: AuthService,
     private settingService: SettingsService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef:MatDialogRef<NewUserRolePermissionsComponent>
   ) {
+    this.checkPermission();
     this.fetchPermissionList();
     this.section_list = [
       {
@@ -75,9 +77,10 @@ export class NewUserRolePermissionsComponent {
     ];
 
     this.formGroup = this.fb.group({
-      role_id: [data?.id, Validators.compose([Validators.required])],
+      user_id: [data?.id, Validators.compose([Validators.required])],
+      role_id: [data?.role_id, Validators.compose([Validators.required])],
       role_display_name: [
-        data?.role_display_name,
+        data?.role ? Global.humanize(data?.role) : null,
         Validators.compose([Validators.required]),
       ],
       permissionModule: this.fb.array([]),
@@ -89,7 +92,8 @@ export class NewUserRolePermissionsComponent {
 
   fetchPermissionList() {
     let params = new URLSearchParams();
-    params.set('role', String(this.data?.id));
+    params.set('user_id', String(this.data?.id));
+    params.set('role', String(this.data?.role_id));
     this.settingService.permissionList(params).subscribe({
       next: (res: any) => {
         const { results, limit, page, total_pages, total_records } = res;
@@ -156,7 +160,6 @@ export class NewUserRolePermissionsComponent {
       permissionModule.push(sectionGroup);
     });
 
-    console.log(this.formGroup.value); // Check the structure
   }
 
   permissions(itemIndex: number): FormArray {
@@ -182,7 +185,6 @@ export class NewUserRolePermissionsComponent {
     if (this.formGroup.valid) {
       this.formGroup.disable();
       const rawFormValue = this.formGroup.getRawValue();
-      console.log(this.formGroup.valid);
 
       let permissions: any = [];
       rawFormValue.permissionModule.forEach((module: any) => {
@@ -213,12 +215,13 @@ export class NewUserRolePermissionsComponent {
       });
       this.settingService
         .updatePermissions({
+          user_id: rawFormValue.user_id,
           role_id: rawFormValue.role_id,
           permissions: permissions,
         })
         .subscribe({
           next: (res: any) => {
-            this.fetchPermissionList();
+            this.dialogRef.close(res);
             this.toastr.success(`Updated Successfully`);
             this.formGroup.enable();
           },
@@ -227,5 +230,17 @@ export class NewUserRolePermissionsComponent {
           },
         });
     }
+  }
+  c_permissions: any = [];
+  checkPermission() {
+    this.settingService
+      .checkPermission({ sec: 'setting', sub_sec: 'role_permission' })
+      .subscribe({
+        next: (res: any) => {
+          const { sub_section_name } = res?.results[0];
+          const { permissions } = sub_section_name[0];          
+          this.c_permissions = permissions;
+        },
+      });
   }
 }

@@ -173,4 +173,57 @@ export class SettingsService {
       payload
     );
   }
+  credentialsCategoryList(params: URLSearchParams) {
+    return this.httpService.get(
+      `admin/credential/category/list?${params.toString()}`
+    );
+  }
+  submitCredentialCategory(payload: any) {
+    if (payload?.id) {
+      return this.httpService.post('admin/credential/category/edit', payload);
+    } else {
+      return this.httpService.post('admin/credential/category/add', payload);
+    }
+  }
+  deleteCredentialCategory(payload: any) {
+    return this.httpService.post('admin/credential/category/delete', payload);
+  }
+
+  credentialsCertificateList(params: URLSearchParams) {
+    return this.httpService.get(
+      `admin/credential/certificate/list?${params.toString()}`
+    );
+  }
+  submitCredentialCertificate(payload: any) {
+    if (payload?.id) {
+      return this.httpService.post(
+        'admin/credential/certificate/edit',
+        payload
+      );
+    } else {
+      return this.httpService.post('admin/credential/certificate/add', payload);
+    }
+  }
+  deleteCredentialCertificate(payload: any) {
+    return this.httpService.post(
+      'admin/credential/certificate/delete',
+      payload
+    );
+  }
+  credentialList(params: URLSearchParams) {
+    return this.httpService.get(`admin/credential/list?${params.toString()}`);
+  }
+  submitCredential(payload: any) {
+    if (payload?.id) {
+      return this.httpService.postFormData('admin/credential/edit', payload);
+    } else {
+      return this.httpService.postFormData('admin/credential/add', payload);
+    }
+  }
+  deleteCredential(payload: any) {
+    return this.httpService.post('admin/credential/delete', payload);
+  }
+  checkPermission(payload: any) {
+    return this.httpService.post('admin/role-permission/check', payload);
+  }
 }

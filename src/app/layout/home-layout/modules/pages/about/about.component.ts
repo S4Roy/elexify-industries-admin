@@ -211,7 +211,6 @@ export class AboutComponent {
           detail_link: this.pageData?.career_cta?.detail_link ?? null,
           heading: this.pageData?.career_cta?.heading ?? null,
         });
-        console.log(this.careerCtaForm.value);
       },
     });
   }
@@ -327,7 +326,6 @@ export class AboutComponent {
   }
   onCareerCtaFormSubmit() {
     this.careerCtaForm.markAllAsTouched();
-    console.log(this.careerCtaForm.getRawValue());
 
     if (this.careerCtaForm.valid) {
       this.careerCtaForm.disable();

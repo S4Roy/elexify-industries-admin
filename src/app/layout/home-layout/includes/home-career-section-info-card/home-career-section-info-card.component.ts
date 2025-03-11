@@ -66,7 +66,6 @@ export class HomeCareerSectionInfoCardComponent {
   }
 
   get title() {
-    //console.log(this.formGroup.get('title'),"tttttttttttttttttttttttttttt")
     return this.formGroup.get('title');
   }
   get description() {
@@ -102,7 +101,6 @@ export class HomeCareerSectionInfoCardComponent {
     }
   }
   onFileSelectedCertificate(event: Event) {
-    console.log(event,"eventtt");
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.formGroup.patchValue({
@@ -117,7 +115,6 @@ export class HomeCareerSectionInfoCardComponent {
           this.imagePreview2 = reader.result; // Set the image preview
         }
       };
-      console.log(target.files[0].type, "sizeee");
       const validFormats = ['image/jpeg', 'image/jpg', 'image/png'];
       //const validVdFormats = ['video/mp4'];
      
@@ -143,13 +140,11 @@ export class HomeCareerSectionInfoCardComponent {
     this.master.getCareerList(params).pipe().subscribe(
       (res: any) => {
         this.careerList= res;
-        console.log("res",res);
         let img: any = res?.file_path;
        
         let crt: any = Array.isArray(res?.certifcates)
           ? res?.certifcates?.map((x: any) => x.file_path)
           : [];
-       console.log(img, crt, "test career img");
 
         this.formGroup.patchValue({
           title: res.title,
@@ -194,7 +189,6 @@ export class HomeCareerSectionInfoCardComponent {
       //   formData.append('file_certificates',this.formGroup.value.file_certificates)
 
       let formData = this.formGroup.getRawValue();
-      console.log(formData,"formDataaaa")
       if (!formData.id) {
         delete formData.id
       }
@@ -217,7 +211,6 @@ export class HomeCareerSectionInfoCardComponent {
   }
 
   deleteItem1(item?: any) {
-    console.log(item,"itemmmmmmmmmmmmmmmmmmmmmmm");
     this.imagePreview = null;
     this.formGroup.patchValue({
       file: null,
@@ -228,7 +221,6 @@ export class HomeCareerSectionInfoCardComponent {
   }
 
   deleteItem2(item?: any) {
-    console.log(item);
     this.imagePreview2 = null;
     this.formGroup.patchValue({
       file_certificates: null,

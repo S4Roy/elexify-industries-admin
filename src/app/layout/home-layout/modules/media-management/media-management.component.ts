@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
 export class MediaManagementComponent implements OnInit {
 
   constructor() {
-    console.log("gfdgf")
    }
 
   ngOnInit() {

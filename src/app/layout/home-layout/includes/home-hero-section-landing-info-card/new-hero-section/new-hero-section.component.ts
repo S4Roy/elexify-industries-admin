@@ -87,7 +87,6 @@ export class NewHeroSectionComponent {
 
       };
 
-      console.log(target.files[0].type, "sizeee");
       const validFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'video/mp4',];
       //const validVdFormats = ['video/mp4'];
       if (!validFormats.includes(target.files[0].type)) {
@@ -148,7 +147,6 @@ export class NewHeroSectionComponent {
       }
       this.master.addHeroSectionData(formData).subscribe({
         next: (response) => {
-          console.log('Upload successful', response);
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });

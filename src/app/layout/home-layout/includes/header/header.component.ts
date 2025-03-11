@@ -21,7 +21,7 @@ export class HeaderComponent {
   @Output() toggleSideNav = new EventEmitter<boolean>();
   userDetails: any = null;
   constructor(
-    private helperService: HelpersService,
+    public helperService: HelpersService,
     private dialogService: DialogService,
     private authService: AuthService,
     private dialog: MatDialog

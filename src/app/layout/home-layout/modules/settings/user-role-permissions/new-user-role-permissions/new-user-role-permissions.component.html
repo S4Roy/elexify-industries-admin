@@ -10,7 +10,7 @@
               class="flex mb-0 justify-between items-center font-semibold text-white"
               id="slide-over-title"
             >
-              {{ data ? "Update" : " Add New " }} Role & Permission
+              {{ data ? "Update" : " Add New " }} Permissions
               <button color="warn" mat-dialog-close mat-icon-button>
                 <mat-icon class="text-red-700">close</mat-icon>
               </button>
@@ -137,7 +137,7 @@
           </div>
           <button
             (click)="onPermissionUpdate()"
-            [disabled]="formGroup.disabled"
+            [disabled]="formGroup.disabled || !c_permissions.includes('edit')"
             class="save-button"
           >
             {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}

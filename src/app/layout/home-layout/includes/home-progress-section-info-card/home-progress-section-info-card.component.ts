@@ -37,7 +37,6 @@ export class HomeProgressSectionInfoCardComponent {
 
   confirmationMessage: string = '';
   onGalleryChange(selectedItems: any[]) {
-     // console.log(selectedItems.length);
       if (selectedItems?.length > 1) {
         selectedItems.pop();
         this.formGroup.patchValue({ gallery: selectedItems });
@@ -89,7 +88,6 @@ export class HomeProgressSectionInfoCardComponent {
           gallery: glry,
           id: res?.setting_id
         });
-       // console.log(this.formGroup.value);
 
       },
       err => {
@@ -103,7 +101,6 @@ export class HomeProgressSectionInfoCardComponent {
 
   onSubmit() {
     this.isSubmitted =true;
-   // console.log(this.formGroup.getRawValue());
     if (this.formGroup.valid) {
       let formData = this.formGroup.getRawValue()
       if (!formData?.id) {
@@ -111,7 +108,6 @@ export class HomeProgressSectionInfoCardComponent {
       }
       this.master.addProgress(formData).pipe().subscribe(
         (res: any) => {
-          //console.log(res);
           this.getProgressList()
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds

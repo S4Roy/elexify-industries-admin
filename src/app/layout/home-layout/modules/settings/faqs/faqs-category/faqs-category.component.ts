@@ -24,6 +24,7 @@ export class FaqsCategoryComponent {
     private toastr: ToastrService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
     this.fetchFaqCategoryList();
   }
   addItem(data: any = null) {
@@ -65,5 +66,17 @@ export class FaqsCategoryComponent {
   onPageChange(data: any) {
     this.paginationOption.page = data;
     this.fetchFaqCategoryList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService
+      .checkPermission({ sec: 'setting', sub_sec: 'faq' })
+      .subscribe({
+        next: (res: any) => {
+          const { sub_section_name } = res?.results[0];
+          const { permissions } = sub_section_name[0];          
+          this.permissions = permissions;
+        },
+      });
   }
 }

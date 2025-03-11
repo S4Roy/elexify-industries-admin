@@ -75,7 +75,6 @@ export class ServicesComponent {
   }
 
   deleteItems(item:any) {
-    console.log(item);
     const deletePayload = {
       id: item.id, 
     };
@@ -95,7 +94,6 @@ export class ServicesComponent {
   }
 
   editItem(item:any){
-    console.log(item);
     this.dialog.open(AddNewServicesComponent, {
       data: item,
       disableClose: true,

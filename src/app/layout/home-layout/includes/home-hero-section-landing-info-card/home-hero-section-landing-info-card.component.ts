@@ -76,7 +76,6 @@ export class HomeHeroSectionLandingInfoCardComponent {
       })
       .afterClosed()
       .subscribe((res: any) => {
-     //   console.log(res,"res-hero-sec");
        if (res) {
         this.getHeroSectionData();
        }
@@ -107,7 +106,6 @@ export class HomeHeroSectionLandingInfoCardComponent {
   }
   cancelImage() {
     // Implement your cancel image logic here
-   // console.log('Cancel Image Clicked!');
   }
   confirmUpload() {
     const confirmation = confirm('Are you sure you want to upload this image?');
@@ -121,7 +119,6 @@ export class HomeHeroSectionLandingInfoCardComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getHeroSectionData(params).pipe().subscribe(
       (res: any) => {
-       // console.log(res, "heroSectionData ressssssssss");
         this.heroSectionData = res;
       },
       err => {
@@ -134,7 +131,6 @@ export class HomeHeroSectionLandingInfoCardComponent {
   }
 
   addDetails() {
-   // console.log("Add more called...");
   }
 
   

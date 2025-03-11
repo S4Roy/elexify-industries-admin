@@ -49,7 +49,6 @@ export class AddClienteleComponent implements OnInit {
             public dialogRef: MatDialogRef<AddClienteleComponent>,
             @Inject(MAT_DIALOG_DATA) public data: any) 
             {
-              console.log(this.data);
               this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
               this.formGroup = this.fb.group({
                 client_name  : ['', Validators.required],
@@ -68,7 +67,6 @@ export class AddClienteleComponent implements OnInit {
   ngOnInit(): void {}
 
   onFileSelected(event: Event) {
-    console.log(event);
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.formGroup.patchValue({
@@ -85,7 +83,6 @@ export class AddClienteleComponent implements OnInit {
         }
       };
 
-      console.log(target.files[0].type, "sizeee");
       const validFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'video/mp4',];
       //const validVdFormats = ['video/mp4'];
       if (!validFormats.includes(target.files[0].type)) {
@@ -105,7 +102,6 @@ export class AddClienteleComponent implements OnInit {
       this.errorMessage1 = '';
       this.errorMessage2 = '';
       this.errorMessage3 = '';
-      console.log(this.selectedImage)
       reader.readAsDataURL(this.selectedImage);
     }
     else {
@@ -126,7 +122,6 @@ export class AddClienteleComponent implements OnInit {
     if (this.formGroup.valid) {
       this.formGroup.disable();
       let formData = this.formGroup.getRawValue();
-      console.log(formData)
       if (this.data?.id) {
         formData.id = this.data.id;
       }
@@ -135,7 +130,6 @@ export class AddClienteleComponent implements OnInit {
       
       apiUrl.subscribe({
         next: (response) => {
-          console.log('Upload successful', response);
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });

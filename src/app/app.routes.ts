@@ -151,6 +151,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'credentials',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/credential/credential.module').then(
+        (m) => m.CredentialModule
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     component: P404Component,
     data: {

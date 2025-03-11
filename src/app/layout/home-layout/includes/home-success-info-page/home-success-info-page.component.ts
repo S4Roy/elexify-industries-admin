@@ -48,7 +48,6 @@ export class HomeSuccessInfoPageComponent {
   }
   confirmationMessage: string = '';
   onBlogsChange(selectedItems: any[]) {
-     // console.log(selectedItems.length);
       if (selectedItems?.length > 2) {
         selectedItems.pop();
         this.formGroup.patchValue({ blogs: selectedItems });

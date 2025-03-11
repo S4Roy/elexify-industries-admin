@@ -26,6 +26,7 @@ export class ContactPurposeComponent {
     private toastr: ToastrService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
     this.contactPurposeList();
   }
   addItem(data: any = null) {
@@ -67,5 +68,17 @@ export class ContactPurposeComponent {
   onPageChange(data: any) {
     this.paginationOption.page = data;
     this.contactPurposeList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService
+      .checkPermission({ sec: 'setting', sub_sec: 'contact_purpose' })
+      .subscribe({
+        next: (res: any) => {
+          const { sub_section_name } = res?.results[0];
+          const { permissions } = sub_section_name[0];          
+          this.permissions = permissions;
+        },
+      });
   }
 }

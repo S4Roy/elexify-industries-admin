@@ -6,7 +6,13 @@
         >{{ paginationOption.total_records }} Category added</span
       >
     </div>
-    <button (click)="addItem()" class="ai-button">+ Add New</button>
+    <button
+      *ngIf="permissions.includes('add')"
+      (click)="addItem()"
+      class="ai-button"
+    >
+      + Add New
+    </button>
   </div>
   <hr />
   <div class="m-3">
@@ -37,10 +43,10 @@
               <td>{{ item?.status }}</td>
               <td class="text-center">
                 <app-menu
-                  [modalItem]="item"
+                  [modalItem]="permissions.includes('edit') ? item : null"
                   (initModal)="addItem($event)"
-                  [delete]="item"
                   (deleteItem)="deleteItem($event)"
+                  [delete]="permissions.includes('delete') ? item : null"
                 ></app-menu>
               </td>
             </tr>

@@ -186,7 +186,6 @@ export class SideNavComponent {
         this.itemList = res?.results;
       },
       error: (err: any) => {
-        console.log(err);
       },
     });
   }

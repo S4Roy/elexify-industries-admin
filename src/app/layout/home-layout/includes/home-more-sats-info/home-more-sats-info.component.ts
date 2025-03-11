@@ -72,7 +72,6 @@ export class HomeMoreSatsInfoComponent {
         reader.readAsDataURL(file);
       });
     }
-    console.log(this.formGroup);
     
   }
 
@@ -93,10 +92,8 @@ export class HomeMoreSatsInfoComponent {
     this.files.clear()
     this.master.getMoreSatsList(params).subscribe(
       (res: any) => {
-        console.log(res);
         this.satsList = res
         let id: any = res?.images.map((item: any) => item.id);
-        console.log(id,"----ID");
         
         this.formGroup.patchValue({
           title: res.title,
@@ -117,9 +114,7 @@ export class HomeMoreSatsInfoComponent {
   filePatch(data:any){
     data.forEach((element:any)=>{
       this.files.push(this.newItem({ preview_path:Global.BACKEND_URL+ element.file_path, file: null ,id:element.id }));
-    })
-    console.log(this.formGroup);
-    
+    })    
   }
   onSubmit() {
     this.formGroup.markAllAsTouched();
@@ -141,8 +136,6 @@ export class HomeMoreSatsInfoComponent {
           formData.append(`files`, file); // Append file with a unique key
         }
       });
-
-      console.log(formData);
       
       this.master.saveMoreSatsData(formData).subscribe({
         next: (response) => {
@@ -163,7 +156,6 @@ export class HomeMoreSatsInfoComponent {
 
 
   deleteItem(item?: any) {
-    console.log(item, "itemmmm");
     const deletePayload = {
       id: item?.value.id,
       setting_id: this.satsList.setting_id,
@@ -173,7 +165,6 @@ export class HomeMoreSatsInfoComponent {
       .subscribe(
         (response) => {
 
-          console.log('Item deleted successfully!', response);
           this.getMoreSatsListData();
           this.formGroup.enable();
         },

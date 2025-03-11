@@ -49,6 +49,7 @@ export class SiteInfoComponent {
       latitude: [null],
       longitude: [null],
     });
+    this.checkPermission();
     this.fetchSiteDetails();
   }
   fetchSiteDetails() {
@@ -98,5 +99,17 @@ export class SiteInfoComponent {
         },
       });
     }
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService
+      .checkPermission({ sec: 'setting', sub_sec: 'site_setting' })
+      .subscribe({
+        next: (res: any) => {
+          const { sub_section_name } = res?.results[0];
+          const { permissions } = sub_section_name[0];          
+          this.permissions = permissions;
+        },
+      });
   }
 }

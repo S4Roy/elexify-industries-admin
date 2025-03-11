@@ -49,8 +49,6 @@ export class AddAwardsComponent implements OnInit {
             public dialogRef: MatDialogRef<AddAwardsComponent>,
             @Inject(MAT_DIALOG_DATA) public data: any) 
             {
-              console.log(this.data);
-              // console.log(this.data['award_images'][0]);
               this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
               this.formGroup = this.fb.group({
                 title : ["", Validators.required],
@@ -69,7 +67,6 @@ export class AddAwardsComponent implements OnInit {
   ngOnInit(): void {}
 
   onFileSelected(event: Event) {
-    console.log(event,"eventtttttttttttttt");
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.formGroup.patchValue({
@@ -86,7 +83,6 @@ export class AddAwardsComponent implements OnInit {
         }
       };
 
-      console.log(target.files[0].type, "sizeee");
       const validFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'video/mp4',];
       //const validVdFormats = ['video/mp4'];
       if (!validFormats.includes(target.files[0].type)) {
@@ -106,7 +102,6 @@ export class AddAwardsComponent implements OnInit {
       this.errorMessage1 = '';
       this.errorMessage2 = '';
       this.errorMessage3 = '';
-      console.log(this.selectedImage)
       reader.readAsDataURL(this.selectedImage);
     }
     else {
@@ -127,7 +122,6 @@ export class AddAwardsComponent implements OnInit {
     if (this.formGroup.valid) {
       this.formGroup.disable();
       let formData = this.formGroup.getRawValue();
-      console.log(formData)
       if (this.data?.id) {
         formData.id = this.data.id;
       }
@@ -136,7 +130,6 @@ export class AddAwardsComponent implements OnInit {
       
       apiUrl.subscribe({
         next: (response) => {
-          console.log('Upload successful', response);
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });

@@ -4,7 +4,6 @@
         <span class="text-base font-medium">Roles & Permissions</span>
         <span class="block text-gray-500 text-xs">{{paginationOption.total_records}} Roles added</span>
       </div>
-      <button [disabled]="true" (click)="addItem()" class="ai-button">+ Add New</button>
     </div>
     <hr />
     <div class="m-3">
@@ -17,7 +16,7 @@
               <th scope="col">Role Name</th>
               <th scope="col" class="text-center">Number Of Users</th>
               <!-- <th scope="col">Module & Permission</th> -->
-              <th scope="col" class="text-center">Action</th>
+              <!-- <th scope="col" class="text-center">Action</th> -->
             </tr>
           </thead>
           <tbody>
@@ -31,17 +30,17 @@
                 </td>
                 <td class="text-center">{{ item?.user_count }}</td>
                 <!-- <td class="text-center">{{ item?.status }}</td> -->
-                <td class="text-center">
+                <!-- <td class="text-center">
                   <app-menu
                     [modalItem]="item"
                     (initModal)="addItem($event)"
                   ></app-menu>
-                </td>
+                </td> -->
               </tr>
             </ng-container>
             <ng-container *ngIf="!item_list?.length">
               <tr>
-                <td class="text-center" colspan="4">No Items Found</td>
+                <td class="text-center" colspan="2">No Items Found</td>
               </tr>
             </ng-container>
           </tbody>

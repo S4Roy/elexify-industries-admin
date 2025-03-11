@@ -46,7 +46,6 @@ export class ClienteleComponent implements OnInit {
     params.set('page_size', '0');
     this.httpService.get(this.listUrl, params).pipe().subscribe(
       (res: any) => {
-        console.log(res);
         this.rows = res.results;
       },
       err => {
@@ -93,7 +92,6 @@ export class ClienteleComponent implements OnInit {
   }
 
   deleteItems(item:any) {
-    console.log(item);
     const payload = {
       id: item.id, 
     };

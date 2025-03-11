@@ -47,22 +47,9 @@ export class HomeSection4LandingServiceInfoCardComponent {
     this.getServicesList();
   }
 
-  // onServicesChange(evt: any[]) {
-  //   console.log(evt, "evttttttttttt");
-  //   if (evt.length > 1) {
-  //     evt.pop();
-  //     this.formGroup.patchValue({ services: evt });
-  //     this.errmsg = "please select up to 6";
-  //     setTimeout(() => {
-  //       this.errmsg = '';
-  //     }, 10000); // 10000 milliseconds = 10 seconds
-  //     this.getPopularServiceList();
-  //   }
-  //   this.errmsg = '';
-  // }
+ 
    
   onServicesChange(evt: any[]) {
-    console.log(evt, "evttttttttttt");
     
     if (evt.length > 6) {
       
@@ -92,7 +79,6 @@ export class HomeSection4LandingServiceInfoCardComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getServicesList(params).pipe().subscribe(
       (res: any) => {
-        //  console.log(res);
         this.servicesList = res?.results;
       },
       err => {
@@ -108,8 +94,6 @@ export class HomeSection4LandingServiceInfoCardComponent {
     let params: URLSearchParams = new URLSearchParams();
     this.master.getPopularServiceList(params).pipe().subscribe(
       (res: any) => {
-        // console.log(res);
-        // this.serviceList = res?.service_list;
         let services = res?.results.map((item: any) => {
           return item.id
         })
@@ -128,7 +112,6 @@ export class HomeSection4LandingServiceInfoCardComponent {
   }
 
   onSubmit() {
-    // console.log(this.formGroup.getRawValue());
     if (this.formGroup.valid) {
       let formData = this.formGroup.getRawValue();
       if (!formData.id) {

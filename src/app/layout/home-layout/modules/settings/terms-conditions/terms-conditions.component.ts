@@ -21,6 +21,7 @@ import { ActivatedRoute } from '@angular/router';
     ReactiveFormsModule,
     NgxEditorModule,
     MatIconModule,
+    NgIf
   ],
   templateUrl: './terms-conditions.component.html',
   styleUrl: './terms-conditions.component.scss',
@@ -49,6 +50,7 @@ export class TermsConditionsComponent {
         page_type: res?.page_type ?? null,
       });
     })
+    this.checkPermission();
     this.fetchCMSData();
   }
 
@@ -96,6 +98,18 @@ export class TermsConditionsComponent {
         },
       });
     }
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService
+      .checkPermission({ sec: 'setting', sub_sec: 'static_page' })
+      .subscribe({
+        next: (res: any) => {
+          const { sub_section_name } = res?.results[0];
+          const { permissions } = sub_section_name[0];          
+          this.permissions = permissions;
+        },
+      });
   }
   ngOnDestroy(): void {
     this.editor.destroy();

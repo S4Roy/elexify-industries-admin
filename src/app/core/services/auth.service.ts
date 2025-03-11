@@ -8,13 +8,13 @@ import { environment } from '../../../environments/environment.prod';
   providedIn: 'root',
 })
 export class AuthService {
-  USER_TOKEN_KEY: string = 'aisats-user-token';
-  USER_TOKEN_ADMIN: string = 'aisats-user-user';
+  USER_TOKEN_KEY: string = 'AISATS-TOKEN';
+  USER_TOKEN_ADMIN: string = 'AISATS-USER';
   constructor(
     private httpService: HttpService,
     private router: Router,
     private toastr: ToastrService
-  ) { }
+  ) {}
   sendOtp(payload: any) {
     return this.httpService.post('admin/auth/login', payload);
   }
@@ -26,15 +26,17 @@ export class AuthService {
   }
   verifyResetCode(payload: any) {
     return this.httpService.post('admin/auth/verify-reset-code', payload);
-  } 
+  }
   resetPassword(payload: any) {
     return this.httpService.post('admin/auth/reset-password', payload);
   }
- 
+
   userSuccessLogin(data: any, rememberme: boolean = false, encodedUrl: string) {
     // userSuccessLogin(data: any, encodedUrl: string) {
 
     let user = {
+      display_role_name: data?.display_role_name,
+      name: data?.first_name + ' ' + data?.last_name,
       email: data?.email,
       is_admin: data?.is_admin,
       profile_image: data?.profile_image,
@@ -45,7 +47,7 @@ export class AuthService {
       user_type: data?.user_type,
       username: data?.username,
     };
-    
+
     //if (rememberme == true) {
     // if (true) {
     //   localStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
@@ -54,14 +56,11 @@ export class AuthService {
     //     this.encrypt(JSON.stringify(user))
     //   );
     // } else {
-      sessionStorage.setItem(
-        this.USER_TOKEN_KEY,
-        this.encrypt(data?.token)
-      );
-      sessionStorage.setItem(
-        this.USER_TOKEN_ADMIN,
-        this.encrypt(JSON.stringify(user))
-      );
+    sessionStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
+    sessionStorage.setItem(
+      this.USER_TOKEN_ADMIN,
+      this.encrypt(JSON.stringify(user))
+    );
     //}
     this.router.navigate(['admin/dashboard']);
   }

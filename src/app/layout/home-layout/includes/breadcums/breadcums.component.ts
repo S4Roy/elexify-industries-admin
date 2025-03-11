@@ -27,11 +27,6 @@ export class BreadcumsComponent {
       this.settingsOutlet = this.breadcrumbs.some((item: any) => item?.label === "Settings");
       this.usersOutlet = this.breadcrumbs.some((item: any) => item?.label === "Users");
     });
-    // this.helperService.breadcrumbs$.subscribe((res: any) => {
-    //   console.log(res);
-    //   this.breadcrumbs = res;
-    //   //this.settingsOutlet = this.breadcrumbs.some((item: any) => item?.label === "Settings");
-    //   this.usersOutlet = this.breadcrumbs.some((item: any) => item?.label === "Users");
-    // });
+    
   }
 }
