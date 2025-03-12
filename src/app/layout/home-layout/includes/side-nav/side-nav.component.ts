@@ -189,8 +189,8 @@ export class SideNavComponent {
       },
     });
   }
-  isActiveChild() {
+  isActiveChild(menu:any) {    
     let isPage = this.router.url.startsWith('/pages');
-    return isPage;
+    return isPage && menu?.url==='/pages';
   }
 }
