@@ -37,7 +37,7 @@ export class HomeProgressSectionInfoCardComponent {
 
   confirmationMessage: string = '';
   onGalleryChange(selectedItems: any[]) {
-      if (selectedItems?.length > 1) {
+      if (selectedItems?.length > 2) {
         selectedItems.pop();
         this.formGroup.patchValue({ gallery: selectedItems });
         this.confirmationMessage = 'You can only select up to 2 items.';

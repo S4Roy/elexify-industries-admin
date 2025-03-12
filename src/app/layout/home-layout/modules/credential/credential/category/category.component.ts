@@ -70,11 +70,10 @@ export class CategoryComponent {
   permissions: any = [];
   checkPermission() {
     this.settingService
-      .checkPermission({ sec: 'setting', sub_sec: 'credential' })
+      .checkPermission({ sec: 'credential' })
       .subscribe({
         next: (res: any) => {
-          const { sub_section_name } = res?.results[0];
-          const { permissions } = sub_section_name[0];          
+          const { permissions } = res?.results[0];
           this.permissions = permissions;
         },
       });
