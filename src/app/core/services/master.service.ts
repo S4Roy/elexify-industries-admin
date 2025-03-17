@@ -232,6 +232,9 @@ export class MasterService {
   clienteleList(params: any) {
     return this.httpService.get(`admin/clientele/list?${params.toString()}`);
   }
+  announcementType() {
+    return this.httpService.get(`admin/announcement-type`);
+  }
   deleteClientele(payload: any) {
     return this.httpService.post(`admin/clientele/delete`, payload);
   }

@@ -96,7 +96,7 @@
               <div class="w-3/4 pl-3">
                 <div class="flex flex-col">
                   <div class="flex text-sm">
-                    <span class="text-gray-400">Announcement</span>
+                    <span class="text-gray-400">{{Global.humanize(item?.type??"")}}</span>
                     <span class="mx-2">|</span>
                     <span>{{ item?.created_at | date : "d MMM, y" }}</span>
                   </div>

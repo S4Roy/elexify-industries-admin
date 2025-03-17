@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../../core/services/auth.service';
 import { HttpService } from '../../../../../core/services/http.service';
 import { AddAwardsComponent } from '../../awards/add-awards/add-awards.component';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MenuComponent } from '../../../includes/menu/menu.component';
@@ -27,6 +27,7 @@ import * as Global from '../../../../../global';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import moment from 'moment';
 import { Editor, NgxEditorModule } from 'ngx-editor';
+import { MasterService } from '../../../../../core/services/master.service';
 @Component({
   selector: 'app-add-news-event',
   templateUrl: './add-news-event.component.html',
@@ -42,13 +43,15 @@ import { Editor, NgxEditorModule } from 'ngx-editor';
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    NgxEditorModule
+    NgxEditorModule,
+    NgFor
   ],
 })
 export class AddNewsEventComponent implements OnInit {
   Global = Global;
   addUrl: string = 'admin/news/add';
   editUrl: string = 'admin/news/edit';
+  announcementType: string = 'admin/announcement-type';
   editor!: Editor;
 
   formGroup!: FormGroup;
@@ -56,7 +59,7 @@ export class AddNewsEventComponent implements OnInit {
     private fb: FormBuilder,
     public toastr: ToastrService,
     private route: ActivatedRoute,
-    private authService: AuthService,
+    private masterService: MasterService,
     private httpService: HttpService,
     public dialogRef: MatDialogRef<AddAwardsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -91,9 +94,15 @@ export class AddNewsEventComponent implements OnInit {
       this.formGroup.get('file')?.updateValueAndValidity();
     }
   }
-
-  ngOnInit(): void {}
-
+  type_list: any = [];
+  ngOnInit(): void {
+    this.fetchAnnouncementType();
+  }
+  fetchAnnouncementType() {
+    this.masterService.announcementType().subscribe((res: any) => {
+      this.type_list = res?.results;
+    });
+  }
   onSubmit() {
     // this.isSubmitted = true;
     this.formGroup.markAllAsTouched();

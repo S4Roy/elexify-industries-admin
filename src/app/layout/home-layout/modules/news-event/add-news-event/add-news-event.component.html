@@ -70,14 +70,20 @@
                 </label>
                 <div class="mt-2">
                   <mat-form-field>
-                    <input
+                    <mat-select
+                      placeholder="Select"
                       formControlName="type"
                       matInput
                       [class.is-invalid]="
                         !Global.isInputValid(formGroup, 'type')
                       "
-                      placeholder="Type Here"
-                    />
+                    >
+                      <mat-option
+                        [value]="item?.key"
+                        *ngFor="let item of type_list"
+                        >{{ item?.value }}</mat-option
+                      >
+                    </mat-select>
                     <mat-error
                       *ngIf="
                         !Global.isInputRuleValid(formGroup, 'type', 'required')

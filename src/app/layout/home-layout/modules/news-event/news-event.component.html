@@ -24,6 +24,7 @@
           <tr class="sticky">
             <th scope="col"></th>
             <th scope="col">Title</th>
+            <th scope="col">Type</th>
             <th scope="col">Description</th>
             <th scope="col" class="text-center">Status</th>
             <th class="text-center">Action</th>
@@ -40,8 +41,11 @@
                   alt="Image"
                 />
               </td>
-              <td scope="row" class="">
+              <td class="">
                 {{ item?.title }}
+              </td>
+              <td class="">
+                {{ Global.humanize(item?.type) }}
               </td>
               <td><span [innerHTML]="item?.description"></span></td>
               <td class="text-center">
