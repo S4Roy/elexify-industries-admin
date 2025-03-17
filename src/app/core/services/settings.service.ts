@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
+  private scrollPosition: number | null = null;
+
   constructor(private httpService: HttpService) {}
 
+  setScrollPosition(position: number | null) {
+    this.scrollPosition = position;
+  }
+
+  getScrollPosition(): number | null {
+    return this.scrollPosition;
+  }
   faqCategoryList(params: URLSearchParams) {
     return this.httpService.get(`admin/faq/category/list?${params.toString()}`);
   }
