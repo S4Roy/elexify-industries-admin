@@ -1,9 +1,9 @@
 <div class="mt-2">
-  <div class="text-lg font-medium flex items-center">
-    ENQUIRY MANAGEMENT
-  </div>
+  <div class="text-lg font-medium flex items-center">ENQUIRY MANAGEMENT</div>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-2">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table
+      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    >
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
           <!-- <th>Index</th> -->
@@ -16,27 +16,47 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let item of latestEnquiryList">
+        <ng-container *ngFor="let item of latestEnquiryList; let i = index">
           <tr>
             <!-- <td *ngIf="!dashboard" class="date">22-12-2024</td> -->
             <!-- <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
               Rahul Roy
             </td> -->
             <!-- <td>rahulgmal.ffo</td>  -->
-              <!-- <td>
+            <!-- <td>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. In sint
               dolorum aliquam quo aspernatur vitae repellendus rem
             </td> -->
             <!-- <td>{{i + 1}}</td> -->
-            <td *ngIf="!dashboard" class="date">{{item.created_at | date:'fullDate'}}</td> 
+            <td *ngIf="!dashboard" class="date">
+              {{ item.created_at | date : "fullDate" }}
+            </td>
             <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
-              {{item.name}}
+              {{ item.name }}
             </td>
-            <td>{{item.email}}</td>
+            <td>{{ item.email }}</td>
             <td>
-              {{item.message}}
+              <ng-container
+                *ngIf="
+                  item?.message?.length < 100 || showMore[i];
+                  else shortContent
+                "
+              >
+                {{ item?.message }}
+              </ng-container>
+              <ng-template #shortContent>
+                {{ item?.message.slice(0, 100) }}...
+              </ng-template>
+              <a
+                class="text-blue-600"
+                href="javascript:void(0)"
+                *ngIf="item?.message?.length >= 100"
+                (click)="showMore[i] = !showMore[i]"
+              >
+                {{ showMore[i] ? "" : "read more" }}
+              </a>
             </td>
-            <td *ngIf="dashboard" class="date">22-12-2024</td>
+            <td *ngIf="dashboard" class="date">{{item?.created_at | date :'dd-MM-yyyy'}}</td>
             <td class="text-center" *ngIf="!dashboard">
               <app-menu [modalItem]="1" [delete]="1"></app-menu>
             </td>
@@ -45,4 +65,4 @@
       </tbody>
     </table>
   </div>
-</div>  
+</div>

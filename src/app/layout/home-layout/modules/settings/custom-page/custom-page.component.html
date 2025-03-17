@@ -24,7 +24,7 @@
           <tr class="sticky">
             <th scope="col">Page Title</th>
             <th scope="col">Publish Date & Time</th>
-            <th scope="col">Status</th>
+            <th scope="col" class="text-center">Status</th>
             <th></th>
           </tr>
         </thead>
@@ -38,7 +38,11 @@
                 {{ item?.title }}
               </td>
               <td>{{ item?.created_at | date : "dd-MM-yy" }}</td>
-              <td>{{ item?.status }}</td>
+              <td class="text-center">
+                <span [class]="item?.status">
+                  {{ item?.status }}
+                </span>
+              </td>
               <td class="text-center">
                 <app-menu
                   [modalItem]="permissions.includes('edit') ? item : null"

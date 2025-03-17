@@ -1,110 +1,83 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../../../core/services/http.service';
-import { ToastrService } from 'ngx-toastr';
-import { MatDialog } from '@angular/material/dialog';
-import { AddAwardsComponent } from './add-awards/add-awards.component';
 import { NgFor, NgIf } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { ColumnMode, NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { MatMenuModule } from '@angular/material/menu';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { MasterService } from '../../../../core/services/master.service';
+import * as Global from '../../../../global';
+import PaginationOptions from '../../../../core/models/PaginationOptions';
+import { SettingsService } from '../../../../core/services/settings.service';
+import { PaginationComponent } from '../../includes/pagination/pagination.component';
+import { MenuComponent } from '../../includes/menu/menu.component';
+import { AddAwardsComponent } from './add-awards/add-awards.component';
 
 @Component({
   selector: 'app-awards',
   templateUrl: './awards.component.html',
   styleUrls: ['./awards.component.css'],
-  imports: [NgFor, NgIf, RouterOutlet, NgxDatatableModule, MatMenuModule],
+  imports: [NgFor, NgIf, PaginationComponent, MenuComponent],
 })
 export class AwardsComponent implements OnInit {
-
-  listUrl: any = 'admin/award/list';
-  // addUrl: string = 'admin/award/add';
-  // editUrl: string = 'admin/award/edit';
-  deleteUrl: string = 'admin/award/delete';
-
-  rows: any[] = [];
-  columns:any[] = [
-    { name: 'Title', prop: 'title' },
-    { name: 'Description', prop: 'description' },
-    { name: 'Status', prop: 'status' },
-    // { name: 'Image', prop: 'award_images' },
-    { name: 'Action', prop: 'action' },
-  ];
-  ColumnMode = ColumnMode;
-  temp: any[] = [];
-
-  constructor(private httpService: HttpService, 
-              private toastr: ToastrService,
-              private dialog: MatDialog) {  }
-
-  ngOnInit() {
-    this.getAwardsList();
+  Global = Global;
+  item_list: any = [];
+  paginationOption: PaginationOptions;
+  constructor(
+    private dialog: MatDialog,
+    private settingService: SettingsService,
+    private masterService: MasterService,
+    private toastr: ToastrService
+  ) {
+    this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
+    this.fetchAwardList();
   }
-
-  getAwardsList(){
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('page_size', '0');
-    this.httpService.get(this.listUrl, params).pipe().subscribe(
-      (res: any) => {
-        this.rows = res.results;
-      },
-      err => {
-        this.toastr.error(err.error.msg, '', { timeOut: 1000 });
+  ngOnInit(): void {}
+  addItem(data: any = null) {
+    this.dialog
+      .open(AddAwardsComponent, {
+        data: data,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        if (res) {
+          this.fetchAwardList();
+        }
       });
   }
-
-  updateFilter(event?:any) {
-    const val = event.target.value.toLowerCase();
-    let searchItem: any = this.rows.filter(function (item:any) {
-      return item.title.toLowerCase().indexOf(val) !== -1 || 
-             item.description.toLowerCase().indexOf(val) !== -1 ||  
-             item.status.toLowerCase().indexOf(val) !== -1 || !val ;
-    });
-    if (val){
-      this.rows = searchItem;
+  fetchAwardList() {
+    let params = new URLSearchParams();
+    if (this.paginationOption.page) {
+      params.set('page', String(this.paginationOption.page));
     }
-    else if (val === ''){
-      this.getAwardsList();
-    }
-    // this.table.offset = 0;
-  } 
-
-  addItem(data: any = null) {
-    this.dialog.open(AddAwardsComponent, {
-      data: data,
-      disableClose: true,
-    })
-    .afterClosed().subscribe((res: any) => {
-      this.getAwardsList();
-    });
-  }
-
-  editItem(item:any){
-    this.dialog.open(AddAwardsComponent, {
-      data: item,
-      disableClose: true,
-    })
-    .afterClosed().subscribe((res: any) => {
-      this.getAwardsList();
-    });
-  }
-
-  deleteItems(item:any) {
-    const payload = {
-      id: item.id, 
-    };
-    this.httpService.post(this.deleteUrl, payload).subscribe({
-      next: (response) => {
-        this.toastr.success('Item Deleted Successfully!', '', { timeOut: 1000 });
-        this.getAwardsList();
+    this.masterService.awardList(params).subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.item_list = results ?? [];
+        this.paginationOption = { limit, page, total_pages, total_records };
       },
-      error: (error) => {
-        console.error('Upload failed', error);
-       // this.formGroup.enable();
-      },
-      complete: () => {
-       // this.formGroup.enable();
-      }
+      error: (err) => {},
     });
   }
-
+  deleteItem(item: any) {
+    this.masterService.deleteAward({ id: item.id }).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`Deleted Successfully`);
+        this.fetchAwardList();
+      },
+      error: (err: any) => {},
+    });
+  }
+  onPageChange(data: any) {
+    this.paginationOption.page = data;
+    this.fetchAwardList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'award' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
+  }
 }

@@ -1,123 +1,83 @@
 import { Component, ViewChild } from '@angular/core';
-//import { MenuComponent } from '../../../includes/menu/menu.component';
+import * as Global from '../../../../../global';
 import { NgFor, NgIf } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-//import { AddNewUserComponent } from '../add-new-user/add-new-user.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AddNewServicesComponent } from '../add-new-services/add-new-services.component';
-import { MasterServiceManagementService } from '../../../../../core/services/master-service-management.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import PaginationOptions from '../../../../../core/models/PaginationOptions';
 import { MasterService } from '../../../../../core/services/master.service';
-import { ColumnMode, DatatableComponent, NgxDatatableModule, SelectionType } from '@swimlane/ngx-datatable';
-import { MatMenuModule } from '@angular/material/menu';
- 
+import { SettingsService } from '../../../../../core/services/settings.service';
+import { PaginationComponent } from '../../../includes/pagination/pagination.component';
+import { AddNewServicesComponent } from '../add-new-services/add-new-services.component';
+import { MenuComponent } from '../../../includes/menu/menu.component';
 
 @Component({
   selector: 'app-services',
-  imports: [NgFor, NgIf, RouterOutlet, NgxDatatableModule, MatMenuModule],
+  imports: [NgFor, NgIf, PaginationComponent, MenuComponent],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss',
-  providers: [MasterServiceManagementService],
 })
 export class ServicesComponent {
-
-  //@ViewChild(DatatableComponent) table: DatatableComponent<any> | any;
-
-  rows: any[] = [];
-  columns:any[] = [
-    { name: 'Name', prop: 'name' },
-    { name: 'Description', prop: 'description' },
-    { name: 'Caption Text', prop: 'caption_text' },
-    { name: 'Status', prop: 'status' },
-    { name: 'Action', prop: 'action' },
-  ];
-  ColumnMode = ColumnMode;
-  temp: any[] = [];
-
-  constructor(private dialog: MatDialog,
-              private masterServiceManagement: MasterServiceManagementService,
-              private toastr: ToastrService,
-              private master: MasterService,
-              private sanitizer: DomSanitizer) 
-              {
-                // this.data? this.formGroup.patchValue(this.data) : null
-                this.rows = [];
-              }
-
-  ngOnInit() {
-    this.getServiceManagementList();
+  Global = Global;
+  item_list: any = [];
+  paginationOption: PaginationOptions;
+  constructor(
+    private dialog: MatDialog,
+    private settingService: SettingsService,
+    private masterService: MasterService,
+    private toastr: ToastrService
+  ) {
+    this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
+    this.fetchServices();
   }
-
+  ngOnInit(): void {}
   addItem(data: any = null) {
-    this.dialog.open(AddNewServicesComponent, {
-      data: data,
-      disableClose: true,
-    })
-    .afterClosed().subscribe((res: any) => {
-      this.getServiceManagementList();
-    });
+    this.dialog
+      .open(AddNewServicesComponent, {
+        data: data,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        if (res) {
+          this.fetchServices();
+        }
+      });
   }
-
-  getServiceManagementList(data?: any) {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('page_size', '0');
-    this.masterServiceManagement.getServiceManagementList(params).pipe().subscribe(
-      (res: any) => {
-        //this.service_list = res.results;
-        this.rows = res.results;
-      },
-      err => {
-        this.toastr.error(err.error.msg, '', { timeOut: 1000 });
-        // this.loading = LoadingState.Ready;
-      }
-    );
-  }
-
-  deleteItems(item:any) {
-    const deletePayload = {
-      id: item.id, 
-    };
-    this.masterServiceManagement.deleteServiceManagementList(deletePayload).subscribe({
-      next: (response) => {
-        this.toastr.success('Item Deleted Successfully!', '', { timeOut: 1000 });
-        this.getServiceManagementList();
-      },
-      error: (error) => {
-        console.error('Upload failed', error);
-       // this.formGroup.enable();
-      },
-      complete: () => {
-       // this.formGroup.enable();
-      }
-    });
-  }
-
-  editItem(item:any){
-    this.dialog.open(AddNewServicesComponent, {
-      data: item,
-      disableClose: true,
-    })
-    .afterClosed().subscribe((res: any) => {
-      this.getServiceManagementList();
-    });
-  }
-
-  updateFilter(event?:any) {
-    const val = event.target.value.toLowerCase();
-    let searchItem: any = this.rows.filter(function (item:any) {
-      return item.name.toLowerCase().indexOf(val) !== -1 || 
-             item.description.toLowerCase().indexOf(val) !== -1 || 
-             item.caption_text.toLowerCase().indexOf(val) !== -1 ||  
-             item.status.toLowerCase().indexOf(val) !== -1 || !val ;
-    });
-    if (val){
-      this.rows = searchItem;
+  fetchServices() {
+    let params = new URLSearchParams();
+    if (this.paginationOption.page) {
+      params.set('page', String(this.paginationOption.page));
     }
-    else if (val === ''){
-      this.getServiceManagementList();
-    }
-    // this.table.offset = 0;
-  } 
-
+    this.masterService.serviceList(params).subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.item_list = results ?? [];
+        this.paginationOption = { limit, page, total_pages, total_records };
+      },
+      error: (err) => {},
+    });
+  }
+  deleteItem(item: any) {
+    this.masterService.deleteService({ id: item.id }).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`Deleted Successfully`);
+        this.fetchServices();
+      },
+      error: (err: any) => {},
+    });
+  }
+  onPageChange(data: any) {
+    this.paginationOption.page = data;
+    this.fetchServices();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'news_event' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
+  }
 }

@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 export class EnquiryComponent {
   @Input() dashboard: boolean = false;
   @Output() enquiryTotalCountChange = new EventEmitter<number>();
+  showMore: boolean []= [];
   latestEnquiryList: any = [];
   constructor(
     private toastr: ToastrService,
@@ -28,7 +29,6 @@ export class EnquiryComponent {
   }
   ngOnChanges() {
     if (this.dashboard) {
-      this.latestEnquiryList = [1, 2, 3];
     }
   }
 

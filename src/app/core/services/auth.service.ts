@@ -31,7 +31,7 @@ export class AuthService {
     return this.httpService.post('admin/auth/reset-password', payload);
   }
 
-  userSuccessLogin(data: any, rememberme: boolean = false, encodedUrl: string) {
+  userSuccessLogin(data: any, rememberme: boolean = true, encodedUrl: string) {
     // userSuccessLogin(data: any, encodedUrl: string) {
 
     let user = {
@@ -48,20 +48,19 @@ export class AuthService {
       username: data?.username,
     };
 
-    //if (rememberme == true) {
-    // if (true) {
-    //   localStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
-    //   localStorage.setItem(
-    //     this.USER_TOKEN_ADMIN,
-    //     this.encrypt(JSON.stringify(user))
-    //   );
-    // } else {
-    sessionStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
-    sessionStorage.setItem(
-      this.USER_TOKEN_ADMIN,
-      this.encrypt(JSON.stringify(user))
-    );
-    //}
+    if (rememberme == true) {
+      localStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
+      localStorage.setItem(
+        this.USER_TOKEN_ADMIN,
+        this.encrypt(JSON.stringify(user))
+      );
+    } else {
+      sessionStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
+      sessionStorage.setItem(
+        this.USER_TOKEN_ADMIN,
+        this.encrypt(JSON.stringify(user))
+      );
+    }
     this.router.navigate(['admin/dashboard']);
   }
   getUserToken() {

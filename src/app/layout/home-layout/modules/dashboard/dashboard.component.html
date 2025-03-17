@@ -1,70 +1,145 @@
-<h2 class="mb-2">Google Analytics</h2>
-<div class="flex gap-3 text-sm">
-  <div class="w-3/4 grow bg-white p-3 rounded">
-    <div class="flex mb-2 gap-3">
-      <div class="w-4/5">
-        <span class="text-base font-medium">Website Views</span>
-        <span class="block text-xs"
-          >Lorem ipsum dolor sit amet, consectetur</span
-        >
+<ng-container *ngIf="!isLoading">
+  <h2 class="mb-2">Google Analytics</h2>
+  <div class="flex gap-3 text-sm">
+    <div class="w-3/4 grow bg-white p-3 rounded">
+      <div class="flex mb-2 gap-3">
+        <div class="w-4/5">
+          <span class="text-base font-medium">Website Views</span>
+          <span class="block text-xs"
+            >Lorem ipsum dolor sit amet, consectetur</span
+          >
+        </div>
+        <small class="w-1/5 leading-3">
+          <mat-form-field>
+            <mat-select placeholder="Select">
+              <mat-option value="week">Weekly</mat-option>
+              <mat-option value="month">Monthly</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </small>
       </div>
-      <small class="w-1/5 leading-3">
-        <mat-form-field>
-          <mat-select placeholder="Select">
-            <mat-option value="week">Weekly</mat-option>
-            <mat-option value="month">Monthly</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </small>
     </div>
-  </div>
-  <div class="w-1/4 bg-white p-3 rounded">
-    <p>Speed</p>
-    <div class="flex mb-2 gap-3">
-      <small class="w-4/5">Largest Content full paint</small>
-      <small class="w-1/5 leading-3 text-red-500">0.8s <br />poor</small>
-    </div>
+    <div class="w-1/4 bg-white p-3 rounded">
+      <p>Speed</p>
+      <div class="flex mb-2 gap-3">
+        <small class="w-4/5">Largest Content full paint</small>
+        <small class="w-1/5 leading-3 text-red-500">0.8s <br />poor</small>
+      </div>
 
-    <div class="flex items-start gap-3 mb-2">
-      <small class="w-4/5 leading-3">
-        Cumulative Layout Shift
-        <small class="block">How stable the elements on the page are</small>
-      </small>
-      <small class="w-1/5 leading-3 text-red-500">0.8s <br />poor</small>
-    </div>
-    <div class="flex items-start gap-3 mb-2">
-      <small class="w-4/5 leading-3">
-        Total Blocking Time
-        <small class="block"
-          >How long people had to wait after page loaded to click
-          anything</small
-        >
-      </small>
-      <small class="w-1/5 leading-3 text-green-500">0.8s <br />Good</small>
+      <div class="flex items-start gap-3 mb-2">
+        <small class="w-4/5 leading-3">
+          Cumulative Layout Shift
+          <small class="block">How stable the elements on the page are</small>
+        </small>
+        <small class="w-1/5 leading-3 text-red-500">0.8s <br />poor</small>
+      </div>
+      <div class="flex items-start gap-3 mb-2">
+        <small class="w-4/5 leading-3">
+          Total Blocking Time
+          <small class="block"
+            >How long people had to wait after page loaded to click
+            anything</small
+          >
+        </small>
+        <small class="w-1/5 leading-3 text-green-500">0.8s <br />Good</small>
+      </div>
     </div>
   </div>
-</div>
-<div class="m-3 flex justify-between items-center">
-  <div class="text-lg font-medium flex items-center">
-    NEW ENQUIRIES
-    <span class="flex ml-2 bg-green-500 w-9 h-9 
-      items-center text-white text-sm justify-center rounded-full">{{enquiryTotal_count}}</span>
+  <div class="m-3 flex justify-between items-center">
+    <div class="text-lg font-medium flex items-center">
+      NEW ENQUIRIES
+      <span
+        class="flex ml-2 bg-green-500 w-9 h-9 items-center text-white text-sm justify-center rounded-full"
+        >{{ enquiryTotal_count }}</span
+      >
+    </div>
+    <a
+      class="ai-button"
+      [routerLink]="['/enquiry']"
+      [queryParams]="{ filter: 'new' }"
+      >VIEW ALL</a
+    >
   </div>
-  <a class="ai-button" [routerLink]="['/main/enquiry']" [queryParams]="{ filter: 'new' }">VIEW ALL</a>
-</div>
-<div class="mt-3 bg-white p-3 rounded">
- 
-  <app-enquiry [dashboard]="true" (enquiryTotalCountChange)="onEnquiryTotalCountChange($event)"></app-enquiry>
-</div>
+  <div class="mt-3 bg-white p-3 rounded">
+    <app-enquiry
+      [dashboard]="true"
+      (enquiryTotalCountChange)="onEnquiryTotalCountChange($event)"
+    ></app-enquiry>
+  </div>
 
-<div class="m-3 flex justify-between items-center">
-  <div class="text-lg font-medium flex items-center">
-    RECENT ANNOUNCEMENTS / NOTICE
-    <!-- <span class="flex ml-2 bg-green-500 w-9 h-9 
+  <div class="m-3 flex justify-between items-center">
+    <div class="text-lg font-medium flex items-center">
+      RECENT ANNOUNCEMENTS / NOTICE
+      <!-- <span class="flex ml-2 bg-green-500 w-9 h-9 
       items-center text-white text-sm justify-center rounded-full">07</span> -->
+    </div>
+    <a class="ai-button cursor-pointer" (click)="addItem()"
+      >CREATE NEW ANNOUNCEMENTS</a
+    >
   </div>
-  <a class="ai-button" [routerLink]="['/main/enquiry']" [queryParams]="{ filter: 'new' }">CREATE NEW ANNOUNCEMENTS</a>
-</div>
-<div class="mt-3 bg-white p-3 rounded">
-  <!-- <app-announcement-notice [dashboard]="true"></app-announcement-notice> -->
-</div>
+  <div class="mt-3 p-3 rounded">
+    <ng-container>
+      <div class="grid grid-cols-3 gap-3">
+        <ng-container *ngFor="let item of news_list; let i = index">
+          <div class="bg-white p-3 flex flex-col justify-between relative">
+            <span class="absolute right-0 top-1">
+              <app-menu (initModal)="addItem($event)" [modalItem]="item"></app-menu>
+            </span>
+            <div class="flex mb-3">
+              <div class="w-1/4">
+                <img
+                  class="object-fit h-20 rounded-md"
+                  [src]="Global.BACKEND_URL + item?.news_images[0]?.file_path"
+                  alt="Image"
+                />
+              </div>
+              <div class="w-3/4 pl-3">
+                <div class="flex flex-col">
+                  <div class="flex text-sm">
+                    <span class="text-gray-400">Announcement</span>
+                    <span class="mx-2">|</span>
+                    <span>{{ item?.created_at | date : "d MMM, y" }}</span>
+                  </div>
+                  <div class="text-lg font-bold leading-5 py-1">
+                    <ng-container
+                      *ngIf="
+                        item?.title?.length < 40 || showMore[i];
+                        else shortContent
+                      "
+                    >
+                      {{ item?.title }}
+                    </ng-container>
+                    <ng-template #shortContent>
+                      {{ item?.title.slice(0, 40) }}...
+                    </ng-template>
+                    <!-- <a
+                    class="text-blue-600"
+                    href="javascript:void(0)"
+                    *ngIf="item?.title?.length >= 40"
+                    (click)="showMore[i] = !showMore[i]"
+                  >
+                    Read {{ showMore[i] ? "Less" : "More" }}
+                  </a> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-between border-t pt-3">
+              <span class="flex items-center 2 text-gray-300">
+                <mat-icon>visibility</mat-icon>
+                <span class="mx-2">{{ item?.view_count }}</span>
+              </span>
+              <a
+                target="_blank"
+                [href]="item?.website_link"
+                class="bg-red-100 py-2 px-5 rounded-md text-red-600"
+              >
+                See Details
+              </a>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

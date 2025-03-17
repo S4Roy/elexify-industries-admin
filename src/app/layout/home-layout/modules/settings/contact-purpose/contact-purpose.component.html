@@ -36,7 +36,11 @@
               >
                 {{ item?.name }}
               </td>
-              <td class="text-center">{{ item?.status }}</td>
+              <td class="text-center">
+                <span [class]="item?.status">
+                  {{ item?.status }}
+                </span>
+              </td>
               <td class="text-center">
                 <app-menu
                   [modalItem]="permissions.includes('edit') ? item : null"

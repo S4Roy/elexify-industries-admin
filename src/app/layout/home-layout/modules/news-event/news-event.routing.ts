@@ -6,9 +6,12 @@ import { HomeLayoutComponent } from '../../home-layout.component';
 const routes: Routes = [
   {
     path: '',component: HomeLayoutComponent,
+    data: { pageTitle: 'News & Events', breadcrumb: 'News & Events' },
     children: [
       {
         path: '', component: NewsEventComponent,
+        data: { pageTitle: 'News & Events', breadcrumb: '' },
+
       },
     ]
   }

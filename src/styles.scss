@@ -2,7 +2,6 @@
 @import "@ng-select/ng-select/themes/default.theme.css";
 @import "@swimlane/ngx-datatable/themes/material.scss";
 
-
 html,
 body {
   height: 100%;
@@ -147,6 +146,10 @@ button.save-button {
   font-weight: 500;
   color: rgba(31, 191, 117, 1);
 }
+.full-wrapper {
+  height: calc(100vh - 156px);
+  overflow: auto;
+}
 .table-wrapper {
   height: calc(100vh - 230px);
   overflow: auto;
@@ -163,8 +166,30 @@ tr.sticky {
 }
 
 button:disabled,
-button[disabled]{
+button[disabled] {
   background-color: #cccccc;
   color: #666666;
   cursor: not-allowed;
+}
+td .active,
+td .inactive {
+  --tw-bg-opacity: 1;
+  --tw-text-opacity: 1;
+
+  background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1)) /* #dcfce7 */;
+  color: rgb(22 101 52 / var(--tw-text-opacity, 1)) /* #166534 */;
+  font-size: 0.75rem /* 12px */;
+  line-height: 1rem /* 16px */;
+  font-weight: 500;
+  margin-inline-end: 0.5rem /* 8px */;
+  padding-left: 0.625rem /* 10px */;
+  padding-right: 0.625rem /* 10px */;
+  padding-top: 0.125rem /* 2px */;
+  padding-bottom: 0.125rem /* 2px */;
+  border-radius: 0.125rem /* 2px */;
+  text-transform: uppercase;
+}
+td .inactive {
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
+  color: rgb(153 27 27 / var(--tw-text-opacity, 1)) /* #991b1b */;
 }

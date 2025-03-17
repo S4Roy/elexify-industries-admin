@@ -8,12 +8,12 @@ const routes: Routes = [
   {
        path: '',
        component: HomeLayoutComponent,
-       //data: { pageTitle: 'Users', breadcrumb: '' },
+       data: { pageTitle: 'Services', breadcrumb: 'Services' },
        children: [
          {
            path: '',
            component: ServicesComponent,
-          // data: { pageTitle: 'Services', breadcrumb: 'Services' },
+          data: { pageTitle: 'Services', breadcrumb: '' },
          },
         ]
     }

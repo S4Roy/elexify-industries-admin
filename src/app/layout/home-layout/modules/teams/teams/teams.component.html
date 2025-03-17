@@ -19,7 +19,7 @@
             <th scope="col">Member Name</th>
             <th scope="col">Designation</th>
             <th scope="col">description </th>
-            <th scope="col">Status</th>
+            <th scope="col" class="text-center">Status</th>
             <th scope="col" class="text-center">Action</th>
           </tr>
         </thead>
@@ -31,7 +31,11 @@
               </td>
               <td>{{ item?.designation }}</td>
               <td>{{ item?.description  }}</td>
-              <td>{{ item?.status }}</td>
+              <td class="text-center">
+                <span [class]="item?.status">
+                  {{ item?.status }}
+                </span>
+              </td>
               <td class="text-center">
                 <app-menu
                   [modalItem]="item"

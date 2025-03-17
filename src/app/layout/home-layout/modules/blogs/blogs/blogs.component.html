@@ -17,7 +17,7 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
           <tr class="sticky">
             <th scope="col">Title</th>
-            <th scope="col">Status</th>
+            <th scope="col" class="text-center">Status</th>
             <th scope="col" class="text-center">Action</th>
           </tr>
         </thead>
@@ -28,7 +28,11 @@
                 {{ item?.blog_title }}
               </td>
            
-              <td>{{ item?.status }}</td>
+              <td class="text-center">
+                <span [class]="item?.status">
+                  {{ item?.status }}
+                </span>
+              </td>
               <td class="text-center">
                 <app-menu
                   [modalItem]="item"

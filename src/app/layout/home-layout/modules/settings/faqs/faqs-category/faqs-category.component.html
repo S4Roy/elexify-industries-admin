@@ -25,7 +25,7 @@
             <th scope="col">Category Name</th>
             <th scope="col">Publish Date & Time</th>
             <th scope="col">Number Of Questions</th>
-            <th scope="col">Status</th>
+            <th scope="col" class="text-center">Status</th>
             <th></th>
           </tr>
         </thead>
@@ -38,9 +38,13 @@
               >
                 {{ item?.category_name }}
               </td>
-              <td>{{ item?.created_at | date : "dd-MM-yy" }}</td>
+              <td>{{ item?.created_at | date : "dd-MM-yyyy HH:mm a" }}</td>
               <td>{{ item?.faq_count }}</td>
-              <td>{{ item?.status }}</td>
+              <td class="text-center">
+                <span [class]="item?.status">
+                  {{ item?.status }}
+                </span>
+              </td>
               <td class="text-center">
                 <app-menu
                   [modalItem]="permissions.includes('edit') ? item : null"

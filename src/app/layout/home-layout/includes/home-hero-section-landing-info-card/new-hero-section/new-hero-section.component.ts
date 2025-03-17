@@ -1,5 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,19 +14,34 @@ import { AuthService } from '../../../../../core/services/auth.service';
 import { ThumbnailComponent } from '../../thumbnail/thumbnail.component';
 import { NgIf } from '@angular/common';
 import { MasterService } from '../../../../../core/services/master.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialog,
+} from '@angular/material/dialog';
 import { MenuComponent } from '../../menu/menu.component';
-
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import * as Global from '../../../../../global';
 @Component({
   selector: 'app-new-hero-section',
-  imports: [MatDialogModule,
-    MenuComponent, MatIconModule, MatButtonModule, ReactiveFormsModule, NgIf],
+  imports: [
+    MatDialogModule,
+    MenuComponent,
+    MatIconModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    NgIf,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+  ],
   templateUrl: './new-hero-section.component.html',
-  styleUrl: './new-hero-section.component.scss'
+  styleUrl: './new-hero-section.component.scss',
 })
 export class NewHeroSectionComponent {
-
+  Global = Global;
   homeHeroSecForm!: FormGroup;
   encodedUrl: any = null;
   selectedImage: File | null = null;
@@ -33,7 +53,7 @@ export class NewHeroSectionComponent {
   file_type: any = '';
   errorMessage1: string = ''; // Variable to hold error message
   errorMessage2: string = '';
-  errorMessage3: string = ''
+  errorMessage3: string = '';
   maxLength1: number = 300;
   maxLength2: number = 300;
   isSubmitted: boolean = false; // Flag to track form submission
@@ -47,19 +67,27 @@ export class NewHeroSectionComponent {
     public dialogRef: MatDialogRef<NewHeroSectionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-
-    this.encodedUrl = this.route.snapshot.queryParamMap.get('redirectTo');
     if (data?.file_type == 'image') {
-      this.imagePreview = data?.hero_sec_image_video
+      this.imagePreview = data?.hero_sec_image_video;
     } else {
-      this.videoPreview = data?.hero_sec_image_video
+      this.videoPreview = data?.hero_sec_image_video;
     }
 
     this.homeHeroSecForm = this.fb.group({
-      hero_sec_main_heading: [data?.hero_sec_main_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength1)]],
-      hero_sec_sub_heading: [data?.hero_sec_sub_heading ?? "", [Validators.required, Validators.maxLength(this.maxLength2)]],
-      file: [""] // Form control for the image
+      hero_sec_main_heading: [
+        data?.hero_sec_main_heading ?? null,
+        [Validators.required, Validators.maxLength(this.maxLength1)],
+      ],
+      hero_sec_sub_heading: [
+        data?.hero_sec_sub_heading ?? null,
+        [Validators.required, Validators.maxLength(this.maxLength2)],
+      ],
+      file: [null, Validators.required], // Form control for the image
     });
+    if (this.data) {
+      this.homeHeroSecForm.get('file')?.clearValidators();
+      this.homeHeroSecForm.get('file')?.updateValueAndValidity();
+    }
   }
 
   get hero_sec_main_heading() {
@@ -73,8 +101,8 @@ export class NewHeroSectionComponent {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.homeHeroSecForm.patchValue({
-        file: target.files[0]
-      })
+        file: target.files[0],
+      });
       this.selectedImage = target.files[0];
       const reader = new FileReader();
       reader.onload = () => {
@@ -84,14 +112,20 @@ export class NewHeroSectionComponent {
         } else if (this.selectedImage?.type.startsWith('image/')) {
           this.imagePreview = reader.result; // Set the image preview
         }
-
       };
 
-      const validFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'video/mp4',];
+      const validFormats = [
+        'image/gif',
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'video/mp4',
+      ];
       //const validVdFormats = ['video/mp4'];
       if (!validFormats.includes(target.files[0].type)) {
         this.hasError = true;
-        this.errorMessage1 = 'Only .png, .jpg, .gif, .jpeg and .mp4 formats are supported.';
+        this.errorMessage1 =
+          'Only .png, .jpg, .gif, .jpeg and .mp4 formats are supported.';
         return; // Prevent further processing
       } else if (target.files[0].size < 24576) {
         this.hasSzError = true;
@@ -101,11 +135,11 @@ export class NewHeroSectionComponent {
       //  else if (!validVdFormats.includes(target.files[0].type)) {
       //   this.hasVdError = true;
       //   this.errorMessage2 = 'Only .mp4 format is supported.';
-      //   return; 
+      //   return;
       // }else if (target.files[0].size < 24576) {
       //   this.hasSzError = true;
       //   this.errorMessage3 = 'Minimum size required: 1920 width x 640 height';
-      //   return; 
+      //   return;
       // }
 
       // If both checks pass, reset error state
@@ -117,12 +151,10 @@ export class NewHeroSectionComponent {
       this.errorMessage3 = '';
 
       reader.readAsDataURL(this.selectedImage);
-
-    }
-    else {
+    } else {
       this.homeHeroSecForm.patchValue({
-        file: null
-      })
+        file: null,
+      });
     }
   }
 
@@ -150,7 +182,7 @@ export class NewHeroSectionComponent {
           this.toastr.success('Data Saved Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });
-          this.dialogRef.close(response)
+          this.dialogRef.close(response);
         },
         error: (error) => {
           console.error('Upload failed', error);
@@ -158,9 +190,8 @@ export class NewHeroSectionComponent {
         },
         complete: () => {
           this.homeHeroSecForm.enable();
-        }
+        },
       });
     }
-
   }
 }

@@ -64,6 +64,9 @@ export class SiteInfoComponent {
           embed_link: this.siteDetails?.gps_coordinates?.embed_link,
           latitude: this.siteDetails?.gps_coordinates?.latitude,
           longitude: this.siteDetails?.gps_coordinates?.longitude,
+          preview_path: this.siteDetails?.preview_path
+            ? Global.BACKEND_URL + this.siteDetails?.preview_path
+            : null,
         });
       },
       error: (err: any) => {},
@@ -93,6 +96,7 @@ export class SiteInfoComponent {
           this.editInfo = !this.editInfo;
           this.fetchSiteDetails();
           this.toastr.success(`Site Info Updated Successfully`);
+          this.formGroup.enable();
         },
         error: (err: any) => {
           this.formGroup.enable();
@@ -107,7 +111,7 @@ export class SiteInfoComponent {
       .subscribe({
         next: (res: any) => {
           const { sub_section_name } = res?.results[0];
-          const { permissions } = sub_section_name[0];          
+          const { permissions } = sub_section_name[0];
           this.permissions = permissions;
         },
       });

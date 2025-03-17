@@ -1,101 +1,123 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import * as Global from '../../../../global';
 import { NgFor, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
-import { RouterOutlet } from '@angular/router';
-import { NgxDatatableModule, ColumnMode } from '@swimlane/ngx-datatable';
 import { ToastrService } from 'ngx-toastr';
-import { HttpService } from '../../../../core/services/http.service';
+import PaginationOptions from '../../../../core/models/PaginationOptions';
+import { MasterService } from '../../../../core/services/master.service';
+import { SettingsService } from '../../../../core/services/settings.service';
+import { PaginationComponent } from '../../includes/pagination/pagination.component';
 import { AddEnquiryManagementComponent } from './add-enquiry-management/add-enquiry-management.component';
+import { MenuComponent } from '../../includes/menu/menu.component';
+import { Subject } from 'rxjs';
+import FilterOptions from '../../../../core/models/FilterOptions';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-enquiry-management',
   templateUrl: './enquiry-management.component.html',
   styleUrls: ['./enquiry-management.component.css'],
-  imports: [NgFor, NgIf, RouterOutlet, NgxDatatableModule, MatMenuModule],
+  imports: [
+    NgFor,
+    NgIf,
+    PaginationComponent,
+    MenuComponent,
+    FormsModule,
+    MatIconModule,
+  ],
 })
 export class EnquiryManagementComponent implements OnInit {
+  Global = Global;
+  showMore: boolean[] = [];
+  item_list: any = [];
+  paginationOption: PaginationOptions;
+  filterOption: FilterOptions;
+  searchSubject = new Subject<string>();
+  search_key: string | null = null;
 
-  listUrl: any = 'admin/inquiry/list';
-  // addUrl: string = 'admin/inquiry/add';
-  // editUrl: string = 'admin/inquiry/edit';
-  deleteUrl: string = 'admin/inquiry/delete';
-
-  rows: any[] = [];
-  columns:any[] = [
-    { name: 'Name', prop: 'name' },
-    { name: 'Email', prop: 'email' },
-    { name: 'Message', prop: 'message' },
-    { name: 'Purpose Type', prop: 'purpose_type' },
-    { name: 'Action', prop: 'action' },
-  ];
-  ColumnMode = ColumnMode;
-  temp: any[] = [];
-
-  constructor(private httpService: HttpService, 
-              private toastr: ToastrService,
-              private dialog: MatDialog) {  }
-
-  ngOnInit() {
-    this.getEnquiryList();
+  constructor(
+    private dialog: MatDialog,
+    private settingService: SettingsService,
+    private masterService: MasterService,
+    private toastr: ToastrService
+  ) {
+    this.paginationOption = Global.resetPaginationOptions();
+    this.filterOption = Global.resetTableFilterOptions();
+    this.checkPermission();
+    this.fetchServices();
   }
 
-  getEnquiryList(){
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('page_size', '0');
-    this.httpService.get(this.listUrl, params).pipe().subscribe(
-      (res: any) => {
-        this.rows = res.results;
-      },
-      err => {
-        this.toastr.error(err.error.msg, '', { timeOut: 1000 });
+  ngOnInit(): void {
+    this.searchSubject
+      .pipe(
+        debounceTime(300), // Adjust debounce time as needed
+        distinctUntilChanged()
+      )
+      .subscribe((data: any) => {
+        this.paginationOption = Global.resetPaginationOptions();
+        this.filterOption.name = this.search_key;
+        this.fetchServices();
       });
   }
 
-  // updateFilter(event?:any) {
-  //   const val = event.target.value.toLowerCase();
-  //   let searchItem: any = this.rows.filter(function (item:any) {
-  //     return item.name.toLowerCase().indexOf(val) !== -1 || 
-  //            item.email.toLowerCase().indexOf(val) !== -1 ||  
-  //            item.message.toLowerCase().indexOf(val) !== -1 || 
-  //            item.purpose_type.toLowerCase().indexOf(val) !== -1 || !val ;
-  //   });
-  //   if (val){
-  //     this.rows = searchItem;
-  //   }
-  //   else if (val === ''){
-  //     this.getEnquiryList();
-  //   }
-  //   // this.table.offset = 0;
-  // } 
-
-  remarks(item:any){
-    this.dialog.open(AddEnquiryManagementComponent, {
-      data: item,
-      disableClose: true,
-    })
-    .afterClosed().subscribe((res: any) => {
-      this.getEnquiryList();
+  addItem(data: any = null) {
+    this.dialog
+      .open(AddEnquiryManagementComponent, {
+        data: data,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        if (res) {
+          this.fetchServices();
+        }
+      });
+  }
+  fetchServices() {
+    let params = new URLSearchParams();
+    if (this.filterOption.name) {
+      params.set('name', this.filterOption.name);
+    }
+    if (this.paginationOption.page) {
+      params.set('page', String(this.paginationOption.page));
+    }
+    this.masterService.enquiryList(params).subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.item_list = results ?? [];
+        this.paginationOption = { limit, page, total_pages, total_records };
+      },
+      error: (err) => {},
     });
   }
-
-  deleteItems(item:any) {
-    const payload = {
-      id: item.id, 
-    };
-    this.httpService.post(this.deleteUrl, payload).subscribe({
-      next: (response) => {
-        this.toastr.success('Item Deleted Successfully!', '', { timeOut: 1000 });
-        this.getEnquiryList();
+  deleteItem(item: any) {
+    this.masterService.deleteEnquiry({ id: item.id }).subscribe({
+      next: (res: any) => {
+        this.toastr.success(`Deleted Successfully`);
+        this.fetchServices();
       },
-      error: (error) => {
-        console.error('Upload failed', error);
-      // this.formGroup.enable();
-      },
-      complete: () => {
-      // this.formGroup.enable();
-      }
+      error: (err: any) => {},
     });
   }
-
+  onPageChange(data: any) {
+    this.paginationOption.page = data;
+    this.fetchServices();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'news_event' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
+  }
+  clearFilter() {
+    this.search_key=null
+    this.paginationOption = Global.resetPaginationOptions();
+    this.filterOption = Global.resetTableFilterOptions();
+    this.fetchServices();
+  }
 }

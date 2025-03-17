@@ -1,46 +1,119 @@
 <div class="fixed inset-0 overflow-hidden">
-<div class="absolute inset-0 overflow-hidden">
-  <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-    <div class="pointer-events-auto relative w-screen max-w-md">
-      <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+  <div class="absolute inset-0 overflow-hidden">
+    <div
+      class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+    >
+      <div class="pointer-events-auto relative w-screen max-w-md">
+        <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+          <div class="p-1 add-new-title sm:px-6">
+            <h2
+              class="flex justify-between items-center font-semibold text-white"
+              id="slide-over-title"
+            >
+               Remarks
+              <button color="warn" mat-dialog-close mat-icon-button>
+                <mat-icon class="text-red-700">close</mat-icon>
+              </button>
+            </h2>
+          </div>
 
-        <div class="p-1 add-new-title sm:px-6">
-          <h2 class="flex justify-between items-center font-semibold text-white" id="slide-over-title"> Add Remarks
-            <button color="warn" mat-dialog-close mat-icon-button>
-              <mat-icon class="text-red-700">close</mat-icon>
+          <div class="relative my-3 flex-1 px-4 sm:px-6">
+            <form class="space-y-6" [formGroup]="formGroup">
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900">
+                  Remarks
+                  <span
+                    class="text-red-500"
+                    *ngIf="
+                      Global.isInputRuleAvailable(
+                        formGroup,
+                        'remark',
+                        'required'
+                      )
+                    "
+                    >*</span
+                  >
+                </label>
+                <div class="mt-2">
+                  <mat-form-field>
+                    <textarea
+                      formControlName="remark"
+                      matInput
+                      [class.is-invalid]="
+                        !Global.isInputValid(formGroup, 'remark')
+                      "
+                      placeholder="Type Here"
+                    ></textarea>
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          formGroup,
+                          'remark',
+                          'required'
+                        )
+                      "
+                    >
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900"
+                  >Contacted?
+                  <span
+                    class="text-red-500"
+                    *ngIf="
+                      Global.isInputRuleAvailable(
+                        formGroup,
+                        'has_read',
+                        'required'
+                      )
+                    "
+                    >*</span
+                  >
+                </label>
+                <div class="mt-2">
+                  <mat-form-field>
+                    <mat-select
+                      placeholder="Select"
+                      formControlName="has_read"
+                      matInput
+                      [class.is-invalid]="
+                        !Global.isInputValid(formGroup, 'has_read')
+                      "
+                    >
+                      <mat-option value="y">Yes</mat-option>
+                      <mat-option value="n">No</mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          formGroup,
+                          'has_read',
+                          'required'
+                        )
+                      "
+                    >
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div>
+            <button
+              (click)="onSubmit()"
+              [disabled]="formGroup.disabled"
+              class="flex border w-full justify-center px-3 py-3 text-green-500"
+            >
+              {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
             </button>
-          </h2>
-        </div>
-        
-        <div class="relative  my-3 flex-1 px-4 sm:px-6">
-          <form class="space-y-6" [formGroup]="formGroup">
-              <div>
-                <label class="block text-sm/6 font-medium text-gray-900">Remark*</label>
-                <div class="mt-2">
-                    <textarea formControlName="remark" type="text"
-                      class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                </div>
-              </div>
-              <div>
-                <label for="has_read" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an Option*</label>
-                <div class="mt-2">
-                    <select id="has_read" formControlName="has_read"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option value="y">Yes</option>
-                      <option value="n">No</option>
-                    </select>
-                </div>
-              </div>
-          </form>
-        </div>
-        <div>
-          <button (click)="onSubmit()" [disabled]="formGroup.disabled"
-            class="flex border w-full justify-center px-3 py-3 text-green-500">
-            {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
-          </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>

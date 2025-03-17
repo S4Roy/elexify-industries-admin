@@ -17,6 +17,8 @@ import { SettingsService } from '../../../../core/services/settings.service';
 export class MenuComponent {
   @Input() modalItem: any = null;
   @Input() edit: any = null;
+  @Input() modalButtonText: any = null;
+  @Input() modalButtonIcon: any = null;
   @Input() delete: any = null;
   @Input() details: any = null;
   @Output() deleteItem = new EventEmitter<any>();

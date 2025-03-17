@@ -4,6 +4,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { ElementRef } from '@angular/core';
 export const APP_SHORT_NAME = 'SFT Travel Desk!';
 export const APP_NAME = environment.APP_NAME;
 export const BACKEND_URL = environment.API_URL;
@@ -11,71 +12,7 @@ export const MAX_AMOUNT = 9999999.99;
 export const CUURENT_YEAR = new Date().getFullYear();
 export const CUURENT_MONTH = new Date().getMonth() + 1;
 export const MAX_DATE = new Date();
-export const COMPANY = {
-  ZHUZOOR: '77d519a7-6e7a-4f35-8c4e-948910c9b952',
-};
-export const ROLE = {
-  RM: 'f9b4ccd2-6e06-443c-b964-23bf935f859e',
-  TRAVEL_DESK: 'f72616be-260b-41bb-a4ee-89146622179a',
-  ACCOUNTS: '241772cb-c907-4961-88cb-a0bf8004bbb2',
-  EMPLOYEE: 'e1bd3dce-eecf-468d-b930-1875bd59d1f4',
-  SUPERADMIN: 'f8b6ace9-a625-4397-bdf8-f34060dbd8e4',
-};
-export const CONVEYANCE = {
-  WITH_IN_CITY: 'Conveyance (within a city)',
-  OUTER_AREA: 'Conveyance (city to outer area)',
-};
-export const DUMMY = {
-  VENDOR_ID: '3aa78320-df98-42f2-bf02-8e39205c3976',
-  VENDOR_NAME: 'Dummy Vendor',
-};
-export const EXP_CATEGORY = {
-  FARE: 'dcaa05b6-5f1e-402f-835e-0704a3a1a455',
-  CONVEYANCE_WITH_IN_CITY: 'b1977db3-d909-4936-a5da-41bf84638963',
-  CONVEYANCE_TO_OUTER_AREA: '5278397a-c8dd-475a-a7a7-c05708b2bb06',
-  LODGING_METRO_CITY: 'fbf965bd-a53e-4d97-978a-34c2007202e5',
-  LODGING_OTHER_CITY: '1aadd03d-90e1-4589-8b9d-6121049b490d',
-  FOODING: 'bb0bf3aa-1fd9-4f1c-9fde-8498073c58a9',
-  DA: 'ed69e9a0-2d54-4a91-a598-f79973b9fe99',
-  OTHERS: '6c3eb31c-df53-495a-b871-e2eb3cef74d2',
-};
-export const EXP_TYPE = {
-  POST: 'Post Trip',
-  APPROVED: 'Approved Trip',
-  LOCAL: 'Local Trip',
-  LOCAL_CONVEYANCE: 'LOCAL_CONVEYANCE',
-  BIKE_LOG: 'BIKE_LOG',
-};
-export const GST_TYPE = [
-  {
-    label: 'IGST',
-    value: 'igst',
-  },
-  {
-    label: 'CGST+SGST',
-    value: 'cgst+sgst',
-  },
-];
-export const ExpenseType = [
-  {
-    label: 'Bike',
-    value: 'Bike',
-  },
-  {
-    label: 'Car',
-    value: 'Car',
-  },
-];
-export const FuelType = [
-  {
-    label: 'Petrol',
-    value: 'Petrol',
-  },
-  {
-    label: 'Diesel',
-    value: 'Diesel',
-  },
-];
+
 export const STATUS = {
   ROLLBACK: 'ROLLBACK',
   RESCHEDULE_REQUEST: 'RESCHEDULE REQUEST',
@@ -90,27 +27,7 @@ export const STATUS = {
   REIMBURSED: 'REIMBURSED',
   COMPLETED: 'COMPLETED',
 };
-export const ININERY_BOOKING_STATUS = {
-  BOOKED: 'BOOKED',
-  NOT_BOOKED: 'NOT BOOKED',
-};
-export const TRIP_APPROVAL_STATUS = {
-  CONFIRMED: 'CONFIRMED',
-  APPROVED: 'APPROVED',
-  CANCELLED: 'CANCELLED',
-  PENDING: 'PENDING',
-};
-export const EXPENSE_APPROVAL_STATUS = {
-  REJECTED: 'REJECTED',
-  CONFIRMED: 'CONFIRMED',
-  APPROVED: 'APPROVED',
-  CANCELLED: 'CANCELLED',
-  PENDING: 'PENDING',
-};
-export const EXPENSE_BY_USER = {
-  TRAVEL_DESK: 'Travel Desk',
-  SUBMITTER: 'Submitter',
-};
+
 export const MONTHS = [
   {
     label: 'January',
@@ -486,7 +403,12 @@ export function onFileSelected(
 
     // Check file type
     if (!allowedTypes.includes(file.type)) {
-      toastr.error('File type is not allowed');
+      const fileTypeName = file.type.split('/')[1];
+      toastr.error(
+        `${fileTypeName} type is not allowed. Allowed types are: ${allowedTypes.join(
+          ', '
+        )}`
+      );
       return; // Skip this file and continue with the next one
     }
     var reader = new FileReader();
@@ -513,7 +435,7 @@ export async function onFileSelectedMultiple(
   sourceKey: any,
   toastr: ToastrService,
   allowedTypes: string[] = ['image/jpeg', 'image/png'], // Default allowed types are JPEG and PNG
-  files_preview:any
+  files_preview: any
 ) {
   if (event.target.files.length > 0) {
     const files = event.target.files;
@@ -523,7 +445,7 @@ export async function onFileSelectedMultiple(
     if (!formGroup.get(sourceKey)) {
       formGroup.setControl(sourceKey, new FormControl([]));
     }
- if (!formGroup.get(files_preview)) {
+    if (!formGroup.get(files_preview)) {
       formGroup.setControl(files_preview, new FormControl([]));
     }
 
@@ -550,7 +472,9 @@ export async function onFileSelectedMultiple(
       try {
         const base64String = await readFileAsDataURL(file);
         fileArrayControl.push(new FormControl(file));
-        filePreviewArrayControl.push(new FormControl({file_path:base64String}));
+        filePreviewArrayControl.push(
+          new FormControl({ file_path: base64String })
+        );
       } catch (error) {
         toastr.error('Error reading file');
       }
@@ -708,6 +632,7 @@ export function resetPaginationOptions() {
 }
 export function resetTableFilterOptions() {
   return {
+    name: '',
     list_type: '',
   };
 }
@@ -816,6 +741,6 @@ export function YEARS() {
 
   return years;
 }
-export function getFileExtension(filePath:string) {
+export function getFileExtension(filePath: string) {
   return filePath.split('.').pop();
 }

@@ -7,8 +7,8 @@
     @if (modalItem) {
     <li>
       <button mat-menu-item (click)="initModal.next(modalItem)">
-        <mat-icon>edit</mat-icon>
-        <span class="ml-1">Edit</span>
+        <mat-icon>{{ modalButtonIcon ?? "edit" }}</mat-icon>
+        <span class="ml-1">{{ modalButtonText ?? "Edit" }}</span>
       </button>
     </li>
 

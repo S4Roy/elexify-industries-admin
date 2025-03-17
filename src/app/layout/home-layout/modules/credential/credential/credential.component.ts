@@ -15,16 +15,19 @@ export class CredentialComponent {
       label: 'Credentials',
       description: 'Manage Credentials',
       router_path: '/credentials/list',
+      icon: 'assets/sidebar_icon/credentials.png',
     },
     {
       label: 'Credentials Category',
       description: 'Manage Category',
       router_path: '/credentials/category',
+      icon: 'assets/sidebar_icon/category.png',
     },
     {
       label: 'Credentials Certificates',
       description: 'Manage Certificates',
       router_path: '/credentials/certificates',
+      icon: 'assets/sidebar_icon/certificates.png',
     },
   ];
 }

@@ -1,67 +1,77 @@
-<!-- <p>services works!</p> -->
 <div class="relative overflow-x-auto">
   <div class="m-3 flex justify-between items-center">
     <div class="flex flex-col items-start">
-      <span class="text-base font-medium">News List</span>
-      <span class="block text-gray-500 text-xs">{{rows.length}} News & Events added</span>
+      <span class="text-base font-medium">News & Events List</span>
+      <span class="block text-gray-500 text-xs"
+        >{{ paginationOption.total_records }} records added</span
+      >
     </div>
-    <button (click)="addItem()" class="ai-button">+ Add New</button>
+    <button
+      *ngIf="permissions.includes('add')"
+      (click)="addItem()"
+      class="ai-button"
+    >
+      + Add New
+    </button>
   </div>
   <hr />
-  
-  <!-- SEARCH -->
-  <input type="text" style="padding:8px;margin:15px auto;width:30%;" placeholder="Type to filter the name column..." 
-    (keyup)="updateFilter($event)" />
-
-  <!-- DATA TABLE -->
-  <ng-container *ngIf="rows.length > 0">
-    <ngx-datatable
-      #table
-      class="material"
-      [columns]="columns"
-      [columnMode]="ColumnMode.force"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      rowHeight="auto"
-      [limit]="5"
-      [rows]="rows">
-
-    <ng-container *ngFor="let column of columns">
-      <ngx-datatable-column [name]="column.name" [prop]="column.prop">
-        <ng-template let-row="row" ngx-datatable-cell-template let-value="value">
-
-          <ng-container *ngIf="column.prop === 'action'; else statusTemplate">
-              <span  matRipple mat-button [matMenuTriggerFor]="menu" matTooltip="View content" class="hover-effect">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical"  viewBox="0 0 16 16">  
-                  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
-                </svg>
-              </span>
-              
-            <!-- ACTIONS -->
-            <mat-menu #menu="matMenu">
-              <ng-container class="menu-content">
-                <ol class="p-4">
-                  <li class="p-1" (click)="editItem(row)" style="cursor: pointer;"> Edit </li>
-                  <li class="p-1" (click)="deleteItems(row)" style="cursor: pointer;"> Delete </li>
-                </ol>
-              </ng-container>
-            </mat-menu>
+  <div class="m-3">
+    <div class="table-wrapper">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      >
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+          <tr class="sticky">
+            <th scope="col"></th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col" class="text-center">Status</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of item_list">
+            <tr>
+              <td class="p-2">
+                <img
+                  *ngIf="item?.news_images?.length"
+                  class="rounded-md w-full bg-gray-200 object-contain h-20"
+                  [src]="Global.BACKEND_URL + item?.news_images[0]?.file_path"
+                  alt="Image"
+                />
+              </td>
+              <td scope="row" class="">
+                {{ item?.title }}
+              </td>
+              <td>{{ item?.description }}</td>
+              <td class="text-center">
+                <span [class]="item?.status">
+                  {{ item?.status }}
+                </span>
+              </td>
+              <td class="text-center">
+                <app-menu
+                  [modalItem]="permissions.includes('edit') ? item : null"
+                  (initModal)="addItem($event)"
+                  (deleteItem)="deleteItem($event)"
+                  [delete]="permissions.includes('delete') ? item : null"
+                ></app-menu>
+              </td>
+            </tr>
           </ng-container>
-
-          <!-- STATUS SHOW IN TITLE CASE -->
-          <ng-template #statusTemplate> 
-            <ng-container  *ngIf="column.prop === 'status'; else defaultTemplate"> 
-              <span style="text-transform: capitalize;">{{ row[column.prop]}}</span> 
-            </ng-container>
-          </ng-template>
-
-          <ng-template #defaultTemplate> {{row[column.prop]}} </ng-template>
-
-        </ng-template>
-      </ngx-datatable-column>
+          <ng-container *ngIf="!item_list?.length">
+            <tr>
+              <td class="text-center" colspan="4">No Items Found</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <ng-container>
+      <pagination
+        [pagination]="paginationOption"
+        (pageChange)="onPageChange($event)"
+      ></pagination>
     </ng-container>
-  </ngx-datatable>
-  </ng-container>
+  </div>
 </div>
-
-<router-outlet></router-outlet>
