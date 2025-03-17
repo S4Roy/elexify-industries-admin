@@ -120,29 +120,29 @@
                     *</span
                   >
                 </label>
-                <div class="mt-2">
-                  <mat-form-field>
-                    <textarea
+                <div
+                  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
+                >
+                  <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                  <div class="inner-height" [formGroup]="formGroup">
+                    <ngx-editor
+                      [editor]="editor"
                       formControlName="description"
-                      matInput
-                      [class.is-invalid]="
-                                      !Global.isInputValid(formGroup, 'description')
-                                    "
-                      placeholder="Type Description"
-                    ></textarea>
-                    <mat-error
-                      *ngIf="
-                                      !Global.isInputRuleValid(
-                                        formGroup,
-                                        'description',
-                                        'required'
-                                      )
-                                    "
-                    >
-                      This field is required
-                    </mat-error>
-                  </mat-form-field>
+                      [placeholder]="'Add Description'"
+                    ></ngx-editor>
+                  </div>
                 </div>
+                <mat-error class="mb-2"
+                  *ngIf="
+                    !Global.isInputRuleValid(
+                      formGroup,
+                      'description',
+                      'required'
+                    )
+                  "
+                >
+                  This field is required
+                </mat-error>
               </div>
               
               <div>

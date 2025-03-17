@@ -83,7 +83,9 @@
                   [modalButtonText]="'Remarks'"
                   [modalButtonIcon]="'chat'"
                   [modalItem]="permissions.includes('edit') ? item : null"
+                  [delete]="permissions.includes('delete') ? item : null"
                   (initModal)="addItem($event)"
+                  (deleteItem)="deleteItem($event)"
                 ></app-menu>
               </td>
             </tr>

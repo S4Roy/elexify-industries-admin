@@ -1,16 +1,17 @@
 <!-- <p>user works!</p> -->
 <div class="relative overflow-x-auto">
-    <div class="m-3 flex justify-between items-center">
-      <div class="flex flex-col items-start">
-        <span class="text-base font-medium">Team Lists</span>
-        <span class="block text-gray-500 text-xs">{{paginationOption.total_records}} members added</span>
-      </div>
-      <button (click)="addItem()" class="ai-button">+ Add New</button>
+  <div class="m-3 flex justify-between items-center">
+    <div class="flex flex-col items-start">
+      <span class="text-base font-medium">Team Lists</span>
+      <span class="block text-gray-500 text-xs"
+        >{{ paginationOption.total_records }} members added</span
+      >
     </div>
-    <hr />
-    <div class="m-3">
-      <div class="table-wrapper">
-  
+    <button (click)="addItem()" class="ai-button">+ Add New</button>
+  </div>
+  <hr />
+  <div class="m-3">
+    <div class="table-wrapper">
       <table
         class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
       >
@@ -18,7 +19,7 @@
           <tr class="sticky">
             <th scope="col">Member Name</th>
             <th scope="col">Designation</th>
-            <th scope="col">description </th>
+            <th scope="col">description</th>
             <th scope="col" class="text-center">Status</th>
             <th scope="col" class="text-center">Action</th>
           </tr>
@@ -26,11 +27,16 @@
         <tbody>
           <ng-container *ngFor="let item of item_list">
             <tr>
-              <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
+              <td
+                scope="row"
+                class="font-medium text-gray-900 whitespace-nowrap"
+              >
                 {{ item?.member_name }}
               </td>
               <td>{{ item?.designation }}</td>
-              <td>{{ item?.description  }}</td>
+              <td>
+                <span [innerHTML]="item?.description"></span>
+              </td>
               <td class="text-center">
                 <span [class]="item?.status">
                   {{ item?.status }}
@@ -54,14 +60,13 @@
         </tbody>
       </table>
     </div>
-  
-      <ng-container>
-        <pagination
-          [pagination]="paginationOption"
-          (pageChange)="onPageChange($event)"
-        ></pagination>
-      </ng-container>
-    </div>
+
+    <ng-container>
+      <pagination
+        [pagination]="paginationOption"
+        (pageChange)="onPageChange($event)"
+      ></pagination>
+    </ng-container>
   </div>
-  <router-outlet></router-outlet>
-  
+</div>
+<router-outlet></router-outlet>

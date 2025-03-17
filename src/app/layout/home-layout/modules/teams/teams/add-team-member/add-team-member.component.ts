@@ -22,6 +22,7 @@ import { NgFor, NgIf } from '@angular/common';
 import * as Global from '../../../../../../global';
 import { SettingsService } from '../../../../../../core/services/settings.service';
 import { MenuComponent } from '../../../../includes/menu/menu.component';
+import { Editor, NgxEditorModule } from 'ngx-editor';
 @Component({
   selector: 'app-add-team-member',
   imports: [
@@ -35,6 +36,7 @@ import { MenuComponent } from '../../../../includes/menu/menu.component';
     MatSelectModule,
     NgIf,
     MenuComponent,
+    NgxEditorModule
   ],
   templateUrl: './add-team-member.component.html',
   styleUrl: './add-team-member.component.scss',
@@ -44,6 +46,8 @@ export class AddTeamMemberComponent {
   formGroup!: FormGroup;
   toogleTextPassword: boolean = false;
   role_list: any = [];
+  editor!: Editor;
+
   constructor(
     private fb: FormBuilder,
     public toastr: ToastrService,
@@ -52,6 +56,8 @@ export class AddTeamMemberComponent {
     private dialogRef: MatDialogRef<AddTeamMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.editor = new Editor();
+
     this.formGroup = this.fb.group({
       designation: [null, Validators.compose([Validators.required])],
       member_name: [null, Validators.compose([Validators.required])],

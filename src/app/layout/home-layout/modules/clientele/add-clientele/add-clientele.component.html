@@ -17,7 +17,10 @@
             </h2>
           </div>
 
-          <div style="height: calc(100vh - 200px); overflow-y: auto" class="relative my-3 flex-1 px-4 sm:px-6">
+          <div
+            style="height: calc(100vh - 200px); overflow-y: auto"
+            class="relative my-3 flex-1 px-4 sm:px-6"
+          >
             <form class="space-y-1" [formGroup]="formGroup">
               <div>
                 <label class="block text-sm/6 font-medium text-gray-900"
@@ -151,28 +154,30 @@
                     >*</span
                   >
                 </label>
-                <div class="mt-2">
-                  <mat-form-field>
-                    <textarea
-                      formControlName="description"
-                      matInput
-                      [class.is-invalid]="
-                        !Global.isInputValid(formGroup, 'description')
-                      "
-                      placeholder="Type Here"
-                    ></textarea>
-                    <mat-error
-                      *ngIf="
-                        !Global.isInputRuleValid(
-                          formGroup,
-                          'description',
-                          'required'
-                        )
-                      "
-                    >
-                      This field is required
-                    </mat-error>
-                  </mat-form-field>
+                <div class="my-2">
+                  <div
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
+                  >
+                    <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                    <div class="inner-height" [formGroup]="formGroup">
+                      <ngx-editor
+                        [editor]="editor"
+                        formControlName="description"
+                        [placeholder]="'Add Description'"
+                      ></ngx-editor>
+                    </div>
+                  </div>
+                  <mat-error
+                  *ngIf="
+                    !Global.isInputRuleValid(
+                      formGroup,
+                      'description',
+                      'required'
+                    )
+                  "
+                >
+                  This field is required
+                </mat-error>
                 </div>
               </div>
               <div>

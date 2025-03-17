@@ -108,7 +108,7 @@ export class EnquiryManagementComponent implements OnInit {
   }
   permissions: any = [];
   checkPermission() {
-    this.settingService.checkPermission({ sec: 'news_event' }).subscribe({
+    this.settingService.checkPermission({ sec: 'enquiry' }).subscribe({
       next: (res: any) => {
         const { permissions } = res?.results[0];
         this.permissions = permissions;

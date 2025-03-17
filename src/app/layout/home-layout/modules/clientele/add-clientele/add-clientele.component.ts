@@ -22,6 +22,7 @@ import * as Global from '../../../../../global';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Editor, NgxEditorModule } from 'ngx-editor';
 @Component({
   selector: 'app-add-clientele',
   templateUrl: './add-clientele.component.html',
@@ -36,12 +37,14 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    NgxEditorModule
   ],
 })
 export class AddClienteleComponent implements OnInit {
   Global = Global;
   addUrl: string = 'admin/clientele/add';
   editUrl: string = 'admin/clientele/edit';
+  editor!: Editor;
 
   formGroup!: FormGroup;
 
@@ -54,6 +57,7 @@ export class AddClienteleComponent implements OnInit {
     public dialogRef: MatDialogRef<AddClienteleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.editor = new Editor();
     this.formGroup = this.fb.group({
       client_name: [null, Validators.required],
       company_name: [null, Validators.required],

@@ -26,6 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
 import * as Global from '../../../../../global';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import moment from 'moment';
+import { Editor, NgxEditorModule } from 'ngx-editor';
 @Component({
   selector: 'app-add-news-event',
   templateUrl: './add-news-event.component.html',
@@ -41,12 +42,14 @@ import moment from 'moment';
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    NgxEditorModule
   ],
 })
 export class AddNewsEventComponent implements OnInit {
   Global = Global;
   addUrl: string = 'admin/news/add';
   editUrl: string = 'admin/news/edit';
+  editor!: Editor;
 
   formGroup!: FormGroup;
   constructor(
@@ -58,6 +61,8 @@ export class AddNewsEventComponent implements OnInit {
     public dialogRef: MatDialogRef<AddAwardsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.editor = new Editor();
+
     this.formGroup = this.fb.group({
       title: [null, Validators.required],
       type: [null, Validators.required],

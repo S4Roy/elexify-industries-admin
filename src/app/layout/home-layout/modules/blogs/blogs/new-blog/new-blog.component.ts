@@ -24,6 +24,7 @@ import { SettingsService } from '../../../../../../core/services/settings.servic
 import { MenuComponent } from '../../../../includes/menu/menu.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import moment from 'moment';
+import { Editor, NgxEditorModule } from 'ngx-editor';
 @Component({
   selector: 'app-new-blog',
   imports: [
@@ -38,6 +39,7 @@ import moment from 'moment';
     NgIf,
     MatDatepickerModule,
     MenuComponent,
+    NgxEditorModule,
   ],
   templateUrl: './new-blog.component.html',
   styleUrl: './new-blog.component.scss',
@@ -47,6 +49,8 @@ export class NewBlogComponent {
   formGroup!: FormGroup;
   toogleTextPassword: boolean = false;
   role_list: any = [];
+  editor!: Editor;
+
   constructor(
     private fb: FormBuilder,
     public toastr: ToastrService,
@@ -55,6 +59,8 @@ export class NewBlogComponent {
     private dialogRef: MatDialogRef<NewBlogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.editor = new Editor();
+
     this.formGroup = this.fb.group({
       short_description: [null, Validators.compose([Validators.required])],
       title: [null, Validators.compose([Validators.required])],
@@ -82,7 +88,9 @@ export class NewBlogComponent {
         delete formData.file;
       }
       if (formData.published_at) {
-         formData.published_at = moment(formData.published_at).format("YYYY-MM-DD");
+        formData.published_at = moment(formData.published_at).format(
+          'YYYY-MM-DD'
+        );
       }
       this.settingService.submitBlog(formData).subscribe({
         next: (res: any) => {

@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import * as Global from '../../../../../global';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import moment from 'moment';
+import { Editor, NgxEditorModule } from 'ngx-editor';
 @Component({
   selector: 'app-add-awards',
   templateUrl: './add-awards.component.html',
@@ -40,6 +41,7 @@ import moment from 'moment';
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    NgxEditorModule,
   ],
 })
 export class AddAwardsComponent implements OnInit {
@@ -47,6 +49,8 @@ export class AddAwardsComponent implements OnInit {
   editUrl: string = 'admin/award/edit/';
   Global = Global;
   formGroup!: FormGroup;
+  editor!: Editor;
+
   constructor(
     private fb: FormBuilder,
     public toastr: ToastrService,
@@ -56,10 +60,12 @@ export class AddAwardsComponent implements OnInit {
     public dialogRef: MatDialogRef<AddAwardsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.editor = new Editor();
+
     this.formGroup = this.fb.group({
       title: [null, Validators.required],
       description: [null, Validators.required],
-      website_link: [null, Validators.required],
+      website_link: [null],
       status: ['active', Validators.required],
       file: [null, Validators.required], // Form control for the image
       file_preview: [null], // Form control for the image

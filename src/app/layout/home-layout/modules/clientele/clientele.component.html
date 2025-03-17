@@ -13,7 +13,7 @@
 <div class="career-wrapper system-bg pr-3">
   <div class="grid grid-cols-1 gap-3">
     <ng-container *ngFor="let item of item_list; let i = index">
-      <div class=" relative p-3 border rounded bg-white">
+      <div class="relative p-3 border rounded bg-white">
         <span class="absolute top-1 right-1">
           <app-menu
             [modalItem]="item"
@@ -39,25 +39,7 @@
                 {{ item?.designation }}, {{ item?.company_name }}
               </div>
               <div class="text-sm font-normal text-gray-400 leading-5 mt-1">
-                <ng-container
-                  *ngIf="
-                    item?.description?.length < 300 || showMore[i];
-                    else shortContent
-                  "
-                >
-                  {{ item?.description }}
-                </ng-container>
-                <ng-template #shortContent>
-                  {{ item?.description.slice(0, 300) }}...
-                </ng-template>
-                <a
-                  class="text-blue-600"
-                  href="javascript:void(0)"
-                  *ngIf="item?.description?.length >= 300"
-                  (click)="showMore[i] = !showMore[i]"
-                >
-                  Read {{ showMore[i] ? "Less" : "More" }}
-                </a>
+                <span [innerHTML]="item?.description"></span>
               </div>
             </div>
           </div>

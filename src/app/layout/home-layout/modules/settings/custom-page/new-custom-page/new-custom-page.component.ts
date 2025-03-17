@@ -49,7 +49,7 @@ export class NewCustomPageComponent {
     this.formGroup = this.fb.group({
       page_id: [null],
       title: [null, Validators.required],
-      content: ['null', Validators.required],
+      content: [null, Validators.required],
       status: ['active', Validators.required],
     });
     if (this.id) {
