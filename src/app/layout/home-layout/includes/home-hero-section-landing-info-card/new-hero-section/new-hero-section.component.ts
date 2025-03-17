@@ -130,6 +130,7 @@ export class NewHeroSectionComponent {
       } else if (target.files[0].size < 24576) {
         this.hasSzError = true;
         this.errorMessage3 = 'Minimum size required: 1920 width x 640 height';
+        this.toastr.error(this.errorMessage3)
         return;
       }
       //  else if (!validVdFormats.includes(target.files[0].type)) {

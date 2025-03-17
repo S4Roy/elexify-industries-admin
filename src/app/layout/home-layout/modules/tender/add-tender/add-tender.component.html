@@ -246,7 +246,7 @@
         </label>
         <div class="mt-2">
           <mat-form-field>
-            <input
+            <input [min]="formGroup.value.start_at"
               matInput
               formControlName="end_at"
               [matDatepicker]="endDatePicker"
@@ -384,7 +384,7 @@
         </label>
         <div class="mt-2">
           <mat-form-field>
-            <input
+            <input [min]="formGroup.value.corrigendum_start_at"
               [readonly]="true"
               matInput
               formControlName="corrigendum_end_at"

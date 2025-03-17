@@ -24,6 +24,9 @@ export class PageService {
   }
   saveAboutUsPartner(payload: any) {
     return this.httpService.post('admin/about/section/save/partner', payload);
+  }  
+  saveAboutUsNewsEvent(payload: any) {
+    return this.httpService.post('admin/about/section/save/news-event', payload);
   }
 
   partnerList() {

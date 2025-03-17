@@ -275,6 +275,24 @@ export class AboutComponent {
         },
       });
     }
+  } 
+  onNewsEvetsFormSubmit() {
+    this.newsEvetsForm.markAllAsTouched();
+    if (this.newsEvetsForm.valid) {
+      this.newsEvetsForm.disable();
+      let formData = this.newsEvetsForm.getRawValue();
+      this.pageService.saveAboutUsNewsEvent(formData).subscribe({
+        next: (res: any) => {
+          this.fetchAboutPage();
+          this.newsEvetsForm.reset();
+          this.newsEvetsForm.enable();
+          this.toastr.success(`Updated Successfully`);
+        },
+        error: (err: any) => {
+          this.newsEvetsForm.enable();
+        },
+      });
+    }
   }
   fetchPartnerList() {
     // let params = new URLSearchParams();

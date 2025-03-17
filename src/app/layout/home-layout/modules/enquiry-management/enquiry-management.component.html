@@ -24,6 +24,7 @@
             <th scope="col">Email</th>
             <th scope="col">Message</th>
             <th scope="col">Purpose Type</th>
+            <th scope="col">Remarks</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
@@ -56,6 +57,27 @@
                 </a>
               </td>
               <td>{{ item?.purpose_type }}</td>
+              <td>
+                <ng-container
+                  *ngIf="
+                    item?.remarks?.length < 60 || showRemarksMore[i];
+                    else shortRemarksContent
+                  "
+                >
+                  {{ item?.remarks }}
+                </ng-container>
+                <ng-template #shortRemarksContent>
+                  {{ item?.remarks.slice(0, 60) }}...
+                </ng-template>
+                <a
+                  class="text-blue-600"
+                  href="javascript:void(0)"
+                  *ngIf="item?.remarks?.length >= 60"
+                  (click)="showRemarksMore[i] = !showRemarksMore[i]"
+                >
+                  {{ showRemarksMore[i] ? "" : "read more" }}
+                </a>
+              </td>
               <td class="text-center">
                 <app-menu
                   [modalButtonText]="'Remarks'"

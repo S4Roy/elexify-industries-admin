@@ -31,6 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class EnquiryManagementComponent implements OnInit {
   Global = Global;
   showMore: boolean[] = [];
+  showRemarksMore: boolean[] = [];
   item_list: any = [];
   paginationOption: PaginationOptions;
   filterOption: FilterOptions;
