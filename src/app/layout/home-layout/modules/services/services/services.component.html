@@ -42,7 +42,9 @@
               <td scope="row" class="">
                 {{ item?.name }}
               </td>
-              <td>{{ item?.description }}</td>
+              <td>
+                <span [innerHTML]="item?.description"></span>
+              </td>
               <td class="text-center">
                 <span [class]="item?.status">
                   {{ item?.status }}

@@ -268,11 +268,16 @@
           This field is required
         </mat-error>
       </mat-form-field>
-      <ng-select formControlName="parters" [multiple]="true">
+      <ng-select
+        [class.is-invalid]="!Global.isInputValid(partnerForm, 'parters')"
+        formControlName="parters"
+        placeholder="Select Partner"
+        [multiple]="true"
+      >
         <ng-option *ngFor="let item of partner_list" [value]="item.id">
           <div class="option-item">
             <img
-              [src]="Global.BACKEND_URL  + item.file_path"
+              [src]="Global.BACKEND_URL + item.file_path"
               alt="{{ item.company_name }}"
               style="width: 30px; height: 30px; margin-right: 10px"
             />
@@ -280,6 +285,11 @@
           </div>
         </ng-option>
       </ng-select>
+      <mat-error
+        *ngIf="!Global.isInputRuleValid(partnerForm, 'parters', 'required')"
+      >
+        This field is required
+      </mat-error>
     </div>
     <hr />
     <div class="flex mt-3 justify-end">
@@ -614,16 +624,27 @@
     </div>
   </form>
   <form class="w-full mt-3 bg-white p-3" [formGroup]="newsEvetsForm">
-    <div class="space-y-6">
+    <div class="space-y-1">
       <h3 class="text-center">News & Event</h3>
-      <ng-select formControlName="news_event" [multiple]="true">
+      <ng-select
+        [class.is-invalid]="!Global.isInputValid(newsEvetsForm, 'news_event')"
+        formControlName="news_event"
+        [multiple]="true"
+        placeholder="Select"
+      >
         <ng-option *ngFor="let item of news_list" [value]="item.id">
           <div class="option-item">
-            
             {{ item.title }}
           </div>
         </ng-option>
       </ng-select>
+      <mat-error
+        *ngIf="
+          !Global.isInputRuleValid(newsEvetsForm, 'news_event', 'required')
+        "
+      >
+        This field is required
+      </mat-error>
     </div>
     <hr />
     <div class="flex mt-3 justify-end">
@@ -751,7 +772,10 @@
                 *ngFor="let file of careerCtaForm.value.files_preview"
               >
                 <div class="relative">
-                  <span *ngIf="file?.id" class="absolute right-0.5 top-0.5 bg-white rounded-sm">
+                  <span
+                    *ngIf="file?.id"
+                    class="absolute right-0.5 top-0.5 bg-white rounded-sm"
+                  >
                     <app-menu
                       [delete]="file"
                       (deleteItem)="deleteItem($event)"

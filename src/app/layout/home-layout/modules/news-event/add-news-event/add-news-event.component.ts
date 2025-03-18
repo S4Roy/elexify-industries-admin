@@ -93,6 +93,9 @@ export class AddNewsEventComponent implements OnInit {
       this.formGroup.get('file')?.clearValidators();
       this.formGroup.get('file')?.updateValueAndValidity();
     }
+    if (data?.action=='view') {
+      this.formGroup.disable()
+    }
   }
   type_list: any = [];
   ngOnInit(): void {

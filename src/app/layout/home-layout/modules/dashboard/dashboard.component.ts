@@ -45,10 +45,10 @@ export class DashboardComponent {
   onEnquiryTotalCountChange(count: number) {
     this.enquiryTotal_count = count;
   }
-  addItem(data: any = null) {
+  addItem(data: any = null,action:any=null) {
     this.dialog
       .open(AddNewsEventComponent, {
-        data: data,
+        data: {...data,action:action},
         disableClose: true,
       })
       .afterClosed()

@@ -62,6 +62,18 @@
                     >
                       Heading is required
                     </mat-error>
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          homeHeroSecForm,
+                          'hero_sec_main_heading',
+                          'maxlength'
+                        )
+                      "
+                    >
+                      Maximum heading length should be
+                      {{ maxLength1 }} characters.
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -104,6 +116,18 @@
                     >
                       Sub Heading is required
                     </mat-error>
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          homeHeroSecForm,
+                          'hero_sec_main_heading',
+                          'maxlength'
+                        )
+                      "
+                    >
+                      Maximum sub heading length should be
+                      {{ maxLength2 }} characters.
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -117,12 +141,15 @@
                       *ngIf="imagePreview || videoPreview"
                     >
                       <app-menu
-                      [modalItem]="true"
-                      (initModal)="chooseFile.click()"
+                        [modalItem]="true"
+                        (initModal)="chooseFile.click()"
                       ></app-menu>
                     </span>
                     <ng-container *ngIf="!imagePreview && !videoPreview">
-                      <label (click)="chooseFile.click()" class="flex flex-col items-center justify-center">
+                      <label
+                        (click)="chooseFile.click()"
+                        class="flex flex-col items-center justify-center"
+                      >
                         <img
                           src="assets/placeholder-image-outline.png"
                           alt="Upload Image"
@@ -163,7 +190,6 @@
                                                     class="text-center text-red-600 font-normal italic">
                                                     Only .png, .jpg, .jpeg format image upload here
                                                 </div> -->
-                        
                       </label>
                     </ng-container>
                     <div *ngIf="imagePreview" class="mt-3">
@@ -178,13 +204,14 @@
                         Your browser does not support the video tag.
                       </video>
                     </div>
-                    <input #chooseFile
-                          hidden
-                          type="file"
-                          class="d-none"
-                          (change)="onFileSelected($event)"
-                          accept="video/*,image/*"
-                        />
+                    <input
+                      #chooseFile
+                      hidden
+                      type="file"
+                      class="d-none"
+                      (change)="onFileSelected($event)"
+                      accept="video/*,image/*"
+                    />
                   </div>
                 </div>
               </div>

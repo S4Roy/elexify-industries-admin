@@ -24,6 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Editor, NgxEditorModule } from 'ngx-editor';
 
 @Component({
   selector: 'app-add-new-services',
@@ -37,6 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    NgxEditorModule,
   ],
   templateUrl: './add-new-services.component.html',
   styleUrl: './add-new-services.component.scss',
@@ -45,7 +47,7 @@ export class AddNewServicesComponent {
   Global = Global;
   addUrl: string = 'admin/service/add';
   editUrl: string = 'admin/service/edit';
-
+  editor!: Editor;
   formGroup!: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -56,6 +58,7 @@ export class AddNewServicesComponent {
     public dialogRef: MatDialogRef<AddNewServicesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.editor = new Editor();
     this.formGroup = this.fb.group({
       name: [null, Validators.required],
       description: [null, Validators.required],
@@ -87,7 +90,7 @@ export class AddNewServicesComponent {
     if (this.formGroup.valid) {
       this.formGroup.disable();
       let formData = this.formGroup.getRawValue();
-      
+
       if (this.data?.id) {
         formData.id = this.data.id;
       }

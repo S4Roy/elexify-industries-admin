@@ -86,6 +86,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'gallery',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/gallery/gallery.module').then(
+        (m) => m.GalleryModule
+      ),
+  },
+  {
     path: 'enquiry',
     loadChildren: () =>
       import('./layout/home-layout/modules/enquiry-management/enquiry-management.module').then(

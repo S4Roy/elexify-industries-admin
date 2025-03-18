@@ -10,7 +10,14 @@
               class="flex justify-between items-center font-semibold text-white"
               id="slide-over-title"
             >
-              {{ data ? "Update News & Event" : "Add News & Event" }}
+              <ng-container
+                *ngIf="data?.action === 'view'; else addUpdateTitleBlock"
+              >
+                {{ Global.humanize(data?.type) }} Details
+              </ng-container>
+              <ng-template #addUpdateTitleBlock>
+                {{ data?.id ? "Update News & Event" : "Add News & Event" }}
+              </ng-template>
               <button color="warn" mat-dialog-close mat-icon-button>
                 <mat-icon class="text-red-700">close</mat-icon>
               </button>
@@ -152,7 +159,7 @@
                 <div
                   class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
                 >
-                  <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                  <ngx-editor-menu [editor]="editor" [disabled]="data?.action==='view'"> </ngx-editor-menu>
                   <div class="inner-height" [formGroup]="formGroup">
                     <ngx-editor
                       [editor]="editor"
@@ -307,7 +314,7 @@
                     class="absolute right-2 top-2 bg-white rounded-sm"
                   >
                     <app-menu
-                      [modalItem]="true"
+                      [modalItem]="!data?.action"
                       (initModal)="mediaFile.click()"
                     ></app-menu>
                   </span>
@@ -349,7 +356,7 @@
               </div>
             </form>
           </div>
-          <div>
+          <div *ngIf="!data?.action">
             <button
               (click)="onSubmit()"
               [disabled]="formGroup.disabled"
