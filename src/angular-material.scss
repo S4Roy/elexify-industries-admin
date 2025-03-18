@@ -226,7 +226,7 @@
     /* Apply warn color */
     &.mat-warn {
       .mat-icon {
-        @apply  text-red-500 #{'!important'};
+        @apply text-red-500 #{'!important'};
       }
     }
   }
@@ -365,13 +365,12 @@ mat-pseudo-checkbox {
 .mat-drawer-backdrop.mat-drawer-shown {
   // background-color: rgba(0, 0, 0, 0.6) !important;
   background: transparent !important;
-
 }
 
 /* -------------------------------------------------------------------------- */
 /*  @ Form fields
 /* -------------------------------------------------------------------------- */
-.mat-mdc-form-field{
+.mat-mdc-form-field {
   width: 100%;
 }
 .mdc-text-field--invalid {
@@ -456,7 +455,7 @@ mat-pseudo-checkbox {
     border-radius: 6px;
     border-width: 1px;
     border-style: solid;
-    @apply shadow-sm bg-white border-gray-300 dark:bg-black dark:bg-opacity-5 dark:border-gray-500 #{'!important'};
+    // @apply shadow-sm bg-white border-gray-300 dark:bg-black dark:bg-opacity-5 dark:border-gray-500 #{'!important'};
 
     /* Adjust the top spacing and overflow when mat-label present */
     &:not(.mdc-text-field--no-label) {
@@ -1091,15 +1090,15 @@ mat-pseudo-checkbox {
     }
 
     &::-moz-placeholder {
-      @apply  text-red-500 #{'!important'};
+      @apply text-red-500 #{'!important'};
     }
 
     &::-webkit-input-placeholder {
-      @apply  text-red-500 #{'!important'};
+      @apply text-red-500 #{'!important'};
     }
 
     &:-ms-input-placeholder {
-      @apply  text-red-500 #{'!important'};
+      @apply text-red-500 #{'!important'};
     }
   }
 }
@@ -1254,7 +1253,7 @@ mat-pseudo-checkbox {
 .mat-step-icon {
   /* Do not override the mat-icon color */
   // .mat-icon {
-    // color: currentColor !important;
+  // color: currentColor !important;
   // }
 }
 
@@ -1403,7 +1402,11 @@ textarea.mat-mdc-input-element {
 .mat-mdc-dialog-container .mat-mdc-dialog-content {
   padding: 0 !important;
 }
-.mat-h2, .mat-headline-6, .mat-typography .mat-h2, .mat-typography .mat-headline-6, .mat-typography h2{
+.mat-h2,
+.mat-headline-6,
+.mat-typography .mat-h2,
+.mat-typography .mat-headline-6,
+.mat-typography h2 {
   margin: 0 !important;
 }
 .mat-datepicker-content .mat-calendar {
