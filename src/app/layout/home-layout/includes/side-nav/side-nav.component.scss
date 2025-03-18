@@ -59,7 +59,11 @@ li.child-item.active {
     font-weight: 500 !important;
   }
 }
-.sidebarMenu{
+.sidebarMenu {
   height: calc(100vh - 80px);
   overflow-y: auto;
+}
+a.active img {
+  filter: invert(16%) sepia(92%) saturate(7463%) hue-rotate(-6deg)
+    brightness(100%) contrast(119%);
 }

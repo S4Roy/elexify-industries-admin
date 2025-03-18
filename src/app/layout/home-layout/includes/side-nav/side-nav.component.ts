@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
@@ -12,6 +18,7 @@ import { SettingsService } from '../../../../core/services/settings.service';
   styleUrl: './side-nav.component.scss',
 })
 export class SideNavComponent {
+  @ViewChildren('menuItem') menuItems!: QueryList<ElementRef>;
   @Input() isNavOpen: boolean = true;
   itemList: any = [
     // {
@@ -185,12 +192,29 @@ export class SideNavComponent {
       next: (res: any) => {
         this.itemList = res?.results;
       },
-      error: (err: any) => {
-      },
+      error: (err: any) => {},
     });
   }
-  isActiveChild(menu:any) {    
+  ngAfterViewInit() {
+    setTimeout(() => {
+      // Delay to allow rendering
+      this.scrollToActive();
+    }, 500);
+  }
+  isActiveChild(menu: any) {
     let isPage = this.router.url.startsWith('/pages');
-    return isPage && menu?.url==='/pages';
+    return isPage && menu?.url === '/pages';
+  }
+  scrollToActive() {
+    const activeItem = this.menuItems.find((item) =>
+      item.nativeElement.classList.contains('active')
+    );
+
+    if (activeItem) {
+      activeItem.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
   }
 }
