@@ -100,7 +100,7 @@
     </div>
     <div class="table-wrapper">
       <div class="grid grid-cols-1 gap-2">
-        <ng-container *ngFor="let item of item_list">
+        <ng-container *ngFor="let item of item_list; let i = index">
           <div class="relative p-3 border rounded">
             <span class="absolute top-0 right-0">
               <app-menu
@@ -160,9 +160,80 @@
                       >
                     </span>
                   </div>
+                  <ng-container *ngIf="showMore[i]">
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Current Address </span>
+                      <span>{{ item?.applicant_name }}</span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400"
+                        >Available for Face to Face
+                      </span>
+                      <span>{{ item?.applicant_email }}</span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Contact Number</span>
+                      <span>{{ item?.applicant_mobile }}</span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Ready to Relocate </span>
+                      <span>{{ item?.applicant_experience }}</span>
+                    </div>
+
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Highest Qualification *</span>
+                      <a
+                        class="flex items-center"
+                        target="_blank"
+                        [href]="Global.BACKEND_URL + item?.file_path"
+                      >
+                        <span class="underline">Attachment</span>
+
+                        <mat-icon class="mx-1 text-sm text-green-500"
+                          >download</mat-icon
+                        >
+                      </a>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Name of Institute *</span>
+                      <span class="flex items-center"> </span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Date of Completion *</span>
+                      <span class="flex items-center"> </span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Company Name *</span>
+                      <span class="flex items-center"> </span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Position Holding *</span>
+                      <span class="flex items-center"> </span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Last Working Day*</span>
+                      <span class="flex items-center"> </span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400">Reason of Leaving *</span>
+                      <span class="flex items-center"> </span>
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="text-gray-400"
+                        >Total year of experince(In Years) *</span
+                      >
+                      <span class="flex items-center"> </span>
+                    </div>
+                  </ng-container>
                 </div>
               </div>
             </div>
+
+            <span class="absolute bottom-0 right-2">
+              <mat-icon (click)="showMore[i] = !showMore[i]">{{
+                showMore[i] ? "expand_less" : "expand_more"
+              }}</mat-icon>
+            </span>
           </div>
         </ng-container>
       </div>

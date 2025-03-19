@@ -26,13 +26,14 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     MatTooltipModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './career-details.component.html',
   styleUrl: './career-details.component.scss',
 })
 export class CareerDetailsComponent {
   Global = Global;
+  showMore: boolean[] = [];
   item_list: any = [];
   statusList: any = [];
   paginationOption: PaginationOptions;
