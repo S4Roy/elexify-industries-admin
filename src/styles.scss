@@ -209,17 +209,25 @@ ng-select.is-invalid {
     display: none;
   }
 
-  ~.invalid-feedback {
+  ~ .invalid-feedback {
     display: block !important;
   }
 }
 
-.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value {
   display: flex;
   align-items: center;
 }
 
-.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label label {
+.ng-select.ng-select-multiple
+  .ng-select-container
+  .ng-value-container
+  .ng-value
+  .ng-value-label
+  label {
   margin-bottom: 0 !important;
 }
 
@@ -229,9 +237,9 @@ ng-select {
     border-color: #000 !important;
   }
 
-  >div {
-    >div.single {
-      >div.placeholder {
+  > div {
+    > div.single {
+      > div.placeholder {
         color: white;
         font-size: 14px;
         font-family: Rethink Sans;
@@ -248,7 +256,7 @@ ng-select {
       // color: #868a9c !important;
     }
 
-    .ng-input>input {
+    .ng-input > input {
       font-size: 14px !important;
       font-family: Rethink Sans;
       letter-spacing: 0px;
@@ -259,4 +267,21 @@ ng-select {
     //   border-color: transparent transparent blue !important;
     // }
   }
+}
+ngx-editor ul,
+ngx-editor ol {
+  list-style-type: initial !important;
+  padding-left: 20px !important;
+}
+ngx-editor ol {
+  list-style-type: decimal !important;
+}
+div[innerHTML] ul {
+  list-style-type: disc !important;
+  padding-left: 20px !important;
+}
+
+div[innerHTML] ol {
+  list-style-type: decimal !important;
+  padding-left: 20px !important;
 }

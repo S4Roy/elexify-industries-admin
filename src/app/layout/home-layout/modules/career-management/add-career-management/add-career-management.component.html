@@ -474,7 +474,11 @@
       <div
         class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
       >
-        <ngx-editor-menu [editor]="responsibilitiesEditor" [toolbar]="Global.toolbar"> </ngx-editor-menu>
+        <ngx-editor-menu
+          [editor]="responsibilitiesEditor"
+          [toolbar]="Global.toolbar"
+        >
+        </ngx-editor-menu>
         <div class="inner-height">
           <ngx-editor
             [editor]="responsibilitiesEditor"
@@ -506,7 +510,11 @@
       <div
         class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
       >
-        <ngx-editor-menu [editor]="requirementsEditor" [toolbar]="Global.toolbar"> </ngx-editor-menu>
+        <ngx-editor-menu
+          [editor]="requirementsEditor"
+          [toolbar]="Global.toolbar"
+        >
+        </ngx-editor-menu>
         <div class="inner-height">
           <ngx-editor
             [editor]="requirementsEditor"
@@ -522,7 +530,7 @@
         This field is required
       </mat-error>
     </div>
-
+    <br />
     <div class="flex mt-3 justify-end">
       <button
         (click)="onSubmit()"
