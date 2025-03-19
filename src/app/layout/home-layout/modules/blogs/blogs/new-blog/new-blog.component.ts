@@ -68,11 +68,13 @@ export class NewBlogComponent {
       website_link: [null],
       published_at: [null, Validators.compose([Validators.required])],
       status: ['active', Validators.compose([Validators.required])],
-      file: [null, Validators.compose([])],
+      file: [null, Validators.compose([Validators.required])],
       file_preview: [null],
     });
     if (this.data?.id) {
       this.teamMemberDetails();
+      this.formGroup.get('file')?.clearValidators();
+      this.formGroup.get('file')?.updateValueAndValidity();
     }
   }
   submitMember() {

@@ -293,7 +293,7 @@
                       <img src="assets/placeholder-image-outline.png" alt="" />
                       <div>Upload Media File Here</div>
                       <div class="text-center text-red-600 font-normal italic">
-                        Maximum file size is 5 MB
+                        Accepts the following file types: .png, .jpg.
                       </div>
                     </div>
                   </ng-container>
@@ -314,6 +314,11 @@
                   "
                 />
               </div>
+              <mat-error
+                *ngIf="!Global.isInputRuleValid(formGroup, 'file', 'required')"
+              >
+                Attachment is required.
+              </mat-error>
             </form>
           </div>
           <div>

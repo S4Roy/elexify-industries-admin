@@ -151,12 +151,16 @@
       </div>
       <div>
         <label class="flex justify-between text-sm/6 font-medium text-gray-900"
-          ><span>Salary
+          ><span
+            >Salary
             <span
               class="text-red-500"
-              *ngIf="Global.isInputRuleAvailable(formGroup, 'salary', 'required')"
+              *ngIf="
+                Global.isInputRuleAvailable(formGroup, 'salary', 'required')
+              "
               >*</span
-            ></span>
+            ></span
+          >
           <div class="flex items-center h-4">
             <span>Disclosed?</span>
             <mat-radio-group
@@ -375,7 +379,7 @@
               [class.is-invalid]="
                 !Global.isInputValid(formGroup, 'language_known')
               "
-            >
+            />
             <mat-error
               *ngIf="
                 !Global.isInputRuleValid(
@@ -467,29 +471,26 @@
           >*</span
         >
       </label>
-      <div class="mt-2">
-        <mat-form-field>
-          <textarea
+      <div
+        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
+      >
+        <ngx-editor-menu [editor]="responsibilitiesEditor"> </ngx-editor-menu>
+        <div class="inner-height">
+          <ngx-editor
+            [editor]="responsibilitiesEditor"
             formControlName="responsibilities"
-            matInput
-            [class.is-invalid]="
-              !Global.isInputValid(formGroup, 'responsibilities')
-            "
-            placeholder="Type Here"
-          ></textarea>
-          <mat-error
-            *ngIf="
-              !Global.isInputRuleValid(
-                formGroup,
-                'responsibilities',
-                'required'
-              )
-            "
-          >
-            This field is required
-          </mat-error>
-        </mat-form-field>
+            [placeholder]="'Add Responsibilities'"
+          ></ngx-editor>
+        </div>
       </div>
+      <mat-error
+        class="mb-2"
+        *ngIf="
+          !Global.isInputRuleValid(formGroup, 'responsibilities', 'required')
+        "
+      >
+        This field is required
+      </mat-error>
     </div>
     <div>
       <label class="block text-sm/6 font-medium text-gray-900"
@@ -502,23 +503,24 @@
           >*</span
         >
       </label>
-      <div class="mt-2">
-        <mat-form-field>
-          <textarea
+      <div
+        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
+      >
+        <ngx-editor-menu [editor]="requirementsEditor"> </ngx-editor-menu>
+        <div class="inner-height">
+          <ngx-editor
+            [editor]="requirementsEditor"
             formControlName="requirements"
-            matInput
-            [class.is-invalid]="!Global.isInputValid(formGroup, 'requirements')"
-            placeholder="Type Here"
-          ></textarea>
-          <mat-error
-            *ngIf="
-              !Global.isInputRuleValid(formGroup, 'requirements', 'required')
-            "
-          >
-            This field is required
-          </mat-error>
-        </mat-form-field>
+            [placeholder]="'Add Requirements'"
+          ></ngx-editor>
+        </div>
       </div>
+      <mat-error
+        class="mb-2"
+        *ngIf="!Global.isInputRuleValid(formGroup, 'requirements', 'required')"
+      >
+        This field is required
+      </mat-error>
     </div>
 
     <div class="flex mt-3 justify-end">

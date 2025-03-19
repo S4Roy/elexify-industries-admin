@@ -13,7 +13,8 @@
               <ng-container
                 *ngIf="data?.action === 'view'; else addUpdateTitleBlock"
               >
-                {{ Global.humanize(data?.type) }} Details
+                <!-- {{ Global.humanize(data?.type) }} -->
+                News & Event Details
               </ng-container>
               <ng-template #addUpdateTitleBlock>
                 {{ data?.id ? "Update News & Event" : "Add News & Event" }}
@@ -159,7 +160,11 @@
                 <div
                   class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
                 >
-                  <ngx-editor-menu [editor]="editor" [disabled]="data?.action==='view'"> </ngx-editor-menu>
+                  <ngx-editor-menu
+                    [editor]="editor"
+                    [disabled]="data?.action === 'view'"
+                  >
+                  </ngx-editor-menu>
                   <div class="inner-height" [formGroup]="formGroup">
                     <ngx-editor
                       [editor]="editor"
@@ -333,7 +338,7 @@
                       <img src="assets/placeholder-image-outline.png" alt="" />
                       <div>Upload Image Here</div>
                       <div class="text-center text-red-600 font-normal italic">
-                        Maximum file size is 5 MB
+                        Accepts the following file types: .png, .jpg.
                       </div>
                     </div>
                   </ng-container>
@@ -354,6 +359,11 @@
                   "
                 />
               </div>
+              <mat-error
+                *ngIf="!Global.isInputRuleValid(formGroup, 'file', 'required')"
+              >
+                Attachment is required.
+              </mat-error>
             </form>
           </div>
           <div *ngIf="!data?.action">

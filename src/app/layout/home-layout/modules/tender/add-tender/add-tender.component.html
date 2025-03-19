@@ -246,7 +246,8 @@
         </label>
         <div class="mt-2">
           <mat-form-field>
-            <input [min]="formGroup.value.start_at"
+            <input
+              [min]="formGroup.value.start_at"
               matInput
               formControlName="end_at"
               [matDatepicker]="endDatePicker"
@@ -291,6 +292,9 @@
             >
               <img src="assets/placeholder-image-outline.png" alt="" />
               <div>Upload Attachment</div>
+              <div class="text-center text-red-600 font-normal italic">
+                Accepts the following file types: .pdf, .doc, .zip.
+              </div>
             </div>
           </ng-container>
         </div>
@@ -310,6 +314,11 @@
           "
         />
       </div>
+      <mat-error
+        *ngIf="!Global.isInputRuleValid(formGroup, 'file', 'required')"
+      >
+        Attachment is required.
+      </mat-error>
     </div>
     <div class="flex items-center">
       <span>Corrigendum Tender?</span>
@@ -384,7 +393,8 @@
         </label>
         <div class="mt-2">
           <mat-form-field>
-            <input [min]="formGroup.value.corrigendum_start_at"
+            <input
+              [min]="formGroup.value.corrigendum_start_at"
               [readonly]="true"
               matInput
               formControlName="corrigendum_end_at"
@@ -437,6 +447,9 @@
             >
               <img src="assets/placeholder-image-outline.png" alt="" />
               <div>Upload Attachment</div>
+              <div class="text-center text-red-600 font-normal italic">
+                Accepts the following file types: .pdf, .doc, .zip.
+              </div>
             </div>
           </ng-container>
         </div>

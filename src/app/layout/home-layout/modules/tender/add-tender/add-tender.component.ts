@@ -76,19 +76,22 @@ export class AddTenderComponent implements OnInit {
       status: ['active', Validators.required],
       corrigendum_start_at: [null],
       corrigendum_end_at: [null],
-      file: [null], // Form control for the image
+      file: [null, Validators.required], // Form control for the image
       file_preview: [null], // Form control for the image
       file_co: [null],
       file_co_preview: [null],
     });
+    if (this.id) {
+      this.formGroup.get('file')?.clearValidators();
+      this.formGroup.get('file')?.updateValueAndValidity();
+    }
   }
   allowedTypes = [
     'application/pdf', // PDF
     'application/msword', // DOC
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // DOCX
     'application/zip', // ZIP
-    
-];
+  ];
   ngOnInit(): void {
     this.tenderCategoryList();
     if (this.id) {
@@ -161,9 +164,13 @@ export class AddTenderComponent implements OnInit {
         this.data = res;
         this.formGroup.patchValue(this.data);
         this.formGroup.patchValue({
-        file_preview:this.data?.attachment?Global.BACKEND_URL +this.data?.attachment:null,
-        file_co_preview:this.data?.corrigendum_attachment?Global.BACKEND_URL +this.data?.corrigendum_attachment:null
-        })
+          file_preview: this.data?.attachment
+            ? Global.BACKEND_URL + this.data?.attachment
+            : null,
+          file_co_preview: this.data?.corrigendum_attachment
+            ? Global.BACKEND_URL + this.data?.corrigendum_attachment
+            : null,
+        });
       },
       error: (err) => {},
     });

@@ -20,6 +20,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PageService } from '../../../../../core/services/page.service';
 import * as Global from '../../../../../global';
 import { MenuComponent } from '../../../includes/menu/menu.component';
+import { Editor, NgxEditorModule } from 'ngx-editor';
 
 @Component({
   selector: 'app-add-career-management',
@@ -35,6 +36,7 @@ import { MenuComponent } from '../../../includes/menu/menu.component';
     MatDatepickerModule,
     MatRadioModule,
     NgFor,
+    NgxEditorModule,
   ],
   templateUrl: './add-career-management.component.html',
   styleUrls: ['./add-career-management.component.css'],
@@ -47,6 +49,8 @@ export class AddCareerManagementComponent implements OnInit {
   data: any = null;
   category_list: any = [];
   id: any = null;
+  responsibilitiesEditor!: Editor;
+  requirementsEditor!: Editor;
   constructor(
     private fb: FormBuilder,
     public toastr: ToastrService,
@@ -54,6 +58,8 @@ export class AddCareerManagementComponent implements OnInit {
     private pageService: PageService,
     private router: Router
   ) {
+    this.responsibilitiesEditor = new Editor();
+    this.requirementsEditor = new Editor();
     this.id = this.route.snapshot.params['id'];
     this.formGroup = this.fb.group({
       title: [null, Validators.required],
@@ -120,9 +126,7 @@ export class AddCareerManagementComponent implements OnInit {
       next: (res: any) => {
         this.data = res;
         this.formGroup.patchValue(this.data);
-        this.formGroup.patchValue({
-         
-        });
+        this.formGroup.patchValue({});
       },
       error: (err) => {},
     });

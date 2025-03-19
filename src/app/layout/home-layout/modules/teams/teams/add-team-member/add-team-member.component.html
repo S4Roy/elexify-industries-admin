@@ -17,12 +17,11 @@
               </button>
             </h2>
           </div>
-          <div class="relative my-3 flex-1 px-4 sm:px-6" style="height: calc(100vh - 116px); overflow-y: auto">
-            <form
-              
-              class="space-y-1"
-              [formGroup]="formGroup"
-            >
+          <div
+            class="relative my-3 flex-1 px-4 sm:px-6"
+            style="height: calc(100vh - 116px); overflow-y: auto"
+          >
+            <form class="space-y-1" [formGroup]="formGroup">
               <div>
                 <label class="block text-sm/6 font-medium text-gray-900"
                   >Name
@@ -110,12 +109,12 @@
                   <span
                     class="text-red-500"
                     *ngIf="
-                                    Global.isInputRuleAvailable(
-                                      formGroup,
-                                      'description',
-                                      'required'
-                                    )
-                                  "
+                      Global.isInputRuleAvailable(
+                        formGroup,
+                        'description',
+                        'required'
+                      )
+                    "
                   >
                     *</span
                   >
@@ -132,7 +131,8 @@
                     ></ngx-editor>
                   </div>
                 </div>
-                <mat-error class="mb-2"
+                <mat-error
+                  class="mb-2"
                   *ngIf="
                     !Global.isInputRuleValid(
                       formGroup,
@@ -144,7 +144,7 @@
                   This field is required
                 </mat-error>
               </div>
-              
+
               <div>
                 <label class="block text-sm/6 font-medium text-gray-900"
                   >Facebook URL
@@ -311,7 +311,7 @@
               </div>
               <div class="h-60">
                 <div
-                  class="w-full h-full rounded flex items-center justify-center relative"
+                  class="w-full border h-full rounded flex items-center justify-center relative"
                 >
                   <span
                     *ngIf="formGroup.value.file_preview"
@@ -337,7 +337,7 @@
                       <img src="assets/placeholder-image-outline.png" alt="" />
                       <div>Upload Media File Here</div>
                       <div class="text-center text-red-600 font-normal italic">
-                        Maximum file size is 5 MB
+                        Accepts the following file types: .png, .jpg.
                       </div>
                     </div>
                   </ng-container>
@@ -358,6 +358,12 @@
                   "
                 />
               </div>
+              <mat-error
+                class="mb-2"
+                *ngIf="!Global.isInputRuleValid(formGroup, 'file', 'required')"
+              >
+                This field is required
+              </mat-error>
             </form>
           </div>
           <div>
