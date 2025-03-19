@@ -110,6 +110,11 @@ export class AddTenderComponent implements OnInit {
         formData.is_fdel = 'n';
         formData.is_fco_del = 'n';
       }
+      if (formData.corrigendum_tender == 'no') {
+        formData.is_fco_del = 'y';
+        formData.corrigendum_start_at = null;
+        formData.corrigendum_end_at = null;
+      }
       delete formData.file_preview;
       if (!formData?.file) {
         delete formData.file;
@@ -174,5 +179,14 @@ export class AddTenderComponent implements OnInit {
       },
       error: (err) => {},
     });
+  }
+  onCorrigendumTenderToogle() {
+    if (this.formGroup.value.corrigendum_tender == 'no') {
+      this.formGroup.patchValue({
+        is_fco_del: 'y',
+        corrigendum_start_at: null,
+        corrigendum_end_at: null,
+      });
+    }
   }
 }

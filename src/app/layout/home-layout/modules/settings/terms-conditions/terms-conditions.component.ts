@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
-
+import * as Global from "../../../../../global"
 @Component({
   selector: 'app-terms-conditions',
   imports: [
@@ -27,6 +27,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './terms-conditions.component.scss',
 })
 export class TermsConditionsComponent {
+  Global=Global
   formGroup!: FormGroup;
   editInfo: boolean = false;
   editor!: Editor;
@@ -42,7 +43,7 @@ export class TermsConditionsComponent {
     this.formGroup = this.fb.group({
       page_type: [null, Validators.required],
       title: [null, Validators.required],
-      content: [null, Validators.required],
+      content: ['', Validators.required],
       page_id: [null],
     });
     this.route.data.subscribe((res:any)=>{
@@ -60,7 +61,7 @@ export class TermsConditionsComponent {
     this.settingService.pageDetails(params).subscribe({
       next: (res: any) => {
         this.formGroup.patchValue({
-          content: res?.page_content ?? null,
+          content: res?.page_content ?? '',
           page_type: res?.page_type ?? null,
           page_id: res?.page_id ?? null,
           title: res?.page_title ?? null,

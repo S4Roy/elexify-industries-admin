@@ -90,7 +90,7 @@ export class AboutComponent {
       list_title_2: [null, Validators.required],
       list_description_2: [null, Validators.required],
       subject: [null, Validators.required],
-      description: [null, Validators.required],
+      description: ['', Validators.required],
       is_fdel: ['n'],
       is_fdel_1: ['n'],
       file: [null],
@@ -100,7 +100,7 @@ export class AboutComponent {
     });
     this.newsEvetsForm = this.fb.group({
       id: [null, Validators.required],
-      news_event: [null, Validators.required],
+      news_event: [null],
     });
     this.careerCtaForm = this.fb.group({
       id: [null, Validators.required],

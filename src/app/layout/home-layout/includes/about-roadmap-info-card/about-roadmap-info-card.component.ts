@@ -3,7 +3,7 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 import { FormBuilder,FormGroup,FormsModule,ReactiveFormsModule,Validators } from '@angular/forms';
 import { NgxEditorModule } from 'ngx-editor';
 import { Editor } from 'ngx-editor';
-
+import * as Global from "../../../../global"
 @Component({
   selector: 'app-about-roadmap-info-card',
   imports: [ThumbnailComponent,FormsModule,ReactiveFormsModule,NgxEditorModule],
@@ -11,6 +11,7 @@ import { Editor } from 'ngx-editor';
   styleUrl: './about-roadmap-info-card.component.scss'
 })
 export class AboutRoadmapInfoCardComponent {
+  Global=Global
   formGroup!: FormGroup;
   editor!: Editor;
   html = '';

@@ -64,7 +64,7 @@ export class NewBlogComponent {
     this.formGroup = this.fb.group({
       short_description: [null, Validators.compose([Validators.required])],
       title: [null, Validators.compose([Validators.required])],
-      description: [null, Validators.compose([Validators.required])],
+      description: ['', Validators.compose([Validators.required])],
       website_link: [null],
       published_at: [null, Validators.compose([Validators.required])],
       status: ['active', Validators.compose([Validators.required])],
@@ -116,7 +116,7 @@ export class NewBlogComponent {
         this.formGroup.patchValue({
           title: res?.blog_title,
           short_description: res?.blog_short_description,
-          description: res?.blog_description,
+          description: res?.blog_description??"",
           website_link: res?.website_link,
           status: res?.status,
           published_at: res?.published_at,

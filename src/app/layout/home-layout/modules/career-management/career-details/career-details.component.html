@@ -11,14 +11,25 @@
 
     <div class="mt-1">
       <span
-        class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
+        class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
         >#{{ item?.job_no }}</span
       >
       <span
-        class="bg-{{item?.job_status=='open'?'green':'gray'}}-100 text-{{item?.job_status=='open'?'green':'gray'}}-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-{{item?.job_status=='open'?'green':'gray'}}-600 me-2"
+        class="bg-{{
+          item?.job_status == 'open' ? 'green' : 'gray'
+        }}-100 text-{{
+          item?.job_status == 'open' ? 'green' : 'gray'
+        }}-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-{{
+          item?.job_status == 'open' ? 'green' : 'gray'
+        }}-600 me-2"
         >{{ item?.no_of_applicant }} No. Of Applications</span
       >
-      <span class="mx-1 text-xs font-bold text-{{item?.job_status=='open'?'green':'gray'}}-600">{{ item?.job_status | titlecase }}</span>
+      <span
+        class="mx-1 text-xs font-bold text-{{
+          item?.job_status == 'open' ? 'green' : 'gray'
+        }}-600"
+        >{{ item?.job_status | titlecase }}</span
+      >
     </div>
     <div class="py-1 text-lg font-bold">{{ item?.title }}</div>
     <div class="flex items-center">
@@ -28,53 +39,59 @@
     </div>
     <div class="flex mt-2">
       <span
-        class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
+        class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
       >
         {{ item?.experience_level }}</span
       >
       <span
-        class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
+        class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
         >{{ item?.year_of_experience }}+ Years Experience</span
       >
       <span
-        class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
+        class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
         >Vacancy {{ item?.no_of_vacancy }}</span
       >
     </div>
     <div class="flex my-2">
       <span
-        class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
+        class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
         >{{ item?.job_location }}</span
       >
       <span
-        class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
+        class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
         >{{ item?.work_mode }}</span
       >
       <span
-        class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
+        class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
         >{{ item?.job_type }}</span
       >
     </div>
 
     <span
-      class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
+      class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 me-2"
       >{{ item?.salary }} | {{ item?.currency_name }}</span
     >
     <div class="career-details-wrapper">
       <div class="mt-2">
         <p>Responsibilities</p>
-        <p>{{ item?.responsibilities }}</p>
+        <p [innerHTML]="item?.responsibilities"></p>
       </div>
       <div class="mt-2">
         <p>Requirements</p>
-        <p>{{ item?.requirements }}</p>
+        <p [innerHTML]="item?.requirements"></p>
       </div>
     </div>
   </div>
   <div class="w-3/5 ms-2 relative p-3 border rounded">
     <div class="flex mb-2 justify-between">
       <h2>Applications</h2>
-      <ng-select (change)="careerApplicationList()" [(ngModel)]="applicant_status" [clearable]="false" style="min-width: 120px" class="rounded-full">
+      <ng-select
+        (change)="careerApplicationList()"
+        [(ngModel)]="applicant_status"
+        [clearable]="false"
+        style="min-width: 120px"
+        class="rounded-full"
+      >
         <ng-option value="">All</ng-option>
         <ng-option [value]="item?.key" *ngFor="let item of statusList">{{
           item?.value
@@ -119,7 +136,7 @@
                       target="_blank"
                       [href]="Global.BACKEND_URL + item?.file_path"
                     >
-                      <span class="underline">attachment</span>
+                      <span class="underline">Attachment</span>
 
                       <mat-icon class="mx-1 text-sm text-green-500"
                         >download</mat-icon

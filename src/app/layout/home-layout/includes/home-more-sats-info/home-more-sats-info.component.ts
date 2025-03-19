@@ -140,6 +140,7 @@ export class HomeMoreSatsInfoComponent {
       this.master.saveMoreSatsData(formData).subscribe({
         next: (response) => {
           this.toastr.success('Data Saved Successfully!', '', { timeOut: 1000 });
+          this.getMoreSatsListData();
           this.formGroup.enable();
         },
         error: (error) => {
@@ -155,25 +156,30 @@ export class HomeMoreSatsInfoComponent {
 
 
 
-  deleteItem(item?: any) {
-    const deletePayload = {
-      id: item?.value.id,
-      setting_id: this.satsList.setting_id,
-    };
-
-    this.master.deleteMoreSatsData(deletePayload)
-      .subscribe(
-        (response) => {
-
-          this.getMoreSatsListData();
-          this.formGroup.enable();
-        },
-        (error) => {
-
-          //  console.error('Error deleting item:', error);
-          this.formGroup.enable();
-        }
-      );
+  deleteItem(data?: any) {
+    if (data?.item?.id) {
+      const deletePayload = {
+        id: data?.item.id,
+        setting_id: this.satsList.setting_id,
+      };
+  
+      this.master.deleteMoreSatsData(deletePayload)
+        .subscribe(
+          (response) => {
+  
+            this.getMoreSatsListData();
+            this.formGroup.enable();
+          },
+          (error) => {
+  
+            //  console.error('Error deleting item:', error);
+            this.formGroup.enable();
+          }
+        );
+    }
+    else{
+      this.files.removeAt(data?.i)
+    }
   }
 
 }

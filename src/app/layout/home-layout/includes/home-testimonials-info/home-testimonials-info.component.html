@@ -41,7 +41,7 @@
                 <ng-select bindLabel="slug_name" 
                 formControlName="news" bindValue="id" 
                 (change)="onNewsChange($event)"
-                placeholder="Select News Item" [items]="newsList" 
+                placeholder="Select News Item (up to 3)" [items]="newsList" 
                 [multiple]="true">
 
                 </ng-select>
@@ -68,7 +68,7 @@
                 formControlName="client_tele" 
                 bindValue="id"
                 (change)="onClientChange($event)"
-                placeholder="Select Clients (up to 3)" 
+                placeholder="Select Clients (up to 4)" 
                 [items]="client_teleList" 
                 [multiple]="true">
               </ng-select>

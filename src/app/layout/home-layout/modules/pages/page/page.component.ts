@@ -68,7 +68,7 @@ export class PageComponent {
       id: [null, Validators.required],
       heading_txt_1: [null],
       heading_txt: [null, Validators.required],
-      description: [null],
+      description: [''],
       count_data: [null],
       count_data_txt: [null],
       count_data_1_data: [null],
@@ -84,7 +84,7 @@ export class PageComponent {
     this.middleAboutTextForm = this.fb.group({
       id: [null, Validators.required],
       heading: [null, Validators.required],
-      description: [null, Validators.required],
+      description: ['', Validators.required],
       button_name: [null],
       details_link: [null],
     });

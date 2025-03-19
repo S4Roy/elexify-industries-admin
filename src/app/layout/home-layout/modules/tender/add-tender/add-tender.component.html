@@ -322,7 +322,7 @@
     </div>
     <div class="flex items-center">
       <span>Corrigendum Tender?</span>
-      <mat-radio-group
+      <mat-radio-group (change)="onCorrigendumTenderToogle()"
         formControlName="corrigendum_tender"
         class="mx-2"
         aria-label="Select an option"

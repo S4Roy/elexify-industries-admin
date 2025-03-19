@@ -62,7 +62,7 @@ export class AddClienteleComponent implements OnInit {
       client_name: [null, Validators.required],
       company_name: [null, Validators.required],
       designation: [null, Validators.required],
-      description: [null, Validators.required],
+      description: ['', Validators.required],
       client_feedback: [null],
       status: ['active', Validators.required],
       file: [null, Validators.required], // Form control for the image
@@ -72,7 +72,7 @@ export class AddClienteleComponent implements OnInit {
       this.formGroup.patchValue({
         client_name: this.data?.client_name ?? null,
         company_name: this.data?.company_name ?? null,
-        description: this.data?.description ?? null,
+        description: this.data?.description ?? '',
         client_feedback: this.data?.client_feedback ?? null,
         designation: this.data?.designation ?? null,
         status: this.data?.status ?? 'active',
@@ -92,7 +92,7 @@ export class AddClienteleComponent implements OnInit {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       this.formGroup.disable();
-      let formData = this.formGroup.getRawValue();
+      let formData = this.formGroup.getRawValue();      
       if (this.data?.id) {
         formData.id = this.data.id;
       }

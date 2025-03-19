@@ -70,7 +70,7 @@ export class AddNewsEventComponent implements OnInit {
       title: [null, Validators.required],
       type: [null, Validators.required],
       short_description: [null,Validators.required],
-      description: [null, Validators.required],
+      description: ['', Validators.required],
       website_link: [null],
       published_at: [null, Validators.required],
       status: [null, Validators.required],

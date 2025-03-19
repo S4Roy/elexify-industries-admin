@@ -2,6 +2,8 @@
 
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import {  Editor, Toolbar } from 'ngx-editor';
+
 import { environment } from '../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { ElementRef } from '@angular/core';
@@ -12,7 +14,16 @@ export const MAX_AMOUNT = 9999999.99;
 export const CUURENT_YEAR = new Date().getFullYear();
 export const CUURENT_MONTH = new Date().getMonth() + 1;
 export const MAX_DATE = new Date();
-
+export const toolbar: Toolbar = [
+  ['bold', 'italic'],
+  ['underline', 'strike'],
+  ['code', 'blockquote'],
+  ['ordered_list', 'bullet_list'],
+  [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+  ['link', 'image'],
+  ['text_color', 'background_color'],
+  ['align_left', 'align_center', 'align_right', 'align_justify'],
+];
 export const STATUS = {
   ROLLBACK: 'ROLLBACK',
   RESCHEDULE_REQUEST: 'RESCHEDULE REQUEST',

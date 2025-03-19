@@ -67,7 +67,7 @@ export class WhyAiSatsComponent {
       id: [null, Validators.required],
       title: [null],
       heading_txt: [null, Validators.required],
-      content: [null, Validators.required],
+      content: ['', Validators.required],
       is_fdel: ['n'],
       file: [null],
       file_preview: [null],
@@ -109,11 +109,11 @@ export class WhyAiSatsComponent {
     });
     this.clientForm = this.fb.group({
       id: [null, Validators.required],
-      clients: [null, Validators.required],
+      clients: [null],
     });
     this.reviewForm = this.fb.group({
       id: [null, Validators.required],
-      client_review: [null, Validators.required],
+      client_review: [null],
     });
 
     this.fetchAboutPage();

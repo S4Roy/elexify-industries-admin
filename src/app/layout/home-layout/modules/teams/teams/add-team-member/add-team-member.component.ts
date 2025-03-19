@@ -61,7 +61,7 @@ export class AddTeamMemberComponent {
     this.formGroup = this.fb.group({
       designation: [null, Validators.compose([Validators.required])],
       member_name: [null, Validators.compose([Validators.required])],
-      description: [null, Validators.compose([Validators.required])],
+      description: ['', Validators.compose([Validators.required])],
       facebook_link: [null],
       linkedin_link: [null],
       twitter_link: [null],
@@ -105,7 +105,7 @@ export class AddTeamMemberComponent {
         this.formGroup.patchValue({
           member_name: res?.member_name,
           designation: res?.designation,
-          description: res?.description,
+          description: res?.description??"",
           facebook_link: res?.facebook_link,
           linkedin_link: res?.linkedin_link,
           twitter_link: res?.twitter_link,

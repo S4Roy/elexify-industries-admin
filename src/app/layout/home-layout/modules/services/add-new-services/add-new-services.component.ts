@@ -61,7 +61,7 @@ export class AddNewServicesComponent {
     this.editor = new Editor();
     this.formGroup = this.fb.group({
       name: [null, Validators.required],
-      description: [null, Validators.required],
+      description: ['', Validators.required],
       caption_text: [null],
       status: [null, Validators.required],
       file: [null, Validators.required], // Form control for the image
@@ -70,7 +70,7 @@ export class AddNewServicesComponent {
     if (data) {
       this.formGroup.patchValue({
         name: this.data?.name ?? null,
-        description: this.data?.description ?? null,
+        description: this.data?.description ?? '',
         caption_text: this.data?.caption_text ?? null,
         status: this.data?.status ?? 'active',
         file_preview: this.data?.file_path

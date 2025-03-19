@@ -64,7 +64,7 @@ export class AddAwardsComponent implements OnInit {
 
     this.formGroup = this.fb.group({
       title: [null, Validators.required],
-      description: [null, Validators.required],
+      description: ['', Validators.required],
       website_link: [null],
       status: ['active', Validators.required],
       file: [null, Validators.required], // Form control for the image
@@ -73,7 +73,7 @@ export class AddAwardsComponent implements OnInit {
     if (data) {
       this.formGroup.patchValue({
         title: this.data?.title ?? null,
-        description: this.data?.description ?? null,
+        description: this.data?.description ?? '',
         website_link: this.data?.website_link ?? null,
         status: this.data?.status ?? 'active',
         file_preview: this.data?.award_images?.length

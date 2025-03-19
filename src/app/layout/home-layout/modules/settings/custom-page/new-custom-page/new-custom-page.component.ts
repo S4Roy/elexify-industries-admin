@@ -49,7 +49,7 @@ export class NewCustomPageComponent {
     this.formGroup = this.fb.group({
       page_id: [null],
       title: [null, Validators.required],
-      content: [null, Validators.required],
+      content: ['', Validators.required],
       status: ['active', Validators.required],
     });
     if (this.id) {
@@ -63,7 +63,7 @@ export class NewCustomPageComponent {
     this.settingService.customPageDetails(params).subscribe({
       next: (res: any) => {
         this.formGroup.patchValue({
-          content: res?.page_content ?? null,
+          content: res?.page_content ?? '',
           page_id: res?.page_id ?? null,
           title: res?.page_title ?? null,
           status: res?.status ?? null,
