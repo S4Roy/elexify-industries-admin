@@ -153,7 +153,7 @@ export class HomeCareerSectionInfoCardComponent {
           file_certificates: crt,
           id: res?.setting_id
         });
-        this.imagePreview = Global.BACKEND_URL+ res?.file_path
+        this.imagePreview = res?.file_path?Global.BACKEND_URL+ res?.file_path:null
         this.imagePreview2 = crt[0] != "" && crt[0] != null ? (Global.BACKEND_URL+crt[0]) : null;
         // this.imagePreview2 = res?.certifcates?.map((x:any)=>{
         //   return x.file_path;
