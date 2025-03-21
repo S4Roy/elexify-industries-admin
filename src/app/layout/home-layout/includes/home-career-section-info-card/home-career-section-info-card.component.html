@@ -41,7 +41,7 @@
                         <app-menu [delete]="'gg'" (deleteItem)="deleteItem1($event)"></app-menu>
                     </span>
                     <ng-container *ngIf="!imagePreview">
-                        <label class="flex flex-col items-center justify-center">
+                        <label class="flex flex-col items-center justify-center cursor-pointer">
                             <img src="assets/placeholder-image-outline.png" alt="Upload Image" />
                             <div *ngIf="!isSubmitted || !hasError " class="text-center text-red-600 font-normal italic">
                                 <!-- <div style="color: red;">Upload Image For Certificates</div> -->
@@ -67,7 +67,7 @@
                         <app-menu [delete]="'gg'" (deleteItem)="deleteItem2($event)"></app-menu>
                     </span>
                     <ng-container *ngIf="!imagePreview2">
-                        <label class="flex flex-col items-center justify-center">
+                        <label class="flex flex-col items-center justify-center cursor-pointer">
                             <img src="assets/placeholder-image-outline.png" alt="Upload Image" />
                             <!-- <div style="text-align: left;">Upload Image For Certificates</div> -->
 
