@@ -16,7 +16,10 @@
               </button>
             </h2>
           </div>
-          <div class="relative my-3 flex-1 px-4 sm:px-6">
+            <div
+            style="height: calc(100vh - 200px); overflow-y: auto"
+            class="relative my-3 flex-1 px-4 sm:px-6"
+          >
             <form class="space-y-1" [formGroup]="formGroup">
               <div>
                 <label class="block text-sm/6 font-medium text-gray-900"
@@ -95,7 +98,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="h-60">
+              <div class="h-60 border rounded">
                 <div
                   class="w-full h-full rounded flex items-center justify-center relative"
                 >
@@ -122,11 +125,14 @@
                     >
                       <img src="assets/placeholder-image-outline.png" alt="" />
                       <div>Upload Media File Here</div>
-                      <div class="text-center text-red-600 font-normal italic">
+                      <!-- <div class="text-center text-red-600 font-normal italic">
                         Accepts the following file types: .png, .jpg.
-                      </div>
+                      </div> -->
                     </div>
                   </ng-container>
+                </div>
+                <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+                  Recommended file size: 3970 pixels in width and 2109 pixels in height.
                 </div>
                 <input
                   type="file"
@@ -146,13 +152,15 @@
               </div>
             </form>
           </div>
-          <button
-            (click)="onSubmit()"
-            [disabled]="formGroup.disabled"
-            class="save-button"
-          >
-            {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
-          </button>
+          <div>
+            <button
+              (click)="onSubmit()"
+              [disabled]="formGroup.disabled"
+              class="flex border w-full justify-center px-3 py-3 text-green-500"
+            >
+              {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
+            </button>
+          </div>
         </div>
       </div>
     </div>

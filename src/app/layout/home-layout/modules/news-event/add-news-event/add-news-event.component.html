@@ -310,7 +310,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="h-60 border">
+              <div class="h-60 border rounded">
                 <div
                   class="w-full h-full rounded flex items-center justify-center relative"
                 >
@@ -337,11 +337,14 @@
                     >
                       <img src="assets/placeholder-image-outline.png" alt="" />
                       <div>Upload Image Here</div>
-                      <div class="text-center text-red-600 font-normal italic">
+                      <!-- <div class="text-center text-red-600 font-normal italic">
                         Accepts the following file types: .png, .jpg.
-                      </div>
+                      </div> -->
                     </div>
                   </ng-container>
+                </div>
+                <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+                  Recommended file size: 4096 pixels in width and 2296 pixels in height.
                 </div>
                 <input
                   type="file"
