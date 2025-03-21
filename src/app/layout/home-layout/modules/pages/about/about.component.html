@@ -780,7 +780,7 @@
         >
           <span
             *ngIf="careerCtaForm.value.files_preview?.length"
-            class="absolute right-2 top-2 bg-white rounded-sm"
+            class="absolute right-0 -top-10 border bg-white rounded-sm"
           >
             <app-menu
               [modalItem]="true"
@@ -788,7 +788,7 @@
             ></app-menu>
           </span>
           <ng-container *ngIf="careerCtaForm.value.files_preview?.length">
-            <div class="grid grid-col-3 gap-2">
+            <div class="w-full grid grid-cols-2 gap-2">
               <ng-container
                 *ngFor="let file of careerCtaForm.value.files_preview"
               >
@@ -803,7 +803,7 @@
                     ></app-menu>
                   </span>
                   <img
-                    class="rounded-md w-full bg-gray-200 object-contain h-20"
+                    class="rounded-md w-full bg-gray-200 object-cover h-36"
                     [src]="file?.file_path"
                     alt="Image"
                   />
@@ -819,7 +819,7 @@
               <img src="assets/placeholder-image-outline.png" alt="" />
               <div>Upload Image Here</div>
               <div class="text-center text-red-600 font-normal italic">
-                Maximum size limit is 5 MB
+                Maximum size limit is 15 MB
               </div>
             </div>
           </ng-container>
