@@ -60,10 +60,14 @@
             <img src="assets/placeholder-image-outline.png" alt="" />
             <div>Upload Banner Image Here</div>
             <div class="text-center text-red-600 font-normal italic">
-              Mimimum size required 1920 width 640 height
+              <!-- Mimimum size required 1920 width 640 height -->
+              Recommended file size: 1920 pixels in width and 640 pixels in height.
             </div>
           </div>
         </ng-container>
+      </div>
+      <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+        Recommended file size: 1920 pixels in width and 640 pixels in height.
       </div>
       <input
         type="file"
@@ -730,8 +734,11 @@
           />
         </div>
       </div>
-
-      <hr />
+      <!-- <hr /> -->
+      <div class="w-full text-sm pl-3" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+        Recommended file size: 110 pixels in width and 112 pixels in height.
+      </div>
+      
       <div class="flex mt-3 justify-end">
         <button
           (click)="onAwardsTextSubmit()"
@@ -796,6 +803,9 @@
                 )
               "
             />
+          </div>
+          <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+            Recommended file size: 2121 pixels in width and 1414 pixels in height.
           </div>
         </div>
         <div class="w-3/5 bg-white p-3 rounded">
@@ -1587,8 +1597,11 @@
             />
           </div>
         </div>
+        <div class="w-full text-sm pl-3" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+          Recommended file size: 73 pixels in width and 73 pixels in height.
+        </div>
       </div>
-      <hr />
+      <!-- <hr /> -->
       <div class="flex mt-3 justify-end">
         <button
           (click)="onBottomTextSubmit()"
