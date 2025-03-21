@@ -60,7 +60,8 @@
             <img src="assets/placeholder-image-outline.png" alt="" />
             <div>Upload Banner Image Here</div>
             <div class="text-center text-red-600 font-normal italic">
-              Mimimum size required 1920 width 640 height
+              <!-- Mimimum size required 1920 width 640 height -->
+              Recommended file size: 1920 pixels in width and 640 pixels in height.
             </div>
           </div>
         </ng-container>
@@ -81,7 +82,9 @@
         "
       />
     </div>
-    <hr />
+    <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+      Recommended file size: 1920 pixels in width and 640 pixels in height.
+    </div>
     <div class="flex mt-3 justify-end">
       <button
         (click)="onBannerSubmit()"
@@ -115,7 +118,9 @@
                 [src]="aboutTextForm.value.file_preview"
                 alt="Banner Image"
               />
+              
             </ng-container>
+            
             <ng-container *ngIf="!aboutTextForm.value.file_preview">
               <div
                 class="flex flex-col items-center justify-center"
@@ -123,12 +128,15 @@
               >
                 <img src="assets/placeholder-image-outline.png" alt="" />
                 <div>Upload Image Here</div>
-                <div class="text-center text-red-600 font-normal italic">
+                <!-- <div class="text-center text-red-600 font-normal italic">
                   Mimimum size required 1920 width 640 height
-                </div>
+                </div> -->
               </div>
             </ng-container>
           </div>
+          <div class="w-full text-sm pt-3" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+            Recommended file size: 2926 pixels in width and 3449 pixels in height.
+         </div>
           <input
             type="file"
             #aboutTextFormFile
@@ -493,7 +501,7 @@
               <img src="assets/placeholder-image-outline.png" alt="" />
               <div>Upload Image Here</div>
               <div class="text-center text-red-600 font-normal italic">
-                Mimimum size required 1920 width 640 height
+                <!-- Mimimum size required 1920 width 640 height -->
               </div>
             </div>
           </ng-container>
@@ -513,6 +521,11 @@
             )
           "
         />
+        <div class="relative">
+          <div class="w-full text-sm absolute bottom-0 p-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+            Recommended file size: 442 pixels in width and 986 pixels in height.
+          </div>
+        </div>
       </div>
       <div class="w-1/5 grow">
         <div class="flex flex-col justify-between h-full">
@@ -543,9 +556,9 @@
                 >
                   <img src="assets/placeholder-image-outline.png" alt="" />
                   <div>Upload Image Here</div>
-                  <div class="text-center text-red-600 font-normal italic">
+                  <!-- <div class="text-center text-red-600 font-normal italic">
                     Mimimum size required 1920 width 640 height
-                  </div>
+                  </div> -->
                 </div>
               </ng-container>
             </div>
@@ -564,6 +577,11 @@
                 )
               "
             />
+          </div>
+          <div class="relative">
+            <div class="w-full text-sm absolute bottom-0 p-3" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+              Recommended file size: 442 pixels in width and 986 pixels in height.
+            </div>
           </div>
           <div>
             <mat-form-field>
