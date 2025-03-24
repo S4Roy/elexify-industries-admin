@@ -61,7 +61,7 @@
             <div>Upload Banner Image Here</div>
             <div class="text-center text-red-600 font-normal italic">
               <!-- Mimimum size required 1920 width 640 height -->
-              Recommended file size: 1920 pixels in width and 640 pixels in height.
+              Recommended file size: 1440 pixels in width and 440 pixels in height.
             </div>
           </div>
         </ng-container>
@@ -83,7 +83,7 @@
       />
     </div>
     <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
-      Recommended file size: 1920 pixels in width and 640 pixels in height.
+      Recommended file size: 1440 pixels in width and 440 pixels in height.
     </div>
     <div class="flex mt-3 justify-end">
       <button
@@ -136,7 +136,7 @@
           </div>
           <div class="w-full text-sm pt-3" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
             Recommended file size: 2926 pixels in width and 3449 pixels in height.
-         </div>
+          </div>
           <input
             type="file"
             #aboutTextFormFile
@@ -523,64 +523,67 @@
         />
         <div class="relative">
           <div class="w-full text-sm absolute bottom-0 p-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
-            Recommended file size: 442 pixels in width and 986 pixels in height.
+            Recommended file size: 612 pixels in width and 813 pixels in height.
           </div>
         </div>
       </div>
       <div class="w-1/5 grow">
-        <div class="flex flex-col justify-between h-full">
-          <div class="h-96 py-3 px-1">
-            <div
-              class="w-full border h-full rounded flex items-center justify-center relative"
-            >
-              <span
-                *ngIf="excellenceForm.value.file_1_preview"
-                class="absolute right-2 top-2 bg-white rounded-sm"
+        <div class="flex flex-col  justify-between h-full">
+          <div class="border p-3 flex flex-col">
+            <div class="h-84 py-3 px-1">
+              <div
+                class="w-full h-full rounded flex items-center justify-center relative"
               >
-                <app-menu
-                  [modalItem]="true"
-                  (initModal)="excellenceFormFile1.click()"
-                ></app-menu>
-              </span>
-              <ng-container *ngIf="excellenceForm.value.file_1_preview">
-                <img
-                  class="rounded-md w-full bg-gray-200 object-cover h-60"
-                  [src]="excellenceForm.value.file_1_preview"
-                  alt="Banner Image"
-                />
-              </ng-container>
-              <ng-container *ngIf="!excellenceForm.value.file_1_preview">
-                <div
-                  class="flex flex-col items-center justify-center"
-                  (click)="excellenceFormFile1.click()"
+                <span
+                  *ngIf="excellenceForm.value.file_1_preview"
+                  class="absolute right-2 top-2 bg-white rounded-sm"
                 >
-                  <img src="assets/placeholder-image-outline.png" alt="" />
-                  <div>Upload Image Here</div>
-                  <!-- <div class="text-center text-red-600 font-normal italic">
-                    Mimimum size required 1920 width 640 height
-                  </div> -->
-                </div>
-              </ng-container>
+                  <app-menu
+                    [modalItem]="true"
+                    (initModal)="excellenceFormFile1.click()"
+                  ></app-menu>
+                </span>
+                <ng-container *ngIf="excellenceForm.value.file_1_preview">
+                  <img
+                    class="rounded-md w-full bg-gray-200 object-cover h-60"
+                    [src]="excellenceForm.value.file_1_preview"
+                    alt="Banner Image"
+                  />
+                </ng-container>
+                <ng-container *ngIf="!excellenceForm.value.file_1_preview">
+                  <div
+                    class="flex flex-col items-center justify-center"
+                    (click)="excellenceFormFile1.click()"
+                  >
+                    <img src="assets/placeholder-image-outline.png" alt="" />
+                    <div>Upload Image Here</div>
+                    <!-- <div class="text-center text-red-600 font-normal italic">
+                      Mimimum size required 1920 width 640 height
+                    </div> -->
+                  </div>
+                </ng-container>
+              </div>
+              <input
+                type="file"
+                #excellenceFormFile1
+                hidden
+                (change)="
+                  Global.onFileSelected(
+                    excellenceForm,
+                    $event,
+                    'file_1',
+                    toastr,
+                    ['image/jpeg', 'image/png'],
+                    'file_1_preview'
+                  )
+                "
+              />
+              
             </div>
-            <input
-              type="file"
-              #excellenceFormFile1
-              hidden
-              (change)="
-                Global.onFileSelected(
-                  excellenceForm,
-                  $event,
-                  'file_1',
-                  toastr,
-                  ['image/jpeg', 'image/png'],
-                  'file_1_preview'
-                )
-              "
-            />
-          </div>
-          <div class="relative">
-            <div class="w-full text-sm absolute bottom-0 p-3" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
-              Recommended file size: 442 pixels in width and 986 pixels in height.
+            <div class="block">
+              <div class="w-full text-sm p-3 text-center" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+                Recommended file size: 489 pixels in width and 579 pixels in height.
+              </div>
             </div>
           </div>
           <div>
@@ -777,7 +780,7 @@
         >
           <span
             *ngIf="careerCtaForm.value.files_preview?.length"
-            class="absolute right-2 top-2 bg-white rounded-sm"
+            class="absolute right-0 -top-10 border bg-white rounded-sm"
           >
             <app-menu
               [modalItem]="true"
@@ -785,7 +788,7 @@
             ></app-menu>
           </span>
           <ng-container *ngIf="careerCtaForm.value.files_preview?.length">
-            <div class="grid grid-col-3 gap-2">
+            <div class="w-full grid grid-cols-2 gap-2">
               <ng-container
                 *ngFor="let file of careerCtaForm.value.files_preview"
               >
@@ -800,7 +803,7 @@
                     ></app-menu>
                   </span>
                   <img
-                    class="rounded-md w-full bg-gray-200 object-contain h-20"
+                    class="rounded-md w-full bg-gray-200 object-cover h-36"
                     [src]="file?.file_path"
                     alt="Image"
                   />
@@ -816,7 +819,7 @@
               <img src="assets/placeholder-image-outline.png" alt="" />
               <div>Upload Image Here</div>
               <div class="text-center text-red-600 font-normal italic">
-                Maximum size limit is 5 MB
+                Maximum size limit is 15 MB
               </div>
             </div>
           </ng-container>
@@ -837,7 +840,14 @@
             )
           "
         />
+        
       </div>
+      
+    </div>
+    <div class="flex mt-3 justify-end">
+        <div class="w-2/5 text-sm p-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+          Recommended file size: 200 pixels in width and 200 pixels in height.
+        </div>
     </div>
     <hr />
     <div class="flex mt-3 justify-end">

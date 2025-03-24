@@ -60,7 +60,8 @@
             <img src="assets/placeholder-image-outline.png" alt="" />
             <div>Upload Banner Image Here</div>
             <div class="text-center text-red-600 font-normal italic">
-              Mimimum size required 1920 width 640 height
+              <!-- Mimimum size required 1920 width 640 height -->
+              Recommended file size: 1440 pixels in width and 440 pixels in height.
             </div>
           </div>
         </ng-container>
@@ -81,7 +82,9 @@
         "
       />
     </div>
-    <hr />
+    <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+      Recommended file size: 1440 pixels in width and 440 pixels in height.
+    </div>
     <div class="flex mt-3 justify-end">
       <button
         (click)="onBannerSubmit()"
@@ -102,7 +105,7 @@
           >
             <span
               *ngIf="aboutTextForm.value.file_preview"
-              class="absolute right-2 top-2"
+              class="absolute right-2 top-2 bg-white border rounded"
             >
               <app-menu
                 [modalItem]="true"
@@ -124,10 +127,13 @@
                 <img src="assets/placeholder-image-outline.png" alt="" />
                 <div>Upload Image Here</div>
                 <div class="text-center text-red-600 font-normal italic">
-                  Mimimum size required 1920 width 640 height
+                  Mimimum size required 2121 width 1414 height
                 </div>
               </div>
             </ng-container>
+          </div>
+          <div class="w-full text-sm pt-3" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+            Recommended file size: 2121 pixels in width and 1414 pixels in height.
           </div>
           <input
             type="file"

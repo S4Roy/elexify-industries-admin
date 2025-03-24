@@ -131,7 +131,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="border relative">
+              <div class="border relative rounded">
                 <div
                   class="w-full bg-white p-5 h-full rounded flex items-center justify-center"
                 >
@@ -161,13 +161,13 @@
                           <!-- <div>Upload Image Here</div> -->
                           <div style="color: red">
                             <!-- Minimum size required: 1920 width x 640 height -->
-                            Recommended file size: 1920 pixels in width and 640 pixels in height.
+                            <!-- Recommended file size: 1920 pixels in width and 640 pixels in height. -->
                           </div>
                           <div class="mb-3"></div>
                           <div class="mb-3"></div>
-                          <div style="color: red">
+                          <!-- <div style="color: red">
                             Upload files in .png, .jpg, .jpeg formats only
-                          </div>
+                          </div> -->
                         </div>
 
                         <div
@@ -215,6 +215,9 @@
                     />
                   </div>
                 </div>
+              </div>
+              <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
+                Recommended file size: 1920 pixels in width and 640 pixels in height.
               </div>
               <mat-error
                 *ngIf="
