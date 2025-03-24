@@ -61,7 +61,7 @@ export class AuthService {
         this.encrypt(JSON.stringify(user))
       );
     }
-    this.router.navigate(['admin/dashboard']);
+    this.router.navigate(['dashboard']);
   }
   getUserToken() {
     let token = localStorage.getItem(this.USER_TOKEN_KEY);

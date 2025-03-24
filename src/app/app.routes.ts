@@ -166,6 +166,22 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'activity-log',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/activity-log/activity-log.module').then(
+        (m) => m.ActivityLogModule
+      ),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'content-approvals',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/content-approvals/content-approvals.module').then(
+        (m) => m.ContentApprovalsModule
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     component: P404Component,
     data: {

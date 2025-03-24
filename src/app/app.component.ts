@@ -6,9 +6,9 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { filter } from 'rxjs';
-import { HelpersService } from './core/services/helpers.service';
+import { HelpersService } from 'app/core/services/helpers.service';
 import { Title } from '@angular/platform-browser';
-import * as Global from './global';
+import * as Global from 'app/global';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({

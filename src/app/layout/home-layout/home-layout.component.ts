@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from './includes/header/header.component';
 import { SideNavComponent } from './includes/side-nav/side-nav.component';
 import { RouterModule } from '@angular/router';
-import { NavService } from '../../core/services/nav.service';
+import { NavService } from 'app/core/services/nav.service';
 import { BreadcumsComponent } from './includes/breadcums/breadcums.component';
-import { HelpersService } from '../../core/services/helpers.service';
+import { HelpersService } from 'app/core/services/helpers.service';
 
 @Component({
   selector: 'app-home-layout',
