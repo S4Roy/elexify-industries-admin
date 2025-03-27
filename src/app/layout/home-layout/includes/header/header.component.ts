@@ -67,9 +67,7 @@ export class HeaderComponent {
       .afterClosed()
       .subscribe((res: any) => {
         if (res) {
-          if (res) {
             this.fetchNotificationList()
-          }
         }
       });
   }

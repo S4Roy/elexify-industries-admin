@@ -1,7 +1,11 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import PaginationOptions from 'app/core/models/PaginationOptions';
 import { ApiService } from 'app/core/services/api.service';
@@ -9,12 +13,19 @@ import { AuthService } from 'app/core/services/auth.service';
 import { DialogService } from 'app/core/services/dialog.service';
 import { HelpersService } from 'app/core/services/helpers.service';
 import * as Global from 'app/global';
-import { ConfirmDialogData } from '../../confirm-dialog/confirm-dialog.component';
-import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { PaginationComponent } from '../../pagination/pagination.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-notifications',
-  imports: [NgIf, MatDialogModule, MatIconModule, MatButtonModule,NgFor,PaginationComponent],
+  imports: [
+    NgIf,
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
+    NgFor,
+    PaginationComponent,
+    MatTooltipModule,
+  ],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss',
 })
@@ -27,7 +38,7 @@ export class NotificationsComponent {
 
   constructor(
     public helperService: HelpersService,
-    private dialogService: DialogService,
+    private dialogRef: MatDialogRef<NotificationsComponent>,
     private authService: AuthService,
     private apiService: ApiService,
     private dialog: MatDialog
@@ -46,7 +57,7 @@ export class NotificationsComponent {
     });
   }
   notificationMarkAllAsRead() {
-    this.apiService.notificationMarkAllAsRead({ }).subscribe({
+    this.apiService.notificationMarkAllAsRead({}).subscribe({
       next: (res: any) => {
         this.fetchNotificationList();
       },
@@ -59,8 +70,15 @@ export class NotificationsComponent {
     }
     this.apiService.notificationList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records,total_unread_record } = res;
-        this.total_unread_record=total_unread_record
+        const {
+          results,
+          limit,
+          page,
+          total_pages,
+          total_records,
+          total_unread_record,
+        } = res;
+        this.total_unread_record = total_unread_record;
         this.item_list = results ?? [];
         this.paginationOption = { limit, page, total_pages, total_records };
       },
@@ -78,5 +96,8 @@ export class NotificationsComponent {
   onPageChange(data: any) {
     this.paginationOption.page = data;
     this.fetchNotificationList();
+  }
+  close() {
+    this.dialogRef.close(true);
   }
 }

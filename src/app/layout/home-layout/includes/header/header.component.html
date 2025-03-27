@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="open-outlet flex justify-end items-center">
-        <mat-icon [matBadgeHidden]="!total_unread_record" [matBadge]="total_unread_record" class="mx-4 cursor-pointer" (click)="showNotifications()">notifications</mat-icon>
+        <mat-icon matBadgeColor="warn" [matBadgeHidden]="!total_unread_record" [matBadge]="total_unread_record" class="mx-4 cursor-pointer" (click)="showNotifications()">notifications</mat-icon>
 
         <!-- Profile dropdown -->
         <div class="">
