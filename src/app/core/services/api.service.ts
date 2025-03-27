@@ -537,4 +537,13 @@ export class ApiService {
       'api/Authentication/HRMSLoginVerify?' + params.toString()
     );
   }
+  notificationList(params: any) {
+    return this.httpService.get(`admin/notification/list?${params.toString()}`);
+  }
+  notificationMarkAsRead(payload: any) {
+    return this.httpService.post(`admin/notification/mark-read`, payload);
+  }
+  notificationMarkAllAsRead(payload: any) {
+    return this.httpService.post(`admin/notification/mark-read-all`, payload);
+  }
 }
