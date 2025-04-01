@@ -238,4 +238,22 @@ export class MasterService {
   deleteClientele(payload: any) {
     return this.httpService.post(`admin/clientele/delete`, payload);
   }
+  latestAnnouncementList(params: any) {
+    return this.httpService.get(`admin/dashboard/latest-announcement?${params.toString()}`);
+  }
+  contentApprovalList(params: any) {
+    return this.httpService.get(`admin/content-approval/list?${params.toString()}`);
+  }
+  contentApprovalDetails(id: any) {
+    return this.httpService.get(`admin/content-approval/details/${id.toString()}`);
+  }
+  contentApprovalChangeRequestStatus(payload:any){
+    return this.httpService.post(`admin/content-approval/change-request-status`, payload);
+  }
+  activityList(params: any) {
+    return this.httpService.get(`admin/activity/list?${params.toString()}`);
+  }
+  activityDetails(id: any) {
+    return this.httpService.get(`admin/activity/details/${id.toString()}`);
+  }
 }

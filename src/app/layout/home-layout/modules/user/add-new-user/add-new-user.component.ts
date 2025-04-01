@@ -62,6 +62,7 @@ export class AddNewUserComponent {
       role_id: [null, Validators.compose([Validators.required])],
       name: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])],
+      status: ['active', Validators.compose([Validators.required])],
     });
     this.userTypeList()
     if (this.data?.id) {
@@ -111,6 +112,7 @@ export class AddNewUserComponent {
           name: res?.name,
           email: res?.email,
           role_id: res?.role_id,
+          status: res?.status,
         });
         this.formGroup.get('password')?.clearValidators();
         this.formGroup.get('password')?.updateValueAndValidity();

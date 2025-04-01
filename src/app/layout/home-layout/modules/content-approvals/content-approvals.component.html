@@ -20,23 +20,22 @@
         >
           <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr class="sticky">
-              <th scope="col">title</th>
               <th scope="col">action type</th>
-              <th scope="col">request from</th>
+              <th scope="col">request for</th>
+              <th scope="col">request form</th>
               <th scope="col">date</th>
-              <th scope="col">Remarks</th>
+              <th scope="col">Comments</th>
+              <th class="text-center">Status</th>
               <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
             <ng-container *ngFor="let item of item_list; let i = index">
               <tr>
+               
+                <td>{{ item?.display_action_type }}</td>
                 <td>
-                 
-                </td>
-                <td>{{ item?.purpose_type }}</td>
-                <td>
-                    {{ item?.name }}
+                    {{ item?.request_for }}
                   <!-- <ng-container
                     *ngIf="
                       item?.message?.length < 60 || showMore[i];
@@ -57,36 +56,42 @@
                     {{ showMore[i] ? "" : "read more" }}
                   </a> -->
                 </td>
+                <td>
+                  {{item?.request_from}}
+                </td>
                 <td>{{ item?.created_at  | date : "dd-MM-yyyy HH:mm a"  }}</td>
                 <td>
                   <ng-container
                     *ngIf="
-                      item?.remarks?.length < 60 || showRemarksMore[i];
+                      item?.comment?.length < 60 || showRemarksMore[i];
                       else shortRemarksContent
                     "
                   >
-                    {{ item?.remarks }}
+                    {{ item?.comment }}
                   </ng-container>
                   <ng-template #shortRemarksContent>
-                    {{ item?.remarks.slice(0, 60) }}...
+                    {{ item?.comment.slice(0, 60) }}...
                   </ng-template>
                   <a
                     class="text-blue-600"
                     href="javascript:void(0)"
-                    *ngIf="item?.remarks?.length >= 60"
+                    *ngIf="item?.comment?.length >= 60"
                     (click)="showRemarksMore[i] = !showRemarksMore[i]"
                   >
                     {{ showRemarksMore[i] ? "" : "read more" }}
                   </a>
                 </td>
                 <td class="text-center">
+                  <span [class]="item?.status">
+                    {{ item?.status }}
+                  </span>
+                </td>
+                <td class="text-center">
                   <app-menu
-                    [modalButtonText]="'Remarks'"
-                    [modalButtonIcon]="'chat'"
+                    [modalButtonText]="'Details'"
+                    [modalButtonIcon]="'info'"
                     [modalItem]="permissions.includes('edit') ? item : null"
-                    [delete]="permissions.includes('delete') ? item : null"
                     (initModal)="addItem($event)"
-                    (deleteItem)="deleteItem($event)"
                   ></app-menu>
                 </td>
               </tr>

@@ -177,28 +177,49 @@
                   </mat-form-field>
                 </div>
               </div>
-              <!-- <div class="mt-2">
-                <mat-form-field>
-                  <mat-select
-                    placeholder="Select"
-                    formControlName="status"
-                    matInput
-                    [class.is-invalid]="
-                      !Global.isInputValid(formGroup, 'status')
-                    "
-                  >
-                    <mat-option value="active">Active</mat-option>
-                    <mat-option value="inactive">Inactive</mat-option>
-                  </mat-select>
-                  <mat-error
+              
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900"
+                  >Status
+                  <span
+                    class="text-red-500"
                     *ngIf="
-                      !Global.isInputRuleValid(formGroup, 'status', 'required')
+                      Global.isInputRuleAvailable(
+                        formGroup,
+                        'status',
+                        'required'
+                      )
                     "
+                    >*</span
                   >
-                    This field is required
-                  </mat-error>
-                </mat-form-field>
-              </div> -->
+                </label>
+                <div class="mt-2">
+                  <mat-form-field>
+                    <mat-select
+                      placeholder="Select"
+                      formControlName="status"
+                      matInput
+                      [class.is-invalid]="
+                        !Global.isInputValid(formGroup, 'status')
+                      "
+                    >
+                      <mat-option value="active">Active</mat-option>
+                      <mat-option value="inactive">Inactive</mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="
+                        !Global.isInputRuleValid(
+                          formGroup,
+                          'status',
+                          'required'
+                        )
+                      "
+                    >
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
             </form>
           </div>
           <div>

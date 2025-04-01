@@ -59,7 +59,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
 
         toastr.error(errorMessage); // Show the specific validation message
       } else {
-        toastr.error('Something went wrong.');
+        toastr.error(error.error?.error??'Something went wrong.');
       }
       return throwError(() => error);
     }),

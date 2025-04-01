@@ -12,20 +12,23 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { PaginationComponent } from 'app/layout/home-layout/includes/pagination/pagination.component';
 import { MenuComponent } from 'app/layout/home-layout/includes/menu/menu.component';
 import * as Global from 'app/global';
+import { AddTeamMemberComponent } from '../teams/teams/add-team-member/add-team-member.component';
 @Component({
   selector: 'app-content-approvals',
-  imports: [ NgFor,
+  imports: [
+    NgFor,
     NgIf,
     PaginationComponent,
     MenuComponent,
     FormsModule,
     MatIconModule,
-    DatePipe],
+    DatePipe,
+  ],
   templateUrl: './content-approvals.component.html',
-  styleUrl: './content-approvals.component.scss'
+  styleUrl: './content-approvals.component.scss',
 })
 export class ContentApprovalsComponent {
-Global = Global;
+  Global = Global;
   showMore: boolean[] = [];
   showRemarksMore: boolean[] = [];
   item_list: any = [];
@@ -43,7 +46,7 @@ Global = Global;
     this.paginationOption = Global.resetPaginationOptions();
     this.filterOption = Global.resetTableFilterOptions();
     this.checkPermission();
-    this.fetchServices();
+    this.fetchContentApprovalList();
   }
 
   ngOnInit(): void {
@@ -55,24 +58,34 @@ Global = Global;
       .subscribe((data: any) => {
         this.paginationOption = Global.resetPaginationOptions();
         this.filterOption.name = this.search_key;
-        this.fetchServices();
+        this.fetchContentApprovalList();
       });
   }
 
   addItem(data: any = null) {
-    // this.dialog
-    //   .open(AddEnquiryManagementComponent, {
-    //     data: data,
-    //     disableClose: true,
-    //   })
-    //   .afterClosed()
-    //   .subscribe((res: any) => {
-    //     if (res) {
-    //       this.fetchServices();
-    //     }
-    //   });
+    this.masterService.contentApprovalDetails(data.uuid).subscribe({
+      next: (res: any) => {
+        if (data.request_for === 'teams') {
+          this.dialog
+            .open(AddTeamMemberComponent, {
+              data: {
+                ...res?.changes_data,
+                previous_data: res?.previous_data,
+                request_details: res?.request_details,
+              },
+              disableClose: true,
+            })
+            .afterClosed()
+            .subscribe((res: any) => {
+              if (res) {
+                this.fetchContentApprovalList();
+              }
+            });
+        }
+      },
+    });
   }
-  fetchServices() {
+  fetchContentApprovalList() {
     let params = new URLSearchParams();
     if (this.filterOption.name) {
       params.set('name', this.filterOption.name);
@@ -80,7 +93,7 @@ Global = Global;
     if (this.paginationOption.page) {
       params.set('page', String(this.paginationOption.page));
     }
-    this.masterService.enquiryList(params).subscribe({
+    this.masterService.contentApprovalList(params).subscribe({
       next: (res: any) => {
         const { results, limit, page, total_pages, total_records } = res;
         this.item_list = results ?? [];
@@ -89,22 +102,13 @@ Global = Global;
       error: (err) => {},
     });
   }
-  deleteItem(item: any) {
-    this.masterService.deleteEnquiry({ id: item.id }).subscribe({
-      next: (res: any) => {
-        this.toastr.success(`Deleted Successfully`);
-        this.fetchServices();
-      },
-      error: (err: any) => {},
-    });
-  }
   onPageChange(data: any) {
     this.paginationOption.page = data;
-    this.fetchServices();
+    this.fetchContentApprovalList();
   }
   permissions: any = [];
   checkPermission() {
-    this.settingService.checkPermission({ sec: 'enquiry' }).subscribe({
+    this.settingService.checkPermission({ sec: 'content_approval' }).subscribe({
       next: (res: any) => {
         const { permissions } = res?.results[0];
         this.permissions = permissions;
@@ -115,6 +119,6 @@ Global = Global;
     this.search_key = null;
     this.paginationOption = Global.resetPaginationOptions();
     this.filterOption = Global.resetTableFilterOptions();
-    this.fetchServices();
+    this.fetchContentApprovalList();
   }
 }

@@ -172,6 +172,9 @@ button[disabled] {
   color: #666666;
   cursor: not-allowed;
 }
+td .rejected,
+td .approved,
+td .pending,
 td .active,
 td .inactive {
   --tw-bg-opacity: 1;
@@ -191,6 +194,15 @@ td .inactive {
   text-transform: uppercase;
 }
 td .inactive {
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
+  color: rgb(153 27 27 / var(--tw-text-opacity, 1)) /* #991b1b */;
+}
+td .pending {
+  background-color: #fef3c7;
+  color: #92400e
+}
+td .rejected
+{
   background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
   color: rgb(153 27 27 / var(--tw-text-opacity, 1)) /* #991b1b */;
 }

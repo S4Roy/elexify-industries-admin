@@ -9,6 +9,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
@@ -23,6 +24,7 @@ import * as Global from '../../../../../../global';
 import { SettingsService } from '../../../../../../core/services/settings.service';
 import { MenuComponent } from '../../../../includes/menu/menu.component';
 import { Editor, NgxEditorModule } from 'ngx-editor';
+import { ApproveContentComponent } from '../../../content-approvals/approve-content/approve-content.component';
 @Component({
   selector: 'app-add-team-member',
   imports: [
@@ -36,7 +38,7 @@ import { Editor, NgxEditorModule } from 'ngx-editor';
     MatSelectModule,
     NgIf,
     MenuComponent,
-    NgxEditorModule
+    NgxEditorModule,
   ],
   templateUrl: './add-team-member.component.html',
   styleUrl: './add-team-member.component.scss',
@@ -54,7 +56,8 @@ export class AddTeamMemberComponent {
     private route: ActivatedRoute,
     private settingService: SettingsService,
     private dialogRef: MatDialogRef<AddTeamMemberComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialog: MatDialog
   ) {
     this.editor = new Editor();
 
@@ -72,6 +75,10 @@ export class AddTeamMemberComponent {
     if (this.data?.id) {
       this.teamMemberDetails();
     }
+    if (this.data?.temp_id) {
+      this.patchValue(this.data);
+      this.formGroup.disable();
+    }
   }
   submitMember() {
     this.formGroup.markAllAsTouched();
@@ -87,7 +94,7 @@ export class AddTeamMemberComponent {
       }
       this.settingService.submitTeamMember(formData).subscribe({
         next: (res: any) => {
-          this.toastr.success(`Member ${this.data?'updated':'added'} Successfully`);
+          this.toastr.success(res?.message);
           this.formGroup.enable();
           this.formGroup.reset();
           this.dialogRef.close(res);
@@ -102,22 +109,39 @@ export class AddTeamMemberComponent {
   teamMemberDetails() {
     this.settingService.teamMemberDetails(this.data.id).subscribe({
       next: (res: any) => {
-        this.formGroup.patchValue({
-          member_name: res?.member_name,
-          designation: res?.designation,
-          description: res?.description??"",
-          facebook_link: res?.facebook_link,
-          linkedin_link: res?.linkedin_link,
-          twitter_link: res?.twitter_link,
-          status: res?.status,
-          file_preview: res?.file_path
-            ? Global.BACKEND_URL + res?.file_path
-            : null,
-        });
-        this.formGroup.get('file')?.clearValidators();
-        this.formGroup.get('file')?.updateValueAndValidity();
+        this.patchValue(res);
       },
       error: (err) => {},
     });
+  }
+  patchValue(res: any) {
+    this.formGroup.patchValue({
+      member_name: res?.member_name,
+      designation: res?.designation,
+      description: res?.description ?? '',
+      facebook_link: res?.facebook_link,
+      linkedin_link: res?.linkedin_link,
+      twitter_link: res?.twitter_link,
+      status: res?.status,
+      file_preview: res?.file_path ? Global.BACKEND_URL + res?.file_path : null,
+    });
+    this.formGroup.get('file')?.clearValidators();
+    this.formGroup.get('file')?.updateValueAndValidity();
+  }
+  approveContent(content_status: string) {
+    this.dialog
+      .open(ApproveContentComponent, {
+        data: { content_status, ...this.data?.request_details },
+        width: '500px',
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        console.log(res);
+
+        if (res) {
+          this.dialogRef.close(res);
+        }
+      });
   }
 }

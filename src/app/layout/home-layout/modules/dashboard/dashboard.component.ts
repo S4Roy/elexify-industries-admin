@@ -62,7 +62,7 @@ export class DashboardComponent {
     this.isLoading = true;
     let params = new URLSearchParams();
     params.set('limit', '3');
-    this.masterService.newsList(params).subscribe({
+    this.masterService.latestAnnouncementList(params).subscribe({
       next: (res: any) => {
         const { results, limit, page, total_pages, total_records } = res;
         this.news_list = results ?? [];
