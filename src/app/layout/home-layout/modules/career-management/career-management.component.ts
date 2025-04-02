@@ -36,9 +36,11 @@ export class CareerManagementComponent implements OnInit {
     private dialog: MatDialog,
     private pageService: PageService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private settingService:SettingsService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
     this.fetchCareerList();
   }
   ngOnInit(): void {}
@@ -76,5 +78,14 @@ export class CareerManagementComponent implements OnInit {
   onPageChange(data: any) {
     this.paginationOption.page = data;
     this.fetchCareerList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'career' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
   }
 }

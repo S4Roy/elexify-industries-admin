@@ -11,6 +11,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddClienteleComponent } from './add-clientele/add-clientele.component';
 import { MasterService } from '../../../../core/services/master.service';
+import { SettingsService } from 'app/core/services/settings.service';
 
 @Component({
   selector: 'app-clientele',
@@ -34,10 +35,12 @@ export class ClienteleComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private masterService: MasterService,
+    private settingService: SettingsService,
     private toastr: ToastrService,
     private router: Router
   ) {
     this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
     this.fetchClienteleList();
   }
   ngOnInit(): void {}
@@ -82,5 +85,14 @@ export class ClienteleComponent implements OnInit {
   onPageChange(data: any) {
     this.paginationOption.page = data;
     this.fetchClienteleList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'clientele' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
   }
 }

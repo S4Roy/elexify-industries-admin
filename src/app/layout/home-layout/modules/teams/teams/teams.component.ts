@@ -26,6 +26,7 @@ export class TeamsComponent {
     private toastr: ToastrService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
     this.fetchUserList();
   }
   addItem(data: any = null) {
@@ -67,6 +68,15 @@ export class TeamsComponent {
   onPageChange(data: any) {
     this.paginationOption.page = data;
     this.fetchUserList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'team' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
   }
 }
 

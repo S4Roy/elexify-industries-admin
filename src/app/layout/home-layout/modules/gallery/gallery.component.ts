@@ -28,10 +28,12 @@ export class GalleryComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private pageService: PageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private settingService: SettingsService,
   ) {
     this.paginationOption = Global.resetPaginationOptions();
-    this.fetchFaqCategoryList();
+    this.checkPermission();
+    this.fetchGalleryList();
   }
   ngOnInit(): void {
    
@@ -45,11 +47,11 @@ export class GalleryComponent implements OnInit {
       .afterClosed()
       .subscribe((res: any) => {
         if (res) {
-          this.fetchFaqCategoryList();
+          this.fetchGalleryList();
         }
       });
   }
-  fetchFaqCategoryList() {
+  fetchGalleryList() {
     let params = new URLSearchParams();
     if (this.paginationOption.page) {
       params.set('page', String(this.paginationOption.page));
@@ -66,15 +68,24 @@ export class GalleryComponent implements OnInit {
   deleteItem(item: any) {
     this.pageService.deleteMedia({ id: item.id }).subscribe({
       next: (res: any) => {
-        this.toastr.success(`Category Deleted Successfully`);
-        this.fetchFaqCategoryList();
+        this.toastr.success(`Media Deleted Successfully`);
+        this.fetchGalleryList();
       },
       error: (err: any) => {},
     });
   }
   onPageChange(data: any) {
     this.paginationOption.page = data;
-    this.fetchFaqCategoryList();
+    this.fetchGalleryList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'gallery' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
   }
 }
 

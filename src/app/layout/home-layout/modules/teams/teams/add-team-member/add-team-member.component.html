@@ -12,7 +12,12 @@
               id="slide-over-title"
             >
               {{ data?.id ? "Update" : data?.temp_id ? "" : "Add New" }} Member
-              {{ data?.temp_id ? "Changes Details" : "" }}
+              {{
+                data?.request_details?.action_type
+                  ? (data?.request_details?.action_type | titlecase) +
+                    " Details"
+                  : ""
+              }}
               <button color="warn" mat-dialog-close mat-icon-button>
                 <mat-icon class="text-red-700">close</mat-icon>
               </button>
@@ -44,6 +49,7 @@
                     class="line-through"
                     *ngIf="
                       data?.previous_data &&
+                      data?.previous_data?.member_name &&
                       data?.previous_data?.member_name !=
                         formGroup.value.member_name
                     "
@@ -94,6 +100,7 @@
                     class="line-through"
                     *ngIf="
                       data?.previous_data &&
+                      data?.previous_data?.designation &&
                       data?.previous_data?.designation !=
                         formGroup.value.designation
                     "
@@ -147,15 +154,16 @@
                     class="line-through"
                     *ngIf="
                       data?.previous_data &&
+                      data?.previous_data?.description &&
                       data?.previous_data?.description !=
                         formGroup.value.description
                     "
                   >
-                    {{ data?.previous_data?.description }}
+                    <div [innerHTML]="data?.previous_data?.description"></div>
                   </mat-error>
                   <ngx-editor-menu
                     [editor]="editor"
-                    [disabled]="data?.previous_data?.temp_id"
+                    [disabled]="data?.temp_id"
                     [toolbar]="Global.toolbar"
                   >
                   </ngx-editor-menu>
@@ -202,6 +210,7 @@
                     class="line-through"
                     *ngIf="
                       data?.previous_data &&
+                      data?.previous_data?.facebook_link &&
                       data?.previous_data?.facebook_link !=
                         formGroup.value.facebook_link
                     "
@@ -253,6 +262,7 @@
                     class="line-through"
                     *ngIf="
                       data?.previous_data &&
+                      data?.previous_data?.linkedin_link &&
                       data?.previous_data?.linkedin_link !=
                         formGroup.value.linkedin_link
                     "
@@ -304,6 +314,7 @@
                     class="line-through"
                     *ngIf="
                       data?.previous_data &&
+                      data?.previous_data?.twitter_link &&
                       data?.previous_data?.twitter_link !=
                         formGroup.value.twitter_link
                     "
@@ -353,6 +364,7 @@
                     class="line-through"
                     *ngIf="
                       data?.previous_data &&
+                      data?.previous_data?.status &&
                       data?.previous_data?.status != formGroup.value.status
                     "
                   >
@@ -385,16 +397,18 @@
                 </div>
               </div>
               <div
-                class="border rounded"
+                class="border h-60 rounded relative"
                 *ngIf="
                   data?.previous_data &&
+                  data?.previous_data?.file_path &&
                   Global.BACKEND_URL + data?.previous_data?.file_path !=
                     formGroup.value.file_preview
                 "
               >
+              <div class="previous-image">Previous Image</div>
                 <div class="">
                   <img
-                    class="blur-xs grayscale"
+                    class="blur-xs grayscale opacity-50 object-cover"
                     [src]="Global.BACKEND_URL + data?.previous_data?.file_path"
                     alt="OLD File"
                   />
@@ -433,7 +447,7 @@
                     </div>
                   </ng-container>
                 </div>
-                <div class="w-full text-sm pt-1" style="color: red">
+                <div class="w-full text-sm text-center pt-1" style="color: red">
                   <b>Note:</b> Upload files in .png, .jpg, .jpeg formats only.
                   Recommended file size: 174 pixels in width and 173 pixels in
                   height.

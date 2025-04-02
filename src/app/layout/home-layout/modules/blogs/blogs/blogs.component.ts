@@ -26,6 +26,7 @@ Global = Global;
     private toastr: ToastrService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
+    this.checkPermission();
     this.blogList();
   }
   addItem(data: any = null) {
@@ -67,6 +68,15 @@ Global = Global;
   onPageChange(data: any) {
     this.paginationOption.page = data;
     this.blogList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'success_story' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
   }
 }
 

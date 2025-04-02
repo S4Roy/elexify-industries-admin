@@ -13,6 +13,7 @@ import { PaginationComponent } from 'app/layout/home-layout/includes/pagination/
 import { MenuComponent } from 'app/layout/home-layout/includes/menu/menu.component';
 import * as Global from 'app/global';
 import { AddTeamMemberComponent } from '../teams/teams/add-team-member/add-team-member.component';
+import { AddClienteleComponent } from '../clientele/add-clientele/add-clientele.component';
 @Component({
   selector: 'app-content-approvals',
   imports: [
@@ -65,22 +66,44 @@ export class ContentApprovalsComponent {
   addItem(data: any = null) {
     this.masterService.contentApprovalDetails(data.uuid).subscribe({
       next: (res: any) => {
-        if (data.request_for === 'teams') {
-          this.dialog
-            .open(AddTeamMemberComponent, {
-              data: {
-                ...res?.changes_data,
-                previous_data: res?.previous_data,
-                request_details: res?.request_details,
-              },
-              disableClose: true,
-            })
-            .afterClosed()
-            .subscribe((res: any) => {
-              if (res) {
-                this.fetchContentApprovalList();
-              }
-            });
+        const dialogData = {
+          ...res?.changes_data,
+          previous_data: res?.previous_data,
+          request_details: res?.request_details,
+        };
+  
+        switch (data.request_for) {
+          case 'teams':
+            this.dialog
+              .open(AddTeamMemberComponent, {
+                data: dialogData,
+                disableClose: true,
+              })
+              .afterClosed()
+              .subscribe((res: any) => {
+                if (res) {
+                  this.fetchContentApprovalList();
+                }
+              });
+            break;
+  
+          case 'clients':
+            this.dialog
+              .open(AddClienteleComponent, {
+                data: dialogData,
+                disableClose: true,
+              })
+              .afterClosed()
+              .subscribe((res: any) => {
+                if (res) {
+                  this.fetchContentApprovalList();
+                }
+              });
+            break;
+  
+          default:
+            this.toastr.warning(`Unknown request type: ${data.request_for}`);
+            break;
         }
       },
     });

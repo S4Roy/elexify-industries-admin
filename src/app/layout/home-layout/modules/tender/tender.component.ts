@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DatePipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PageService } from '../../../../core/services/page.service';
+import { SettingsService } from 'app/core/services/settings.service';
 
 @Component({
   selector: 'app-tender',
@@ -36,10 +37,12 @@ export class TenderComponent implements OnInit {
     private dialog: MatDialog,
     private pageService: PageService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private settingService:SettingsService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
     this.fetchTenderList();
+    this.checkPermission();
   }
   ngOnInit(): void {}
   addItem(data: any = null) {
@@ -75,5 +78,14 @@ export class TenderComponent implements OnInit {
   onPageChange(data: any) {
     this.paginationOption.page = data;
     this.fetchTenderList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'tender' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
   }
 }

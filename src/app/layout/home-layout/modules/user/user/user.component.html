@@ -21,6 +21,7 @@
             <th scope="col">Role</th>
             <th scope="col">Email ID</th>
             <th scope="col" class="text-center">Permission</th>
+            <th scope="col" class="text-center">Status</th>
             <th scope="col" class="text-center">Action</th>
           </tr>
         </thead>
@@ -43,6 +44,11 @@
                   >Permissions</a
                 >
               </td>
+              <td class="text-center">
+                <span [class]="item?.status">
+                  {{ item?.status }}
+                </span>
+                </td>
               <td class="text-center">
                 <app-menu
                   [modalItem]="permissions.includes('edit') ? item : null"

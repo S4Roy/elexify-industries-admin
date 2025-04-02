@@ -19,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import * as Global from '../../../../../../global';
 import { SettingsService } from '../../../../../../core/services/settings.service';
 import { MenuComponent } from '../../../../includes/menu/menu.component';
@@ -39,6 +39,7 @@ import { ApproveContentComponent } from '../../../content-approvals/approve-cont
     NgIf,
     MenuComponent,
     NgxEditorModule,
+    TitleCasePipe,
   ],
   templateUrl: './add-team-member.component.html',
   styleUrl: './add-team-member.component.scss',
@@ -68,7 +69,7 @@ export class AddTeamMemberComponent {
       facebook_link: [null],
       linkedin_link: [null],
       twitter_link: [null],
-      status: [null, Validators.compose([Validators.required])],
+      status: ['active', Validators.compose([Validators.required])],
       file: [null, Validators.compose([Validators.required])],
       file_preview: [null],
     });

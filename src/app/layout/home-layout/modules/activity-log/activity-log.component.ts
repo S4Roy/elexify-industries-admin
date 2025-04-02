@@ -13,6 +13,7 @@ import { PaginationComponent } from 'app/layout/home-layout/includes/pagination/
 import { MenuComponent } from 'app/layout/home-layout/includes/menu/menu.component';
 import * as Global from 'app/global';
 import { AddTeamMemberComponent } from '../teams/teams/add-team-member/add-team-member.component';
+import { AddClienteleComponent } from '../clientele/add-clientele/add-clientele.component';
 
 @Component({
   selector: 'app-activity-log',
@@ -47,7 +48,7 @@ export class ActivityLogComponent {
       this.paginationOption = Global.resetPaginationOptions();
       this.filterOption = Global.resetTableFilterOptions();
       this.checkPermission();
-      this.fetchContentApprovalList();
+      this.fetchActivityLogList();
     }
   
     ngOnInit(): void {
@@ -59,32 +60,56 @@ export class ActivityLogComponent {
         .subscribe((data: any) => {
           this.paginationOption = Global.resetPaginationOptions();
           this.filterOption.name = this.search_key;
-          this.fetchContentApprovalList();
+          this.fetchActivityLogList();
         });
     }
   
-    addItem(data: any = null) {
-      this.masterService.activityDetails(data.uuid).subscribe({
-        next: (res: any) => {
-          if (data.request_for === 'teams') {
+  addItem(data: any = null) {
+    this.masterService.contentApprovalDetails(data.uuid).subscribe({
+      next: (res: any) => {
+        const dialogData = {
+          ...res?.changes_data,
+          previous_data: res?.previous_data,
+          request_details: res?.request_details,
+        };
+  
+        switch (data.request_for) {
+          case 'teams':
             this.dialog
               .open(AddTeamMemberComponent, {
-                data: {
-                  ...res?.changes_data,
-                  previous_data: res?.previous_data                },
+                data: dialogData,
                 disableClose: true,
               })
               .afterClosed()
               .subscribe((res: any) => {
                 if (res) {
-                  this.fetchContentApprovalList();
+                  this.fetchActivityLogList();
                 }
               });
-          }
-        },
-      });
-    }
-    fetchContentApprovalList() {
+            break;
+  
+          case 'clients':
+            this.dialog
+              .open(AddClienteleComponent, {
+                data: dialogData,
+                disableClose: true,
+              })
+              .afterClosed()
+              .subscribe((res: any) => {
+                if (res) {
+                  this.fetchActivityLogList();
+                }
+              });
+            break;
+  
+          default:
+            this.toastr.warning(`Unknown request type: ${data.request_for}`);
+            break;
+        }
+      },
+    });
+  }
+    fetchActivityLogList() {
       let params = new URLSearchParams();
       if (this.filterOption.name) {
         params.set('name', this.filterOption.name);
@@ -103,7 +128,7 @@ export class ActivityLogComponent {
     }
     onPageChange(data: any) {
       this.paginationOption.page = data;
-      this.fetchContentApprovalList();
+      this.fetchActivityLogList();
     }
     permissions: any = [];
     checkPermission() {
@@ -118,7 +143,7 @@ export class ActivityLogComponent {
       this.search_key = null;
       this.paginationOption = Global.resetPaginationOptions();
       this.filterOption = Global.resetTableFilterOptions();
-      this.fetchContentApprovalList();
+      this.fetchActivityLogList();
     }
   }
   

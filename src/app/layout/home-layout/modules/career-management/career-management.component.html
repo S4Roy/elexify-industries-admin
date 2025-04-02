@@ -1,6 +1,6 @@
 <div class="absolute flex justify-end right-5 top-14">
   <div class="flex">
-    <button
+    <button *ngIf="permissions.includes('add')"
       (click)="addItem()"
       type="button"
       class="px-2 py-1 outline-1 text-xs font-medium text-center inline-flex items-center border-red-500 text-red-500 border rounded-full"
@@ -16,9 +16,9 @@
       <div class="h-64 relative p-3 border rounded bg-white">
         <span class="absolute top-0 right-0">
           <app-menu
-            [modalItem]="item"
+            [modalItem]="permissions.includes('edit')?item:null"
             (initModal)="addItem($event)"
-            [delete]="item"
+            [delete]="permissions.includes('delete')?item:null"
             (deleteItem)="deleteItem($event)"
           ></app-menu>
         </span>

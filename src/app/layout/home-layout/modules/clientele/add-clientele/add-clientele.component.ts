@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgIf, TitleCasePipe } from '@angular/common';
 import {
   ReactiveFormsModule,
   FormGroup,
@@ -11,6 +11,7 @@ import {
   MatDialogModule,
   MatDialogRef,
   MAT_DIALOG_DATA,
+  MatDialog,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
@@ -23,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Editor, NgxEditorModule } from 'ngx-editor';
+import { ApproveContentComponent } from '../../content-approvals/approve-content/approve-content.component';
 @Component({
   selector: 'app-add-clientele',
   templateUrl: './add-clientele.component.html',
@@ -37,7 +39,8 @@ import { Editor, NgxEditorModule } from 'ngx-editor';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    NgxEditorModule
+    NgxEditorModule,
+    TitleCasePipe
   ],
 })
 export class AddClienteleComponent implements OnInit {
@@ -51,7 +54,7 @@ export class AddClienteleComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public toastr: ToastrService,
-    private route: ActivatedRoute,
+    private dialog: MatDialog,
     private authService: AuthService,
     private httpService: HttpService,
     public dialogRef: MatDialogRef<AddClienteleComponent>,
@@ -68,21 +71,13 @@ export class AddClienteleComponent implements OnInit {
       file: [null, Validators.required], // Form control for the image
       file_preview: [null], // Form control for the image
     });
-    if (data) {
-      this.formGroup.patchValue({
-        client_name: this.data?.client_name ?? null,
-        company_name: this.data?.company_name ?? null,
-        description: this.data?.description ?? '',
-        client_feedback: this.data?.client_feedback ?? null,
-        designation: this.data?.designation ?? null,
-        status: this.data?.status ?? 'active',
-        file_preview: this.data.file_path
-          ? Global.BACKEND_URL + this.data.file_path
-          : null,
-      });
-      this.formGroup.get('file')?.clearValidators();
-      this.formGroup.get('file')?.updateValueAndValidity();
+    if (this.data?.id) {
+      this.patchValue(this.data);
     }
+    if (this.data?.temp_id) {
+      this.patchValue(this.data);
+      this.formGroup.disable();
+    }    
   }
 
   ngOnInit(): void {}
@@ -92,7 +87,7 @@ export class AddClienteleComponent implements OnInit {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       this.formGroup.disable();
-      let formData = this.formGroup.getRawValue();      
+      let formData = this.formGroup.getRawValue();
       if (this.data?.id) {
         formData.id = this.data.id;
       }
@@ -120,5 +115,32 @@ export class AddClienteleComponent implements OnInit {
         },
       });
     }
+  }
+  patchValue(res: any) {
+    this.formGroup.patchValue({
+      client_name: res?.client_name ?? null,
+      company_name: res?.company_name ?? null,
+      description: res?.description ?? '',
+      client_feedback: res?.client_feedback ?? null,
+      designation: res?.designation ?? null,
+      status: res?.status ?? 'active',
+      file_preview: res.file_path ? Global.BACKEND_URL + res.file_path : null,
+    });
+    this.formGroup.get('file')?.clearValidators();
+    this.formGroup.get('file')?.updateValueAndValidity();
+  }
+  approveContent(content_status: string) {
+    this.dialog
+      .open(ApproveContentComponent, {
+        data: { content_status, ...this.data?.request_details },
+        width: '500px',
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((res: any) => {
+        if (res) {
+          this.dialogRef.close(res);
+        }
+      });
   }
 }

@@ -53,7 +53,7 @@
         >{{ enquiryTotal_count }}</span
       >
     </div>
-    <a
+    <a *ngIf="enquiry_permissions.includes('list')"
       class="ai-button"
       [routerLink]="['/enquiry']"
       [queryParams]="{ filter: 'new' }"
@@ -73,7 +73,7 @@
       <!-- <span class="flex ml-2 bg-green-500 w-9 h-9 
       items-center text-white text-sm justify-center rounded-full">07</span> -->
     </div>
-    <a class="ai-button cursor-pointer" (click)="addItem()"
+    <a *ngIf="permissions.includes('add')" class="ai-button cursor-pointer" (click)="addItem()"
       >CREATE NEW ANNOUNCEMENTS</a
     >
   </div>
@@ -83,7 +83,7 @@
         <ng-container *ngFor="let item of news_list; let i = index">
           <div class="bg-white p-3 flex flex-col justify-between relative">
             <span class="absolute right-0 top-1">
-              <app-menu (initModal)="addItem($event)" [modalItem]="item"></app-menu>
+              <app-menu (initModal)="addItem($event)" [modalItem]="permissions.includes('edit')?item:null"></app-menu>
             </span>
             <div class="flex mb-3">
               <div class="w-1/4">

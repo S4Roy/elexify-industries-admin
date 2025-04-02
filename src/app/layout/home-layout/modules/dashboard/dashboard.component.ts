@@ -13,6 +13,7 @@ import * as Global from '../../../../global';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddNewsEventComponent } from '../news-event/add-news-event/add-news-event.component';
 import { MenuComponent } from '../../includes/menu/menu.component';
+import { SettingsService } from 'app/core/services/settings.service';
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -28,7 +29,7 @@ import { MenuComponent } from '../../includes/menu/menu.component';
     NgIf,
     MatIconModule,
     DatePipe,
-    MenuComponent
+    MenuComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -39,16 +40,21 @@ export class DashboardComponent {
   news_list: any = [];
   enquiryTotal_count: any;
   isLoading: boolean = false;
-  constructor(private masterService: MasterService, private dialog: MatDialog) {
+  constructor(
+    private masterService: MasterService,
+    private dialog: MatDialog,
+    private settingService: SettingsService
+  ) {
+    this.checkPermission();
     this.fetchNewsList();
   }
   onEnquiryTotalCountChange(count: number) {
     this.enquiryTotal_count = count;
   }
-  addItem(data: any = null,action:any=null) {
+  addItem(data: any = null, action: any = null) {
     this.dialog
       .open(AddNewsEventComponent, {
-        data: {...data,action:action},
+        data: { ...data, action: action },
         disableClose: true,
       })
       .afterClosed()
@@ -73,5 +79,20 @@ export class DashboardComponent {
       },
     });
   }
-  
+  permissions: any = [];
+  enquiry_permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'news_event' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
+    this.settingService.checkPermission({ sec: 'enquiry' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.enquiry_permissions = permissions;
+      },
+    });
+  }
 }
