@@ -1,6 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import "@ng-select/ng-select/themes/default.theme.css";
-@import "@swimlane/ngx-datatable/themes/material.scss";
 
 html,
 body {
@@ -172,11 +170,11 @@ button[disabled] {
   color: #666666;
   cursor: not-allowed;
 }
-td .rejected,
-td .approved,
-td .pending,
-td .active,
-td .inactive {
+span.rejected,
+span.approved,
+span.pending,
+span.active,
+span.inactive {
   --tw-bg-opacity: 1;
   --tw-text-opacity: 1;
 
@@ -193,15 +191,15 @@ td .inactive {
   border-radius: 0.125rem /* 2px */;
   text-transform: uppercase;
 }
-td .inactive {
+span.inactive {
   background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
   color: rgb(153 27 27 / var(--tw-text-opacity, 1)) /* #991b1b */;
 }
-td .pending {
+span.pending {
   background-color: #fef3c7;
   color: #92400e
 }
-td .rejected
+span.rejected
 {
   background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
   color: rgb(153 27 27 / var(--tw-text-opacity, 1)) /* #991b1b */;

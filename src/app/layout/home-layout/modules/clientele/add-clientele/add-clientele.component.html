@@ -310,7 +310,9 @@
                       data?.previous_data?.status != formGroup.value.status
                     "
                   >
-                    {{ data?.previous_data?.status }}
+                  <span [class]="data?.previous_data?.status">{{
+                    data?.previous_data?.status
+                  }}</span>
                   </mat-error>
                   <mat-form-field>
                     <mat-select
@@ -426,7 +428,7 @@
               {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
             </button>
           </div>
-          <div class="flex" *ngIf="data?.request_details?.status === 'pending'">
+          <div class="flex" *ngIf="data?.request_details?.status === 'pending' && !data?.isViewOnly">
             <button
               (click)="approveContent('approved')"
               class="flex border w-[50%] justify-center px-3 py-3 text-green-500"

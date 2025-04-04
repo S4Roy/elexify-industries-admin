@@ -42,12 +42,16 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
         let message = JSON.stringify(error.message);
         toastr.error(message ?? '404 Not Found');
       } else if (error?.status === 400) {
-        // Handle 400 Bad Request specifically
+        // Handle 400 Bad Request specifically        
         let errorMessage = '';
         if (error.error?.validation) {
           errorMessage =
             error.error?.validation?.body?.message || 'Validation failed';
-        } else {
+        }
+        else if (error?.error.error){
+          errorMessage = error?.error.error;
+        } 
+        else {
           let result = error.error;
           for (const key in result) {
             const element = result[key];

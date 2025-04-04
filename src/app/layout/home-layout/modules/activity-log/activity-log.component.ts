@@ -14,6 +14,7 @@ import { MenuComponent } from 'app/layout/home-layout/includes/menu/menu.compone
 import * as Global from 'app/global';
 import { AddTeamMemberComponent } from '../teams/teams/add-team-member/add-team-member.component';
 import { AddClienteleComponent } from '../clientele/add-clientele/add-clientele.component';
+import { AddNewServicesComponent } from '../services/add-new-services/add-new-services.component';
 
 @Component({
   selector: 'app-activity-log',
@@ -24,56 +25,71 @@ import { AddClienteleComponent } from '../clientele/add-clientele/add-clientele.
     MenuComponent,
     FormsModule,
     MatIconModule,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './activity-log.component.html',
   styleUrl: './activity-log.component.scss',
 })
 export class ActivityLogComponent {
   Global = Global;
-    showMore: boolean[] = [];
-    showRemarksMore: boolean[] = [];
-    item_list: any = [];
-    paginationOption: PaginationOptions;
-    filterOption: FilterOptions;
-    searchSubject = new Subject<string>();
-    search_key: string | null = null;
-  
-    constructor(
-      private dialog: MatDialog,
-      private settingService: SettingsService,
-      private masterService: MasterService,
-      private toastr: ToastrService
-    ) {
-      this.paginationOption = Global.resetPaginationOptions();
-      this.filterOption = Global.resetTableFilterOptions();
-      this.checkPermission();
-      this.fetchActivityLogList();
-    }
-  
-    ngOnInit(): void {
-      this.searchSubject
-        .pipe(
-          debounceTime(300), // Adjust debounce time as needed
-          distinctUntilChanged()
-        )
-        .subscribe((data: any) => {
-          this.paginationOption = Global.resetPaginationOptions();
-          this.filterOption.name = this.search_key;
-          this.fetchActivityLogList();
-        });
-    }
-  
+  showMore: boolean[] = [];
+  showRemarksMore: boolean[] = [];
+  item_list: any = [];
+  paginationOption: PaginationOptions;
+  filterOption: FilterOptions;
+  searchSubject = new Subject<string>();
+  search_key: string | null = null;
+
+  constructor(
+    private dialog: MatDialog,
+    private settingService: SettingsService,
+    private masterService: MasterService,
+    private toastr: ToastrService
+  ) {
+    this.paginationOption = Global.resetPaginationOptions();
+    this.filterOption = Global.resetTableFilterOptions();
+    this.checkPermission();
+    this.fetchActivityLogList();
+  }
+
+  ngOnInit(): void {
+    this.searchSubject
+      .pipe(
+        debounceTime(300), // Adjust debounce time as needed
+        distinctUntilChanged()
+      )
+      .subscribe((data: any) => {
+        this.paginationOption = Global.resetPaginationOptions();
+        this.filterOption.name = this.search_key;
+        this.fetchActivityLogList();
+      });
+  }
+
   addItem(data: any = null) {
-    this.masterService.contentApprovalDetails(data.uuid).subscribe({
+    this.masterService.activityDetails(data.uuid).subscribe({
       next: (res: any) => {
         const dialogData = {
           ...res?.changes_data,
           previous_data: res?.previous_data,
           request_details: res?.request_details,
+          isViewOnly:true
         };
-  
+
         switch (data.request_for) {
+          case 'services':
+            this.dialog
+              .open(AddNewServicesComponent, {
+                data: dialogData,
+                disableClose: true,
+              })
+              .afterClosed()
+              .subscribe((res: any) => {
+                if (res) {
+                  this.fetchActivityLogList();
+                }
+              });
+            break;
+
           case 'teams':
             this.dialog
               .open(AddTeamMemberComponent, {
@@ -87,7 +103,7 @@ export class ActivityLogComponent {
                 }
               });
             break;
-  
+
           case 'clients':
             this.dialog
               .open(AddClienteleComponent, {
@@ -101,7 +117,7 @@ export class ActivityLogComponent {
                 }
               });
             break;
-  
+
           default:
             this.toastr.warning(`Unknown request type: ${data.request_for}`);
             break;
@@ -109,41 +125,40 @@ export class ActivityLogComponent {
       },
     });
   }
-    fetchActivityLogList() {
-      let params = new URLSearchParams();
-      if (this.filterOption.name) {
-        params.set('name', this.filterOption.name);
-      }
-      if (this.paginationOption.page) {
-        params.set('page', String(this.paginationOption.page));
-      }
-      this.masterService.activityList(params).subscribe({
-        next: (res: any) => {
-          const { results, limit, page, total_pages, total_records } = res;
-          this.item_list = results ?? [];
-          this.paginationOption = { limit, page, total_pages, total_records };
-        },
-        error: (err) => {},
-      });
+  fetchActivityLogList() {
+    let params = new URLSearchParams();
+    if (this.filterOption.name) {
+      params.set('name', this.filterOption.name);
     }
-    onPageChange(data: any) {
-      this.paginationOption.page = data;
-      this.fetchActivityLogList();
+    if (this.paginationOption.page) {
+      params.set('page', String(this.paginationOption.page));
     }
-    permissions: any = [];
-    checkPermission() {
-      this.settingService.checkPermission({ sec: 'activity_log' }).subscribe({
-        next: (res: any) => {
-          const { permissions } = res?.results[0];
-          this.permissions = permissions;
-        },
-      });
-    }
-    clearFilter() {
-      this.search_key = null;
-      this.paginationOption = Global.resetPaginationOptions();
-      this.filterOption = Global.resetTableFilterOptions();
-      this.fetchActivityLogList();
-    }
+    this.masterService.activityList(params).subscribe({
+      next: (res: any) => {
+        const { results, limit, page, total_pages, total_records } = res;
+        this.item_list = results ?? [];
+        this.paginationOption = { limit, page, total_pages, total_records };
+      },
+      error: (err) => {},
+    });
   }
-  
+  onPageChange(data: any) {
+    this.paginationOption.page = data;
+    this.fetchActivityLogList();
+  }
+  permissions: any = [];
+  checkPermission() {
+    this.settingService.checkPermission({ sec: 'activity_log' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
+  }
+  clearFilter() {
+    this.search_key = null;
+    this.paginationOption = Global.resetPaginationOptions();
+    this.filterOption = Global.resetTableFilterOptions();
+    this.fetchActivityLogList();
+  }
+}

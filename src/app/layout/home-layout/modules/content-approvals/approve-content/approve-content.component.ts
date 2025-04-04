@@ -45,7 +45,6 @@ export class ApproveContentComponent {
       ],
       content_status: [data?.content_status, Validators.required],
     });
-    console.log(this.formGroup.value);
   }
   closeModal() {
     this.dialogRef.close();
@@ -58,10 +57,14 @@ export class ApproveContentComponent {
         .contentApprovalChangeRequestStatus(this.formGroup.getRawValue())
         .subscribe({
           next: (res: any) => {
+            this.formGroup.enable();
             if (res) {
               this.dialogRef.close(res);
             }
           },
+          error:(err:any)=>{
+            this.formGroup.enable();
+          }
         });
     }
   }

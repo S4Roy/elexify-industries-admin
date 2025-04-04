@@ -10,7 +10,16 @@
               class="flex justify-between items-center font-semibold text-white"
               id="slide-over-title"
             >
-              {{ data ? "Update " : "Add New" }} Service
+              {{
+                data?.id ? "Update " : data?.temp_id ? "" : "Add New"
+              }}
+              Service
+              {{
+                data?.request_details?.action_type
+                  ? (data?.request_details?.action_type | titlecase) +
+                    " Details"
+                  : ""
+              }}
               <button color="warn" mat-dialog-close mat-icon-button>
                 <mat-icon class="text-red-700">close</mat-icon>
               </button>
@@ -34,6 +43,16 @@
                   >
                 </label>
                 <div class="mt-2">
+                  <mat-error
+                    class="line-through"
+                    *ngIf="
+                      data?.previous_data &&
+                      data?.previous_data?.name &&
+                      data?.previous_data?.name != formGroup.value.name
+                    "
+                  >
+                    {{ data?.previous_data?.name }}
+                  </mat-error>
                   <mat-form-field>
                     <input
                       formControlName="name"
@@ -72,7 +91,23 @@
                 <div
                   class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 text-area-sec terms-height"
                 >
-                  <ngx-editor-menu [editor]="editor" [toolbar]="Global.toolbar"> </ngx-editor-menu>
+                  <mat-error
+                    class="line-through"
+                    *ngIf="
+                      data?.previous_data &&
+                      data?.previous_data?.description &&
+                      data?.previous_data?.description !=
+                        formGroup.value.description
+                    "
+                  >
+                    <div [innerHTML]="data?.previous_data?.description"></div>
+                  </mat-error>
+                  <ngx-editor-menu
+                    [editor]="editor"
+                    [disabled]="data?.temp_id"
+                    [toolbar]="Global.toolbar"
+                  >
+                  </ngx-editor-menu>
                   <div class="inner-height">
                     <ngx-editor
                       [editor]="editor"
@@ -111,6 +146,17 @@
                   >
                 </label>
                 <div class="mt-2">
+                  <mat-error
+                    class="line-through"
+                    *ngIf="
+                      data?.previous_data &&
+                      data?.previous_data?.caption_text &&
+                      data?.previous_data?.caption_text !=
+                        formGroup.value.caption_text
+                    "
+                  >
+                    {{ data?.previous_data?.caption_text }}
+                  </mat-error>
                   <mat-form-field>
                     <input
                       formControlName="caption_text"
@@ -151,6 +197,18 @@
                   >
                 </label>
                 <div class="mt-2">
+                  <mat-error
+                    class="line-through"
+                    *ngIf="
+                      data?.previous_data &&
+                      data?.previous_data?.status &&
+                      data?.previous_data?.status != formGroup.value.status
+                    "
+                  >
+                  <span [class]="data?.previous_data?.status">{{
+                    data?.previous_data?.status
+                  }}</span>
+                  </mat-error>
                   <mat-form-field>
                     <mat-select
                       placeholder="Select"
@@ -177,6 +235,24 @@
                   </mat-form-field>
                 </div>
               </div>
+              <div
+                class="border h-60 rounded relative"
+                *ngIf="
+                  data?.previous_data &&
+                  data?.previous_data?.file_path &&
+                  Global.BACKEND_URL + data?.previous_data?.file_path !=
+                    formGroup.value.file_preview
+                "
+              >
+                <div class="previous-image">Previous Image</div>
+                <div class="">
+                  <img
+                    class="blur-xs grayscale opacity-50 object-cover"
+                    [src]="Global.BACKEND_URL + data?.previous_data?.file_path"
+                    alt="OLD File"
+                  />
+                </div>
+              </div>
               <div class="h-60 border">
                 <div
                   class="w-full h-full rounded flex items-center justify-center relative"
@@ -186,7 +262,7 @@
                     class="absolute right-2 top-2 bg-white rounded-sm"
                   >
                     <app-menu
-                      [modalItem]="true"
+                      [modalItem]="!data?.temp_id ? true : false"
                       (initModal)="mediaFile.click()"
                     ></app-menu>
                   </span>
@@ -210,8 +286,10 @@
                     </div>
                   </ng-container>
                 </div>
-                <div class="w-full text-sm pt-1" style="color: red"><b>Note:</b> Upload files in .png, .jpg, .jpeg formats only. 
-                  Recommended file size: 148 pixels in width and 148 pixels in height.
+                <div class="w-full text-sm pt-1" style="color: red">
+                  <b>Note:</b> Upload files in .png, .jpg, .jpeg formats only.
+                  Recommended file size: 148 pixels in width and 148 pixels in
+                  height.
                 </div>
                 <input
                   type="file"
@@ -231,13 +309,32 @@
               </div>
             </form>
           </div>
-          <div>
+          <div *ngIf="!data?.temp_id">
             <button
               (click)="onSubmit()"
               [disabled]="formGroup.disabled"
               class="flex border w-full justify-center px-3 py-3 text-green-500"
             >
               {{ formGroup.disabled ? "Please wait..." : "Save & Continue" }}
+            </button>
+          </div>
+          <div
+            class="flex"
+            *ngIf="
+              data?.request_details?.status === 'pending' && !data?.isViewOnly
+            "
+          >
+            <button
+              (click)="approveContent('approved')"
+              class="flex border w-[50%] justify-center px-3 py-3 text-green-500"
+            >
+              APPROVE
+            </button>
+            <button
+              (click)="approveContent('rejected')"
+              class="flex border w-[50%] justify-center px-3 py-3 text-red-500"
+            >
+              REJECT
             </button>
           </div>
         </div>

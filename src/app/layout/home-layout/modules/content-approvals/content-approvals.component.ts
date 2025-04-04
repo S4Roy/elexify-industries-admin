@@ -14,6 +14,7 @@ import { MenuComponent } from 'app/layout/home-layout/includes/menu/menu.compone
 import * as Global from 'app/global';
 import { AddTeamMemberComponent } from '../teams/teams/add-team-member/add-team-member.component';
 import { AddClienteleComponent } from '../clientele/add-clientele/add-clientele.component';
+import { AddNewServicesComponent } from '../services/add-new-services/add-new-services.component';
 @Component({
   selector: 'app-content-approvals',
   imports: [
@@ -71,8 +72,21 @@ export class ContentApprovalsComponent {
           previous_data: res?.previous_data,
           request_details: res?.request_details,
         };
-  
+
         switch (data.request_for) {
+          case 'services':
+            this.dialog
+              .open(AddNewServicesComponent, {
+                data: dialogData,
+                disableClose: true,
+              })
+              .afterClosed()
+              .subscribe((res: any) => {
+                if (res) {
+                  this.fetchContentApprovalList();
+                }
+              });
+            break;
           case 'teams':
             this.dialog
               .open(AddTeamMemberComponent, {
@@ -86,7 +100,7 @@ export class ContentApprovalsComponent {
                 }
               });
             break;
-  
+
           case 'clients':
             this.dialog
               .open(AddClienteleComponent, {
@@ -100,7 +114,7 @@ export class ContentApprovalsComponent {
                 }
               });
             break;
-  
+
           default:
             this.toastr.warning(`Unknown request type: ${data.request_for}`);
             break;

@@ -73,7 +73,7 @@ export class ServicesComponent {
   }
   permissions: any = [];
   checkPermission() {
-    this.settingService.checkPermission({ sec: 'news_event' }).subscribe({
+    this.settingService.checkPermission({ sec: 'service' }).subscribe({
       next: (res: any) => {
         const { permissions } = res?.results[0];
         this.permissions = permissions;
