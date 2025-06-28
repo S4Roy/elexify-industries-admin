@@ -42,9 +42,8 @@ export class CustomPageComponent {
     }
     this.settingService.customPageList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });
@@ -69,7 +68,7 @@ export class CustomPageComponent {
       .subscribe({
         next: (res: any) => {
           const { sub_section_name } = res?.results[0];
-          const { permissions } = sub_section_name[0];          
+          const { permissions } = sub_section_name[0];
           this.permissions = permissions;
         },
       });

@@ -1,10 +1,18 @@
-@if (modalItem || edit || details|| delete ) {
+@if (modalItem || edit || details|| delete || stockItem ) {
 
 <mat-icon class="cursor-pointer" [matMenuTriggerFor]="menu">more_vert</mat-icon>
 
 <mat-menu #menu="matMenu">
   <ul class="actionlink">
-    @if (modalItem) {
+    @if (stockItem) {
+    <li>
+      <button mat-menu-item (click)="initStockModal.next(stockItem)">
+        <mat-icon>inventory_2</mat-icon>
+        <span class="ml-1">Stocks</span>
+      </button>
+    </li>
+
+    } @if (modalItem) {
     <li>
       <button mat-menu-item (click)="initModal.next(modalItem)">
         <mat-icon>{{ modalButtonIcon ?? "edit" }}</mat-icon>

@@ -12,12 +12,12 @@ import { NewCredentialsComponent } from './new-credentials/new-credentials.compo
 
 @Component({
   selector: 'app-credentials-list',
-  imports: [NgIf, NgFor, MenuComponent,PaginationComponent],
+  imports: [NgIf, NgFor, MenuComponent, PaginationComponent],
   templateUrl: './credentials-list.component.html',
-  styleUrl: './credentials-list.component.scss'
+  styleUrl: './credentials-list.component.scss',
 })
 export class CredentialsListComponent {
-Global = Global;
+  Global = Global;
   category_list: any = [];
   item_list: any = [];
   paginationOption: PaginationOptions;
@@ -58,9 +58,8 @@ Global = Global;
     }
     this.settingService.credentialList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });
@@ -100,13 +99,11 @@ Global = Global;
   }
   permissions: any = [];
   checkPermission() {
-    this.settingService
-      .checkPermission({ sec: 'credential' })
-      .subscribe({
-        next: (res: any) => {
-          const { permissions } = res?.results[0];
-          this.permissions = permissions;
-        },
-      });
+    this.settingService.checkPermission({ sec: 'credential' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
   }
 }

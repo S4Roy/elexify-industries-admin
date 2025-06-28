@@ -13,7 +13,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,NgxSpinnerModule],
+  imports: [RouterOutlet, NgxSpinnerModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -26,8 +26,7 @@ export class AppComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private helperService: HelpersService,
-    private titleService: Title,
-
+    private titleService: Title
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -42,7 +41,7 @@ export class AppComponent {
             this.titleService.setTitle(this.PageMainTitle);
           }
         });
-        this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);        
+        this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
         this.helperService.updateBreadCrumbs(this.breadcrumbs);
       });
   }
@@ -65,16 +64,27 @@ export class AppComponent {
       if (routeURL !== '') {
         url += `/${routeURL}`;
       }
-      let label =
-        child.snapshot.data['breadcrumb'] || child.snapshot.data['Title'];
-      if (label) {
-        breadcrumbs.push({ label: label, url: url });
+
+      let label = '';
+      const data = child.snapshot.data;
+      const breadcrumb = data['breadcrumb'];
+
+      if (typeof breadcrumb === 'function') {
+        label = breadcrumb(data, child.snapshot); // Execute the breadcrumb function
+      } else if (breadcrumb) {
+        label = breadcrumb;
       }
+
+      if (label) {
+        breadcrumbs.push({ label, url });
+      }
+
       return this.createBreadcrumbs(child, url, breadcrumbs);
     }
 
     return breadcrumbs;
   }
+
   getActivatedRouteChild(activatedRoute: ActivatedRoute): ActivatedRoute {
     if (activatedRoute.firstChild) {
       return this.getActivatedRouteChild(activatedRoute.firstChild);

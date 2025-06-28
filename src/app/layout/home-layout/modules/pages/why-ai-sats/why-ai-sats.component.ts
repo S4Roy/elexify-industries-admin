@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { InfoCardComponent } from '../../../includes/info-card/info-card.component';
-import { AboutRoadmapInfoCardComponent } from '../../../includes/about-roadmap-info-card/about-roadmap-info-card.component';
 import { TaggedSectionComponent } from '../../../includes/tagged-section/tagged-section.component';
 import { MenuComponent } from '../../../includes/menu/menu.component';
 import { NgFor, NgIf } from '@angular/common';

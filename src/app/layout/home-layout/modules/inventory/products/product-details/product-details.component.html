@@ -1,0 +1,230 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+  <!-- Product Info Section -->
+  <div class="grid grid-cols-1 gap-8">
+    <!-- Image Gallery -->
+    <div class="space-y-4">
+      <div *ngIf="product?.images?.length; else noImage">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <img
+            *ngFor="let img of product?.images"
+            [src]="img?.url"
+            alt="{{ product?.name }}"
+            class="w-full h-48 object-cover rounded-lg shadow-md"
+          />
+        </div>
+      </div>
+      <ng-template #noImage>
+        <div class="text-gray-500">No images available</div>
+      </ng-template>
+    </div>
+
+    <!-- Product Details -->
+    <div class="space-y-4">
+      <h1 class="text-3xl font-bold text-gray-900">{{ product?.name }}</h1>
+      <div class="" [innerHTML]="product?.description"></div>
+
+      <!-- Pricing -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <span class="text-gray-500">Selling Price:</span> ₹<strong>{{
+            product?.sale_price
+          }}</strong>
+        </div>
+        <div>
+          <span class="text-gray-500">Cost Price:</span> ₹<strong>{{
+            product?.cost_price
+          }}</strong>
+        </div>
+        <div>
+          <span class="text-gray-500">MRP:</span> ₹<strong>{{
+            product?.regular_price
+          }}</strong>
+        </div>
+        <div>
+          <span class="text-gray-500">Discount:</span> {{ product?.discount }}%
+        </div>
+      </div>
+
+      <!-- Inventory Info -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <span class="text-gray-500">Current Stock:</span>
+          <span class="font-semibold text-green-600">{{
+            product?.current_stock
+          }}</span>
+        </div>
+        <div>
+          <span class="text-gray-500">Low Stock Alert:</span>
+          <span
+            [ngClass]="
+              product?.current_stock <= product?.low_stock_alert
+                ? 'text-red-600'
+                : 'text-gray-800'
+            "
+          >
+            {{ product?.low_stock_alert }}
+          </span>
+        </div>
+        <div>
+          <span class="text-gray-500">Stock Status:</span>
+          {{ product?.stock_status || "In Stock" }}
+        </div>
+        <div>
+          <span class="text-gray-500">Allow Backorder:</span>
+          {{ product?.allow_backorder ? "Yes" : "No" }}
+        </div>
+      </div>
+
+      <!-- Category & Brand -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <span class="text-gray-500">Category:</span>
+          {{ product?.category?.name }}
+        </div>
+        <div>
+          <span class="text-gray-500">Brand:</span> {{ product?.brand?.name }}
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div *ngIf="product?.tags?.length">
+        <span class="text-gray-500">Tags:</span>
+        <div class="flex flex-wrap gap-2 mt-1">
+          <span
+            *ngFor="let tag of product?.tags"
+            class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded"
+          >
+            {{ tag }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Variants -->
+  <div *ngIf="product?.variants?.length" class="bg-white rounded-xl shadow p-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Variants</h2>
+    <div class="space-y-3">
+      <div
+        *ngFor="let variant of product?.variants"
+        class="border p-4 rounded-md"
+      >
+        <div class="flex justify-between text-sm text-gray-700">
+          <div>Color: {{ variant?.color }}</div>
+          <div>Size: {{ variant?.size }}</div>
+          <div>Stock: {{ variant?.stock }}</div>
+          <div>Price: ₹{{ variant?.price }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shipping Info -->
+  <div class="bg-white rounded-xl shadow p-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Shipping Info</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+      <div>
+        <span class="text-gray-500">Weight:</span> {{ product?.weight }} kg
+      </div>
+      <div>
+        <span class="text-gray-500">Dimensions:</span> {{ product?.dimensions }}
+      </div>
+      <div>
+        <span class="text-gray-500">Shipping Class:</span>
+        {{ product?.shipping_class }}
+      </div>
+      <div>
+        <span class="text-gray-500">Delivery Estimate:</span>
+        {{ product?.delivery_time }}
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO Section -->
+  <div class="bg-white rounded-xl shadow p-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">SEO Information</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium text-gray-700"
+          >Meta Title</label
+        >
+        <textarea
+          type="text"
+          [value]="product?.seo?.meta_title"
+          class="w-full px-4 py-2 border rounded bg-gray-50 h-24"
+          readonly
+        ></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700"
+          >Meta Description</label
+        >
+        <textarea
+          [value]="product?.seo?.meta_description"
+          class="w-full px-4 py-2 border rounded bg-gray-50 h-24"
+          readonly
+        ></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700"
+          >Meta Keywords</label
+        >
+        <div class="flex flex-wrap gap-2 mt-1">
+          <span
+            *ngFor="let keyword of product?.seo?.meta_keywords"
+            class="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded"
+          >
+            {{ keyword }}
+          </span>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700"
+          >Canonical URL</label
+        >
+        <input
+          type="text"
+          [value]="product?.seo?.canonical_url"
+          class="w-full px-4 py-2 border rounded bg-gray-50"
+          readonly
+        />
+      </div>
+    </div>
+    <div class="mt-4">
+      <label class="block text-sm font-medium text-gray-700">SEO Status</label>
+      <span
+        [ngClass]="
+          product?.seo?.status === 'active'
+            ? 'bg-green-100 text-green-700'
+            : 'bg-red-100 text-red-700'
+        "
+        class="inline-block px-3 py-1 text-sm font-semibold rounded"
+      >
+        {{ product?.seo?.status }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Admin Metadata -->
+  <div class="bg-white rounded-xl shadow p-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Admin Info</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+      <div>
+        <span class="text-gray-500">Created By:</span>
+        {{ product?.created_by?.name }}
+      </div>
+      <div>
+        <span class="text-gray-500">Last Updated By:</span>
+        {{ product?.updated_by?.name }}
+      </div>
+      <div>
+        <span class="text-gray-500">Created At:</span>
+        {{ product?.created_at | date : "medium" }}
+      </div>
+      <div>
+        <span class="text-gray-500">Updated At:</span>
+        {{ product?.updated_at | date : "medium" }}
+      </div>
+    </div>
+  </div>
+</div>

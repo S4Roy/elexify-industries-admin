@@ -2,13 +2,13 @@
   <div class="flex px-2">
     Showing {{ (pagination.page - 1) * pagination.limit + 1 }} -
     {{
-      pagination.page == pagination.total_pages
-        ? pagination.total_records
+      pagination.page == pagination.totalPages
+        ? pagination.totalDocs
         : pagination.page * pagination.limit
     }}
-    of <b class="mx-1">{{ pagination.total_records }}</b> records.
+    of <b class="mx-1">{{ pagination.totalDocs }}</b> records.
   </div>
-  <div class="pagination" *ngIf="pagination.total_records>10">
+  <div class="pagination" *ngIf="pagination.totalDocs > 10">
     <button class="first" [disabled]="value === 1" (click)="selectPage(1)">
       <<
     </button>
@@ -28,15 +28,15 @@
     </button>
     <button
       class="next"
-      [disabled]="value === pagination?.total_pages"
+      [disabled]="value === pagination?.totalPages"
       (click)="selectPage(value + 1)"
     >
       >
     </button>
     <button
       class="first"
-      [disabled]="value === pagination?.total_pages"
-      (click)="selectPage(pagination?.total_pages)"
+      [disabled]="value === pagination?.totalPages"
+      (click)="selectPage(pagination?.totalPages)"
     >
       >>
     </button>

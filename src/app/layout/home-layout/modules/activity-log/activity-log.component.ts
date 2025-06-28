@@ -72,7 +72,7 @@ export class ActivityLogComponent {
           ...res?.changes_data,
           previous_data: res?.previous_data,
           request_details: res?.request_details,
-          isViewOnly:true
+          isViewOnly: true,
         };
 
         switch (data.request_for) {
@@ -135,9 +135,8 @@ export class ActivityLogComponent {
     }
     this.masterService.activityList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });

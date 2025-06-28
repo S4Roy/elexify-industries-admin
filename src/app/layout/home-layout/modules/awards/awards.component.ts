@@ -51,9 +51,8 @@ export class AwardsComponent implements OnInit {
     }
     this.masterService.awardList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });

@@ -50,9 +50,8 @@ export class NewsEventComponent implements OnInit {
     }
     this.masterService.newsList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });

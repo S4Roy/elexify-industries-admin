@@ -2,7 +2,7 @@
 
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
-import {  Editor, Toolbar } from 'ngx-editor';
+import { Editor, Toolbar } from 'ngx-editor';
 
 import { environment } from '../environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -98,7 +98,6 @@ export function isInputRuleAvailable(
   return false;
 }
 
-
 export function onFileSelected(
   formGroup: FormGroup,
   event: any,
@@ -188,9 +187,7 @@ export async function onFileSelectedMultiple(
       try {
         const base64String = await readFileAsDataURL(file);
         fileArrayControl.push(new FormControl(file));
-        filePreviewArrayControl.push(
-          new FormControl({ file_path: base64String })
-        );
+        filePreviewArrayControl.push(new FormControl({ url: base64String }));
       } catch (error) {
         toastr.error('Error reading file');
       }
@@ -229,10 +226,20 @@ export function resetPaginationOptions() {
     page: 1,
     total_pages: 0,
     total_records: 0,
+    hasNextPage: true,
+    hasPrevPage: false,
+    nextPage: 0,
+    pagingCounter: 0,
+    prevPage: 0,
+    totalDocs: 0,
+    totalPages: 0,
   };
 }
 export function resetTableFilterOptions() {
   return {
+    category: '',
+    search_key: '',
+    slug: '',
     name: '',
     list_type: '',
   };

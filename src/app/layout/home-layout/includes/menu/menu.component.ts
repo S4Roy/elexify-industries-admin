@@ -21,8 +21,10 @@ export class MenuComponent {
   @Input() modalButtonIcon: any = null;
   @Input() delete: any = null;
   @Input() details: any = null;
+  @Input() stockItem: any = null;
   @Output() deleteItem = new EventEmitter<any>();
   @Output() initModal = new EventEmitter<any>();
+  @Output() initStockModal = new EventEmitter<any>();
   constructor(
     private dialogService: DialogService,
     private settingService: SettingsService

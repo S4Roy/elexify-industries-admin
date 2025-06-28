@@ -26,13 +26,21 @@ export class HttpService {
     return this.http.post<any>(`${this.BASE_URL}${uri}`, formData);
   }
 
+  putFormData(uri: string, payload: any) {
+    let formData: FormData = new FormData();
+    for (let key in payload) {
+      formData.append(key, payload[key]);
+    }
+    return this.http.put<any>(`${this.BASE_URL}${uri}`, formData);
+  }
+
   get(uri: string, payload: any = {}) {
     return this.http.get<any>(`${this.BASE_URL}${uri}`, payload);
   }
   delete(uri: string, payload: any = {}) {
     return this.http.delete<any>(`${this.BASE_URL}${uri}`, {
       body: payload,
-      observe: 'response' // To get full response including status codes
+      observe: 'response', // To get full response including status codes
     });
   }
   getList(uri: string, payload: any): Observable<any> {
@@ -44,7 +52,7 @@ export class HttpService {
     };
 
     return this.http
-      .get(`${this.BASE_URL}${uri}?${payload?.params??""}`, httpOptions)
+      .get(`${this.BASE_URL}${uri}?${payload?.params ?? ''}`, httpOptions)
       .pipe(
         map((response) => {
           const paginationInfo = response.headers.get('X-Pagination');
@@ -61,16 +69,15 @@ export class HttpService {
       }),
       observe: 'response' as const, // Ensuring type compatibility
     };
-  
-    return this.http.post(`${this.BASE_URL}${uri}`, payload, httpOptions)
-      .pipe(
-        map((response) => {
-          const paginationInfo = response.headers.get('X-Pagination');
-          const pagingData = paginationInfo ? JSON.parse(paginationInfo) : null;
-          const data = response.body;
-          return { pagingData, data };
-        })
-      );
+
+    return this.http.post(`${this.BASE_URL}${uri}`, payload, httpOptions).pipe(
+      map((response) => {
+        const paginationInfo = response.headers.get('X-Pagination');
+        const pagingData = paginationInfo ? JSON.parse(paginationInfo) : null;
+        const data = response.body;
+        return { pagingData, data };
+      })
+    );
   }
   downloadFile(uri: string) {
     let httpOptions: Object = { responseType: 'blob' };

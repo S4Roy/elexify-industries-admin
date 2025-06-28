@@ -5,7 +5,7 @@
         <div class="flex shrink-0 items-center">
           <button (click)="toggleSideNav.emit(isNavOpen)">
             <img
-              class="h-8 w-auto"
+              class="h-8 w-auto teal"
               src="assets/{{
                 isNavOpen ? 'arrow-left-linear.png' : 'menu.png'
               }}"
@@ -16,7 +16,7 @@
             <div>
               <img
                 class="h-8 w-auto"
-                src="assets/air-india.png"
+                src="assets/logo.png"
                 alt="Your Company"
               />
             </div>
@@ -24,7 +24,14 @@
         </div>
       </div>
       <div class="open-outlet flex justify-end items-center">
-        <mat-icon matBadgeColor="warn" [matBadgeHidden]="!total_unread_record" [matBadge]="total_unread_record" class="mx-4 cursor-pointer" (click)="showNotifications()">notifications</mat-icon>
+        <mat-icon
+          matBadgeColor="warn"
+          [matBadgeHidden]="!total_unread_record"
+          [matBadge]="total_unread_record"
+          class="mx-4 cursor-pointer"
+          (click)="showNotifications()"
+          >notifications</mat-icon
+        >
 
         <!-- Profile dropdown -->
         <div class="">

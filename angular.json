@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "air-india-sats-admin": {
+    "elexify-admin-panel": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/air-india-sats-admin",
+            "outputPath": "dist/elexify-admin-panel",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -79,10 +79,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "air-india-sats-admin:build:production"
+              "buildTarget": "elexify-admin-panel:build:production"
             },
             "development": {
-              "buildTarget": "air-india-sats-admin:build:development"
+              "buildTarget": "elexify-admin-panel:build:development"
             }
           },
           "defaultConfiguration": "development"

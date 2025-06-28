@@ -16,28 +16,34 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PaginationComponent } from '../../includes/pagination/pagination.component';
 
 @Component({
-  imports:[MatIconModule,MatFormFieldModule,MatInputModule,NgFor,MenuComponent,MatTooltipModule,PaginationComponent],
+  imports: [
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgFor,
+    MenuComponent,
+    MatTooltipModule,
+    PaginationComponent,
+  ],
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.css']
+  styleUrls: ['./gallery.component.css'],
 })
 export class GalleryComponent implements OnInit {
- Global = Global;
+  Global = Global;
   item_list: any = [];
   paginationOption: PaginationOptions;
   constructor(
     private dialog: MatDialog,
     private pageService: PageService,
     private toastr: ToastrService,
-    private settingService: SettingsService,
+    private settingService: SettingsService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
     this.checkPermission();
     this.fetchGalleryList();
   }
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
   addItem(data: any = null) {
     this.dialog
       .open(AddGalleryComponent, {
@@ -58,9 +64,8 @@ export class GalleryComponent implements OnInit {
     }
     this.pageService.galleryList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });
@@ -88,4 +93,3 @@ export class GalleryComponent implements OnInit {
     });
   }
 }
-

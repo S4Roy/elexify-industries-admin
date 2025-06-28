@@ -197,3 +197,7 @@ span.profile-image-menu {
     transform: translateX(-100%);
   }
 }
+img.teal {
+  filter: invert(38%) sepia(62%) saturate(2600%) hue-rotate(145deg)
+    brightness(85%) contrast(110%);
+}

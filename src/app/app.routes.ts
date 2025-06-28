@@ -31,6 +31,14 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+  {
+    path: 'inventory',
+    loadChildren: () =>
+      import('./layout/home-layout/modules/inventory/inventory.module').then(
+        (m) => m.InventoryModule
+      ),
+    canActivate: [authGuard],
+  },
   // {
   //   path: 'others',
   //   component: HomeLayoutComponent,
@@ -95,16 +103,16 @@ export const routes: Routes = [
   {
     path: 'enquiry',
     loadChildren: () =>
-      import('./layout/home-layout/modules/enquiry-management/enquiry-management.module').then(
-        (m) => m.EnquiryManagementModule
-      ),
+      import(
+        './layout/home-layout/modules/enquiry-management/enquiry-management.module'
+      ).then((m) => m.EnquiryManagementModule),
   },
   {
     path: 'career',
     loadChildren: () =>
-      import('./layout/home-layout/modules/career-management/career-management.module').then(
-        (m) => m.CareerManagementModule
-      ),
+      import(
+        './layout/home-layout/modules/career-management/career-management.module'
+      ).then((m) => m.CareerManagementModule),
   },
   {
     path: 'clientele',
@@ -168,17 +176,17 @@ export const routes: Routes = [
   {
     path: 'activity-log',
     loadChildren: () =>
-      import('./layout/home-layout/modules/activity-log/activity-log.module').then(
-        (m) => m.ActivityLogModule
-      ),
+      import(
+        './layout/home-layout/modules/activity-log/activity-log.module'
+      ).then((m) => m.ActivityLogModule),
     canActivate: [authGuard],
   },
   {
     path: 'content-approvals',
     loadChildren: () =>
-      import('./layout/home-layout/modules/content-approvals/content-approvals.module').then(
-        (m) => m.ContentApprovalsModule
-      ),
+      import(
+        './layout/home-layout/modules/content-approvals/content-approvals.module'
+      ).then((m) => m.ContentApprovalsModule),
     canActivate: [authGuard],
   },
   {

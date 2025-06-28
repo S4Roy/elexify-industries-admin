@@ -12,12 +12,12 @@ import { AddTeamMemberComponent } from './add-team-member/add-team-member.compon
 
 @Component({
   selector: 'app-teams',
-  imports: [MenuComponent, NgFor, NgIf, RouterOutlet,PaginationComponent],
+  imports: [MenuComponent, NgFor, NgIf, RouterOutlet, PaginationComponent],
   templateUrl: './teams.component.html',
-  styleUrl: './teams.component.scss'
+  styleUrl: './teams.component.scss',
 })
 export class TeamsComponent {
- Global = Global;
+  Global = Global;
   item_list: any = [];
   paginationOption: PaginationOptions;
   constructor(
@@ -49,9 +49,8 @@ export class TeamsComponent {
     }
     this.settingService.teamList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });
@@ -79,4 +78,3 @@ export class TeamsComponent {
     });
   }
 }
-

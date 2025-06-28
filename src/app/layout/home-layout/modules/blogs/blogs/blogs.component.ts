@@ -12,12 +12,12 @@ import { NewBlogComponent } from './new-blog/new-blog.component';
 
 @Component({
   selector: 'app-blogs',
-  imports: [MenuComponent, NgFor, NgIf, RouterOutlet,PaginationComponent],
+  imports: [MenuComponent, NgFor, NgIf, RouterOutlet, PaginationComponent],
   templateUrl: './blogs.component.html',
-  styleUrl: './blogs.component.scss'
+  styleUrl: './blogs.component.scss',
 })
 export class BlogsComponent {
-Global = Global;
+  Global = Global;
   item_list: any = [];
   paginationOption: PaginationOptions;
   constructor(
@@ -49,9 +49,8 @@ Global = Global;
     }
     this.settingService.blogList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });
@@ -79,4 +78,3 @@ Global = Global;
     });
   }
 }
-

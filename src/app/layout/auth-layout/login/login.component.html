@@ -10,76 +10,69 @@
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <form class="space-y-1" [formGroup]="loginForm">
-      <div>
-        <label for="email" class="block text-sm/6 font-medium text-gray-900"
+      <mat-form-field>
+        <mat-label
           >Email
           <span
-            class="text-red-500"
+            class="text-red-600"
             *ngIf="Global.isInputRuleAvailable(loginForm, 'email', 'required')"
             >*</span
-          ></label
+          ></mat-label
         >
-        <div class="mt-2">
-          <mat-form-field>
-            <input
-              formControlName="email"
-              matInput
-              [readonly]="otpSend"
-              [class.is-invalid]="!Global.isInputValid(loginForm, 'email')"
-              placeholder="Type Here"
-            />
+        <input
+          formControlName="email"
+          matInput
+          [readonly]="otpSend"
+          [class.is-invalid]="!Global.isInputValid(loginForm, 'email')"
+          placeholder="Type Here"
+        />
 
-            <mat-error
-              *ngIf="!Global.isInputRuleValid(loginForm, 'email', 'required')"
-            >
-              This field is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div *ngIf="!otpSend">
-        <label class="block text-sm/6 font-medium text-gray-900"
-          >Password
-          <span
-            class="text-red-500"
-            *ngIf="
-              Global.isInputRuleAvailable(loginForm, 'password', 'required')
-            "
-            >*</span
-          ></label
+        <mat-error
+          *ngIf="!Global.isInputRuleValid(loginForm, 'email', 'required')"
         >
-        <div class="mt-2">
-          <mat-form-field>
-            <input
-              [type]="visibiltyToogle[1] ? 'text' : 'password'"
-              formControlName="password"
-              matInput
-              [class.is-invalid]="!Global.isInputValid(loginForm, 'password')"
-              placeholder="Type Here"
-            />
-            <mat-icon
-              (click)="visibiltyToogle[1] = !visibiltyToogle[1]"
-              matSuffix
-              >{{
-                !visibiltyToogle[1] ? "visibility_off" : "visibility"
-              }}</mat-icon
-            >
-            <mat-error
+          This field is required
+        </mat-error>
+      </mat-form-field>
+
+      <div *ngIf="!otpSend">
+        <mat-form-field>
+          <mat-label
+            >Password
+            <span
+              class="text-red-600"
               *ngIf="
-                !Global.isInputRuleValid(loginForm, 'password', 'required')
+                Global.isInputRuleAvailable(loginForm, 'password', 'required')
               "
-            >
-              This field is required
-            </mat-error>
-          </mat-form-field>
-        </div>
+              >*</span
+            ></mat-label
+          >
+          <input
+            [type]="visibiltyToogle[1] ? 'text' : 'password'"
+            formControlName="password"
+            matInput
+            [class.is-invalid]="!Global.isInputValid(loginForm, 'password')"
+            placeholder="Type Here"
+          />
+          <mat-icon
+            (click)="visibiltyToogle[1] = !visibiltyToogle[1]"
+            matSuffix
+            >{{
+              !visibiltyToogle[1] ? "visibility_off" : "visibility"
+            }}</mat-icon
+          >
+          <mat-error
+            *ngIf="!Global.isInputRuleValid(loginForm, 'password', 'required')"
+          >
+            This field is required
+          </mat-error>
+        </mat-form-field>
       </div>
 
       <div *ngIf="otpSend">
         <label for="email" class="block text-sm/6 font-medium text-gray-900"
           >Verification Code
           <span
-            class="text-red-500"
+            class="text-teal-600"
             *ngIf="
               Global.isInputRuleAvailable(
                 loginForm,
@@ -117,18 +110,18 @@
       </div>
 
       <!-- <div class="flex items-center justify-between"> -->
-        <div class="text-sm text-right" style="margin-bottom: 10px">
+      <div class="text-sm text-right" style="margin-bottom: 10px">
         <a
           routerLink="/auth/forgot-password"
-          class="cursor-pointer hover font-semibold text-red-600 hover:text-red-500"
+          class="cursor-pointer hover font-semibold text-teal-700 hover:text-teal-600"
           >Forgot password?</a
         >
       </div>
       <div *ngIf="!otpSend">
         <button
-          (click)="sendOtp()"
+          (click)="submitLogin()"
           [disabled]="loginForm.disabled"
-          class="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+          class="flex w-full justify-center rounded-md bg-teal-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-teal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
         >
           {{ loginForm.disabled ? "Please wait..." : "Sign In" }}
         </button>
@@ -137,7 +130,7 @@
         <button
           (click)="submitLogin()"
           [disabled]="loginForm.disabled"
-          class="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+          class="flex w-full justify-center rounded-md bg-teal-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
         >
           {{ loginForm.disabled ? "Please wait..." : "Sign In" }}
         </button>

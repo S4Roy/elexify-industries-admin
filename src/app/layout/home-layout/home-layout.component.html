@@ -3,7 +3,10 @@
     <app-side-nav [isNavOpen]="isNavOpen"></app-side-nav>
   </div>
   <div class="right-wrapper">
-    <app-header [isNavOpen]="isNavOpen" (toggleSideNav)="toggleSideNav($event)"></app-header>
+    <app-header
+      [isNavOpen]="isNavOpen"
+      (toggleSideNav)="toggleSideNav($event)"
+    ></app-header>
     <app-breadcums></app-breadcums>
     <div class="outlet" [class]="breadcrumbs?.length ? '' : 'full-outlet'">
       <div [class]="pagesOutlet || !breadcrumbs?.length ? '' : 'content-box'">

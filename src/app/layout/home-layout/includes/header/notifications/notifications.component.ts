@@ -79,8 +79,8 @@ export class NotificationsComponent {
           total_unread_record,
         } = res;
         this.total_unread_record = total_unread_record;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
     });
   }

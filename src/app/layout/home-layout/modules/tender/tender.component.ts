@@ -25,20 +25,20 @@ import { SettingsService } from 'app/core/services/settings.service';
     NgIf,
     RouterModule,
     TitleCasePipe,
-    DatePipe
+    DatePipe,
   ],
 })
 export class TenderComponent implements OnInit {
   Global = Global;
   item_list: any = [];
-  showMore : boolean [] = [];
+  showMore: boolean[] = [];
   paginationOption: PaginationOptions;
   constructor(
     private dialog: MatDialog,
     private pageService: PageService,
     private toastr: ToastrService,
     private router: Router,
-    private settingService:SettingsService
+    private settingService: SettingsService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
     this.fetchTenderList();
@@ -57,9 +57,8 @@ export class TenderComponent implements OnInit {
     }
     this.pageService.tenderList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {
         this.item_list = [];

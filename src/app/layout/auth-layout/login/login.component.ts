@@ -73,11 +73,13 @@ export class LoginComponent {
           this.toastr.success('OTP Sent Successfully!', '', {
             timeOut: 1000, // Display for 1 seconds
           });
-          this.loginForm.get('verification_code')?.setValidators([Validators.required])
-          this.loginForm.get('verification_code')?.markAsUntouched()
-          this.loginForm.get('verification_code')?.updateValueAndValidity()
-          this.loginForm.get('password')?.clearValidators()
-          this.loginForm.get('password')?.updateValueAndValidity()
+          this.loginForm
+            .get('verification_code')
+            ?.setValidators([Validators.required]);
+          this.loginForm.get('verification_code')?.markAsUntouched();
+          this.loginForm.get('verification_code')?.updateValueAndValidity();
+          this.loginForm.get('password')?.clearValidators();
+          this.loginForm.get('password')?.updateValueAndValidity();
         },
         error: (err: any) => {
           this.loginForm.enable();
@@ -92,10 +94,10 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginForm.disable();
       let formData = this.loginForm.getRawValue();
-      delete formData.password;
-      this.authService.verifyLoginOtp(formData).subscribe({
+      delete formData.verification_code;
+      this.authService.submitLogin(formData).subscribe({
         next: (res: any) => {
-          this.authService.userSuccessLogin(res, true, this.encodedUrl);
+          this.authService.userSuccessLogin(res?.data, true, this.encodedUrl);
         },
         error: (err: any) => {
           this.loginForm.enable();

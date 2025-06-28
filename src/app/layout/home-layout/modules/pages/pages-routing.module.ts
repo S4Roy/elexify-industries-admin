@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeLayoutComponent } from '../../home-layout.component';
 import { AboutComponent } from './about/about.component';
 import { EnquiryComponent } from '../main/enquiry/enquiry.component';
-import { HomeComponent } from './home/home.component';
 import { WhyAiSatsComponent } from './why-ai-sats/why-ai-sats.component';
 import { PageComponent } from './page/page.component';
 import { pageResolver } from '../../../../core/resolver/page.resolver';
@@ -16,13 +15,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'about',
         pathMatch: 'full',
-      },
-      {
-        path: 'home',
-        component: HomeComponent,
-        data: { pageTitle: 'Home', breadcrumb: 'Home' },
       },
       {
         path: 'about',
@@ -44,7 +38,7 @@ const routes: Routes = [
         component: PageComponent,
         resolve: {
           pageData: pageResolver, // Use the resolver to fetch data based on page_type
-        },      
+        },
       },
     ],
   },

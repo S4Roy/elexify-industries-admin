@@ -22,14 +22,9 @@ import { SettingsService } from 'app/core/services/settings.service';
     MatInputModule,
     ReactiveFormsModule,
     MatSelectModule,
-    EnquiryComponent,
-    // AnnouncementNoticeComponent,
     RouterModule,
-    NgFor,
     NgIf,
     MatIconModule,
-    DatePipe,
-    MenuComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -45,8 +40,8 @@ export class DashboardComponent {
     private dialog: MatDialog,
     private settingService: SettingsService
   ) {
-    this.checkPermission();
-    this.fetchNewsList();
+    // this.checkPermission();
+    // this.fetchNewsList();
   }
   onEnquiryTotalCountChange(count: number) {
     this.enquiryTotal_count = count;

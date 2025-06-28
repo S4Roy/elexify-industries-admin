@@ -23,7 +23,7 @@ import { PageService } from '../../../../core/services/page.service';
     MatTooltipModule,
     NgIf,
     RouterModule,
-    TitleCasePipe
+    TitleCasePipe,
   ],
   templateUrl: './career-management.component.html',
   styleUrls: ['./career-management.component.css'],
@@ -37,7 +37,7 @@ export class CareerManagementComponent implements OnInit {
     private pageService: PageService,
     private toastr: ToastrService,
     private router: Router,
-    private settingService:SettingsService
+    private settingService: SettingsService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
     this.checkPermission();
@@ -56,13 +56,11 @@ export class CareerManagementComponent implements OnInit {
     }
     this.pageService.careerList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {
-        this.item_list =  [];
-
+        this.item_list = [];
       },
     });
   }

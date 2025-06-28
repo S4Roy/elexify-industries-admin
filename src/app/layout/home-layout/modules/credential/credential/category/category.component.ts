@@ -47,9 +47,8 @@ export class CategoryComponent {
     }
     this.settingService.credentialsCategoryList(params).subscribe({
       next: (res: any) => {
-        const { results, limit, page, total_pages, total_records } = res;
-        this.item_list = results ?? [];
-        this.paginationOption = { limit, page, total_pages, total_records };
+        this.item_list = res?.data?.docs ?? [];
+        this.paginationOption = { ...res?.data };
       },
       error: (err) => {},
     });
@@ -69,13 +68,11 @@ export class CategoryComponent {
   }
   permissions: any = [];
   checkPermission() {
-    this.settingService
-      .checkPermission({ sec: 'credential' })
-      .subscribe({
-        next: (res: any) => {
-          const { permissions } = res?.results[0];
-          this.permissions = permissions;
-        },
-      });
+    this.settingService.checkPermission({ sec: 'credential' }).subscribe({
+      next: (res: any) => {
+        const { permissions } = res?.results[0];
+        this.permissions = permissions;
+      },
+    });
   }
 }

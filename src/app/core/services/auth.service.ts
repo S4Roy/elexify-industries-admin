@@ -8,13 +8,16 @@ import { environment } from '../../../environments/environment.prod';
   providedIn: 'root',
 })
 export class AuthService {
-  USER_TOKEN_KEY: string = 'AISATS-TOKEN';
-  USER_TOKEN_ADMIN: string = 'AISATS-USER';
+  USER_TOKEN_KEY: string = 'ELEXIFY-TOKEN';
+  USER_TOKEN_ADMIN: string = 'ELEXIFY-USER';
   constructor(
     private httpService: HttpService,
     private router: Router,
     private toastr: ToastrService
   ) {}
+  submitLogin(payload: any) {
+    return this.httpService.post('auth/admin/login', payload);
+  }
   sendOtp(payload: any) {
     return this.httpService.post('admin/auth/login', payload);
   }
@@ -34,28 +37,22 @@ export class AuthService {
   userSuccessLogin(data: any, rememberme: boolean = true, encodedUrl: string) {
     // userSuccessLogin(data: any, encodedUrl: string) {
 
-    let user = {
-      display_role_name: data?.display_role_name,
-      name: data?.first_name + ' ' + data?.last_name,
-      email: data?.email,
-      is_admin: data?.is_admin,
-      profile_image: data?.profile_image,
-      token_expiry: data?.token_expiry,
-      user_default_language: data?.user_default_language,
-      user_id: data?.user_id,
-      user_role_id: data?.user_role_id,
-      user_type: data?.user_type,
-      username: data?.username,
-    };
+    let user = { ...data?.user };
 
     if (rememberme == true) {
-      localStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
+      localStorage.setItem(
+        this.USER_TOKEN_KEY,
+        this.encrypt(data?.token?.access_token)
+      );
       localStorage.setItem(
         this.USER_TOKEN_ADMIN,
         this.encrypt(JSON.stringify(user))
       );
     } else {
-      sessionStorage.setItem(this.USER_TOKEN_KEY, this.encrypt(data?.token));
+      sessionStorage.setItem(
+        this.USER_TOKEN_KEY,
+        this.encrypt(data?.token?.access_token)
+      );
       sessionStorage.setItem(
         this.USER_TOKEN_ADMIN,
         this.encrypt(JSON.stringify(user))
@@ -89,10 +86,7 @@ export class AuthService {
     return !!this.getUserToken();
   }
   private encrypt(txt: string): string {
-    return CryptoJS.AES.encrypt(
-      txt.toString(),
-      environment.SECRET_KEY
-    ).toString();
+    return CryptoJS.AES.encrypt(txt.toString(), environment.AES_KEY).toString();
   }
 
   private decrypt(txtToDecrypt: string) {
@@ -104,7 +98,7 @@ export class AuthService {
     try {
       const decryptedBytes = CryptoJS.AES.decrypt(
         txtToDecrypt,
-        environment.SECRET_KEY
+        environment.AES_KEY
       );
       const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
       return decryptedText ? decryptedText : null;

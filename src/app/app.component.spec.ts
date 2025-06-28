@@ -14,16 +14,18 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'air-india-sats-admin' title`, () => {
+  it(`should have the 'elexify-admin-panel' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('air-india-sats-admin');
+    expect(app.title).toEqual('elexify-admin-panel');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, air-india-sats-admin');
+    expect(compiled.querySelector('h1')?.textContent).toContain(
+      'Hello, elexify-admin-panel'
+    );
   });
 });

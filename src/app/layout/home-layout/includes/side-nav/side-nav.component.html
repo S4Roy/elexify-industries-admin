@@ -29,7 +29,7 @@
               #menuItem
               [routerLink]="menu?.url"
               [class]="isNavOpen ? 'gap-x-6' : ''"
-              routerLinkActive="text-red-500 active"
+              routerLinkActive=" active"
               [routerLinkActiveOptions]="{ exact: menu?.exact ?? false }"
               class="group items-center relative flex mb-2 hover:bg-gray-50"
             >
@@ -49,7 +49,9 @@
                     {{ menu?.label }}
                   </span>
                 </div>
-                <mat-icon *ngIf="isNavOpen">chevron_right</mat-icon>
+                <mat-icon *ngIf="isNavOpen">{{
+                  isActiveChild(menu) ? "keyboard_arrow_down" : "chevron_right"
+                }}</mat-icon>
               </div>
             </a>
             <ng-container *ngIf="menu?.childMenuItems?.length && isNavOpen">
@@ -67,7 +69,7 @@
                       routerLinkActive=" active"
                       [routerLink]="childMenu?.url"
                       [routerLinkActiveOptions]="{
-                        exact: childMenu?.exact ?? false
+                        exact: false
                       }"
                     >
                       <a class="block font-light px-2">

@@ -29,14 +29,11 @@ export class PaginationComponent {
     this.pageChange.emit(this.value);
   }
   private updateVisiblePages(): void {
-    const length = Math.min(
-      this.pagination.total_pages,
-      this.pagination.limit
-    );
+    const length = Math.min(this.pagination.totalPages, this.pagination.limit);
     const startIndex = Math.max(
       Math.min(
         this.value - Math.ceil(length / 2),
-        this.pagination?.total_pages - length
+        this.pagination?.totalPages - length
       ),
       0
     );

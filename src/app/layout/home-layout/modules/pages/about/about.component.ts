@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { InfoCardComponent } from '../../../includes/info-card/info-card.component';
-import { AboutRoadmapInfoCardComponent } from '../../../includes/about-roadmap-info-card/about-roadmap-info-card.component';
 import { TaggedSectionComponent } from '../../../includes/tagged-section/tagged-section.component';
 import { MenuComponent } from '../../../includes/menu/menu.component';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
@@ -129,7 +128,7 @@ export class AboutComponent {
           id: this.pageData?.banner?.id ?? null,
           display_text: this.pageData?.banner?.display_text ?? null,
           file_preview: this.pageData?.banner?.file_path
-            ? Global.BACKEND_URL  + this.pageData?.banner?.file_path
+            ? Global.BACKEND_URL + this.pageData?.banner?.file_path
             : null,
           is_fdel: ['n'],
         });
@@ -140,7 +139,7 @@ export class AboutComponent {
           sub_heading_txt: this.pageData?.about_text?.sub_heading_txt ?? null,
           content: this.pageData?.about_text?.content ?? null,
           file_preview: this.pageData?.about_text?.file_path
-            ? Global.BACKEND_URL  + this.pageData?.about_text?.file_path
+            ? Global.BACKEND_URL + this.pageData?.about_text?.file_path
             : null,
         });
         this.partnerForm.patchValue({
@@ -156,10 +155,10 @@ export class AboutComponent {
           description: this.pageData?.main_content?.description ?? null,
           subject: this.pageData?.main_content?.subject ?? null,
           file_preview: this.pageData?.main_content?.file_path
-            ? Global.BACKEND_URL  + this.pageData?.main_content?.file_path
+            ? Global.BACKEND_URL + this.pageData?.main_content?.file_path
             : null,
           file_1_preview: this.pageData?.main_content?.file_path_1
-            ? Global.BACKEND_URL  + this.pageData?.main_content?.file_path_1
+            ? Global.BACKEND_URL + this.pageData?.main_content?.file_path_1
             : null,
           is_fdel: ['n'],
           is_fdel_1: ['n'],
@@ -196,7 +195,7 @@ export class AboutComponent {
         });
         this.files_preview.clear();
         this.pageData?.career_cta?.files?.forEach((file: any) => {
-          let url = Global.BACKEND_URL  + file?.file_path;
+          let url = Global.BACKEND_URL + file?.file_path;
           this.files_preview.push(
             this.fb.group({
               file_path: url,
@@ -275,7 +274,7 @@ export class AboutComponent {
         },
       });
     }
-  } 
+  }
   onNewsEvetsFormSubmit() {
     this.newsEvetsForm.markAllAsTouched();
     if (this.newsEvetsForm.valid) {
@@ -387,7 +386,6 @@ export class AboutComponent {
       })
       .subscribe({
         next: (res: any) => {
-         
           this.toastr.success(`Deleted Successfully`);
           this.fetchAboutPage();
         },
