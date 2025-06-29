@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import PaginationOptions from 'app/core/models/PaginationOptions';
@@ -10,9 +10,17 @@ import * as Global from 'app/global';
 import { InventoryService } from 'app/core/services/inventory.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import FilterOptions from 'app/core/models/FilterOptions';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 @Component({
   selector: 'app-orders',
-  imports: [NgFor, NgIf, PaginationComponent, MenuComponent, RouterLink],
+  imports: [
+    NgFor,
+    NgIf,
+    PaginationComponent,
+    MenuComponent,
+    RouterLink,
+    DatePipe,
+  ],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss',
 })
@@ -32,21 +40,19 @@ export class OrdersComponent {
     // this.checkPermission();
     this.route.paramMap.subscribe((params) => {
       this.filterOption.category = params.get('slug');
-      this.fetchProductList();
+      this.fetchOrderList();
     });
   }
   ngOnInit(): void {}
   addItem(data: any = null) {}
   stockItem(data: any = null) {}
-  fetchProductList() {
+  fetchOrderList() {
     let params = new URLSearchParams();
     if (this.paginationOption.page) {
       params.set('page', String(this.paginationOption.page));
     }
-    if (this.filterOption.category) {
-      params.set('category', this.filterOption.category);
-    }
-    this.inventoryService.productList(params).subscribe({
+
+    this.inventoryService.orderList(params).subscribe({
       next: (res: any) => {
         this.item_list = res?.data?.docs ?? [];
         this.paginationOption = {
@@ -57,17 +63,17 @@ export class OrdersComponent {
     });
   }
   deleteItem(item: any) {
-    this.inventoryService.deleteProduct({ _id: item._id }).subscribe({
-      next: (res: any) => {
-        this.toastr.success(res?.body?.message);
-        this.fetchProductList();
-      },
-      error: (err: any) => {},
-    });
+    // this.inventoryService.deleteProduct({ _id: item._id }).subscribe({
+    //   next: (res: any) => {
+    //     this.toastr.success(res?.body?.message);
+    //     this.fetchOrderList();
+    //   },
+    //   error: (err: any) => {},
+    // });
   }
   onPageChange(data: any) {
     this.paginationOption.page = data;
-    this.fetchProductList();
+    this.fetchOrderList();
   }
   permissions: any = ['add', 'edit', 'delete'];
   checkPermission() {
@@ -77,5 +83,11 @@ export class OrdersComponent {
     //     this.permissions = permissions;
     //   },
     // });
+  }
+  orderDetails(item: any) {
+    this.dialog.open(OrderDetailsComponent, {
+      data: item,
+      width: '800px',
+    });
   }
 }

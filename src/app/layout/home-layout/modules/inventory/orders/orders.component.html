@@ -11,13 +11,13 @@
         added</span
       >
     </div>
-    <button
+    <!-- <button
       *ngIf="permissions.includes('add')"
       (click)="addItem()"
       class="ai-button"
     >
       + Add New
-    </button>
+    </button> -->
   </div>
   <hr />
   <div class="m-3">
@@ -25,67 +25,49 @@
       <table class="table-base">
         <thead>
           <tr class="sticky">
-            <th scope="col"></th>
-            <th scope="col">Brand</th>
-            <th scope="col">Category</th>
-            <th scope="col">Name</th>
-            <th scope="col">Stock</th>
-            <th scope="col" class="text-center">Status</th>
+            <th scope="col">ID</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Total</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
           <ng-container *ngFor="let item of item_list">
             <tr>
-              <td>
-                <img
-                  *ngIf="item?.images?.length"
-                  [src]="item?.images[0]?.url"
-                  alt="Image"
-                />
+              <td (click)="orderDetails(item)">
+                <a href="javascript:void(0)">{{ item?.id }}</a>
               </td>
               <td class="">
-                <a>{{ item?.brand?.name }}</a>
+                <a>{{ item?.user?.name }}</a>
               </td>
               <td class="">
-                <ng-container *ngFor="let category of item?.categories">
-                  <a
-                    class="block"
-                    [routerLink]="'/inventory/products/' + category?.slug"
-                    >{{ category?.name }}</a
-                  >
-                </ng-container>
+                {{ item?.created_at | date }}
               </td>
               <td class="">
-                <a [routerLink]="'/inventory/products/details/' + item?.slug">{{
-                  item?.name
-                }}</a>
+                {{ item?.order_status }}
               </td>
-              <td>
-                <a class="cursor-pointer" (click)="stockItem(item)">{{
-                  item?.current_stock
-                }}</a>
+
+              <td (click)="orderDetails(item)">
+                {{ item?.grand_total }}
               </td>
+
               <td class="text-center">
-                <span class="table-status" [class]="item?.status">
-                  {{ item?.status }}
-                </span>
-              </td>
-              <td class="text-center">
-                <app-menu
+                <!-- <app-menu
                   [modalItem]="permissions.includes('edit') ? item : null"
                   [stockItem]="permissions.includes('edit') ? item : null"
                   (initModal)="addItem($event)"
                   (initStockModal)="stockItem($event)"
                   (deleteItem)="deleteItem($event)"
                   [delete]="permissions.includes('delete') ? item : null"
-                ></app-menu>
+                ></app-menu> -->
               </td>
             </tr>
           </ng-container>
           <ng-container *ngIf="!item_list?.length">
             <tr>
-              <td class="text-center" colspan="5">No Items Found</td>
+              <td class="text-center" colspan="7">No Items Found</td>
             </tr>
           </ng-container>
         </tbody>

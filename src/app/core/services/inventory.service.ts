@@ -80,4 +80,9 @@ export class InventoryService {
       return this.httpService.put(`admin/inventory/product/edit`, payload);
     }
   }
+  orderList(params: any) {
+    return this.httpService.get(
+      `admin/inventory/order/list?${params.toString()}`
+    );
+  }
 }
