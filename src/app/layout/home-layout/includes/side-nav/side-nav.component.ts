@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { isImage } from '../../../../global';
 import { SettingsService } from '../../../../core/services/settings.service';
+import { DeviceDetectorService } from 'app/core/services/device-detector.service';
+import { NavService } from 'app/core/services/nav.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -216,7 +218,12 @@ export class SideNavComponent {
       ],
     },
   ];
-  constructor(private router: Router, private settingService: SettingsService) {
+  constructor(
+    private router: Router,
+    private settingService: SettingsService,
+    public navService: NavService,
+    public device: DeviceDetectorService
+  ) {
     // this.fetchMenuList();
   }
   fetchMenuList() {

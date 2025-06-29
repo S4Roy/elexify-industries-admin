@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -10,6 +10,8 @@ import { HelpersService } from 'app/core/services/helpers.service';
 import { Title } from '@angular/platform-browser';
 import * as Global from 'app/global';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { DeviceDetectorService } from './core/services/device-detector.service';
+import { EventsService } from './core/services/event.service';
 
 @Component({
   selector: 'app-root',
@@ -26,16 +28,24 @@ export class AppComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private helperService: HelpersService,
-    private titleService: Title
+    private titleService: Title,
+    public deviceService: DeviceDetectorService,
+    private eventsService: EventsService
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         const route = this.getActivatedRouteChild(this.activatedRoute);
         route.data.subscribe((data: any) => {
-          if (data?.pageTitle) {
+          const resolvedPage = route.snapshot.data?.['page'];
+          const dynamicTitle = resolvedPage?.title ?? data?.pageTitle ?? null;
+
+          this.helperService.updatePageTitle(dynamicTitle ?? null);
+          this.eventsService.setAddBtnVisibility(false);
+
+          if (dynamicTitle) {
             this.titleService.setTitle(
-              data?.pageTitle + ' | ' + this.PageMainTitle
+              dynamicTitle + ' | ' + this.PageMainTitle
             );
           } else {
             this.titleService.setTitle(this.PageMainTitle);
@@ -91,5 +101,10 @@ export class AppComponent {
     } else {
       return activatedRoute;
     }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: UIEvent) {
+    const width = (event.target as Window).innerWidth;
+    this.deviceService.updateDeviceType(width);
   }
 }

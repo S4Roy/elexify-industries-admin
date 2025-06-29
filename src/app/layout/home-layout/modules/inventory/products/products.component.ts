@@ -12,6 +12,9 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import FilterOptions from 'app/core/models/FilterOptions';
 import { NewProductComponent } from './new-product/new-product.component';
 import { StocksComponent } from './stocks/stocks.component';
+import { HelpersService } from 'app/core/services/helpers.service';
+import { Subject, combineLatest, takeUntil } from 'rxjs';
+import { EventsService } from 'app/core/services/event.service';
 @Component({
   selector: 'app-products',
   imports: [NgFor, NgIf, PaginationComponent, MenuComponent, RouterLink],
@@ -23,21 +26,37 @@ export class ProductsComponent {
   item_list: any = [];
   paginationOption: PaginationOptions;
   filterOption: FilterOptions;
+  private destroy$ = new Subject<void>();
+
   constructor(
     private dialog: MatDialog,
     private inventoryService: InventoryService,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private helperService: HelpersService,
+    private eventsService: EventsService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
     this.filterOption = Global.resetTableFilterOptions();
-    // this.checkPermission();
-    this.route.paramMap.subscribe((params) => {
-      this.filterOption.category = params.get('slug');
-      this.fetchProductList();
-    });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.eventsService.setAddBtnVisibility(true);
+    this.eventsService.addClicked$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.addItem();
+      });
+    combineLatest([this.route.paramMap, this.helperService.searchKey$])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([params, searchKey]) => {
+        this.filterOption = Global.resetTableFilterOptions();
+        this.filterOption.slug = params.get('slug');
+        this.filterOption.search_key = searchKey;
+        this.paginationOption.page = 1;
+        this.fetchProductList();
+      });
+  }
+
   addItem(data: any = null) {
     this.dialog
       .open(NewProductComponent, {
@@ -66,11 +85,17 @@ export class ProductsComponent {
   }
   fetchProductList() {
     let params = new URLSearchParams();
+    if (this.paginationOption.limit) {
+      params.set('limit', String(this.paginationOption.limit));
+    }
     if (this.paginationOption.page) {
       params.set('page', String(this.paginationOption.page));
     }
     if (this.filterOption.category) {
       params.set('category', this.filterOption.category);
+    }
+    if (this.filterOption.search_key) {
+      params.set('search_key', this.filterOption.search_key);
     }
     this.inventoryService.productList(params).subscribe({
       next: (res: any) => {
@@ -103,5 +128,9 @@ export class ProductsComponent {
     //     this.permissions = permissions;
     //   },
     // });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,24 +1,31 @@
-<div class="">
-  <div class="flex items-center h-12 border w-full">
-    <div
-      class="flex shrink-0 items-center px-2"
-      [class]="isNavOpen ? '' : 'w-full justify-center'"
-    >
-      <img
-        class="h-10 w-auto"
-        src="assets/{{ isNavOpen ? 'logo.png' : 'sats.png' }}"
-        alt="Your Company"
-      />
+<div class="sidebar">
+  <div class="w-full p-3">
+    <div class="flex items-center h-12 w-full">
+      <div
+        class="flex shrink-0 items-center px-2"
+        [class]="isNavOpen ? '' : 'w-full justify-center'"
+      >
+        <img
+          class="h-10 w-auto"
+          src="assets/{{ isNavOpen ? 'logo.png' : 'sats.png' }}"
+          alt="Your Company"
+        />
+      </div>
+      <button
+        *ngIf="!device.isDesktop()"
+        (click)="navService.closeMenu()"
+        class="absolute top-5 right-3"
+      >
+        <mat-icon class="">close</mat-icon>
+      </button>
     </div>
-  </div>
-  <div class="mx-auto max-w-7xl p-3">
     <nav
       [class]="isNavOpen ? 'divide-y divide-blue-200' : 'w-full justify-center'"
       class="flex-auto text-sm/6 overflow-hidden"
     >
       <ul class="mt-2 sidebarMenu">
         <ng-container *ngFor="let item of itemList">
-          <li class="px-2">
+          <li class="px-2 mb-2">
             <span class="text-sm block">{{ item?.title }}</span>
             <small *ngIf="isNavOpen" class="text-gray-500 text-xs block">{{
               item?.description
@@ -27,6 +34,7 @@
           <ng-container *ngFor="let menu of item?.menuItems">
             <a
               #menuItem
+              (click)="navService.closeMenu()"
               [routerLink]="menu?.url"
               [class]="isNavOpen ? 'gap-x-6' : ''"
               routerLinkActive=" active"
@@ -42,16 +50,22 @@
                       <img [src]="menu?.image_path" alt="Icon" />
                     </ng-container>
                     <ng-template #matIcon>
-                      <mat-icon class="">{{ menu?.icon }}</mat-icon>
+                      <mat-icon class="mx-1">{{ menu?.icon }}</mat-icon>
                     </ng-template>
                   </div>
                   <span *ngIf="isNavOpen" class="font-medium leading-4">
                     {{ menu?.label }}
                   </span>
                 </div>
-                <mat-icon *ngIf="isNavOpen">{{
-                  isActiveChild(menu) ? "keyboard_arrow_down" : "chevron_right"
-                }}</mat-icon>
+                <mat-icon
+                  *ngIf="isNavOpen && menu?.childMenuItems?.length"
+                  class="mx-1"
+                  >{{
+                    isActiveChild(menu)
+                      ? "keyboard_arrow_down"
+                      : "chevron_right"
+                  }}</mat-icon
+                >
               </div>
             </a>
             <ng-container *ngIf="menu?.childMenuItems?.length && isNavOpen">
@@ -65,6 +79,7 @@
                 <ul class="child-menu">
                   <ng-container *ngFor="let childMenu of menu?.childMenuItems">
                     <li
+                      (click)="navService.closeMenu()"
                       class="child-item"
                       routerLinkActive=" active"
                       [routerLink]="childMenu?.url"

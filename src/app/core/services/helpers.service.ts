@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AuthService } from './auth.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { AuthService } from "./auth.service";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class HelpersService {
   private viewport = new BehaviorSubject<any>({});
@@ -15,7 +15,17 @@ export class HelpersService {
   private backUrl = new BehaviorSubject<any>({});
   private breadcrumbs = new BehaviorSubject<any>([]);
   breadcrumbs$ = this.breadcrumbs.asObservable();
+  private searchKey = new BehaviorSubject<any>([]);
+  private pageTitle = new BehaviorSubject<any>(null);
+  searchKey$ = this.searchKey.asObservable();
+  pageTitle$ = this.pageTitle.asObservable();
   constructor(private authService: AuthService) {}
+  updatePageTitle(data: any) {
+    this.pageTitle.next(data);
+  }
+  updateSearchTerm(searchKey: string) {
+    this.searchKey.next(searchKey);
+  }
   updateBreadCrumbs(data: any) {
     this.breadcrumbs.next(data);
   }
@@ -28,7 +38,7 @@ export class HelpersService {
   updateformGroup(data: any) {
     this.formGroup.next(data);
   }
-  setPageData( data: any): void {
+  setPageData(data: any): void {
     this.pageData.next(data);
   }
   getPageData(page_type: any): Observable<any> {
@@ -44,15 +54,14 @@ export class HelpersService {
     return this.formGroup.asObservable();
   }
   role() {
-    let userData = this.authService.getUserData();
-    if (userData !== null) {
-      let parseData = JSON.parse(userData);
-      if (!parseData?.userRoles?.length) {
-        return '';
-      }
-      let user_role = parseData?.userRoles[0]?.name ?? null;
-      return user_role;
-    } else {
+    const userData = this.authService.getUserData();
+    if (!userData) return null;
+
+    try {
+      const parsed = JSON.parse(userData);
+      return parsed?.role ?? "";
+    } catch (e) {
+      console.error("Invalid user data JSON:", e);
       return null;
     }
   }
@@ -61,7 +70,7 @@ export class HelpersService {
     if (userData !== null) {
       let parseData = JSON.parse(userData);
       if (!parseData?.user_role_id) {
-        return '';
+        return "";
       }
       let roleId = parseData?.user_role_id ?? null;
       return roleId;
@@ -116,6 +125,15 @@ export class HelpersService {
     if (userData !== null) {
       let parseData = JSON.parse(userData);
       return parseData;
+    } else {
+      return null;
+    }
+  }
+  userName() {
+    let userData = this.authService.getUserData();
+    if (userData !== null) {
+      let parseData = JSON.parse(userData);
+      return parseData?.employee_details?.first_name;
     } else {
       return null;
     }

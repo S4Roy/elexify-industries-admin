@@ -1,0 +1,14 @@
+.footer {
+  box-shadow: 0 0 2rem 0 rgba(33, 37, 41, 0.1);
+  vertical-align: middle;
+  padding: 1rem;
+  display: none;
+  position: fixed;
+  bottom: 0;
+  width: calc(100vw - 252px);
+}
+@media (min-width: 768px) {
+  .footer {
+    display: block;
+  }
+}

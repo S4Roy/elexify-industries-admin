@@ -222,7 +222,7 @@ export function humanize(str: string) {
 }
 export function resetPaginationOptions() {
   return {
-    limit: 10,
+    limit: 20,
     page: 1,
     total_pages: 0,
     total_records: 0,
@@ -237,6 +237,7 @@ export function resetPaginationOptions() {
 }
 export function resetTableFilterOptions() {
   return {
+    _id: '',
     category: '',
     search_key: '',
     slug: '',

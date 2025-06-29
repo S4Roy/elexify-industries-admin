@@ -12,6 +12,13 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ApiService } from 'app/core/services/api.service';
 import { MatBadgeModule } from '@angular/material/badge';
+import { DeviceDetectorService } from 'app/core/services/device-detector.service';
+import { NavService } from 'app/core/services/nav.service';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-header',
   imports: [
@@ -20,6 +27,10 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatMenuModule,
     MatDividerModule,
     MatBadgeModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -27,17 +38,41 @@ import { MatBadgeModule } from '@angular/material/badge';
 export class HeaderComponent {
   @Input() isNavOpen: boolean = true;
   @Output() toggleSideNav = new EventEmitter<boolean>();
+  public searchSubject = new Subject<string>();
+  private destroy$ = new Subject<void>();
+
   total_unread_record: any = null;
   userDetails: any = null;
+  searchTerm: any = null;
+
   constructor(
     public helperService: HelpersService,
     private dialogService: DialogService,
     private authService: AuthService,
     private apiService: ApiService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public device: DeviceDetectorService,
+    private navService: NavService
   ) {
     this.userDetails = this.helperService.userDetails();
     // this.fetchNotificationList()
+  }
+  ngOnInit(): void {
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((term: string) => {
+        this.helperService.updateSearchTerm(term);
+      });
+  }
+
+  onSearchChange(event: any): void {
+    this.searchSubject.next(
+      event?.target?.value ? event?.target?.value?.trim() : ''
+    );
+  }
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.searchSubject.next('');
   }
   signOut(): void {
     const dialogData: ConfirmDialogData = {
@@ -79,19 +114,27 @@ export class HeaderComponent {
   }
   fetchNotificationList() {
     let params: URLSearchParams = new URLSearchParams();
-    this.apiService.notificationList(params).subscribe({
-      next: (res: any) => {
-        const {
-          results,
-          limit,
-          page,
-          total_pages,
-          total_records,
-          total_unread_record,
-        } = res;
-        this.total_unread_record = total_unread_record;
-        console.log(total_unread_record);
-      },
-    });
+    // this.apiService.notificationList(params).subscribe({
+    //   next: (res: any) => {
+    //     const {
+    //       results,
+    //       limit,
+    //       page,
+    //       total_pages,
+    //       total_records,
+    //       total_unread_record,
+    //     } = res;
+    //     this.total_unread_record = total_unread_record;
+    //     console.log(total_unread_record);
+    //   },
+    // });
+  }
+  toggleMenu() {
+    this.navService.toggleMenu();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.searchSubject.complete();
   }
 }

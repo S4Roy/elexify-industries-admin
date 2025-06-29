@@ -5,29 +5,32 @@ import { RouterModule } from '@angular/router';
 import { NavService } from 'app/core/services/nav.service';
 import { BreadcumsComponent } from './includes/breadcums/breadcums.component';
 import { HelpersService } from 'app/core/services/helpers.service';
+import { DeviceDetectorService } from 'app/core/services/device-detector.service';
+import { NgIf, NgClass } from '@angular/common';
+import { FooterComponent } from './includes/header/footer/footer.component';
 
 @Component({
   selector: 'app-home-layout',
-  imports: [HeaderComponent, SideNavComponent, RouterModule, BreadcumsComponent],
+  imports: [
+    HeaderComponent,
+    SideNavComponent,
+    RouterModule,
+    BreadcumsComponent,
+    NgIf,
+    FooterComponent,
+    NgClass,
+  ],
   templateUrl: './home-layout.component.html',
   styleUrl: './home-layout.component.scss',
 })
 export class HomeLayoutComponent {
-  isNavOpen: boolean = false;
+  isNavOpen: boolean = true;
   pagesOutlet: boolean = false;
   breadcrumbs: any = [];
-  constructor(private navService: NavService, private helperService: HelpersService) { }
-  ngOnInit() {
-    this.navService.isNavOpen().subscribe((boolean: boolean) => {
-      this.isNavOpen = boolean;
-    });
-    this.helperService.breadcrumbs$.subscribe((res: any) => {
-      this.breadcrumbs = res;
-      this.pagesOutlet = this.breadcrumbs.some((item: any) => item?.label === "Pages");
-
-    });
-  }
-  toggleSideNav(toggleSate: any) {
-    this.navService.updateNav(!toggleSate);
-  }
+  constructor(
+    public navService: NavService,
+    private helperService: HelpersService,
+    public device: DeviceDetectorService
+  ) {}
+  ngOnInit() {}
 }

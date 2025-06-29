@@ -1,17 +1,21 @@
 <div class="page-wrapper">
-  <div [class]="isNavOpen ? 'left-wrapper' : 'stretch-left-wrapper'">
+  <div
+    [class]="isNavOpen ? 'left-wrapper' : 'stretch-left-wrapper'"
+    *ngIf="device.isDesktop() || navService.isMenuOpen"
+  >
     <app-side-nav [isNavOpen]="isNavOpen"></app-side-nav>
   </div>
-  <div class="right-wrapper">
+  <div class="right-wrapper" [ngClass]="{ 'header-on': navService.headerOpen }">
     <app-header
+      *ngIf="navService.headerOpen"
       [isNavOpen]="isNavOpen"
-      (toggleSideNav)="toggleSideNav($event)"
     ></app-header>
     <app-breadcums></app-breadcums>
     <div class="outlet" [class]="breadcrumbs?.length ? '' : 'full-outlet'">
-      <div [class]="pagesOutlet || !breadcrumbs?.length ? '' : 'content-box'">
-        <router-outlet></router-outlet>
-      </div>
+      <!-- <div [class]="pagesOutlet || !breadcrumbs?.length ? '' : 'content-box'"> -->
+      <router-outlet></router-outlet>
+      <!-- </div> -->
     </div>
+    <app-footer></app-footer>
   </div>
 </div>

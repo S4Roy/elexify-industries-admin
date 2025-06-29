@@ -9,12 +9,13 @@ import { ProductDetailsComponent } from './products/product-details/product-deta
 import { productNameResolver } from './resolver/product-name.resolver';
 import { BrandsComponent } from './brands/brands.component';
 import { OrdersComponent } from './orders/orders.component';
+import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeLayoutComponent,
-    data: { pageTitle: '', breadcrumb: 'inventory' },
+    data: { pageTitle: '', breadcrumb: 'Inventory' },
     children: [
       {
         path: '',
@@ -24,12 +25,12 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
-        data: { pageTitle: 'Dashboard', breadcrumb: 'dashboard' },
+        data: { pageTitle: 'Dashboard', breadcrumb: 'Dashboard' },
       },
       {
         path: 'brands',
         component: BlankLayoutComponent,
-        data: { pageTitle: 'Categories', breadcrumb: 'brands' },
+        data: { pageTitle: 'Brands', breadcrumb: 'Brands' },
         children: [
           {
             path: '',
@@ -47,7 +48,7 @@ const routes: Routes = [
             data: {
               pageTitle: 'Brands',
               breadcrumb: (data: any, route: ActivatedRouteSnapshot) =>
-                route.paramMap.get('slug')?.replace(/-/g, ' ') ?? 'brands',
+                route.paramMap.get('slug')?.replace(/-/g, ' ') ?? 'Brands',
             },
           },
         ],
@@ -55,7 +56,7 @@ const routes: Routes = [
       {
         path: 'categories',
         component: BlankLayoutComponent,
-        data: { pageTitle: 'Categories', breadcrumb: 'categories' },
+        data: { pageTitle: 'Categories', breadcrumb: 'Categories' },
         children: [
           {
             path: '',
@@ -81,7 +82,7 @@ const routes: Routes = [
       {
         path: 'products',
         component: BlankLayoutComponent,
-        data: { pageTitle: 'Products', breadcrumb: 'products' },
+        data: { pageTitle: 'Products', breadcrumb: 'Products' },
         children: [
           {
             path: '',
@@ -118,7 +119,7 @@ const routes: Routes = [
       {
         path: 'orders',
         component: BlankLayoutComponent,
-        data: { pageTitle: 'Orders', breadcrumb: 'orders' },
+        data: { pageTitle: 'Orders', breadcrumb: 'Orders' },
         children: [
           {
             path: '',
@@ -129,6 +130,14 @@ const routes: Routes = [
             path: '',
             component: OrdersComponent,
             data: { pageTitle: 'Orders', breadcrumb: '' },
+          },
+          {
+            path: ':_id',
+            component: OrderDetailsComponent,
+            data: {
+              pageTitle: 'Order Details',
+              breadcrumb: 'Details',
+            },
           },
         ],
       },

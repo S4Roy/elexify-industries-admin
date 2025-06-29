@@ -1,4 +1,4 @@
-<div class="main-row h-8">
+<div class="pagination">
   <div class="flex px-2">
     Showing {{ (pagination.page - 1) * pagination.limit + 1 }} -
     {{
@@ -8,7 +8,7 @@
     }}
     of <b class="mx-1">{{ pagination.totalDocs }}</b> records.
   </div>
-  <div class="pagination" *ngIf="pagination.totalDocs > 10">
+  <div class="" *ngIf="pagination.totalDocs > 10">
     <button class="first" [disabled]="value === 1" (click)="selectPage(1)">
       <<
     </button>

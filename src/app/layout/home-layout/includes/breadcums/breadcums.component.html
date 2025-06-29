@@ -1,37 +1,57 @@
 <div
-  class="flex flex-wrap items-center gap-2 px-3 py-2 mt-2 mb-0 system-bg text-sm sm:text-base"
   *ngIf="breadcrumbs?.length"
+  class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 my-3 px-5"
 >
-  <!-- Optional OTHERS section -->
-  <ng-container *ngIf="settingsOutlet || usersOutlet">
-    <a
-      class="font-medium flex items-center text-gray-700 hover:text-teal-600 transition"
-      [routerLink]=""
-    >
-      OTHERS
-      <img
-        src="assets/double-arrow.png"
-        alt="arrow"
-        class="mx-1 inline-block size-4 sm:size-5"
-      />
-    </a>
-  </ng-container>
+  <!-- Left Section -->
+  <div>
+    <h2 *ngIf="pageTitle" class="text-xl font-semibold text-black mb-1">
+      {{ pageTitle }}
+    </h2>
+    <nav class="text-sm text-gray-500">
+      <ol class="flex space-x-2 items-center">
+        <li>
+          <a routerLink="/" class="text-gray-700 hover:underline">
+            <mat-icon
+              class="!text-base !leading-none !w-5 !h-5 text-gray-700 align-middle"
+              >home</mat-icon
+            >
+          </a>
+        </li>
+        <li class="mx-1">/</li>
+        <ng-container *ngFor="let item of breadcrumbs; let l = last">
+          <li>
+            <a
+              class="font-medium flex items-center text-gray-700 bread-crumb transition"
+              [routerLink]="[item?.url]"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="bread-crumb-active"
+            >
+              {{ item?.label }}
+            </a>
+          </li>
+          <li *ngIf="!l" alt="arrow" class="mx-1">/</li>
+        </ng-container>
+      </ol>
+    </nav>
+  </div>
 
-  <!-- Breadcrumb items -->
-  <ng-container *ngFor="let item of breadcrumbs; let l = last">
-    <a
-      class="font-medium flex items-center text-gray-700 hover:text-teal-600 transition"
-      [routerLink]="[item?.url]"
-      [routerLinkActiveOptions]="{ exact: true }"
-      routerLinkActive="text-green-600"
+  <!-- Right Section -->
+  <div class="flex flex-wrap items-center gap-3">
+    <button
+      *ngIf="showAddBtn"
+      matTooltip="Add New Brand"
+      class="btn-add"
+      (click)="eventsService.triggerAddClick()"
     >
-      {{ item?.label | uppercase }}
-      <img
-        src="assets/double-arrow.png"
-        *ngIf="!l"
-        alt="arrow"
-        class="mx-1 inline-block size-4 sm:size-5"
-      />
-    </a>
-  </ng-container>
+      <mat-icon class="text-xs">add</mat-icon>
+      Add New
+    </button>
+    <button class="btn-collapse" (click)="upderHeaderVisibility()">
+      <mat-icon class="text-xs">{{
+        navService.headerOpen
+          ? "keyboard_double_arrow_up"
+          : "keyboard_double_arrow_down"
+      }}</mat-icon>
+    </button>
+  </div>
 </div>
