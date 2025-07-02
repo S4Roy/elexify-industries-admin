@@ -5,10 +5,23 @@
   display: none;
   position: fixed;
   bottom: 0;
-  width: calc(100vw - 252px);
+  left: 0;
+  width: 100vw;
+  background-color: #fff; /* optional for clarity */
+  z-index: 10;
 }
-@media (min-width: 768px) {
+
+/* Show footer on tablets and up */
+@media screen and (min-width: 768px) {
   .footer {
     display: block;
+  }
+}
+
+/* Optional: adjust width only if sidebar is present on desktop */
+@media screen and (min-width: 1024px) {
+  .footer.with-sidebar {
+    width: calc(100vw - 252px);
+    left: 252px;
   }
 }

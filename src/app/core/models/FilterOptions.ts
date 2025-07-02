@@ -5,4 +5,5 @@ export default class FilterOptions {
   search_key: string | null = null;
   name: string | null = null;
   list_type: string = '';
+  order_status: string | null = null;
 }

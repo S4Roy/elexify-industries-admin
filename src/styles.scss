@@ -416,8 +416,13 @@ button.save-button {
   overflow: auto;
 }
 .table-wrapper {
-  height: calc(100vh - 230px);
+  height: calc(100vh - 180px) !important;
   overflow: auto;
+}
+.header-on {
+  .table-wrapper {
+    height: calc(100vh - 230px) !important;
+  }
 }
 .add-wrapper {
   height: calc(100vh - 100px);
@@ -771,4 +776,103 @@ app-footer {
   align-items: center;
   width: 100%;
   padding: 0 10px;
+}
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sort-icon::after {
+  content: "⇅";
+  font-size: 0.8rem;
+  margin-left: 4px;
+  color: #aaa;
+}
+
+.sort-icon-up::after {
+  content: "↑";
+  font-size: 0.8rem;
+  margin-left: 4px;
+  color: #333;
+}
+
+.sort-icon-down::after {
+  content: "↓";
+  font-size: 0.8rem;
+  margin-left: 4px;
+  color: #333;
+}
+.status-label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Individual statuses */
+.delivered {
+  background-color: #e6f4ea;
+  color: #1b5e20;
+}
+
+.pending-payment {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.processing {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.failed {
+  background-color: #fdecea;
+  color: #b71c1c;
+}
+
+.pickup-exception {
+  background-color: #ffe0b2;
+  color: #e65100;
+}
+
+.undelivered {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.returned {
+  background-color: #fbe9e7;
+  color: #bf360c;
+}
+
+.reached-hub {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+.out-for-pickup {
+  background-color: #fffde7;
+  color: #f57f17;
+}
+
+.picked-up {
+  background-color: #e0f7fa;
+  color: #006064;
+}
+
+.out-for-delivery {
+  background-color: #f1f8e9;
+  color: #33691e;
+}
+
+.intransit {
+  background-color: #ede7f6;
+  color: #4527a0;
 }

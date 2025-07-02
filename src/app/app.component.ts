@@ -38,7 +38,13 @@ export class AppComponent {
         const route = this.getActivatedRouteChild(this.activatedRoute);
         route.data.subscribe((data: any) => {
           const resolvedPage = route.snapshot.data?.['page'];
-          const dynamicTitle = resolvedPage?.title ?? data?.pageTitle ?? null;
+          let dynamicTitle: string | null = null;
+
+          if (typeof data.pageTitle === 'function') {
+            dynamicTitle = data.pageTitle(data, route.snapshot);
+          } else {
+            dynamicTitle = resolvedPage?.title ?? data?.pageTitle ?? null;
+          }
 
           this.helperService.updatePageTitle(dynamicTitle ?? null);
           this.eventsService.setAddBtnVisibility(false);

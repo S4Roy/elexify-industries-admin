@@ -21,6 +21,7 @@ export class MenuComponent {
   @Input() modalButtonIcon: any = null;
   @Input() delete: any = null;
   @Input() details: any = null;
+  @Input() pick_order: any = null;
   @Input() stockItem: any = null;
   @Output() deleteItem = new EventEmitter<any>();
   @Output() initModal = new EventEmitter<any>();

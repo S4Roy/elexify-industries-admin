@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NavService } from 'app/core/services/nav.service';
 import { EventsService } from 'app/core/services/event.service';
+import { DeviceDetectorService } from 'app/core/services/device-detector.service';
 
 @Component({
   selector: 'app-breadcums',
@@ -22,7 +23,8 @@ export class BreadcumsComponent {
   constructor(
     private helperService: HelpersService,
     public navService: NavService,
-    public eventsService: EventsService
+    public eventsService: EventsService,
+    public device: DeviceDetectorService
   ) {
     this.eventsService.showAddBtn$.subscribe((status) => {
       this.showAddBtn = status;

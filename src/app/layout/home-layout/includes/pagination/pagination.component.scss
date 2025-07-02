@@ -1,73 +1,29 @@
-.pagination {
+.pagination-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.main-row {
-  width: 100%;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
-  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-}
+  padding: 5px;
+  background-color: #e5e7eb;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+  }
 
-.pagination ul li {
-  border: none;
-  background: transparent;
-  padding: 0px 8px;
-  color: #666;
-  font-weight: 400;
-}
+  .pagination-info {
+    font-size: 14px;
+    color: #555;
+  }
 
-.selected {
-  color: #eb1d25;
-  font-weight: 600;
-}
+  .pagination-controls {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    align-items: center;
 
-.pagination button {
-  border: none;
-  background: transparent;
-  padding: 0px 7px;
-}
-
-.next {
-  background: #232d3f !important;
-  padding: 7px 0px !important;
-  width: 27px;
-  height: 25px;
-  border-radius: 4px;
-  margin: 7px 5px;
-  color: #fff;
-  overflow: hidden;
-  line-height: 2px;
-  font-size: 13px;
-}
-
-.next:hover {
-  background: #ccc !important;
-  color: #000;
-}
-
-.first {
-  background: #ccc !important;
-  padding: 7px 0px !important;
-  width: 27px;
-  height: 25px;
-  border-radius: 4px;
-  margin: 7px 5px;
-  color: #000;
-  overflow: hidden;
-  line-height: 2px;
-  font-size: 13px;
-  /* accent-color: brown; */
-}
-
-.first:hover {
-  background: #232d3f !important;
-  color: #fff;
-}
-button[disabled] {
-  cursor: not-allowed;
-  opacity: 0.5;
-  pointer-events: none;
+    button[mat-button] {
+      min-width: 36px;
+    }
+  }
 }

@@ -10,6 +10,7 @@ import { productNameResolver } from './resolver/product-name.resolver';
 import { BrandsComponent } from './brands/brands.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderDetailsComponent } from './orders/order-details/order-details.component';
+import { PickOrderComponent } from './orders/pick-order/pick-order.component';
 
 const routes: Routes = [
   {
@@ -132,12 +133,60 @@ const routes: Routes = [
             data: { pageTitle: 'Orders', breadcrumb: '' },
           },
           {
-            path: ':_id',
+            path: 'details/:_id',
             component: OrderDetailsComponent,
             data: {
               pageTitle: 'Order Details',
               breadcrumb: 'Details',
             },
+          },
+          {
+            path: ':order_status',
+            component: OrdersComponent,
+            data: {
+              pageTitle: (data: any, route: ActivatedRouteSnapshot) => {
+                const status = route.paramMap.get('order_status') ?? '';
+                const formattedStatus = status
+                  .replace(/-/g, ' ')
+                  .replace(/\b\w/g, (char) => char.toUpperCase());
+                return `Orders - ${formattedStatus}`;
+              },
+              breadcrumb: (data: any, route: ActivatedRouteSnapshot) => {
+                const status = route.paramMap.get('order_status') ?? '';
+                return status
+                  .replace(/-/g, ' ')
+                  .replace(/\b\w/g, (char) => char.toUpperCase());
+              },
+            },
+          },
+          {
+            path: ':order_status',
+            component: BlankLayoutComponent,
+            data: {
+              pageTitle: (data: any, route: ActivatedRouteSnapshot) => {
+                const status = route.paramMap.get('order_status') ?? '';
+                const formattedStatus = status
+                  .replace(/-/g, ' ')
+                  .replace(/\b\w/g, (char) => char.toUpperCase());
+                return `Orders - ${formattedStatus}`;
+              },
+              breadcrumb: (data: any, route: ActivatedRouteSnapshot) => {
+                const status = route.paramMap.get('order_status') ?? '';
+                return status
+                  .replace(/-/g, ' ')
+                  .replace(/\b\w/g, (char) => char.toUpperCase());
+              },
+            },
+            children: [
+              {
+                path: ':_id',
+                component: PickOrderComponent,
+                data: {
+                  pageTitle: 'Order - Pick Order',
+                  breadcrumb: 'Pick Order',
+                },
+              },
+            ],
           },
         ],
       },

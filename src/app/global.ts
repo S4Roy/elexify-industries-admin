@@ -243,6 +243,7 @@ export function resetTableFilterOptions() {
     slug: '',
     name: '',
     list_type: '',
+    order_status: '',
   };
 }
 

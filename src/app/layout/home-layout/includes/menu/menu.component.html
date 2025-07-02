@@ -1,4 +1,4 @@
-@if (modalItem || edit || details|| delete || stockItem ) {
+@if (modalItem || edit || details|| delete || stockItem || pick_order ) {
 
 <mat-icon class="cursor-pointer" [matMenuTriggerFor]="menu">more_vert</mat-icon>
 
@@ -25,6 +25,13 @@
       <button mat-menu-item [routerLink]="edit">
         <mat-icon>edit</mat-icon>
         <span>Modify</span>
+      </button>
+    </li>
+    } @if (pick_order) {
+    <li>
+      <button mat-menu-item [routerLink]="pick_order">
+        <mat-icon>shopping_bag</mat-icon>
+        <span>Pick Order</span>
       </button>
     </li>
     } @if (details) {
