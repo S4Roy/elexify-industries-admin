@@ -65,79 +65,79 @@ export class SideNavComponent {
             },
           ],
         },
-        {
-          label: 'Pages',
-          icon: 'web',
-          url: '/pages',
-          childMenuItems: [
-            // {
-            //   label: 'Home',
-            //   url: '/pages/home',
-            //   exact: true,
-            // },
-            {
-              label: 'About Us',
-              url: '/pages/about',
-              exact: true,
-            },
-            // {
-            //   label: 'Why ANCTPL?',
-            //   url: '/pages/why-anctpl',
-            //   exact: true,
-            // },
-            {
-              label: 'Services',
-              url: '/pages/service',
-              exact: true,
-            },
-            {
-              label: 'FAQs',
-              url: '/pages/faq',
-              exact: true,
-            },
-            // {
-            //   label: 'Awards',
-            //   url: '/pages/awards',
-            //   exact: true,
-            // },
-            // {
-            //   label: 'News & Events',
-            //   url: '/pages/news_event',
-            //   exact: true,
-            // },
-            // {
-            //   label: 'Success Stories',
-            //   url: '/pages/success_story',
-            //   exact: true,
-            // },
-            // {
-            //   label: 'Gallery',
-            //   url: '/pages/gallery',
-            //   exact: true,
-            // },
-            // {
-            //   label: 'Career',
-            //   url: '/pages/career',
-            //   exact: true,
-            // },
-            // {
-            //   label: 'Tender',
-            //   url: '/pages/tender',
-            //   exact: true,
-            // },
-            // {
-            //   label: 'Clientele',
-            //   url: '/pages/clientele',
-            //   exact: true,
-            // },
+        // {
+        //   label: 'Pages',
+        //   icon: 'web',
+        //   url: '/pages',
+        //   childMenuItems: [
+        //     // {
+        //     //   label: 'Home',
+        //     //   url: '/pages/home',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'About Us',
+        //     //   url: '/pages/about',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'Why ANCTPL?',
+        //     //   url: '/pages/why-anctpl',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'Services',
+        //     //   url: '/pages/service',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'FAQs',
+        //     //   url: '/pages/faq',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'Awards',
+        //     //   url: '/pages/awards',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'News & Events',
+        //     //   url: '/pages/news_event',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'Success Stories',
+        //     //   url: '/pages/success_story',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'Gallery',
+        //     //   url: '/pages/gallery',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'Career',
+        //     //   url: '/pages/career',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'Tender',
+        //     //   url: '/pages/tender',
+        //     //   exact: true,
+        //     // },
+        //     // {
+        //     //   label: 'Clientele',
+        //     //   url: '/pages/clientele',
+        //     //   exact: true,
+        //     // },
 
-            {
-              label: 'Contact Us',
-              url: '/pages/contact_us',
-              exact: true,
-            },
-          ],
-        },
+        //     // {
+        //     //   label: 'Contact Us',
+        //     //   url: '/pages/contact_us',
+        //     //   exact: true,
+        //     // },
+        //   ],
+        // },
         // {
         //   label: 'Service Management',
         //   icon: 'format_list_bulleted',
@@ -191,29 +191,29 @@ export class SideNavComponent {
         //   image_path: 'assets/sidebar_icon/award-updated-icon.svg',
         //   url: '/success-stories',
         // },
-        {
-          label: 'Teams',
-          icon: 'contacts',
-          image_path: 'assets/sidebar_icon/users.svg',
-          url: '/teams',
-        },
+        // {
+        //   label: 'Teams',
+        //   icon: 'contacts',
+        //   image_path: 'assets/sidebar_icon/users.svg',
+        //   url: '/teams',
+        // },
       ],
     },
     {
       title: 'Others',
       description: 'Manage your details',
       menuItems: [
+        // {
+        //   label: 'Settings',
+        //   icon: 'settings',
+        //   image_path: 'assets/sidebar_icon/settings.svg',
+        //   url: '/settings',
+        // },
         {
-          label: 'Settings',
-          icon: 'settings',
-          image_path: 'assets/sidebar_icon/settings.svg',
-          url: '/settings',
-        },
-        {
-          label: 'User',
+          label: 'Customers',
           icon: 'contacts',
           image_path: 'assets/sidebar_icon/users.svg',
-          url: '/user',
+          url: '/customers',
         },
       ],
     },

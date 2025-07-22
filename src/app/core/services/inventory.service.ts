@@ -85,4 +85,24 @@ export class InventoryService {
       `admin/inventory/order/list?${params.toString()}`
     );
   }
+  orderDetails(params: any) {
+    return this.httpService.get(
+      `admin/inventory/order/details?${params.toString()}`
+    );
+  }
+  pickedItemBySku(params: any) {
+    return this.httpService.get(
+      `admin/inventory/order/picked-item-by-sku?${params.toString()}`
+    );
+  }
+  scanAndPackItem(params: any) {
+    return this.httpService.get(
+      `admin/inventory/order/scan-and-pack-item?${params.toString()}`
+    );
+  }
+  orderStats(params: any) {
+    return this.httpService.get(
+      `admin/inventory/order/stats?${params.toString()}`
+    );
+  }
 }

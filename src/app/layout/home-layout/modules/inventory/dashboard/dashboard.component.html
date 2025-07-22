@@ -1,1 +1,40 @@
-<p>dashboard works!</p>
+<div class="p-6 bg-gray-100 min-h-screen space-y-6">
+  <!-- Stats Section -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Inventory Stats -->
+    <!-- <div class="bg-white p-5 rounded-2xl shadow">
+      <p class="text-sm text-gray-500">Total Products</p>
+      <p class="text-2xl font-bold text-blue-600">1,250</p>
+    </div>
+    <div class="bg-white p-5 rounded-2xl shadow">
+      <p class="text-sm text-gray-500">Low Stock</p>
+      <p class="text-2xl font-bold text-yellow-500">82</p>
+    </div>
+    <div class="bg-white p-5 rounded-2xl shadow">
+      <p class="text-sm text-gray-500">Out of Stock</p>
+      <p class="text-2xl font-bold text-red-500">23</p>
+    </div>
+    <div class="bg-white p-5 rounded-2xl shadow">
+      <p class="text-sm text-gray-500">Categories</p>
+      <p class="text-2xl font-bold text-green-500">18</p>
+    </div> -->
+
+    <!-- Order Stats -->
+    <a class="bg-white p-5 rounded-2xl shadow" routerLink="/inventory/orders">
+      <p class="text-sm text-gray-500 uppercase">Total Orders</p>
+      <p class="text-2xl font-bold text-blue-600">{{ data?.total }}</p>
+    </a>
+
+    <a
+      *ngFor="let status of data?.status"
+      class="p-5 rounded-2xl shadow"
+      [class]="status?.order_status"
+      routerLink="/inventory/orders/{{ status?.order_status }}"
+    >
+      <p class="text-sm">
+        <span class="uppercase">{{ status?.order_status }}</span>
+      </p>
+      <p class="text-2xl font-bold">{{ status?.count }}</p>
+    </a>
+  </div>
+</div>

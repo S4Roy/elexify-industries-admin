@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { MenuComponent } from '../../../includes/menu/menu.component';
-import { NgFor, NgIf } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { AddNewUserComponent } from '../add-new-user/add-new-user.component';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import * as Global from '../../../../../global';
 import PaginationOptions from '../../../../../core/models/PaginationOptions';
 import { ToastrService } from 'ngx-toastr';
-import { SettingsService } from '../../../../../core/services/settings.service';
 import { PaginationComponent } from '../../../includes/pagination/pagination.component';
-import { NewUserRolePermissionsComponent } from '../../settings/user-role-permissions/new-user-role-permissions/new-user-role-permissions.component';
-
+import { ApiService } from 'app/core/services/api.service';
+import * as Global from 'app/global';
+import { ActivatedRoute, Router } from '@angular/router';
+import FilterOptions from 'app/core/models/FilterOptions';
+import { HelpersService } from 'app/core/services/helpers.service';
+import { Subject, combineLatest, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-user',
-  imports: [MenuComponent, NgFor, NgIf, RouterOutlet, PaginationComponent],
+  imports: [MenuComponent, NgFor, NgIf, PaginationComponent, DatePipe],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
@@ -21,74 +21,95 @@ export class UserComponent {
   Global = Global;
   item_list: any = [];
   paginationOption: PaginationOptions;
+
+  filterOption: FilterOptions;
+  private destroy$ = new Subject<void>();
+
   constructor(
     private dialog: MatDialog,
-    private settingService: SettingsService,
-    private toastr: ToastrService
+    private apiService: ApiService,
+    private route: ActivatedRoute,
+    private toastr: ToastrService,
+    private router: Router,
+    private helperService: HelpersService
   ) {
     this.paginationOption = Global.resetPaginationOptions();
-    this.checkPermission();
-    this.fetchUserList();
+    this.filterOption = Global.resetTableFilterOptions();
+    // this.checkPermission();
   }
-  updateRolePermission(data: any = null) {
-    this.dialog
-      .open(NewUserRolePermissionsComponent, {
-        data: data,
-        disableClose: true,
-      })
-      .afterClosed()
-      .subscribe((res: any) => {
-        if (res) {
-          this.fetchUserList();
-        }
+  public sortKey: string = 'created_at';
+  public sortDirection: 'asc' | 'desc' = 'desc';
+  ngOnInit(): void {
+    combineLatest([this.route.paramMap, this.helperService.searchKey$])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([params, searchKey]) => {
+        this.filterOption = Global.resetTableFilterOptions();
+        this.filterOption.search_key = searchKey;
+        this.paginationOption.page = 1;
+        this.fetchCutomerList();
       });
   }
-  addItem(data: any = null) {
-    this.dialog
-      .open(AddNewUserComponent, {
-        data: data,
-        disableClose: true,
-      })
-      .afterClosed()
-      .subscribe((res: any) => {
-        if (res) {
-          this.fetchUserList();
-        }
-      });
+  sort(field: string): void {
+    this.paginationOption = Global.resetPaginationOptions();
+
+    if (this.sortKey === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortKey = field;
+      this.sortDirection = 'asc';
+    }
+
+    // Emit or trigger sorting logic (API call or client-side)
+    this.fetchCutomerList();
   }
-  fetchUserList() {
-    let params = new URLSearchParams();
+  getSortIcon(field: string): string {
+    if (this.sortKey !== field) return 'sort-icon';
+    return this.sortDirection === 'asc' ? 'sort-icon-up' : 'sort-icon-down';
+  }
+  addItem(data: any = null) {}
+  fetchCutomerList() {
+    let params = new URLSearchParams({
+      sort_by: this.sortKey,
+      sort_order: this.sortDirection === 'asc' ? '1' : '-1',
+    });
+    if (this.paginationOption.limit) {
+      params.set('limit', String(this.paginationOption.limit));
+    }
     if (this.paginationOption.page) {
       params.set('page', String(this.paginationOption.page));
     }
-    this.settingService.userList(params).subscribe({
+
+    if (this.filterOption.search_key) {
+      params.set('search_key', this.filterOption.search_key);
+    }
+
+    this.apiService.customerList(params).subscribe({
       next: (res: any) => {
         this.item_list = res?.data?.docs ?? [];
-        this.paginationOption = { ...res?.data };
+        this.paginationOption = {
+          ...res?.data,
+        };
       },
       error: (err) => {},
     });
   }
-  permissions: any = [];
-  checkPermission() {
-    this.settingService.checkPermission({ sec: 'user' }).subscribe({
-      next: (res: any) => {
-        const { permissions } = res?.results[0];
-        this.permissions = permissions;
-      },
-    });
-  }
   deleteItem(item: any) {
-    this.settingService.deleteUser({ id: item.id }).subscribe({
-      next: (res: any) => {
-        this.toastr.success(`User Deleted Successfully`);
-        this.fetchUserList();
-      },
-      error: (err: any) => {},
-    });
+    // this.inventoryService.deleteProduct({ _id: item._id }).subscribe({
+    //   next: (res: any) => {
+    //     this.toastr.success(res?.body?.message);
+    //     this.fetchCutomerList();
+    //   },
+    //   error: (err: any) => {},
+    // });
   }
   onPageChange(data: any) {
     this.paginationOption.page = data;
-    this.fetchUserList();
+    this.fetchCutomerList();
+  }
+  permissions: any = ['add', 'edit', 'delete'];
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

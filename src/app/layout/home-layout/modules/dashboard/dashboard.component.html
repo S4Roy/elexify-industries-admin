@@ -1,1 +1,80 @@
-<ng-container *ngIf="!isLoading"> </ng-container>
+<ng-container *ngIf="!isLoading">
+  <div class="p-6 bg-gray-100 min-h-screen space-y-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+      <button
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >
+        + Add Product
+      </button>
+    </div>
+
+    <!-- Top Summary Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <p class="text-sm text-gray-500">Total Orders</p>
+        <p class="text-2xl font-bold text-blue-600">12,580</p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <p class="text-sm text-gray-500">Total Revenue</p>
+        <p class="text-2xl font-bold text-green-600">₹23,40,210</p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <p class="text-sm text-gray-500">Total Users</p>
+        <p class="text-2xl font-bold text-indigo-600">5,478</p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <p class="text-sm text-gray-500">Total Products</p>
+        <p class="text-2xl font-bold text-purple-600">2,145</p>
+      </div>
+    </div>
+
+    <!-- Orders by Status -->
+    <div class="bg-white p-5 rounded-2xl shadow">
+      <h2 class="text-lg font-semibold text-gray-800 mb-4">Orders by Status</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+        <div class="p-4 bg-blue-50 rounded-xl text-center">
+          <p class="text-sm text-gray-500">Pending</p>
+          <p class="text-xl font-bold text-blue-700">134</p>
+        </div>
+        <div class="p-4 bg-yellow-50 rounded-xl text-center">
+          <p class="text-sm text-gray-500">Confirmed</p>
+          <p class="text-xl font-bold text-yellow-600">95</p>
+        </div>
+        <div class="p-4 bg-orange-50 rounded-xl text-center">
+          <p class="text-sm text-gray-500">Packed</p>
+          <p class="text-xl font-bold text-orange-600">88</p>
+        </div>
+        <div class="p-4 bg-teal-50 rounded-xl text-center">
+          <p class="text-sm text-gray-500">Shipped</p>
+          <p class="text-xl font-bold text-teal-600">74</p>
+        </div>
+        <div class="p-4 bg-green-50 rounded-xl text-center">
+          <p class="text-sm text-gray-500">Delivered</p>
+          <p class="text-xl font-bold text-green-600">421</p>
+        </div>
+        <div class="p-4 bg-red-50 rounded-xl text-center">
+          <p class="text-sm text-gray-500">Cancelled</p>
+          <p class="text-xl font-bold text-red-600">19</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inventory Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <p class="text-sm text-gray-500">Low Stock Products</p>
+        <p class="text-2xl font-bold text-yellow-600">78</p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <p class="text-sm text-gray-500">Out of Stock</p>
+        <p class="text-2xl font-bold text-red-500">29</p>
+      </div>
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <p class="text-sm text-gray-500">Total Categories</p>
+        <p class="text-2xl font-bold text-blue-500">15</p>
+      </div>
+    </div>
+  </div>
+</ng-container>

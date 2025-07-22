@@ -15,22 +15,7 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
-  {
-    path: 'main',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/main/main.module').then(
-        (m) => m.MainModule
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'pages',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/pages/pages.module').then(
-        (m) => m.PagesModule
-      ),
-    canActivate: [authGuard],
-  },
+
   {
     path: 'inventory',
     loadChildren: () =>
@@ -39,31 +24,9 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
-  // {
-  //   path: 'others',
-  //   component: HomeLayoutComponent,
-  //   data: { Title: 'Home', breadcrumb: 'Others' },
-  //   children: [
-  //     {
-  //       path: 'settings',
-  //       loadChildren: () =>
-  //         import('./layout/home-layout/modules/settings/settings.module').then(
-  //           (m) => m.SettingsModule
-  //         ),
-  //       canActivate: [authGuard],
-  //     },
-  //   ],
-  // },
+
   {
-    path: 'settings',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/settings/settings.module').then(
-        (m) => m.SettingsModule
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'user',
+    path: 'customers',
     loadChildren: () =>
       import('./layout/home-layout/modules/user/user.module').then(
         (m) => m.UserModule
@@ -78,117 +41,7 @@ export const routes: Routes = [
       ),
     canActivate: [guestGuard],
   },
-  {
-    path: 'services',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/services/services.module').then(
-        (m) => m.ServicesModule
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'media',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/gallery/gallery.module').then(
-        (m) => m.GalleryModule
-      ),
-  },
-  {
-    path: 'gallery',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/gallery/gallery.module').then(
-        (m) => m.GalleryModule
-      ),
-  },
-  {
-    path: 'enquiry',
-    loadChildren: () =>
-      import(
-        './layout/home-layout/modules/enquiry-management/enquiry-management.module'
-      ).then((m) => m.EnquiryManagementModule),
-  },
-  {
-    path: 'career',
-    loadChildren: () =>
-      import(
-        './layout/home-layout/modules/career-management/career-management.module'
-      ).then((m) => m.CareerManagementModule),
-  },
-  {
-    path: 'clientele',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/clientele/clientele.module').then(
-        (m) => m.ClienteleModule
-      ),
-  },
-  {
-    path: 'awards',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/awards/awards.module').then(
-        (m) => m.AwardsModule
-      ),
-  },
-  {
-    path: 'newsevent',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/news-event/news-event.module').then(
-        (m) => m.NewsEventModule
-      ),
-  },
-  {
-    path: 'tender',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/tender/tender.module').then(
-        (m) => m.TenderModule
-      ),
-  },
-  {
-    path: 'gallery',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/gallery/gallery.module').then(
-        (m) => m.GalleryModule
-      ),
-  },
-  {
-    path: 'teams',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/teams/teams.module').then(
-        (m) => m.TeamsModule
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'success-stories',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/blogs/blogs.module').then(
-        (m) => m.BlogsModule
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'credentials',
-    loadChildren: () =>
-      import('./layout/home-layout/modules/credential/credential.module').then(
-        (m) => m.CredentialModule
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'activity-log',
-    loadChildren: () =>
-      import(
-        './layout/home-layout/modules/activity-log/activity-log.module'
-      ).then((m) => m.ActivityLogModule),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'content-approvals',
-    loadChildren: () =>
-      import(
-        './layout/home-layout/modules/content-approvals/content-approvals.module'
-      ).then((m) => m.ContentApprovalsModule),
-    canActivate: [authGuard],
-  },
+
   {
     path: '**',
     component: P404Component,

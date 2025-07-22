@@ -35,7 +35,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
         toastr.error(message);
         authService.userLogout();
       } else if (error?.status === 409) {
-        toastr.error(error.error[0] ?? 'Conflict Error');
+        toastr.error(error.error?.message ?? 'Conflict Error');
       } else if (error?.status === 415) {
         toastr.error(error?.error?.title ?? 'Validation Error');
       } else if (error?.status === 404) {
@@ -45,7 +45,9 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
         let errorMessage = '';
         if (error.error?.validation) {
           errorMessage =
-            error.error?.validation?.body?.message || 'Validation failed';
+            error.error?.validation?.body?.message ||
+            error.error?.validation?.query?.message ||
+            'Validation failed';
         } else if (error?.error.error) {
           errorMessage = error?.error.error;
         } else {

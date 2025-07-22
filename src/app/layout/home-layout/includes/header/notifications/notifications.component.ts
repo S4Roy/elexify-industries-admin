@@ -49,40 +49,13 @@ export class NotificationsComponent {
     this.fetchNotificationList();
   }
 
-  notificationMarkAsRead(item: any) {
-    this.apiService.notificationMarkAsRead({ id: item?.id }).subscribe({
-      next: (res: any) => {
-        this.fetchNotificationList();
-      },
-    });
-  }
-  notificationMarkAllAsRead() {
-    this.apiService.notificationMarkAllAsRead({}).subscribe({
-      next: (res: any) => {
-        this.fetchNotificationList();
-      },
-    });
-  }
+  notificationMarkAsRead(item: any) {}
+  notificationMarkAllAsRead() {}
   fetchNotificationList() {
     let params: URLSearchParams = new URLSearchParams();
     if (this.paginationOption.page) {
       params.set('page', String(this.paginationOption.page));
     }
-    this.apiService.notificationList(params).subscribe({
-      next: (res: any) => {
-        const {
-          results,
-          limit,
-          page,
-          total_pages,
-          total_records,
-          total_unread_record,
-        } = res;
-        this.total_unread_record = total_unread_record;
-        this.item_list = res?.data?.docs ?? [];
-        this.paginationOption = { ...res?.data };
-      },
-    });
   }
   parseJson(json: any) {
     try {
