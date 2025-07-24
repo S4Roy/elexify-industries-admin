@@ -1,0 +1,74 @@
+<!-- Header -->
+<div
+  class="flex justify-between items-center pt-4 px-5"
+  [formGroup]="formGroup"
+>
+  <h2 class="text-xl font-semibold">Pack Item</h2>
+  <input
+    #skuInput
+    type="text"
+    formControlName="sku"
+    placeholder="Scan barcode..."
+    class="border rounded p-2 text-sm w-60"
+    (keydown.enter)="onEnterScan()"
+  />
+</div>
+
+<!-- Products Table -->
+<div class="space-y-4 h-[60vh] p-5 overflow-auto">
+  <!-- Sort by unpacked: unpacked items come first -->
+  <ng-container *ngFor="let item of data?.packed_items">
+    <div class="flex flex-col md:flex-row md:items-center gap-4 border-b pb-4">
+      <!-- Image & Info -->
+      <div class="flex items-center gap-4 flex-1">
+        <img
+          *ngIf="item?.images[0]?.url"
+          [src]="item?.images[0]?.url"
+          class="w-16 h-16 rounded object-cover border"
+        />
+        <div class="space-y-1">
+          <p class="font-medium">{{ item?.name }}</p>
+          <p class="text-xs text-gray-500">SKU: {{ item?.sku }}</p>
+          <p class="text-xs text-gray-500">
+            Category:
+            <ng-container *ngFor="let cat of item?.categories; let last = last">
+              {{ cat?.name }}<span *ngIf="!last">, </span>
+            </ng-container>
+          </p>
+          <!-- Packing status badge -->
+          <p class="text-xs mt-1">
+            <span
+              *ngIf="item?.ordered_quantity === item?.picked_quantity"
+              class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-medium"
+            >
+              ✅ Picked
+            </span>
+            <span
+              *ngIf="item?.picked_quantity < item?.ordered_quantity"
+              class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-xs font-medium"
+            >
+              {{ item?.picked_quantity }}/{{ item?.ordered_quantity }}
+              Picked
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Center: Stock & Pricing Info -->
+      <div class="text-sm text-gray-700 text-right md:text-left min-w-[140px]">
+        <p><span class="font-medium">Stock:</span> {{ item?.current_stock }}</p>
+        <p>
+          <span class="font-medium">Price:</span>
+          {{ item?.unit_price | currency : "INR" }}
+        </p>
+        <p>
+          <span class="font-medium">Qty:</span> {{ item?.ordered_quantity }}
+        </p>
+        <p>
+          <span class="font-medium">Weight:</span>
+          {{ item?.shipping?.weight }} kg
+        </p>
+      </div>
+    </div>
+  </ng-container>
+</div>
