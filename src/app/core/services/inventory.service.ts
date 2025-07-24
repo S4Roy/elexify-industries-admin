@@ -90,6 +90,16 @@ export class InventoryService {
       `admin/inventory/order/details?${params.toString()}`
     );
   }
+  pickedItems(params: any) {
+    return this.httpService.get(
+      `admin/inventory/order/picked-items?${params.toString()}`
+    );
+  }
+  packedItems(params: any) {
+    return this.httpService.get(
+      `admin/inventory/order/packed-items?${params.toString()}`
+    );
+  }
   pickedItemBySku(params: any) {
     return this.httpService.get(
       `admin/inventory/order/picked-item-by-sku?${params.toString()}`
@@ -98,6 +108,11 @@ export class InventoryService {
   scanAndPackItem(params: any) {
     return this.httpService.get(
       `admin/inventory/order/scan-and-pack-item?${params.toString()}`
+    );
+  }
+  scanAndPickItem(params: any) {
+    return this.httpService.get(
+      `admin/inventory/order/scan-and-pick-item?${params.toString()}`
     );
   }
   orderStats(params: any) {

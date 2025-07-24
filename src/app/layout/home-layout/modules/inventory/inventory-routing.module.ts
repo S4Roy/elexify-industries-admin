@@ -10,7 +10,9 @@ import { productNameResolver } from './resolver/product-name.resolver';
 import { BrandsComponent } from './brands/brands.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderDetailsComponent } from './orders/order-details/order-details.component';
-import { PickOrderComponent } from './orders/pick-order/pick-order.component';
+import { OrderPackingComponent } from './orders/order-packing/order-packing.component';
+import { PickItemComponent } from './orders/order-packing/pick-item/pick-item.component';
+import { PackItemComponent } from './orders/order-packing/pack-item/pack-item.component';
 
 const routes: Routes = [
   {
@@ -180,11 +182,31 @@ const routes: Routes = [
             children: [
               {
                 path: ':_id',
-                component: PickOrderComponent,
-                data: {
-                  pageTitle: 'Order - Pick Order',
-                  breadcrumb: 'Pick Order',
-                },
+                component: OrderPackingComponent,
+
+                children: [
+                  {
+                    path: '',
+                    redirectTo: 'pick-item',
+                    pathMatch: 'full',
+                  },
+                  {
+                    path: 'pick-item',
+                    component: PickItemComponent,
+                    data: {
+                      pageTitle: 'Order - Pick Item',
+                      breadcrumb: 'Pick Item',
+                    },
+                  },
+                  {
+                    path: 'pack-item',
+                    component: PackItemComponent,
+                    data: {
+                      pageTitle: 'Order - Pack Item',
+                      breadcrumb: 'Pack Item',
+                    },
+                  },
+                ],
               },
             ],
           },
