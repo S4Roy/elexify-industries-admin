@@ -14,8 +14,8 @@
         <th scope="col" (click)="sort('order_status')" class="sortable">
           Status <span [class]="getSortIcon('order_status')"></span>
         </th>
-        <th scope="col" (click)="sort('items')" class="sortable">
-          Items <span [class]="getSortIcon('items')"></span>
+        <th scope="col" (click)="sort('item_count')" class="sortable">
+          Items <span [class]="getSortIcon('item_count')"></span>
         </th>
         <th scope="col" (click)="sort('grand_total')" class="sortable">
           Total <span [class]="getSortIcon('grand_total')"></span>
@@ -44,7 +44,7 @@
               {{ item?.order_status }}</span
             >
           </td>
-          <td>{{ item?.order_items?.length }}</td>
+          <td>{{ item?.item_count }}</td>
           <td>
             {{ item?.grand_total | currency : "INR" }}
           </td>

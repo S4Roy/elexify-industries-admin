@@ -1,11 +1,12 @@
 import { CurrencyPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import FilterOptions from 'app/core/models/FilterOptions';
 import { InventoryService } from 'app/core/services/inventory.service';
 import * as Global from 'app/global';
 import { NgxBarcode6Module } from 'ngx-barcode6';
+import { PickedItemComponent } from './picked-item/picked-item.component';
 import {
   FormBuilder,
   FormGroup,
@@ -13,10 +14,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
-import { CommunicatorService } from 'app/core/services/communicator.service';
 
 @Component({
-  selector: 'app-order-packing',
+  selector: 'app-pick-order',
   imports: [
     CurrencyPipe,
     NgFor,
@@ -24,12 +24,11 @@ import { CommunicatorService } from 'app/core/services/communicator.service';
     DatePipe,
     NgxBarcode6Module,
     ReactiveFormsModule,
-    RouterModule,
   ],
-  templateUrl: './order-packing.component.html',
-  styleUrl: './order-packing.component.scss',
+  templateUrl: './pick-order.component.html',
+  styleUrl: './pick-order.component.scss',
 })
-export class OrderPackingComponent {
+export class PickOrderComponent {
   Global = Global;
   filterOption: FilterOptions;
   formGroup!: FormGroup;
@@ -40,17 +39,39 @@ export class OrderPackingComponent {
     private route: ActivatedRoute,
     private inventoryService: InventoryService,
     private dialog: MatDialog,
-    private fb: FormBuilder,
-    private router: Router,
-    private communicator: CommunicatorService
+    private fb: FormBuilder
   ) {
     this.filterOption = Global.resetTableFilterOptions();
   }
-
+  ngAfterViewInit(): void {
+    // Automatically focus the input when view is ready
+    this.skuInput.nativeElement.focus();
+  }
   ngOnInit() {
-    this.communicator.trigger$.subscribe((data) => {
-      this.fetchOrderList();
+    this.formGroup = this.fb.group({
+      sku: [null, Validators.required],
     });
+    this.formGroup
+      .get('sku')
+      ?.valueChanges.pipe(
+        debounceTime(300), // Wait 300ms after user stops typing
+        distinctUntilChanged(), // Only emit when value changes
+        filter((value) => !!value?.trim()) // Skip empty values if needed
+      )
+      .subscribe((value: string) => {
+        let params = new URLSearchParams({
+          sku: value,
+          order_id: this.data?._id,
+        });
+
+        this.inventoryService.scanAndPickItem(params).subscribe({
+          next: (res: any) => {
+            this.formGroup.reset();
+            this.fetchOrderList();
+          },
+          error: (err) => {},
+        });
+      });
     this.route.paramMap.subscribe((params) => {
       this.filterOption._id = params.get('_id');
       if (this.filterOption._id) {
@@ -68,7 +89,10 @@ export class OrderPackingComponent {
       error: (err) => {},
     });
   }
-  packItem() {
-    this.router.navigate(['pack-item'], { relativeTo: this.route });
+  pickedItem() {
+    this.dialog.open(PickedItemComponent, {
+      data: {},
+      width: '500px',
+    });
   }
 }
